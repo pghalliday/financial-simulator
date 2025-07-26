@@ -1,0 +1,161 @@
+import json
+
+from prettytable import PrettyTable, TableStyle
+
+LABEL_COLUMN_NAME = 'For the portion of the taxable amount'
+RATE_COLUMN_NAME = 'Rate'
+TAXABLE_COLUMN_NAME = 'Taxable portion'
+TAX_DUE_COLUMN_NAME = 'Tax Due'
+TOTAL_LABEL = 'Total'
+
+def format_float(amount):
+    return '' if amount is None else f'{amount:_.2f}'
+
+
+def format_integer(amount):
+    return '' if amount is None else f'{amount:_}'
+
+
+def format_rate(rate):
+    return '' if rate is None else f'{(rate * 100):.2f}%'
+
+
+def column_width(column):
+    return max([len(text) for text in column])
+
+
+def format_column_left(column, width):
+    return [f'{text:<{width}}' for text in column]
+
+
+def format_column_right(column, width):
+    return [f'{text:>{width}}' for text in column]
+
+
+class TaxCalculation(object):
+    def __init__(self, taxable, tax_due):
+        self.taxable = taxable
+        self.tax_due = tax_due
+
+    def format_columns(self):
+        return f'{format_float(self.taxable)}', f'{format_float(self.tax_due)}'
+
+
+class TaxCalculations(object):
+    def __init__(self, tax_bands, calculations):
+        self.tax_bands = tax_bands
+        self.calculations = calculations
+        taxable, tax_due = zip(*[(calculation.taxable, calculation.tax_due) for calculation in self.calculations])
+        self.taxable = sum(taxable)
+        self.tax_due = sum(tax_due)
+
+    def format_columns(self):
+        return tuple(zip(*[calculation.format_columns() for calculation in self.calculations]))
+
+    def format_totals(self):
+        return f'{format_float(self.taxable)}', f'{format_float(self.tax_due)}'
+
+    def __str__(self):
+        labels, rates = self.tax_bands.format_columns()
+        taxable_portions, tax_due_portions = self.format_columns()
+        taxable, tax_due = self.format_totals()
+        table = PrettyTable()
+        table.set_style(TableStyle.SINGLE_BORDER)
+        table.add_column(LABEL_COLUMN_NAME, labels, 'l')
+        table.add_column(RATE_COLUMN_NAME, rates, 'r')
+        table.add_column(TAXABLE_COLUMN_NAME, taxable_portions, 'r')
+        table.add_column(TAX_DUE_COLUMN_NAME, tax_due_portions, 'r')
+        table.add_divider()
+        table.add_row(['', TOTAL_LABEL, taxable, tax_due])
+        return table.get_string()
+
+
+
+class TaxBand(object):
+    def __init__(self, lower, upper, rate):
+        self.lower = lower
+        self.upper = upper
+        self.rate = rate
+
+    def calculate(self, total_taxable):
+        if total_taxable <= self.lower:
+            taxable = 0
+        elif self.upper is None:
+            taxable = total_taxable - self.lower
+        elif total_taxable >= self.upper:
+            taxable = self.upper - self.lower
+        else:
+            taxable = total_taxable - self.lower
+        return TaxCalculation(taxable, taxable * self.rate)
+
+    def format_columns(self):
+        formatted_lower = format_integer(self.lower)
+        formatted_upper = format_integer(self.upper)
+        if self.lower == 0:
+            if self.upper is None:
+                label = 'always'
+            else:
+                label = f'up to {formatted_upper}'
+        elif self.upper is None:
+            label = f'above {formatted_lower}'
+        else:
+            label = f'from {formatted_lower} to {formatted_upper}'
+        return label, format_rate(self.rate)
+
+
+class TaxBands(object):
+    def __init__(self, data):
+        bands = {}
+        for band in data['bands']:
+            bands[band['above']] = band['rate']
+        if not bands[0]:
+            # if no band is specified for above 0, then assume
+            # the rate up to the first band is 0.0
+            bands[0] = 0.0
+        sorted_bands = dict(sorted(bands.items()))
+        self.bands = []
+        last_rate = None
+        last_above = None
+        for above, rate in sorted_bands.items():
+            if last_rate is not None:
+                self.bands.append(TaxBand(last_above, above, last_rate))
+            last_rate = rate
+            last_above = above
+        self.bands.append(TaxBand(last_above, None, last_rate))
+
+    def calculate(self, taxable):
+        return TaxCalculations(self, [band.calculate(taxable) for band in self.bands])
+
+    def format_columns(self):
+        return tuple(zip(*[band.format_columns() for band in self.bands]))
+
+    def __str__(self):
+        labels, rates = self.format_columns()
+        table = PrettyTable()
+        table.set_style(TableStyle.SINGLE_BORDER)
+        table.add_column(LABEL_COLUMN_NAME, labels, 'l')
+        table.add_column(RATE_COLUMN_NAME, rates, 'r')
+        return table.get_string()
+
+
+
+class TaxBandsByYear(object):
+    def __init__(self, data_file):
+        # Load the tax bands and sort them by year and threshold
+        with open(data_file) as f:
+            data = json.load(f)
+            years = {}
+            for year_bands in data:
+                year = year_bands['year']
+                years[year] = TaxBands(year_bands)
+            self.years = dict(sorted(years.items()))
+
+    def get_bands(self, year):
+        # Search for the year equal to or lower than the required year.
+        # We assume that if we do not have bands for a year, then the bands
+        # have not changed since the previous year. If we cannot find a band
+        # equal to or lower than the required year, then we throw an error
+        bands = [b for y, b in self.years.items() if y <= year]
+        if not bands:
+            raise Exception('No bands found for year {}'.format(year))
+        return bands[-1]
