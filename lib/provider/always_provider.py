@@ -1,7 +1,7 @@
 from datetime import date
 from typing import TypeVar
 
-from . import Provider
+from .provider import Provider
 
 T = TypeVar('T')
 

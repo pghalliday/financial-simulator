@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Callable
 
-from . import Schedule
+from .schedule import Schedule
 
 
 class FilterSchedule(Schedule):

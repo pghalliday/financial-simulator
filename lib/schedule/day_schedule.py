@@ -1,6 +1,6 @@
 from datetime import date
 
-from . import Schedule
+from .schedule import Schedule
 
 
 class DaySchedule(Schedule):

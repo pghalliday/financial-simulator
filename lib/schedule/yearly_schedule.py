@@ -1,6 +1,6 @@
 from datetime import date
 
-from . import Schedule
+from .schedule import Schedule
 from ..utils.date import correct_day_of_the_month
 
 
