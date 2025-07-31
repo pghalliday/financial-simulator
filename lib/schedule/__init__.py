@@ -1,6 +1,7 @@
 from .schedule import Schedule
 from .never_schedule import NeverSchedule
 from .daily_schedule import DailySchedule
+from .day_schedule import DaySchedule
 from .weekly_schedule import WeeklySchedule
 from .monthly_schedule import MonthlySchedule
 from .yearly_schedule import YearlySchedule

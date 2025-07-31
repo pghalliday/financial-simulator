@@ -5,47 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b1e87e8-9ba2-412a-95d2-72bea0c3c29d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/daily_interest_calculations.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/amount/amount.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/asset/asset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/asset/bank_account.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/asset/investment.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/entity/corporation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/interest/banded_interest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/interest/interest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/all_schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/any_schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/daily_schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/modulo_schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/monthly_schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/never_schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/schedule.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/weekly_schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/yearly_schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/tax/business/corporation_tax.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/tax/individual/box_1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/tax/individual/box_2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/tax/individual/box_3.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/tax/individual/box_3/box_3_actual.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/tax/individual/box_3/box_3_notional.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utils/date.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utils/interest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/finance-modelling-notebook.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/finance-modelling-notebook.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/schedule/day_schedule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/corporate_tax.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/corporate_tax.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/corporate_tax_bands.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/corporation_tax_bands.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/entities/corporation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/entities/entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/entity/entity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/entities/individual.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/entity/individual.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/salaries/salary.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/salaries/salary.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/salaries/simple_salary.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/salaries/simple_monthly_salary.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/simulation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/tax_bands_by_year.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/tax/tax_bands_by_year.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simulation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/simulation.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/schedule.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/schedule.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +88,7 @@
       <option name="presentableId" value="Default" />
       <updated>1753531462646</updated>
       <workItem from="1753531463671" duration="45586000" />
-      <workItem from="1753738863863" duration="51822000" />
+      <workItem from="1753738863863" duration="52472000" />
     </task>
     <servers />
   </component>
