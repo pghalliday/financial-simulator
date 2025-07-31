@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 from typing import Set
 
-from lib.schedule.schedule import Schedule
+from . import Schedule
 
 
 class ModuloSchedule(Schedule):

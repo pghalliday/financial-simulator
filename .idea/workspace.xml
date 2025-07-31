@@ -5,13 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b1e87e8-9ba2-412a-95d2-72bea0c3c29d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/schedule/filter_schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/from_schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/range_schedule.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schedule/until_schedule.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/provider/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/provider/all_provider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/provider/always_provider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/provider/any_provider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/provider/never_provider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/provider/provider.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/provider/provider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/provider/scheduled_provider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schedule/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/all_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/all_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/any_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/any_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/daily_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/daily_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/day_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/day_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/filter_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/filter_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/from_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/from_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/modulo_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/modulo_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/monthly_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/monthly_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/never_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/never_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/range_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/range_schedule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedule/schedule.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/schedule.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/until_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/until_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/weekly_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/weekly_schedule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedule/yearly_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedule/yearly_schedule.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +38,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Jupyter Notebook" />
         <option value="Python Script" />
+        <option value="Jupyter Notebook" />
       </list>
     </option>
   </component>
@@ -44,7 +61,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/pghalliday/projects/github/pghalliday/finance-modelling-notebook/lib/schedule",
+    "last_opened_file_path": "/Users/pghalliday/projects/github/pghalliday/finance-modelling-notebook/lib/provider",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -61,11 +78,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/provider" />
       <recent name="$PROJECT_DIR$/lib/schedule" />
       <recent name="$PROJECT_DIR$/lib/schedules" />
       <recent name="$PROJECT_DIR$/lib/cash_schedules" />
       <recent name="$PROJECT_DIR$/lib/assets/investment/withdrawal_schedules" />
-      <recent name="$PROJECT_DIR$/lib/assets/investment/deposit_schedules" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/schedule" />
@@ -91,7 +108,7 @@
       <option name="presentableId" value="Default" />
       <updated>1753531462646</updated>
       <workItem from="1753531463671" duration="45586000" />
-      <workItem from="1753738863863" duration="56994000" />
+      <workItem from="1753738863863" duration="64530000" />
     </task>
     <servers />
   </component>

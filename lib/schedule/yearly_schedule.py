@@ -1,7 +1,7 @@
 from datetime import date
 
-from lib.schedule.schedule import Schedule
-from lib.utils.date import correct_day_of_the_month
+from . import Schedule
+from ..utils.date import correct_day_of_the_month
 
 
 class YearlySchedule(Schedule):

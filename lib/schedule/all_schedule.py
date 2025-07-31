@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Dict
 
-from lib.schedule.schedule import Schedule
+from . import Schedule
 
 
 class AllSchedule(Schedule):

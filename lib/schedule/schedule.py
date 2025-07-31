@@ -5,8 +5,8 @@ from datetime import date
 class Schedule(metaclass=ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
-        return (hasattr(subclass, 'next') and
-                callable(subclass.next) or
+        return (hasattr(subclass, 'check') and
+                callable(subclass.check) or
                 NotImplemented)
 
     @abstractmethod
