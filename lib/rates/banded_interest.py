@@ -1,8 +1,8 @@
 from datetime import date
 from typing import List, Dict
 
-from lib.interest.interest import Interest
-from lib.utils.interest import annual_to_daily_interest_rate
+from lib.rates.interest import Interest
+from lib.utils.rates import annual_to_daily_rate
 
 
 class InterestBand(object):
@@ -24,7 +24,7 @@ class InterestBand(object):
             balance = self.upper - self.lower
         else:
             balance = total_balance - self.lower
-        return balance * annual_to_daily_interest_rate(self.rate, current_date)
+        return balance * annual_to_daily_rate(self.rate, current_date)
 
 class BandedInterest(Interest):
     bands: List[InterestBand]

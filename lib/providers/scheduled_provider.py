@@ -2,7 +2,7 @@ from datetime import date
 from typing import TypeVar
 
 from .provider import Provider
-from ..schedule import Schedule
+from ..schedules import Schedule
 
 T = TypeVar('T')
 

@@ -1,4 +1,4 @@
-# Provider
+# Providers
 
 A collection of Provider implementations that will take the current date and provide an
 item valid for that date.
@@ -8,13 +8,13 @@ item valid for that date.
 from calendar import TUESDAY, THURSDAY
 from datetime import date, timedelta
 
-from lib.provider import \
+from lib.providers import \
     NeverProvider, \
     AlwaysProvider, \
     ScheduledProvider, \
     AnyProvider, \
     AllProvider
-from lib.schedule import \
+from lib.schedules import \
     WeeklySchedule, \
     AnySchedule, \
     UntilSchedule

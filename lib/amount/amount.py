@@ -1,6 +1,6 @@
 from datetime import date
 
-from lib.schedule.schedule import Schedule
+from lib.schedules.schedule import Schedule
 
 
 class Amount(object):

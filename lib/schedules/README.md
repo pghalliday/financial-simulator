@@ -1,4 +1,4 @@
-# Schedule
+# Schedules
 
 A collection of schedule implementations that will take the current date and check if that day
 is in the schedule.
@@ -8,7 +8,7 @@ is in the schedule.
 from calendar import TUESDAY, SATURDAY, JANUARY, FEBRUARY, APRIL, JULY, OCTOBER
 from datetime import date, timedelta
 
-from lib.schedule import \
+from lib.schedules import \
     NeverSchedule, \
     DailySchedule, \
     DaySchedule, \

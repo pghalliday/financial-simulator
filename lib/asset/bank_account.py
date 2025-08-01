@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from datetime import date
 
 from lib.asset.asset import Asset, AssetState, AssetEffect
-from lib.interest.interest import Interest
-from lib.schedule.schedule import Schedule
+from lib.rates.interest import Interest
+from lib.schedules.schedule import Schedule
 
 @dataclass(frozen=True)
 class SavingsAccountState(AssetState):
