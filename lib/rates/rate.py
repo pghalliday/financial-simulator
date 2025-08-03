@@ -3,7 +3,7 @@ from datetime import date
 from decimal import Decimal
 
 
-class DailyRateCalculator(metaclass=ABCMeta):
+class Rate(metaclass=ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         return (hasattr(subclass, 'calculate') and
@@ -11,5 +11,5 @@ class DailyRateCalculator(metaclass=ABCMeta):
                 NotImplemented)
 
     @abstractmethod
-    def calculate(self, current_date: date, annual_rate: Decimal, balance: Decimal, accrued: Decimal) -> Decimal:
+    def calculate(self, current_date: date, balance: Decimal, accrued: Decimal) -> Decimal:
         raise NotImplementedError

@@ -27,7 +27,7 @@ START_DATE = date.today()
 print(f'Start Date: {format_day(START_DATE)}')
 ```
 
-    Start Date: 2025-08-01 : Fri
+    Start Date: 2025-08-03 : Sun
 
 
 ## NeverProvider
@@ -41,16 +41,16 @@ values = zip(days, map(NeverProvider[str]().get, days))
 print_values(values)
 ```
 
-    [2025-08-01 : Fri : None
-     2025-08-02 : Sat : None
-     2025-08-03 : Sun : None
+    [2025-08-03 : Sun : None
      2025-08-04 : Mon : None
      2025-08-05 : Tue : None
      2025-08-06 : Wed : None
      2025-08-07 : Thu : None
      2025-08-08 : Fri : None
      2025-08-09 : Sat : None
-     2025-08-10 : Sun : None]
+     2025-08-10 : Sun : None
+     2025-08-11 : Mon : None
+     2025-08-12 : Tue : None]
 
 
 ## AlwaysProvider
@@ -64,16 +64,16 @@ values = zip(days, map(AlwaysProvider('My value').get, days))
 print_values(values)
 ```
 
-    [2025-08-01 : Fri : My value
-     2025-08-02 : Sat : My value
-     2025-08-03 : Sun : My value
+    [2025-08-03 : Sun : My value
      2025-08-04 : Mon : My value
      2025-08-05 : Tue : My value
      2025-08-06 : Wed : My value
      2025-08-07 : Thu : My value
      2025-08-08 : Fri : My value
      2025-08-09 : Sat : My value
-     2025-08-10 : Sun : My value]
+     2025-08-10 : Sun : My value
+     2025-08-11 : Mon : My value
+     2025-08-12 : Tue : My value]
 
 
 ## ScheduledProvider
@@ -89,16 +89,16 @@ values = zip(days, map(ScheduledProvider('My value',
 print_values(values)
 ```
 
-    [2025-08-01 : Fri : None
-     2025-08-02 : Sat : None
-     2025-08-03 : Sun : None
+    [2025-08-03 : Sun : None
      2025-08-04 : Mon : None
      2025-08-05 : Tue : My value
      2025-08-06 : Wed : None
      2025-08-07 : Thu : My value
      2025-08-08 : Fri : None
      2025-08-09 : Sat : None
-     2025-08-10 : Sun : None]
+     2025-08-10 : Sun : None
+     2025-08-11 : Mon : None
+     2025-08-12 : Tue : My value]
 
 
 ## AnyProvider
@@ -116,16 +116,16 @@ values = zip(days, map(AnyProvider([ScheduledProvider('Value 1', UntilSchedule(S
 print_values(values)
 ```
 
-    [2025-08-01 : Fri : Value 1
-     2025-08-02 : Sat : Value 1
-     2025-08-03 : Sun : Value 1
-     2025-08-04 : Mon : Value 2
-     2025-08-05 : Tue : Value 2
+    [2025-08-03 : Sun : Value 1
+     2025-08-04 : Mon : Value 1
+     2025-08-05 : Tue : Value 1
      2025-08-06 : Wed : Value 2
      2025-08-07 : Thu : Value 2
-     2025-08-08 : Fri : Value 3
-     2025-08-09 : Sat : Value 3
-     2025-08-10 : Sun : None]
+     2025-08-08 : Fri : Value 2
+     2025-08-09 : Sat : Value 2
+     2025-08-10 : Sun : Value 3
+     2025-08-11 : Mon : Value 3
+     2025-08-12 : Tue : None]
 
 
 ## AllProvider
@@ -149,14 +149,14 @@ values = zip(days, map(AllProvider({'Always': AlwaysProvider('My value'),
 print_values(values)
 ```
 
-    [2025-08-01 : Fri : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 1'}
-     2025-08-02 : Sat : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 1'}
-     2025-08-03 : Sun : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 1'}
-     2025-08-04 : Mon : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 2'}
-     2025-08-05 : Tue : {'Always': 'My value', 'Scheduled': 'My value', 'Any': 'Value 2'}
+    [2025-08-03 : Sun : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 1'}
+     2025-08-04 : Mon : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 1'}
+     2025-08-05 : Tue : {'Always': 'My value', 'Scheduled': 'My value', 'Any': 'Value 1'}
      2025-08-06 : Wed : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 2'}
      2025-08-07 : Thu : {'Always': 'My value', 'Scheduled': 'My value', 'Any': 'Value 2'}
-     2025-08-08 : Fri : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 3'}
-     2025-08-09 : Sat : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 3'}
-     2025-08-10 : Sun : {'Always': 'My value', 'Scheduled': None, 'Any': None}]
+     2025-08-08 : Fri : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 2'}
+     2025-08-09 : Sat : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 2'}
+     2025-08-10 : Sun : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 3'}
+     2025-08-11 : Mon : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 3'}
+     2025-08-12 : Tue : {'Always': 'My value', 'Scheduled': 'My value', 'Any': None}]
 

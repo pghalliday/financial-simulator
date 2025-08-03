@@ -31,7 +31,7 @@ START_DATE = date.today()
 print(f'Start Date: {format_day(START_DATE)}')
 ```
 
-    Start Date: 2025-08-01 : Fri
+    Start Date: 2025-08-03 : Sun
 
 
 ## Primitive schedules
@@ -63,16 +63,16 @@ matches = filter(DailySchedule().check, days)
 print_days(matches)
 ```
 
-    [2025-08-01 : Fri
-     2025-08-02 : Sat
-     2025-08-03 : Sun
+    [2025-08-03 : Sun
      2025-08-04 : Mon
      2025-08-05 : Tue
      2025-08-06 : Wed
      2025-08-07 : Thu
      2025-08-08 : Fri
      2025-08-09 : Sat
-     2025-08-10 : Sun]
+     2025-08-10 : Sun
+     2025-08-11 : Mon
+     2025-08-12 : Tue]
 
 
 ### DaySchedule
@@ -86,7 +86,7 @@ matches = filter(DaySchedule(START_DATE + timedelta(days=50)).check, days)
 print_days(matches)
 ```
 
-    [2025-09-20 : Sat]
+    [2025-09-22 : Mon]
 
 
 ### FromSchedule
@@ -100,16 +100,16 @@ matches = filter(FromSchedule(START_DATE + timedelta(days=10)).check, days)
 print_days(matches)
 ```
 
-    [2025-08-11 : Mon
-     2025-08-12 : Tue
-     2025-08-13 : Wed
+    [2025-08-13 : Wed
      2025-08-14 : Thu
      2025-08-15 : Fri
      2025-08-16 : Sat
      2025-08-17 : Sun
      2025-08-18 : Mon
      2025-08-19 : Tue
-     2025-08-20 : Wed]
+     2025-08-20 : Wed
+     2025-08-21 : Thu
+     2025-08-22 : Fri]
 
 
 ### UntilSchedule
@@ -123,16 +123,16 @@ matches = filter(UntilSchedule(START_DATE + timedelta(days=10)).check, days)
 print_days(matches)
 ```
 
-    [2025-08-01 : Fri
-     2025-08-02 : Sat
-     2025-08-03 : Sun
+    [2025-08-03 : Sun
      2025-08-04 : Mon
      2025-08-05 : Tue
      2025-08-06 : Wed
      2025-08-07 : Thu
      2025-08-08 : Fri
      2025-08-09 : Sat
-     2025-08-10 : Sun]
+     2025-08-10 : Sun
+     2025-08-11 : Mon
+     2025-08-12 : Tue]
 
 
 ### RangeSchedule
@@ -148,16 +148,16 @@ matches = filter(RangeSchedule(from_date=START_DATE + timedelta(days=10),
 print_days(matches)
 ```
 
-    [2025-08-11 : Mon
-     2025-08-12 : Tue
-     2025-08-13 : Wed
+    [2025-08-13 : Wed
      2025-08-14 : Thu
      2025-08-15 : Fri
      2025-08-16 : Sat
      2025-08-17 : Sun
      2025-08-18 : Mon
      2025-08-19 : Tue
-     2025-08-20 : Wed]
+     2025-08-20 : Wed
+     2025-08-21 : Thu
+     2025-08-22 : Fri]
 
 
 ### WeeklySchedule
@@ -259,8 +259,7 @@ matches = filter(FilterSchedule(filter_func).check, days)
 print_days(matches)
 ```
 
-    [2025-08-01 : Fri
-     2025-08-04 : Mon
+    [2025-08-04 : Mon
      2025-08-05 : Tue
      2025-08-06 : Wed
      2025-08-07 : Thu
@@ -272,7 +271,9 @@ print_days(matches)
      2025-08-15 : Fri
      2025-08-18 : Mon
      2025-08-19 : Tue
-     2025-08-20 : Wed]
+     2025-08-20 : Wed
+     2025-08-21 : Thu
+     2025-08-22 : Fri]
 
 
 ## Schedule operators
@@ -326,8 +327,7 @@ matches = filter(AllSchedule({
 print_days(matches)
 ```
 
-    [2025-08-12 : Tue
-     2025-08-19 : Tue
+    [2025-08-19 : Tue
      2025-08-26 : Tue
      2025-09-02 : Tue
      2025-09-09 : Tue

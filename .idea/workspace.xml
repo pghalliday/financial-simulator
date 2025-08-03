@@ -5,7 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b1e87e8-9ba2-412a-95d2-72bea0c3c29d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/daily_rate_calculators/README.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/daily_rate_calculators/README.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/rates/banded_rate.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/rates/continuous_rate.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/rates/periodic_rate.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/utils/bands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/daily_rate_calculators/README.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/daily_rate_calculators/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/daily_rate_calculators/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/daily_rate_calculators/continuous_daily_rate_calculator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/daily_rate_calculators/daily_rate_calculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/rate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/daily_rate_calculators/periodic_daily_rate_calculator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/rates/README.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/README.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/rates/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/rates/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/rates/banded_interest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/rates/interest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/date.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/date.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/print.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/print.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +32,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="Jupyter Notebook" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -63,11 +80,11 @@
       <recent name="$PROJECT_DIR$/lib/schedule" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/daily_rate_calculators" />
       <recent name="$PROJECT_DIR$/lib/rate_calculators" />
       <recent name="$PROJECT_DIR$/lib/schedule" />
       <recent name="$PROJECT_DIR$/lib/tax/business" />
       <recent name="$PROJECT_DIR$/lib/tax" />
-      <recent name="$PROJECT_DIR$/lib" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -87,7 +104,7 @@
       <updated>1753531462646</updated>
       <workItem from="1753531463671" duration="45586000" />
       <workItem from="1753738863863" duration="73447000" />
-      <workItem from="1754037206612" duration="17449000" />
+      <workItem from="1754037206612" duration="39898000" />
     </task>
     <servers />
   </component>
