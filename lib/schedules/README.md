@@ -22,16 +22,16 @@ from lib.schedules import \
     AnySchedule, \
     AllSchedule, \
     ModuloSchedule
-from lib.utils.print import \
+from lib.utils.format import \
     format_day, \
-    print_days
+    format_days
 
 START_DATE = date.today()
 
 print(f'Start Date: {format_day(START_DATE)}')
 ```
 
-    Start Date: 2025-08-03 : Sun
+    Start Date: 2025-08-04 : Mon
 
 
 ## Primitive schedules
@@ -46,7 +46,7 @@ This is a trivial schedule in that it always returns False
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(1000)]
 matches = filter(NeverSchedule().check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
     []
@@ -60,11 +60,10 @@ This is a trivial schedule in that it always returns True
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
 matches = filter(DailySchedule().check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
-    [2025-08-03 : Sun
-     2025-08-04 : Mon
+    [2025-08-04 : Mon
      2025-08-05 : Tue
      2025-08-06 : Wed
      2025-08-07 : Thu
@@ -72,7 +71,8 @@ print_days(matches)
      2025-08-09 : Sat
      2025-08-10 : Sun
      2025-08-11 : Mon
-     2025-08-12 : Tue]
+     2025-08-12 : Tue
+     2025-08-13 : Wed]
 
 
 ### DaySchedule
@@ -83,10 +83,10 @@ This schedule will only match on the specified day
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(1000)]
 matches = filter(DaySchedule(START_DATE + timedelta(days=50)).check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
-    [2025-09-22 : Mon]
+    [2025-09-23 : Tue]
 
 
 ### FromSchedule
@@ -97,11 +97,10 @@ This schedule will match on all dates after and including the specified day
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(20)]
 matches = filter(FromSchedule(START_DATE + timedelta(days=10)).check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
-    [2025-08-13 : Wed
-     2025-08-14 : Thu
+    [2025-08-14 : Thu
      2025-08-15 : Fri
      2025-08-16 : Sat
      2025-08-17 : Sun
@@ -109,7 +108,8 @@ print_days(matches)
      2025-08-19 : Tue
      2025-08-20 : Wed
      2025-08-21 : Thu
-     2025-08-22 : Fri]
+     2025-08-22 : Fri
+     2025-08-23 : Sat]
 
 
 ### UntilSchedule
@@ -120,11 +120,10 @@ This schedule will match on all dates up to but not including the specified day
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(20)]
 matches = filter(UntilSchedule(START_DATE + timedelta(days=10)).check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
-    [2025-08-03 : Sun
-     2025-08-04 : Mon
+    [2025-08-04 : Mon
      2025-08-05 : Tue
      2025-08-06 : Wed
      2025-08-07 : Thu
@@ -132,7 +131,8 @@ print_days(matches)
      2025-08-09 : Sat
      2025-08-10 : Sun
      2025-08-11 : Mon
-     2025-08-12 : Tue]
+     2025-08-12 : Tue
+     2025-08-13 : Wed]
 
 
 ### RangeSchedule
@@ -145,11 +145,10 @@ the `until_date`
 days = [START_DATE + timedelta(days=i) for i in range(30)]
 matches = filter(RangeSchedule(from_date=START_DATE + timedelta(days=10),
                                until_date=START_DATE + timedelta(days=20)).check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
-    [2025-08-13 : Wed
-     2025-08-14 : Thu
+    [2025-08-14 : Thu
      2025-08-15 : Fri
      2025-08-16 : Sat
      2025-08-17 : Sun
@@ -157,7 +156,8 @@ print_days(matches)
      2025-08-19 : Tue
      2025-08-20 : Wed
      2025-08-21 : Thu
-     2025-08-22 : Fri]
+     2025-08-22 : Fri
+     2025-08-23 : Sat]
 
 
 ### WeeklySchedule
@@ -168,7 +168,7 @@ This schedule will match on the specified day of the week
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(50)]
 matches = filter(WeeklySchedule(TUESDAY).check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
     [2025-08-05 : Tue
@@ -191,7 +191,7 @@ then the last day of the month will match.
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(500)]
 matches = filter(MonthlySchedule(30).check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
     [2025-08-30 : Sat
@@ -223,7 +223,7 @@ then the last day of the month will match.
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(5000)]
 matches = filter(YearlySchedule(FEBRUARY, 30).check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
     [2026-02-28 : Sat
@@ -256,7 +256,7 @@ def filter_func(current_date: date) -> bool:
 
 
 matches = filter(FilterSchedule(filter_func).check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
     [2025-08-04 : Mon
@@ -295,7 +295,7 @@ matches = filter(AnySchedule({
     'Every April 1': YearlySchedule(APRIL, 1),
     'Every July 1': YearlySchedule(JULY, 1),
     'Every October 1': YearlySchedule(OCTOBER, 1)}).check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
     [2025-10-01 : Wed
@@ -324,7 +324,7 @@ days = [START_DATE + timedelta(days=i) for i in range(50)]
 matches = filter(AllSchedule({
     'Every Tuesday': WeeklySchedule(TUESDAY),
     'From 10 days from now': FromSchedule(START_DATE + timedelta(days=10))}).check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
     [2025-08-19 : Tue
@@ -359,7 +359,7 @@ days = [START_DATE + timedelta(days=i) for i in range(5000)]
 matches = filter(ModuloSchedule(YearlySchedule(APRIL, 15),
                                 start_date=date(START_DATE.year, JANUARY, 1),
                                 modulo=4).check, days)
-print_days(matches)
+print(format_days(matches))
 ```
 
     [2029-04-15 : Sun

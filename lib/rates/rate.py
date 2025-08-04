@@ -1,6 +1,18 @@
+from __future__ import annotations
+
 from abc import ABCMeta, abstractmethod
+from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
+
+
+@dataclass(frozen=True)
+class RateCalculation:
+    rate: Rate
+    current_date: date
+    balance: Decimal
+    accrued: Decimal
+    calculation: Decimal
 
 
 class Rate(metaclass=ABCMeta):
@@ -11,5 +23,5 @@ class Rate(metaclass=ABCMeta):
                 NotImplemented)
 
     @abstractmethod
-    def calculate(self, current_date: date, balance: Decimal, accrued: Decimal) -> Decimal:
+    def calculate(self, current_date: date, balance: Decimal, accrued: Decimal) -> RateCalculation:
         raise NotImplementedError

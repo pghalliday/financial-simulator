@@ -4,22 +4,21 @@ A collection of daily rate calculation algorithms.
 
 
 ```python
-from calendar import JANUARY, APRIL, JULY, OCTOBER
-from dataclasses import dataclass, replace
 from datetime import date, timedelta
 from decimal import Decimal, getcontext, FloatOperation
 from functools import reduce
-from typing import Callable
 
-from lib.providers import ScheduledProvider, AnyProvider, AlwaysProvider, Provider
 from lib.rates import \
-    Rate, \
     ContinuousRate, \
     PeriodicRate, \
     create_banded_rate
-from lib.schedules import AnySchedule, YearlySchedule
 from lib.utils.date import days_in_year
-from lib.utils.print import format_day
+from lib.utils.rates.state import \
+    State, \
+    StateUpdater, \
+    ANNUAL_UPDATER_PROVIDER, \
+    QUARTERLY_UPDATER_PROVIDER, \
+    DAILY_UPDATER_PROVIDER
 
 decimal_context = getcontext()
 decimal_context.traps[FloatOperation] = True
@@ -35,74 +34,23 @@ BANDS = {Decimal('0.0'): Decimal('0.10'),
          Decimal('4000.0'): Decimal('0.0')}
 STARTING_BALANCE = Decimal('10_000')
 
+INITIAL_STATE = State(current_date=START_DATE,
+                      net_deposits=STARTING_BALANCE,
+                      interest_paid=Decimal('0.0'),
+                      interest_accrued=Decimal('0.0'))
 
-@dataclass(frozen=True)
-class State:
-    balance: Decimal
-    accrued: Decimal
-
-    def __str__(self) -> str:
-        return f"""Balance: {self.balance:.20}
-Accrued: {self.accrued:.20}
-Total: {self.balance + self.accrued:.20}"""
-
-
-INITIAL_STATE = State(balance=STARTING_BALANCE,
-                      accrued=Decimal('0'))
-
-
-def payout(state: State) -> State:
-    return State(balance=state.balance + state.accrued,
-                 accrued=Decimal('0'))
-
-
-def accrue(state: State) -> State:
-    return replace(state)
-
-
-class StateUpdater(object):
-    calculator: Rate
-    updater_provider: Provider[Callable[[State], State]]
-
-    def __init__(self,
-                 calculator: Rate,
-                 updater_provider: Provider[Callable[[State], State]]):
-        self.calculator = calculator
-        self.updater_provider = updater_provider
-
-    def update(self, current_date: date, state: State) -> State:
-        # apply the payment schedule first
-        state = self.updater_provider.get(current_date)(state)
-        # then apply the rate and accrue
-        return replace(state,
-                       accrued=state.accrued + self.calculator.calculate(current_date,
-                                                                         state.balance,
-                                                                         state.accrued))
-
-
-ANNUAL_PAYMENT_SCHEDULE = YearlySchedule(JANUARY, 1)
-ANNUAL_UPDATER_PROVIDER = AnyProvider([ScheduledProvider(payout, ANNUAL_PAYMENT_SCHEDULE),
-                                       AlwaysProvider(accrue)])
-
-QUARTERLY_PAYMENT_SCHEDULE = AnySchedule({'First quarter': YearlySchedule(APRIL, 1),
-                                          'Second quarter': YearlySchedule(JULY, 1),
-                                          'Third quarter': YearlySchedule(OCTOBER, 1),
-                                          'Fourth quarter': YearlySchedule(JANUARY, 1)})
-QUARTERLY_UPDATER_PROVIDER = AnyProvider([ScheduledProvider(payout, QUARTERLY_PAYMENT_SCHEDULE),
-                                          AlwaysProvider(accrue)])
-
-DAILY_UPDATER_PROVIDER = AlwaysProvider(payout)
-
-print(f'Start Date: {format_day(START_DATE)}')
-print(f'Starting balance: {STARTING_BALANCE:.2f}')
-print()
 print(f'Decimal context: {decimal_context}')
+print(INITIAL_STATE)
 ```
 
-    Start Date: 2025-01-01 : Wed
-    Starting balance: 10000.00
-    
     Decimal context: Context(prec=1000, rounding=ROUND_HALF_EVEN, Emin=-999999, Emax=999999, capitals=1, clamp=0, flags=[], traps=[InvalidOperation, DivisionByZero, FloatOperation, Overflow])
+    ┌──────────────────┬──────────────────┐
+    │ Current date     │ 2025-01-01 : Wed │
+    │ Net deposits     │            10000 │
+    │ Interest paid    │              0.0 │
+    │ Interest accrued │              0.0 │
+    │ Total            │          10000.0 │
+    └──────────────────┴──────────────────┘
 
 
 ## ContinuousRate
@@ -110,49 +58,75 @@ print(f'Decimal context: {decimal_context}')
 This calculator applies a continuously compounding algorithm, which most accurately reflects a
 continuous return given a desired annual rate.
 
+Each call to calculate will return the daily amount associated with the given annual rate.
+
 
 ```python
 rate = ContinuousRate(RATE)
-print(rate)
+calculation = rate.calculate(current_date=START_DATE,
+                             balance=STARTING_BALANCE,
+                             accrued=Decimal('0.0'))
+print(calculation)
+```
+
+    ┌──────────────┬───────────────────────┐
+    │ Current date │      2025-01-01 : Wed │
+    │ Rate         │ ContinuousRate: 1.50% │
+    │ Daily rate   │              0.004079 │
+    │ Balance      │          10000.000000 │
+    │ Accrued      │              0.000000 │
+    │ Calculation  │              0.407916 │
+    └──────────────┴───────────────────────┘
+
+
+So collecting the daily amounts over a full year, we can see the compounded result.
+
+
+```python
 state_updater = StateUpdater(rate, ANNUAL_UPDATER_PROVIDER)
-state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
-print(state)
+final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+print(final_state)
 ```
 
-    ContinuousRate: 1.50%
-    Balance: 10000
-    Accrued: 150.00000000000000000
-    Total: 10150.000000000000000
+    ┌──────────────────┬───────────────────────┐
+    │ Current date     │      2025-12-31 : Wed │
+    │ Net deposits     │                 10000 │
+    │ Interest paid    │                   0.0 │
+    │ Interest accrued │ 150.00000000000000000 │
+    │ Total            │ 10150.000000000000000 │
+    └──────────────────┴───────────────────────┘
 
 
 
 ```python
-rate = ContinuousRate(RATE)
-print(rate)
 state_updater = StateUpdater(rate, QUARTERLY_UPDATER_PROVIDER)
-state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
-print(state)
+final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+print(final_state)
 ```
 
-    ContinuousRate: 1.50%
-    Balance: 10111.981008877791361
-    Accrued: 38.018991122208639007
-    Total: 10150.000000000000000
+    ┌──────────────────┬───────────────────────┐
+    │ Current date     │      2025-12-31 : Wed │
+    │ Net deposits     │                 10000 │
+    │ Interest paid    │ 111.98100887779136099 │
+    │ Interest accrued │ 38.018991122208639007 │
+    │ Total            │ 10150.000000000000000 │
+    └──────────────────┴───────────────────────┘
 
 
 
 ```python
-rate = ContinuousRate(RATE)
-print(rate)
 state_updater = StateUpdater(rate, DAILY_UPDATER_PROVIDER)
-state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
-print(state)
+final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+print(final_state)
 ```
 
-    ContinuousRate: 1.50%
-    Balance: 10149.585982644606491
-    Accrued: 0.41401735539350891438
-    Total: 10150.000000000000000
+    ┌──────────────────┬────────────────────────┐
+    │ Current date     │       2025-12-31 : Wed │
+    │ Net deposits     │                  10000 │
+    │ Interest paid    │  149.58598264460649109 │
+    │ Interest accrued │ 0.41401735539350891438 │
+    │ Total            │  10150.000000000000000 │
+    └──────────────────┴────────────────────────┘
 
 
 ## PeriodicRate
@@ -162,34 +136,78 @@ balance for each day without taking into account the unrealized accrued amount. 
 balance, this should provide the same return as the `ContinuousRate`. However,
 for a falling balance it will return less and for a rising balance it will return more.
 
+Each call to calculate will return the daily amount associated with the given annual rate.
+
 
 ```python
 rate = PeriodicRate(RATE, 1)
-print(rate)
-state_updater = StateUpdater(rate, ANNUAL_UPDATER_PROVIDER)
-state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
-print(state)
+calculation = rate.calculate(current_date=START_DATE,
+                             balance=STARTING_BALANCE,
+                             accrued=Decimal('0.0'))
+print(calculation)
 ```
 
-    PeriodicRate: 1 periods: 1.50%
-    Balance: 10000
-    Accrued: 150.00000000000000000
-    Total: 10150.000000000000000
+    ┌──────────────┬────────────────────────────────┐
+    │ Current date │               2025-01-01 : Wed │
+    │ Rate         │ PeriodicRate: 1 periods: 1.50% │
+    │ Daily rate   │                       0.004110 │
+    │ Balance      │                   10000.000000 │
+    │ Accrued      │                       0.000000 │
+    │ Calculation  │                       0.410959 │
+    └──────────────┴────────────────────────────────┘
+
+
+So collecting the daily amounts over a full year, we can see the compounded result.
+
+
+```python
+state_updater = StateUpdater(rate, ANNUAL_UPDATER_PROVIDER)
+final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+print(final_state)
+```
+
+    ┌──────────────────┬───────────────────────┐
+    │ Current date     │      2025-12-31 : Wed │
+    │ Net deposits     │                 10000 │
+    │ Interest paid    │                   0.0 │
+    │ Interest accrued │ 150.00000000000000000 │
+    │ Total            │ 10150.000000000000000 │
+    └──────────────────┴───────────────────────┘
 
 
 
 ```python
 rate = PeriodicRate(RATE, 4)
-print(rate)
-state_updater = StateUpdater(rate, QUARTERLY_UPDATER_PROVIDER)
-state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
-print(state)
+calculation = rate.calculate(current_date=START_DATE,
+                             balance=STARTING_BALANCE,
+                             accrued=Decimal('0.0'))
+print(calculation)
 ```
 
-    PeriodicRate: 4 periods: 1.50%
-    Balance: 10111.981565565267852
-    Accrued: 38.018411299158197925
-    Total: 10149.999976864426049
+    ┌──────────────┬────────────────────────────────┐
+    │ Current date │               2025-01-01 : Wed │
+    │ Rate         │ PeriodicRate: 4 periods: 1.50% │
+    │ Daily rate   │                       0.004087 │
+    │ Balance      │                   10000.000000 │
+    │ Accrued      │                       0.000000 │
+    │ Calculation  │                       0.408667 │
+    └──────────────┴────────────────────────────────┘
+
+
+
+```python
+state_updater = StateUpdater(rate, QUARTERLY_UPDATER_PROVIDER)
+final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+print(final_state)
+```
+
+    ┌──────────────────┬───────────────────────┐
+    │ Current date     │      2025-12-31 : Wed │
+    │ Net deposits     │                 10000 │
+    │ Interest paid    │ 111.98156556526785157 │
+    │ Interest accrued │ 38.018411299158197925 │
+    │ Total            │ 10149.999976864426049 │
+    └──────────────────┴───────────────────────┘
 
 
 > **_NB._** We can see an error here as the total is slightly less than the expected 10,150.
@@ -234,50 +252,84 @@ print('Days in second half of the year', (date(2026, 1, 1) - date(2025, 7, 1)).d
 
 This rate combines a dictionary of rates that will be applied at different balance amounts.
 
+Each call to calculate will return the daily amount associated with the given annual rate.
+
 
 ```python
 rate = create_banded_rate({k: ContinuousRate(v) for k, v in BANDS.items()})
-print(rate)
-state_updater = StateUpdater(rate, DAILY_UPDATER_PROVIDER)
-state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
-print(state)
+calculation = rate.calculate(current_date=START_DATE,
+                             balance=STARTING_BALANCE,
+                             accrued=Decimal('0.0'))
+print(calculation)
 ```
 
-    ┌─────────────────────────┬────────────────────────┐
-    │          Range          │          Rate          │
-    ├─────────────────────────┼────────────────────────┤
-    │      up to 1000.00      │ ContinuousRate: 10.00% │
-    │ from 1000.00 to 2000.00 │ ContinuousRate: 20.00% │
-    │ from 2000.00 to 3000.00 │ ContinuousRate: 30.00% │
-    │ from 3000.00 to 4000.00 │ ContinuousRate: 40.00% │
-    │      above 4000.00      │ ContinuousRate: 0.00%  │
-    └─────────────────────────┴────────────────────────┘
+    ┌─────────────────────────┬────────────────────────┬──────────────┬──────────┬─────────────┐
+    │ Band                    │                   Rate │      Balance │  Accrued │ Calculation │
+    ├─────────────────────────┼────────────────────────┼──────────────┼──────────┼─────────────┤
+    │ up to 1000.00           │ ContinuousRate: 10.00% │  1000.000000 │ 0.000000 │    0.261158 │
+    │ from 1000.00 to 2000.00 │ ContinuousRate: 20.00% │  1000.000000 │ 0.000000 │    0.499636 │
+    │ from 2000.00 to 3000.00 │ ContinuousRate: 30.00% │  1000.000000 │ 0.000000 │    0.719065 │
+    │ from 3000.00 to 4000.00 │ ContinuousRate: 40.00% │  1000.000000 │ 0.000000 │    0.922267 │
+    │ above 4000.00           │  ContinuousRate: 0.00% │  6000.000000 │ 0.000000 │    0.000000 │
+    ├─────────────────────────┼────────────────────────┼──────────────┼──────────┼─────────────┤
+    │ 2025-01-01 : Wed        │                 Totals │ 10000.000000 │ 0.000000 │    2.402125 │
+    └─────────────────────────┴────────────────────────┴──────────────┴──────────┴─────────────┘
 
 
-    Balance: 10874.373552777960360
-    Accrued: 2.4021251449943965929
-    Total: 10876.775677922954756
+So collecting the daily amounts over a full year, we can see the compounded result.
+
+
+```python
+state_updater = StateUpdater(rate, DAILY_UPDATER_PROVIDER)
+final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+print(final_state)
+```
+
+    ┌──────────────────┬───────────────────────┐
+    │ Current date     │      2025-12-31 : Wed │
+    │ Net deposits     │                 10000 │
+    │ Interest paid    │ 874.37355277796035981 │
+    │ Interest accrued │ 2.4021251449943965929 │
+    │ Total            │ 10876.775677922954756 │
+    └──────────────────┴───────────────────────┘
 
 
 
 ```python
 rate = create_banded_rate({k: PeriodicRate(v, 4) for k, v in BANDS.items()})
-print(rate)
-state_updater = StateUpdater(rate, QUARTERLY_UPDATER_PROVIDER)
-state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
-print(state)
+calculation = rate.calculate(current_date=START_DATE,
+                             balance=STARTING_BALANCE,
+                             accrued=Decimal('0.0'))
+print(calculation)
 ```
 
-    ┌─────────────────────────┬─────────────────────────────────┐
-    │          Range          │               Rate              │
-    ├─────────────────────────┼─────────────────────────────────┤
-    │      up to 1000.00      │ PeriodicRate: 4 periods: 10.00% │
-    │ from 1000.00 to 2000.00 │ PeriodicRate: 4 periods: 20.00% │
-    │ from 2000.00 to 3000.00 │ PeriodicRate: 4 periods: 30.00% │
-    │ from 3000.00 to 4000.00 │ PeriodicRate: 4 periods: 40.00% │
-    │      above 4000.00      │  PeriodicRate: 4 periods: 0.00% │
-    └─────────────────────────┴─────────────────────────────────┘
-    Balance: 10677.028352357823072
-    Accrued: 228.15607478725173139
-    Total: 10905.184427145074804
+    ┌─────────────────────────┬─────────────────────────────────┬──────────────┬──────────┬─────────────┐
+    │ Band                    │                            Rate │      Balance │  Accrued │ Calculation │
+    ├─────────────────────────┼─────────────────────────────────┼──────────────┼──────────┼─────────────┤
+    │ up to 1000.00           │ PeriodicRate: 4 periods: 10.00% │  1000.000000 │ 0.000000 │    0.264260 │
+    │ from 1000.00 to 2000.00 │ PeriodicRate: 4 periods: 20.00% │  1000.000000 │ 0.000000 │    0.511070 │
+    │ from 2000.00 to 3000.00 │ PeriodicRate: 4 periods: 30.00% │  1000.000000 │ 0.000000 │    0.742904 │
+    │ from 3000.00 to 4000.00 │ PeriodicRate: 4 periods: 40.00% │  1000.000000 │ 0.000000 │    0.961724 │
+    │ above 4000.00           │  PeriodicRate: 4 periods: 0.00% │  6000.000000 │ 0.000000 │    0.000000 │
+    ├─────────────────────────┼─────────────────────────────────┼──────────────┼──────────┼─────────────┤
+    │ 2025-01-01 : Wed        │                          Totals │ 10000.000000 │ 0.000000 │    2.479957 │
+    └─────────────────────────┴─────────────────────────────────┴──────────────┴──────────┴─────────────┘
+
+    
+
+
+
+```python
+state_updater = StateUpdater(rate, QUARTERLY_UPDATER_PROVIDER)
+final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+print(final_state)
+```
+
+    ┌──────────────────┬───────────────────────┐
+    │ Current date     │      2025-12-31 : Wed │
+    │ Net deposits     │                 10000 │
+    │ Interest paid    │ 677.02835235782307248 │
+    │ Interest accrued │ 228.15607478725173139 │
+    │ Total            │ 10905.184427145074804 │
+    └──────────────────┴───────────────────────┘
 
