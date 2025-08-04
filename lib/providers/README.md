@@ -3,23 +3,22 @@
 A collection of Provider implementations that will take the current date and provide an
 item valid for that date.
 
-
 ```python
 from calendar import TUESDAY, THURSDAY
 from datetime import date, timedelta
 
-from lib.providers import \
-    NeverProvider, \
-    AlwaysProvider, \
-    ScheduledProvider, \
-    AnyProvider, \
+from lib.providers import
+    NeverProvider,
+    AlwaysProvider,
+    ScheduledProvider,
+    AnyProvider,
     AllProvider
-from lib.schedules import \
-    WeeklySchedule, \
-    AnySchedule, \
+from lib.schedules import
+    WeeklySchedule,
+    AnySchedule,
     UntilSchedule
-from lib.utils.format import \
-    format_day, \
+from lib.utils.format import
+    format_day,
     format_values
 
 START_DATE = date.today()
@@ -29,11 +28,9 @@ print(f'Start Date: {format_day(START_DATE)}')
 
     Start Date: 2025-08-04 : Mon
 
-
 ## NeverProvider
 
 This is a trivial provider that always provides `None`
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
@@ -52,11 +49,9 @@ print(format_values(values))
      2025-08-12 : Tue : None
      2025-08-13 : Wed : None]
 
-
 ## AlwaysProvider
 
 This is a trivial provider that always provides the given value
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
@@ -75,11 +70,9 @@ print(format_values(values))
      2025-08-12 : Tue : My value
      2025-08-13 : Wed : My value]
 
-
 ## ScheduledProvider
 
 This provider provides its value according to the specified schedule. If not scheduled it provides `None`.
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
@@ -100,12 +93,11 @@ print(format_values(values))
      2025-08-12 : Tue : My value
      2025-08-13 : Wed : None]
 
-
 ## AnyProvider
 
-This provider takes a list of providers and provides the value from the first provider that provides a not `None` value. If all
+This provider takes a list of providers and provides the value from the first provider that provides a not `None` value.
+If all
 the providers provide `None` then `None` will be provided.
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
@@ -127,11 +119,10 @@ print(format_values(values))
      2025-08-12 : Tue : Value 3
      2025-08-13 : Wed : None]
 
-
 ## AllProvider
 
-This provider takes a dictionary of providers and provides a corresponding dictionary of the values provided by each provider
-
+This provider takes a dictionary of providers and provides a corresponding dictionary of the values provided by each
+provider
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]

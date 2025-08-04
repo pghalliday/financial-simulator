@@ -3,27 +3,26 @@
 A collection of schedule implementations that will take the current date and check if that day
 is in the schedule.
 
-
 ```python
 from calendar import TUESDAY, SATURDAY, JANUARY, FEBRUARY, APRIL, JULY, OCTOBER
 from datetime import date, timedelta
 
-from lib.schedules import \
-    NeverSchedule, \
-    DailySchedule, \
-    DaySchedule, \
-    FromSchedule, \
-    UntilSchedule, \
-    RangeSchedule, \
-    WeeklySchedule, \
-    MonthlySchedule, \
-    YearlySchedule, \
-    FilterSchedule, \
-    AnySchedule, \
-    AllSchedule, \
+from lib.schedules import
+    NeverSchedule,
+    DailySchedule,
+    DaySchedule,
+    FromSchedule,
+    UntilSchedule,
+    RangeSchedule,
+    WeeklySchedule,
+    MonthlySchedule,
+    YearlySchedule,
+    FilterSchedule,
+    AnySchedule,
+    AllSchedule,
     ModuloSchedule
-from lib.utils.format import \
-    format_day, \
+from lib.utils.format import
+    format_day,
     format_days
 
 START_DATE = date.today()
@@ -33,7 +32,6 @@ print(f'Start Date: {format_day(START_DATE)}')
 
     Start Date: 2025-08-04 : Mon
 
-
 ## Primitive schedules
 
 The following schedules are the basic building blocks of schedules.
@@ -41,7 +39,6 @@ The following schedules are the basic building blocks of schedules.
 ### NeverSchedule
 
 This is a trivial schedule in that it always returns False
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(1000)]
@@ -51,11 +48,9 @@ print(format_days(matches))
 
     []
 
-
 ### DailySchedule
 
 This is a trivial schedule in that it always returns True
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
@@ -74,11 +69,9 @@ print(format_days(matches))
      2025-08-12 : Tue
      2025-08-13 : Wed]
 
-
 ### DaySchedule
 
 This schedule will only match on the specified day
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(1000)]
@@ -88,11 +81,9 @@ print(format_days(matches))
 
     [2025-09-23 : Tue]
 
-
 ### FromSchedule
 
 This schedule will match on all dates after and including the specified day
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(20)]
@@ -111,11 +102,9 @@ print(format_days(matches))
      2025-08-22 : Fri
      2025-08-23 : Sat]
 
-
 ### UntilSchedule
 
 This schedule will match on all dates up to but not including the specified day
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(20)]
@@ -134,12 +123,10 @@ print(format_days(matches))
      2025-08-12 : Tue
      2025-08-13 : Wed]
 
-
 ### RangeSchedule
 
 This schedule will match on all dates after and including the `from_date` up to but not including
 the `until_date`
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(30)]
@@ -159,11 +146,9 @@ print(format_days(matches))
      2025-08-22 : Fri
      2025-08-23 : Sat]
 
-
 ### WeeklySchedule
 
 This schedule will match on the specified day of the week
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(50)]
@@ -179,14 +164,12 @@ print(format_days(matches))
      2025-09-09 : Tue
      2025-09-16 : Tue]
 
-
 ### MonthlySchedule
 
 This schedule will match on the specified day of the month.
 
 > **_NB._** If the current month does not have the specified day (e.g., there is no 30th of February in any year)
-then the last day of the month will match.
-
+> then the last day of the month will match.
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(500)]
@@ -211,14 +194,12 @@ print(format_days(matches))
      2026-10-30 : Fri
      2026-11-30 : Mon]
 
-
 ### YearlySchedule
 
 This schedule will match on the specified day of specified month.
 
 > **_NB._** If the current month does not have the specified day (e.g., there is no 30th of February in any year)
-then the last day of the month will match.
-
+> then the last day of the month will match.
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(5000)]
@@ -241,11 +222,9 @@ print(format_days(matches))
      2038-02-28 : Sun
      2039-02-28 : Mon]
 
-
 ### FilterSchedule
 
 This is a generic schedule that takes a callback function that will be used to check the supplied date
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(20)]
@@ -275,7 +254,6 @@ print(format_days(matches))
      2025-08-21 : Thu
      2025-08-22 : Fri]
 
-
 ## Schedule operators
 
 The following schedules take other schedules and apply an operator to them.
@@ -286,7 +264,6 @@ This represents a boolean `OR` operator for schedules. If any of the child sched
 then this schedule will match.
 
 For example, to get a quarterly schedule, you could create four Yearly schedules and Any them together.
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(1000)]
@@ -310,14 +287,12 @@ print(format_days(matches))
      2028-01-01 : Sat
      2028-04-01 : Sat]
 
-
 ### AllSchedule
 
 This represents a boolean `AND` operator for schedules. Only if all the child schedules match the current date,
 will this schedule match.
 
 For example, to get a weekly schedule but only from a certain date.
-
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(50)]
@@ -332,7 +307,6 @@ print(format_days(matches))
      2025-09-02 : Tue
      2025-09-09 : Tue
      2025-09-16 : Tue]
-
 
 ### ModuloSchedule
 
@@ -350,9 +324,8 @@ Then, apply a ModuloSchedule starting on the first of January and matching every
 > **_NB._** A ModuloSchedule will assert if a date before the `start_date` is checked.
 
 > **_NBB._** This is a complicated schedule that may be removed in the future. Any use case may well be achievable
-using a combination of the other schedules. Particularly the FilterSchedule and another schedule combined
-with an AllSchedule.
-
+> using a combination of the other schedules. Particularly the FilterSchedule and another schedule combined
+> with an AllSchedule.
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(5000)]
@@ -365,7 +338,6 @@ print(format_days(matches))
     [2029-04-15 : Sun
      2033-04-15 : Fri
      2037-04-15 : Wed]
-
 
 ## Implementation notes
 

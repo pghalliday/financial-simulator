@@ -1,13 +1,12 @@
+from dataclasses import dataclass
 from datetime import date
 
 from .schedule import Schedule
 
 
+@dataclass(frozen=True)
 class DaySchedule(Schedule):
     day: date
-
-    def __init__(self, day: date):
-        self.day = day
 
     def check(self, current_date: date) -> bool:
         return current_date == self.day

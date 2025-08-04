@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from datetime import date
 from typing import TypeVar, List
 
@@ -6,11 +7,9 @@ from .provider import Provider
 T = TypeVar('T')
 
 
+@dataclass(frozen=True)
 class AnyProvider(Provider[T]):
     providers: List[Provider[T]]
-
-    def __init__(self, providers: List[Provider[T]]) -> None:
-        self.providers = providers
 
     def get(self, current_date: date) -> T:
         for provider in self.providers:

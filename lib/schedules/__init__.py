@@ -4,7 +4,6 @@ from .daily_schedule import DailySchedule
 from .day_schedule import DaySchedule
 from .filter_schedule import FilterSchedule
 from .from_schedule import FromSchedule
-from .modulo_schedule import ModuloSchedule
 from .monthly_schedule import MonthlySchedule
 from .never_schedule import NeverSchedule
 from .range_schedule import RangeSchedule

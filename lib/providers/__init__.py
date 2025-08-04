@@ -4,3 +4,4 @@ from .any_provider import AnyProvider
 from .never_provider import NeverProvider
 from .provider import Provider
 from .scheduled_provider import ScheduledProvider
+from .map_provider import MapProvider

@@ -15,13 +15,8 @@ class RateCalculation:
     calculation: Decimal
 
 
+@dataclass(frozen=True)
 class Rate(metaclass=ABCMeta):
-    @classmethod
-    def __subclasshook__(cls, subclass):
-        return (hasattr(subclass, 'calculate') and
-                callable(subclass.calculate) or
-                NotImplemented)
-
     @abstractmethod
     def calculate(self, current_date: date, balance: Decimal, accrued: Decimal) -> RateCalculation:
         raise NotImplementedError
