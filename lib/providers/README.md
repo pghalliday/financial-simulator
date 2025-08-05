@@ -15,6 +15,7 @@ from lib.providers import \
     AnyProvider, \
     AllProvider
 from lib.providers.map_provider import MapProvider
+from lib.providers.sequence_provider import SequenceProvider
 from lib.schedules import \
     WeeklySchedule, \
     AnySchedule, \
@@ -75,6 +76,31 @@ print(format_values(values))
      2025-08-12 : Tue : My value
      2025-08-13 : Wed : My value
      2025-08-14 : Thu : My value]
+
+
+## SequenceProvider
+
+This provider takes a mapping of dates to values and provides the value associated with the current date.
+If no value is associated with the current date then it provides `None`.
+
+
+```python
+days = [START_DATE + timedelta(days=i) for i in range(10)]
+sequence = {day: day.weekday() for day in days}
+values = zip(days, map(SequenceProvider(sequence).get, days))
+print(format_values(values))
+```
+
+    [2025-08-05 : Tue : 1
+     2025-08-06 : Wed : 2
+     2025-08-07 : Thu : 3
+     2025-08-08 : Fri : 4
+     2025-08-09 : Sat : 5
+     2025-08-10 : Sun : 6
+     2025-08-11 : Mon : 0
+     2025-08-12 : Tue : 1
+     2025-08-13 : Wed : 2
+     2025-08-14 : Thu : 3]
 
 
 ## ScheduledProvider
