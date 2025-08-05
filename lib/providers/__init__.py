@@ -1,4 +1,5 @@
 from .always_provider import AlwaysProvider
+from .factories import create_sequence_provider
 from .flat_map_provider import FlatMapProvider
 from .function_provider import FunctionProvider
 from .map_provider import MapProvider
@@ -8,4 +9,3 @@ from .never_provider import NeverProvider
 from .next_provider import NextProvider
 from .provider import Provider, Provided
 from .scheduled_provider import ScheduledProvider
-from .factories import create_sequence_provider

@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b1e87e8-9ba2-412a-95d2-72bea0c3c29d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bank_accounts/README.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bank_accounts/README.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bank_accounts/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bank_accounts/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bank_accounts/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bank_accounts/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bank_accounts/bank_account.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bank_accounts/bank_account.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bank_accounts/bank_account_reducer.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/providers/README.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/README.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/providers/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/providers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/providers/factories.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/factories.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/rates/README.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/README.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/rates/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schedules/README.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/README.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +99,7 @@
       <updated>1753531462646</updated>
       <workItem from="1753531463671" duration="45586000" />
       <workItem from="1753738863863" duration="73447000" />
-      <workItem from="1754037206612" duration="113160000" />
+      <workItem from="1754037206612" duration="119191000" />
     </task>
     <servers />
   </component>

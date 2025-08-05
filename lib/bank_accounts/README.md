@@ -7,7 +7,7 @@ State and reducer implementations to keep track of bank account changes.
 from datetime import date
 from decimal import Decimal, getcontext, FloatOperation
 
-from lib.bank_accounts import BankAccount, BankAccountReducer
+from lib.bank_accounts import BankAccount, BankAccountProviders
 from lib.providers import AlwaysProvider
 from lib.rates import ContinuousRate
 from lib.schedules import DailySchedule
@@ -19,6 +19,7 @@ decimal_context.prec = 1000
 
 # Start on the last day of last year so we create opening states for the first year in our range
 START_DATE = date(date.today().year - 1, 12, 31)
+# List 3 years from this year
 YEARS = [START_DATE.year + offset for offset in range(1, 4)]
 # Total number of days in years plus one, so we roll over into another year and create closing states
 # for the last year in our range
@@ -47,11 +48,11 @@ The reducer should be provided with an interest rate and an interest payment sch
 
 
 ```python
-bank_account_reducer = BankAccountReducer(rate_provider=RATE_PROVIDER,
-                                          interest_payment_schedule=DailySchedule())
+providers = BankAccountProviders(rate_provider=RATE_PROVIDER,
+                                 interest_payment_schedule=DailySchedule())
 state = INITIAL_STATE
 for day in DAYS:
-    state = bank_account_reducer.next(state)
+    state = state.next(providers)
 print(state)
 ```
 
