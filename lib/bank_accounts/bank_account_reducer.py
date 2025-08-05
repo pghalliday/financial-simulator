@@ -34,8 +34,8 @@ class BankAccountReducer:
         opening_balance = state.opening_balance
         closing_interest_applied = state.closing_interest_applied
         opening_interest_applied = state.opening_interest_applied
-        closing_interest_accrued = state.closing_interest_applied
-        opening_interest_accrued = state.opening_interest_applied
+        closing_interest_accrued = state.closing_interest_accrued
+        opening_interest_accrued = state.opening_interest_accrued
         # if at the start of the year then update the closing and opening balances, etc.
         if current_date.month == JANUARY and current_date.day == 1:
             closing_balance = MappingProxyType(dict(closing_balance) | {state.current_date.year: state.balance})
