@@ -7,7 +7,7 @@ from .from_schedule import FromSchedule
 from .monthly_schedule import MonthlySchedule
 from .never_schedule import NeverSchedule
 from .range_schedule import RangeSchedule
-from .schedule import Schedule
+from .schedule import Schedule, Scheduled
 from .until_schedule import UntilSchedule
 from .weekly_schedule import WeeklySchedule
 from .yearly_schedule import YearlySchedule

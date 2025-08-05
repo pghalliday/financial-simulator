@@ -1,8 +1,7 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date
-from typing import TypeVar, Callable, Generic
+from typing import TypeVar, Callable, Generic, Sequence
 
-from .merge_provider import MergeProvider
 from .never_provider import NeverProvider
 from .provider import Provider, Provided
 
@@ -14,18 +13,23 @@ U = TypeVar('U')
 class MergeMapProvider(Generic[T, U], Provider[T]):
     transform: Callable[[date, U], Provider[T]]
     provider: Provider[U] = NeverProvider()
-    __complete: bool = False
-    __merge_provider: MergeProvider[T] = field(default_factory=MergeProvider)
+    __sub_providers: Sequence[Provider[T]] = ()
 
     def get(self, current_date: date) -> Provided[T]:
-        # first, get the provided sequence of U if not complete
-        if not self.__complete:
-            provided = self.provider.get(current_date)
-            self.__complete = provided.complete
-            # for each U, transform to a new Provider
-            providers = (self.transform(current_date, value) for value in provided.values)
-            # create a new AllProvider
-            self.__merge_provider = MergeProvider(tuple(self.__merge_provider.providers) + tuple(providers))
-        all_provided = self.__merge_provider.get(current_date)
-        return Provided(values=all_provided.values,
-                        complete=all_provided.complete and self.__complete)
+        # first, get the provided sequence of U
+        provided = self.provider.get(current_date)
+        # for each U, transform to a new Provider
+        sub_providers = tuple(self.transform(current_date, value) for value in provided.values)
+        self.__sub_providers += sub_providers
+        providers_and_provided = tuple((provider, provider.get(current_date))
+                                       for provider
+                                       in self.__sub_providers)
+        self.__sub_providers = tuple(provider
+                                     for provider, provided in providers_and_provided
+                                     if not provided.complete)
+        return Provided(values=tuple(value
+                                     for sub_values in [provided.values
+                                                        for _provider, provided in
+                                                        providers_and_provided]
+                                     for value in sub_values),
+                        complete=provided.complete and not self.__sub_providers)

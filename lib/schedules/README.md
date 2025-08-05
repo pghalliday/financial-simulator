@@ -1,7 +1,7 @@
 # Schedules
 
 A collection of schedule implementations that will take the current date and check if that day
-is in the schedule.
+is in the schedule. The returned `Scheduled` instance will also indicate if the schedule is complete.
 
 
 ```python
@@ -20,7 +20,8 @@ from lib.schedules import \
     YearlySchedule, \
     FilterSchedule, \
     AnySchedule, \
-    AllSchedule
+    AllSchedule, \
+    Scheduled
 from lib.utils.format import \
     format_day, \
     format_days
@@ -44,11 +45,15 @@ This is a trivial schedule in that it always returns False
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(1000)]
-matches = filter(NeverSchedule().check, days)
+days_and_scheduled = [(day, NeverSchedule().check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
     []
+    Completed: 2025-08-05 : Tue
 
 
 ### DailySchedule
@@ -58,8 +63,11 @@ This is a trivial schedule in that it always returns True
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
-matches = filter(DailySchedule().check, days)
+days_and_scheduled = [(day, DailySchedule().check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
     [2025-08-05 : Tue
@@ -72,6 +80,7 @@ print(format_days(matches))
      2025-08-12 : Tue
      2025-08-13 : Wed
      2025-08-14 : Thu]
+    Completed: Not completed
 
 
 ### DaySchedule
@@ -81,11 +90,15 @@ This schedule will only match on the specified day
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(1000)]
-matches = filter(DaySchedule(START_DATE + timedelta(days=50)).check, days)
+days_and_scheduled = [(day, DaySchedule(START_DATE + timedelta(days=50)).check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
     [2025-09-24 : Wed]
+    Completed: 2025-09-24 : Wed
 
 
 ### FromSchedule
@@ -95,8 +108,11 @@ This schedule will match on all dates after and including the specified day
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(20)]
-matches = filter(FromSchedule(START_DATE + timedelta(days=10)).check, days)
+days_and_scheduled = [(day, FromSchedule(START_DATE + timedelta(days=10)).check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
     [2025-08-15 : Fri
@@ -109,6 +125,7 @@ print(format_days(matches))
      2025-08-22 : Fri
      2025-08-23 : Sat
      2025-08-24 : Sun]
+    Completed: Not completed
 
 
 ### UntilSchedule
@@ -118,8 +135,11 @@ This schedule will match on all dates up to but not including the specified day
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(20)]
-matches = filter(UntilSchedule(START_DATE + timedelta(days=10)).check, days)
+days_and_scheduled = [(day, UntilSchedule(START_DATE + timedelta(days=10)).check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
     [2025-08-05 : Tue
@@ -132,6 +152,7 @@ print(format_days(matches))
      2025-08-12 : Tue
      2025-08-13 : Wed
      2025-08-14 : Thu]
+    Completed: 2025-08-14 : Thu
 
 
 ### RangeSchedule
@@ -142,9 +163,12 @@ the `until_date`
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(30)]
-matches = filter(RangeSchedule(from_date=START_DATE + timedelta(days=10),
-                               until_date=START_DATE + timedelta(days=20)).check, days)
+days_and_scheduled = [(day, RangeSchedule(from_date=START_DATE + timedelta(days=10),
+                                          until_date=START_DATE + timedelta(days=20)).check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
     [2025-08-15 : Fri
@@ -157,6 +181,7 @@ print(format_days(matches))
      2025-08-22 : Fri
      2025-08-23 : Sat
      2025-08-24 : Sun]
+    Completed: 2025-08-24 : Sun
 
 
 ### WeeklySchedule
@@ -166,8 +191,11 @@ This schedule will match on the specified day of the week
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(50)]
-matches = filter(WeeklySchedule(TUESDAY).check, days)
+days_and_scheduled = [(day, WeeklySchedule(TUESDAY).check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
     [2025-08-05 : Tue
@@ -178,6 +206,7 @@ print(format_days(matches))
      2025-09-09 : Tue
      2025-09-16 : Tue
      2025-09-23 : Tue]
+    Completed: Not completed
 
 
 ### MonthlySchedule
@@ -190,8 +219,11 @@ then the last day of the month will match.
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(500)]
-matches = filter(MonthlySchedule(30).check, days)
+days_and_scheduled = [(day, MonthlySchedule(30).check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
     [2025-08-30 : Sat
@@ -210,6 +242,7 @@ print(format_days(matches))
      2026-09-30 : Wed
      2026-10-30 : Fri
      2026-11-30 : Mon]
+    Completed: Not completed
 
 
 ### YearlySchedule
@@ -222,8 +255,11 @@ then the last day of the month will match.
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(5000)]
-matches = filter(YearlySchedule(FEBRUARY, 30).check, days)
+days_and_scheduled = [(day, YearlySchedule(FEBRUARY, 30).check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
     [2026-02-28 : Sat
@@ -240,6 +276,7 @@ print(format_days(matches))
      2037-02-28 : Sat
      2038-02-28 : Sun
      2039-02-28 : Mon]
+    Completed: Not completed
 
 
 ### FilterSchedule
@@ -251,12 +288,16 @@ This is a generic schedule that takes a callback function that will be used to c
 days = [START_DATE + timedelta(days=i) for i in range(20)]
 
 
-def filter_func(current_date: date) -> bool:
-    return current_date.weekday() < SATURDAY
+def filter_func(current_date: date) -> Scheduled:
+    return Scheduled(match=current_date.weekday() < SATURDAY,
+                     complete=False)
 
 
-matches = filter(FilterSchedule(filter_func).check, days)
+days_and_scheduled = [(day, FilterSchedule(filter_func).check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
     [2025-08-05 : Tue
@@ -273,6 +314,7 @@ print(format_days(matches))
      2025-08-20 : Wed
      2025-08-21 : Thu
      2025-08-22 : Fri]
+    Completed: Not completed
 
 
 ## Schedule operators
@@ -289,11 +331,14 @@ For example, to get a quarterly schedule, you could create four Yearly schedules
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(1000)]
-matches = filter(AnySchedule((YearlySchedule(JANUARY, 1),
-                              YearlySchedule(APRIL, 1),
-                              YearlySchedule(JULY, 1),
-                              YearlySchedule(OCTOBER, 1))).check, days)
+days_and_scheduled = [(day, AnySchedule((YearlySchedule(JANUARY, 1),
+                                         YearlySchedule(APRIL, 1),
+                                         YearlySchedule(JULY, 1),
+                                         YearlySchedule(OCTOBER, 1))).check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
     [2025-10-01 : Wed
@@ -307,6 +352,7 @@ print(format_days(matches))
      2027-10-01 : Fri
      2028-01-01 : Sat
      2028-04-01 : Sat]
+    Completed: Not completed
 
 
 ### AllSchedule
@@ -314,20 +360,23 @@ print(format_days(matches))
 This represents a boolean `AND` operator for schedules. Only if all the child schedules match the current date,
 will this schedule match.
 
-For example, to get a weekly schedule but only from a certain date.
+For example, to get a weekly schedule but only until a certain date.
 
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(50)]
-matches = filter(AllSchedule((WeeklySchedule(TUESDAY),
-                              FromSchedule(START_DATE + timedelta(days=10)))).check, days)
+days_and_scheduled = [(day, AllSchedule((WeeklySchedule(TUESDAY),
+                                         UntilSchedule(START_DATE + timedelta(days=30)))).check(day)) for day in days]
+matches = [day for day, scheduled in days_and_scheduled if scheduled.match]
+completed = next((format_day(day) for day, scheduled in days_and_scheduled if scheduled.complete), 'Not completed')
 print(format_days(matches))
+print(f'Completed: {completed}')
 ```
 
-    [2025-08-19 : Tue
+    [2025-08-05 : Tue
+     2025-08-12 : Tue
+     2025-08-19 : Tue
      2025-08-26 : Tue
-     2025-09-02 : Tue
-     2025-09-09 : Tue
-     2025-09-16 : Tue
-     2025-09-23 : Tue]
+     2025-09-02 : Tue]
+    Completed: 2025-09-03 : Wed
 

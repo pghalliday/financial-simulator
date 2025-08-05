@@ -8,4 +8,4 @@ from .never_provider import NeverProvider
 from .next_provider import NextProvider
 from .provider import Provider, Provided
 from .scheduled_provider import ScheduledProvider
-from .sequence_provider import SequenceProvider
+from .factories import create_sequence_provider

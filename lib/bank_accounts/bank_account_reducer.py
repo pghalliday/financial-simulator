@@ -50,7 +50,7 @@ class BankAccountReducer:
             opening_interest_accrued = MappingProxyType(
                 dict(opening_interest_accrued) | {current_date.year: state.interest_accrued})
         # Apply the accrued interest if it is an interest payment day
-        if self.interest_payment_schedule.check(current_date):
+        if self.interest_payment_schedule.check(current_date).match:
             interest_applied += interest_accrued
             interest_applications += (InterestApplication(application_date=current_date,
                                                           amount=interest_accrued,

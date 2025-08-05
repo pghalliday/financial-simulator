@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Callable
 
-from .schedule import Schedule
+from .schedule import Schedule, Scheduled
 
 
 @dataclass(frozen=True)
 class FilterSchedule(Schedule):
-    func: Callable[[date], bool]
+    filter: Callable[[date], Scheduled]
 
-    def check(self, current_date: date) -> bool:
-        return self.func(current_date)
+    def check(self, current_date: date) -> Scheduled:
+        return self.filter(current_date)

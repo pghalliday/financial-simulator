@@ -14,6 +14,7 @@ class ScheduledProvider(Provider[T]):
     schedule: Schedule = NeverSchedule()
 
     def get(self, current_date: date) -> Provided[T]:
-        values = (self.value,) if self.schedule.check(current_date) else ()
+        scheduled = self.schedule.check(current_date)
+        values = (self.value,) if scheduled.match else ()
         return Provided(values=values,
-                        complete=False)
+                        complete=scheduled.complete)

@@ -15,12 +15,12 @@ from lib.providers import \
     ScheduledProvider, \
     NextProvider, \
     MergeProvider, \
-    SequenceProvider, \
     FunctionProvider, \
     MapProvider, \
     FlatMapProvider, \
     MergeMapProvider, \
-    Provided
+    Provided, \
+    create_sequence_provider
 from lib.schedules import \
     WeeklySchedule, \
     AnySchedule, \
@@ -81,31 +81,6 @@ print(format_values(values))
      2025-08-12 : Tue : Provided(values=('My value',), complete=False)
      2025-08-13 : Wed : Provided(values=('My value',), complete=False)
      2025-08-14 : Thu : Provided(values=('My value',), complete=False)]
-
-
-## SequenceProvider
-
-This provider takes a mapping of dates to values and provides the value associated with the current date
-in a single value sequence. If no value is associated with the current date then it provides an empty sequence.
-
-
-```python
-days = [START_DATE + timedelta(days=i) for i in range(10)]
-sequence = tuple((day, day.weekday()) for day in days if day.weekday() % 2 == 0)
-values = zip(days, map(SequenceProvider(sequence).get, days))
-print(format_values(values))
-```
-
-    [2025-08-05 : Tue : Provided(values=(), complete=False)
-     2025-08-06 : Wed : Provided(values=(2,), complete=False)
-     2025-08-07 : Thu : Provided(values=(), complete=False)
-     2025-08-08 : Fri : Provided(values=(4,), complete=False)
-     2025-08-09 : Sat : Provided(values=(), complete=False)
-     2025-08-10 : Sun : Provided(values=(6,), complete=False)
-     2025-08-11 : Mon : Provided(values=(0,), complete=False)
-     2025-08-12 : Tue : Provided(values=(), complete=False)
-     2025-08-13 : Wed : Provided(values=(2,), complete=True)
-     2025-08-14 : Thu : Provided(values=(), complete=True)]
 
 
 ## ScheduledProvider
@@ -182,8 +157,8 @@ print(format_values(values))
      2025-08-10 : Sun : Provided(values=('Value 2',), complete=False)
      2025-08-11 : Mon : Provided(values=('Value 2',), complete=False)
      2025-08-12 : Tue : Provided(values=('Value 3',), complete=False)
-     2025-08-13 : Wed : Provided(values=('Value 3',), complete=False)
-     2025-08-14 : Thu : Provided(values=(), complete=False)]
+     2025-08-13 : Wed : Provided(values=('Value 3',), complete=True)
+     2025-08-14 : Thu : Provided(values=(), complete=True)]
 
 
 ## MergeProvider
@@ -283,11 +258,13 @@ The values from these providers will be merged in future resulting `Provided` in
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(15)]
+sequence_days = [START_DATE + timedelta(days=i) for i in range(10)]
 values = zip(days, map(MergeMapProvider(
-    transform=lambda current_date, value: SequenceProvider(((current_date + timedelta(days=1), f'{value}-1'),
-                                                            (current_date + timedelta(days=2), f'{value}-2'),
-                                                            (current_date + timedelta(days=3), f'{value}-3'))),
-    provider=SequenceProvider([(day, day.weekday()) for day in days])).get, days))
+    transform=lambda current_date, value: create_sequence_provider({current_date + timedelta(days=1): f'{value}-1',
+                                                                    current_date + timedelta(days=2): f'{value}-2',
+                                                                    current_date + timedelta(days=3): f'{value}-3',
+                                                                    current_date + timedelta(days=4): f'{value}-4'}),
+    provider=create_sequence_provider({day: day.weekday() for day in sequence_days})).get, days))
 print(format_values(values))
 ```
 
@@ -295,15 +272,44 @@ print(format_values(values))
      2025-08-06 : Wed : Provided(values=('1-1',), complete=False)
      2025-08-07 : Thu : Provided(values=('1-2', '2-1'), complete=False)
      2025-08-08 : Fri : Provided(values=('1-3', '2-2', '3-1'), complete=False)
-     2025-08-09 : Sat : Provided(values=('2-3', '3-2', '4-1'), complete=False)
-     2025-08-10 : Sun : Provided(values=('3-3', '4-2', '5-1'), complete=False)
-     2025-08-11 : Mon : Provided(values=('4-3', '5-2', '6-1'), complete=False)
-     2025-08-12 : Tue : Provided(values=('5-3', '6-2', '0-1'), complete=False)
-     2025-08-13 : Wed : Provided(values=('6-3', '0-2', '1-1'), complete=False)
-     2025-08-14 : Thu : Provided(values=('0-3', '1-2', '2-1'), complete=False)
-     2025-08-15 : Fri : Provided(values=('1-3', '2-2', '3-1'), complete=False)
-     2025-08-16 : Sat : Provided(values=('2-3', '3-2', '4-1'), complete=False)
-     2025-08-17 : Sun : Provided(values=('3-3', '4-2', '5-1'), complete=False)
-     2025-08-18 : Mon : Provided(values=('4-3', '5-2', '6-1'), complete=False)
-     2025-08-19 : Tue : Provided(values=('5-3', '6-2', '0-1'), complete=False)]
+     2025-08-09 : Sat : Provided(values=('1-4', '2-3', '3-2', '4-1'), complete=False)
+     2025-08-10 : Sun : Provided(values=('2-4', '3-3', '4-2', '5-1'), complete=False)
+     2025-08-11 : Mon : Provided(values=('3-4', '4-3', '5-2', '6-1'), complete=False)
+     2025-08-12 : Tue : Provided(values=('4-4', '5-3', '6-2', '0-1'), complete=False)
+     2025-08-13 : Wed : Provided(values=('5-4', '6-3', '0-2', '1-1'), complete=False)
+     2025-08-14 : Thu : Provided(values=('6-4', '0-3', '1-2', '2-1'), complete=False)
+     2025-08-15 : Fri : Provided(values=('0-4', '1-3', '2-2', '3-1'), complete=False)
+     2025-08-16 : Sat : Provided(values=('1-4', '2-3', '3-2'), complete=False)
+     2025-08-17 : Sun : Provided(values=('2-4', '3-3'), complete=False)
+     2025-08-18 : Mon : Provided(values=('3-4',), complete=True)
+     2025-08-19 : Tue : Provided(values=(), complete=True)]
+
+
+## Factories
+
+The following factory methods are available to construct combinations of providers to implement common patterns.
+
+### create_sequence_provider
+
+This factory takes a mapping of days to values and returns a `Provider` that will provide the given values on the specified days.
+
+
+```python
+days = [START_DATE + timedelta(days=i) for i in range(10)]
+sequence_days = [START_DATE + timedelta(days=i) for i in range(9)]
+values = zip(days, map(create_sequence_provider({day: format_day(day)
+                                                 for day in sequence_days}).get, days))
+print(format_values(values))
+```
+
+    [2025-08-05 : Tue : Provided(values=('2025-08-05 : Tue',), complete=False)
+     2025-08-06 : Wed : Provided(values=('2025-08-06 : Wed',), complete=False)
+     2025-08-07 : Thu : Provided(values=('2025-08-07 : Thu',), complete=False)
+     2025-08-08 : Fri : Provided(values=('2025-08-08 : Fri',), complete=False)
+     2025-08-09 : Sat : Provided(values=('2025-08-09 : Sat',), complete=False)
+     2025-08-10 : Sun : Provided(values=('2025-08-10 : Sun',), complete=False)
+     2025-08-11 : Mon : Provided(values=('2025-08-11 : Mon',), complete=False)
+     2025-08-12 : Tue : Provided(values=('2025-08-12 : Tue',), complete=False)
+     2025-08-13 : Wed : Provided(values=('2025-08-13 : Wed',), complete=True)
+     2025-08-14 : Thu : Provided(values=(), complete=True)]
 

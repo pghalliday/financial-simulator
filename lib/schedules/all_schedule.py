@@ -1,14 +1,17 @@
 from dataclasses import dataclass
 from datetime import date
+from typing import Sequence
 
-from numpy.random.mtrand import Sequence
-
-from .schedule import Schedule
+from .schedule import Schedule, Scheduled
 
 
 @dataclass(frozen=True)
 class AllSchedule(Schedule):
-    children: Sequence[Schedule] = ()
+    schedules: Sequence[Schedule] = ()
 
-    def check(self, current_date: date) -> bool:
-        return all([child.check(current_date) for child in self.children])
+    def check(self, current_date: date) -> Scheduled:
+        schedules_and_scheduled = tuple((schedule, schedule.check(current_date))
+                                        for schedule
+                                        in self.schedules)
+        return Scheduled(match=all(scheduled.match for _schedule, scheduled in schedules_and_scheduled),
+                         complete=any(scheduled.complete for _schedule, scheduled in schedules_and_scheduled))
