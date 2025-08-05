@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from datetime import timedelta
 from decimal import Decimal
 from types import MappingProxyType
+from typing import Tuple
 
 from .balance_change import BalanceChange
 from .bank_account import BankAccount
@@ -10,15 +11,15 @@ from .interest_accrual import InterestAccrual
 from .interest_application import InterestApplication
 from ..providers import Provider, NeverProvider
 from ..rates import Rate
-from ..schedules import Schedule
+from ..schedules import Schedule, NeverSchedule
 
 
 @dataclass(frozen=True)
 class BankAccountReducer:
     rate_provider: Provider[Rate] = NeverProvider()
-    interest_payment_schedule: Schedule = NeverProvider()
-    deposit_provider: Provider[MappingProxyType[str, Decimal]] = NeverProvider()
-    withdrawal_provider: Provider[MappingProxyType[str, Decimal]] = NeverProvider()
+    interest_payment_schedule: Schedule = NeverSchedule()
+    deposit_provider: Provider[Tuple[str, Decimal]] = NeverProvider()
+    withdrawal_provider: Provider[Tuple[str, Decimal]] = NeverProvider()
 
     def next(self, state: BankAccount) -> BankAccount:
         # add one day to the current date
@@ -61,30 +62,28 @@ class BankAccountReducer:
                                               new_balance=balance),)
             interest_accrued = Decimal('0.0')
         # Check for deposits
-        deposits = self.deposit_provider.get(current_date)
-        if deposits is not None:
-            for label, amount in deposits.items():
-                if amount is not None:
-                    balance += amount
-                    balance_changes += (BalanceChange(change_date=current_date,
-                                                      source=f'Deposit: {label}',
-                                                      amount=amount,
-                                                      new_balance=balance),)
+        deposits = self.deposit_provider.get(current_date).values
+        for label, amount in deposits:
+            if amount is not None:
+                balance += amount
+                balance_changes += (BalanceChange(change_date=current_date,
+                                                  source=f'Deposit: {label}',
+                                                  amount=amount,
+                                                  new_balance=balance),)
         # Check for withdrawals
-        withdrawals = self.withdrawal_provider.get(current_date)
-        if withdrawals is not None:
-            for label, amount in withdrawals.items():
-                if amount is not None:
-                    balance -= amount
-                    balance_changes += (BalanceChange(change_date=current_date,
-                                                      source=f'Withdrawal: {label}',
-                                                      amount=-amount,
-                                                      new_balance=balance),)
+        withdrawals = self.withdrawal_provider.get(current_date).values
+        for label, amount in withdrawals:
+            if amount is not None:
+                balance -= amount
+                balance_changes += (BalanceChange(change_date=current_date,
+                                                  source=f'Withdrawal: {label}',
+                                                  amount=-amount,
+                                                  new_balance=balance),)
         # Calculate interest on the new balance
-        rate = self.rate_provider.get(current_date)
-        if rate is not None:
-            rate_calculation = rate.calculate(current_date, balance,
-                                              interest_accrued)
+        rates = self.rate_provider.get(current_date).values
+        if rates:
+            rate_calculation = rates[0].calculate(current_date, balance,
+                                                  interest_accrued)
             interest_accrued += rate_calculation.calculation
             interest_accruals += (InterestAccrual(accrual_date=current_date,
                                                   rate_calculation=rate_calculation,

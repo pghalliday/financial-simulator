@@ -1,9 +1,11 @@
-from .all_provider import AllProvider
 from .always_provider import AlwaysProvider
-from .any_provider import AnyProvider
+from .flat_map_provider import FlatMapProvider
 from .function_provider import FunctionProvider
 from .map_provider import MapProvider
+from .merge_map_provider import MergeMapProvider
+from .merge_provider import MergeProvider
 from .never_provider import NeverProvider
-from .provider import Provider
+from .next_provider import NextProvider
+from .provider import Provider, Provided
 from .scheduled_provider import ScheduledProvider
 from .sequence_provider import SequenceProvider

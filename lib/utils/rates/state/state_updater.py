@@ -19,7 +19,7 @@ class StateUpdater(object):
 
     def update(self, current_date: date, state: State) -> State:
         # apply the payment schedule first
-        state = self.updater_provider.get(current_date)(current_date, state)
+        state = self.updater_provider.get(current_date).values[0](current_date, state)
         # calculate the accrual
         calculation = self.rate.calculate(current_date,
                                           state.net_deposits + state.interest_paid,

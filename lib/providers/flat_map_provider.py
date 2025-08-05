@@ -10,8 +10,8 @@ U = TypeVar('U')
 
 
 @dataclass
-class MapProvider(Generic[T, U], Provider[T]):
-    transform: Callable[[U], T]
+class FlatMapProvider(Generic[T, U], Provider[T]):
+    transform: Callable[[U], Sequence[T]]
     provider: Provider[U] = NeverProvider()
     __complete: bool = False
 
@@ -20,6 +20,10 @@ class MapProvider(Generic[T, U], Provider[T]):
         if not self.__complete:
             provided = self.provider.get(current_date)
             self.__complete = provided.complete
-            values = tuple(self.transform(value) for value in provided.values)
+            values = tuple(t_value
+                           for sequence in (self.transform(u_value)
+                                            for u_value
+                                            in provided.values)
+                           for t_value in sequence)
         return Provided(values=values,
                         complete=self.__complete)

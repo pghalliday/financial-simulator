@@ -1,7 +1,8 @@
 # Providers
 
-A collection of Provider implementations that will take the current date and provide an
-item valid for that date.
+A collection of Provider implementations that will take the current date and provide sequences of values
+valid for that date. The sequence will be wrapped in an instance `Provided` that will also indicate if the
+provider has completed (i.e., it will not provide any more values).
 
 
 ```python
@@ -12,11 +13,14 @@ from lib.providers import \
     NeverProvider, \
     AlwaysProvider, \
     ScheduledProvider, \
-    AnyProvider, \
-    AllProvider, \
+    NextProvider, \
+    MergeProvider, \
     SequenceProvider, \
     FunctionProvider, \
-    MapProvider
+    MapProvider, \
+    FlatMapProvider, \
+    MergeMapProvider, \
+    Provided
 from lib.schedules import \
     WeeklySchedule, \
     AnySchedule, \
@@ -35,7 +39,7 @@ print(f'Start Date: {format_day(START_DATE)}')
 
 ## NeverProvider
 
-This is a trivial provider that always provides `None`
+This is a trivial provider that always provides an empty sequence.
 
 
 ```python
@@ -44,21 +48,21 @@ values = zip(days, map(NeverProvider[str]().get, days))
 print(format_values(values))
 ```
 
-    [2025-08-05 : Tue : None
-     2025-08-06 : Wed : None
-     2025-08-07 : Thu : None
-     2025-08-08 : Fri : None
-     2025-08-09 : Sat : None
-     2025-08-10 : Sun : None
-     2025-08-11 : Mon : None
-     2025-08-12 : Tue : None
-     2025-08-13 : Wed : None
-     2025-08-14 : Thu : None]
+    [2025-08-05 : Tue : Provided(values=(), complete=True)
+     2025-08-06 : Wed : Provided(values=(), complete=True)
+     2025-08-07 : Thu : Provided(values=(), complete=True)
+     2025-08-08 : Fri : Provided(values=(), complete=True)
+     2025-08-09 : Sat : Provided(values=(), complete=True)
+     2025-08-10 : Sun : Provided(values=(), complete=True)
+     2025-08-11 : Mon : Provided(values=(), complete=True)
+     2025-08-12 : Tue : Provided(values=(), complete=True)
+     2025-08-13 : Wed : Provided(values=(), complete=True)
+     2025-08-14 : Thu : Provided(values=(), complete=True)]
 
 
 ## AlwaysProvider
 
-This is a trivial provider that always provides the given value
+This is a trivial provider that always provides a single value sequence.
 
 
 ```python
@@ -67,46 +71,47 @@ values = zip(days, map(AlwaysProvider('My value').get, days))
 print(format_values(values))
 ```
 
-    [2025-08-05 : Tue : My value
-     2025-08-06 : Wed : My value
-     2025-08-07 : Thu : My value
-     2025-08-08 : Fri : My value
-     2025-08-09 : Sat : My value
-     2025-08-10 : Sun : My value
-     2025-08-11 : Mon : My value
-     2025-08-12 : Tue : My value
-     2025-08-13 : Wed : My value
-     2025-08-14 : Thu : My value]
+    [2025-08-05 : Tue : Provided(values=('My value',), complete=False)
+     2025-08-06 : Wed : Provided(values=('My value',), complete=False)
+     2025-08-07 : Thu : Provided(values=('My value',), complete=False)
+     2025-08-08 : Fri : Provided(values=('My value',), complete=False)
+     2025-08-09 : Sat : Provided(values=('My value',), complete=False)
+     2025-08-10 : Sun : Provided(values=('My value',), complete=False)
+     2025-08-11 : Mon : Provided(values=('My value',), complete=False)
+     2025-08-12 : Tue : Provided(values=('My value',), complete=False)
+     2025-08-13 : Wed : Provided(values=('My value',), complete=False)
+     2025-08-14 : Thu : Provided(values=('My value',), complete=False)]
 
 
 ## SequenceProvider
 
-This provider takes a mapping of dates to values and provides the value associated with the current date.
-If no value is associated with the current date then it provides `None`.
+This provider takes a mapping of dates to values and provides the value associated with the current date
+in a single value sequence. If no value is associated with the current date then it provides an empty sequence.
 
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
-sequence = {day: day.weekday() for day in days}
+sequence = tuple((day, day.weekday()) for day in days if day.weekday() % 2 == 0)
 values = zip(days, map(SequenceProvider(sequence).get, days))
 print(format_values(values))
 ```
 
-    [2025-08-05 : Tue : 1
-     2025-08-06 : Wed : 2
-     2025-08-07 : Thu : 3
-     2025-08-08 : Fri : 4
-     2025-08-09 : Sat : 5
-     2025-08-10 : Sun : 6
-     2025-08-11 : Mon : 0
-     2025-08-12 : Tue : 1
-     2025-08-13 : Wed : 2
-     2025-08-14 : Thu : 3]
+    [2025-08-05 : Tue : Provided(values=(), complete=False)
+     2025-08-06 : Wed : Provided(values=(2,), complete=False)
+     2025-08-07 : Thu : Provided(values=(), complete=False)
+     2025-08-08 : Fri : Provided(values=(4,), complete=False)
+     2025-08-09 : Sat : Provided(values=(), complete=False)
+     2025-08-10 : Sun : Provided(values=(6,), complete=False)
+     2025-08-11 : Mon : Provided(values=(0,), complete=False)
+     2025-08-12 : Tue : Provided(values=(), complete=False)
+     2025-08-13 : Wed : Provided(values=(2,), complete=True)
+     2025-08-14 : Thu : Provided(values=(), complete=True)]
 
 
 ## ScheduledProvider
 
-This provider provides its value according to the specified schedule. If not scheduled it provides `None`.
+This provider provides a single value sequence according to the specified schedule. If not scheduled it
+provides an empty sequence.
 
 
 ```python
@@ -117,50 +122,51 @@ values = zip(days, map(ScheduledProvider('My value',
 print(format_values(values))
 ```
 
-    [2025-08-05 : Tue : My value
-     2025-08-06 : Wed : None
-     2025-08-07 : Thu : My value
-     2025-08-08 : Fri : None
-     2025-08-09 : Sat : None
-     2025-08-10 : Sun : None
-     2025-08-11 : Mon : None
-     2025-08-12 : Tue : My value
-     2025-08-13 : Wed : None
-     2025-08-14 : Thu : My value]
+    [2025-08-05 : Tue : Provided(values=('My value',), complete=False)
+     2025-08-06 : Wed : Provided(values=(), complete=False)
+     2025-08-07 : Thu : Provided(values=('My value',), complete=False)
+     2025-08-08 : Fri : Provided(values=(), complete=False)
+     2025-08-09 : Sat : Provided(values=(), complete=False)
+     2025-08-10 : Sun : Provided(values=(), complete=False)
+     2025-08-11 : Mon : Provided(values=(), complete=False)
+     2025-08-12 : Tue : Provided(values=('My value',), complete=False)
+     2025-08-13 : Wed : Provided(values=(), complete=False)
+     2025-08-14 : Thu : Provided(values=('My value',), complete=False)]
 
 
 ## FunctionProvider
 
-This provider uses the specified function to map the current date to a value.
+This provider uses the specified function to map the current date to an instance of `Provided`.
 
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
-values = zip(days, map(FunctionProvider(lambda current_date: current_date.weekday()).get, days))
+values = zip(days, map(FunctionProvider(lambda current_date: Provided(values=(current_date.weekday(),),
+                                                                      complete=False)).get, days))
 print(format_values(values))
 ```
 
-    [2025-08-05 : Tue : 1
-     2025-08-06 : Wed : 2
-     2025-08-07 : Thu : 3
-     2025-08-08 : Fri : 4
-     2025-08-09 : Sat : 5
-     2025-08-10 : Sun : 6
-     2025-08-11 : Mon : 0
-     2025-08-12 : Tue : 1
-     2025-08-13 : Wed : 2
-     2025-08-14 : Thu : 3]
+    [2025-08-05 : Tue : Provided(values=(1,), complete=False)
+     2025-08-06 : Wed : Provided(values=(2,), complete=False)
+     2025-08-07 : Thu : Provided(values=(3,), complete=False)
+     2025-08-08 : Fri : Provided(values=(4,), complete=False)
+     2025-08-09 : Sat : Provided(values=(5,), complete=False)
+     2025-08-10 : Sun : Provided(values=(6,), complete=False)
+     2025-08-11 : Mon : Provided(values=(0,), complete=False)
+     2025-08-12 : Tue : Provided(values=(1,), complete=False)
+     2025-08-13 : Wed : Provided(values=(2,), complete=False)
+     2025-08-14 : Thu : Provided(values=(3,), complete=False)]
 
 
-## AnyProvider
+## NextProvider
 
-This provider takes a list of providers and provides the value from the first provider that provides a not `None` value. If all
-the providers provide `None` then `None` will be provided.
+This provider takes a sequence of providers and provides the values from the first provider that provides
+a non-empty sequence of values.
 
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
-values = zip(days, map(AnyProvider(
+values = zip(days, map(NextProvider(
     (ScheduledProvider('Value 1', UntilSchedule(START_DATE + timedelta(days=3))),
      ScheduledProvider('Value 2', UntilSchedule(START_DATE + timedelta(days=7))),
      ScheduledProvider('Value 3', UntilSchedule(START_DATE + timedelta(days=9))))).get,
@@ -168,47 +174,48 @@ values = zip(days, map(AnyProvider(
 print(format_values(values))
 ```
 
-    [2025-08-05 : Tue : Value 1
-     2025-08-06 : Wed : Value 1
-     2025-08-07 : Thu : Value 1
-     2025-08-08 : Fri : Value 2
-     2025-08-09 : Sat : Value 2
-     2025-08-10 : Sun : Value 2
-     2025-08-11 : Mon : Value 2
-     2025-08-12 : Tue : Value 3
-     2025-08-13 : Wed : Value 3
-     2025-08-14 : Thu : None]
+    [2025-08-05 : Tue : Provided(values=('Value 1',), complete=False)
+     2025-08-06 : Wed : Provided(values=('Value 1',), complete=False)
+     2025-08-07 : Thu : Provided(values=('Value 1',), complete=False)
+     2025-08-08 : Fri : Provided(values=('Value 2',), complete=False)
+     2025-08-09 : Sat : Provided(values=('Value 2',), complete=False)
+     2025-08-10 : Sun : Provided(values=('Value 2',), complete=False)
+     2025-08-11 : Mon : Provided(values=('Value 2',), complete=False)
+     2025-08-12 : Tue : Provided(values=('Value 3',), complete=False)
+     2025-08-13 : Wed : Provided(values=('Value 3',), complete=False)
+     2025-08-14 : Thu : Provided(values=(), complete=False)]
 
 
-## AllProvider
+## MergeProvider
 
-This provider takes a dictionary of providers and provides a corresponding dictionary of the values provided by each provider
+This provider takes a sequence of providers and provides a corresponding sequence of the merged values provided
+by those providers.
 
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
-values = zip(days, map(AllProvider((AlwaysProvider('Always value'),
-                                    ScheduledProvider('Sometimes value', AnySchedule((WeeklySchedule(TUESDAY),
-                                                                                      WeeklySchedule(THURSDAY)))),
-                                    AnyProvider(
-                                        (ScheduledProvider('Value 1', UntilSchedule(START_DATE + timedelta(days=3))),
-                                         ScheduledProvider('Value 2', UntilSchedule(START_DATE + timedelta(days=7))),
-                                         ScheduledProvider('Value 3',
-                                                           UntilSchedule(START_DATE + timedelta(days=9))))))).get,
+values = zip(days, map(MergeProvider((AlwaysProvider('Always value'),
+                                      ScheduledProvider('Sometimes value', AnySchedule((WeeklySchedule(TUESDAY),
+                                                                                        WeeklySchedule(THURSDAY)))),
+                                      NextProvider(
+                                          (ScheduledProvider('Value 1', UntilSchedule(START_DATE + timedelta(days=3))),
+                                           ScheduledProvider('Value 2', UntilSchedule(START_DATE + timedelta(days=7))),
+                                           ScheduledProvider('Value 3',
+                                                             UntilSchedule(START_DATE + timedelta(days=9))))))).get,
                        days))
 print(format_values(values))
 ```
 
-    [2025-08-05 : Tue : ['Always value', 'Sometimes value', 'Value 1']
-     2025-08-06 : Wed : ['Always value', 'Value 1']
-     2025-08-07 : Thu : ['Always value', 'Sometimes value', 'Value 1']
-     2025-08-08 : Fri : ['Always value', 'Value 2']
-     2025-08-09 : Sat : ['Always value', 'Value 2']
-     2025-08-10 : Sun : ['Always value', 'Value 2']
-     2025-08-11 : Mon : ['Always value', 'Value 2']
-     2025-08-12 : Tue : ['Always value', 'Sometimes value', 'Value 3']
-     2025-08-13 : Wed : ['Always value', 'Value 3']
-     2025-08-14 : Thu : ['Always value', 'Sometimes value']]
+    [2025-08-05 : Tue : Provided(values=('Always value', 'Sometimes value', 'Value 1'), complete=False)
+     2025-08-06 : Wed : Provided(values=('Always value', 'Value 1'), complete=False)
+     2025-08-07 : Thu : Provided(values=('Always value', 'Sometimes value', 'Value 1'), complete=False)
+     2025-08-08 : Fri : Provided(values=('Always value', 'Value 2'), complete=False)
+     2025-08-09 : Sat : Provided(values=('Always value', 'Value 2'), complete=False)
+     2025-08-10 : Sun : Provided(values=('Always value', 'Value 2'), complete=False)
+     2025-08-11 : Mon : Provided(values=('Always value', 'Value 2'), complete=False)
+     2025-08-12 : Tue : Provided(values=('Always value', 'Sometimes value', 'Value 3'), complete=False)
+     2025-08-13 : Wed : Provided(values=('Always value', 'Value 3'), complete=False)
+     2025-08-14 : Thu : Provided(values=('Always value', 'Sometimes value'), complete=False)]
 
 
 ## MapProvider
@@ -218,7 +225,7 @@ This provider uses the specified transform function to transform the values prov
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
-values = zip(days, map(MapProvider(transform=lambda value: value.upper(),
+values = zip(days, map(MapProvider(transform=lambda value: (value.upper(), value.lower()),
                                    provider=ScheduledProvider(value='My value',
                                                               schedule=AnySchedule((WeeklySchedule(TUESDAY),
                                                                                     WeeklySchedule(
@@ -226,14 +233,77 @@ values = zip(days, map(MapProvider(transform=lambda value: value.upper(),
 print(format_values(values))
 ```
 
-    [2025-08-05 : Tue : MY VALUE
-     2025-08-06 : Wed : None
-     2025-08-07 : Thu : MY VALUE
-     2025-08-08 : Fri : None
-     2025-08-09 : Sat : None
-     2025-08-10 : Sun : None
-     2025-08-11 : Mon : None
-     2025-08-12 : Tue : MY VALUE
-     2025-08-13 : Wed : None
-     2025-08-14 : Thu : MY VALUE]
+    [2025-08-05 : Tue : Provided(values=(('MY VALUE', 'my value'),), complete=False)
+     2025-08-06 : Wed : Provided(values=(), complete=False)
+     2025-08-07 : Thu : Provided(values=(('MY VALUE', 'my value'),), complete=False)
+     2025-08-08 : Fri : Provided(values=(), complete=False)
+     2025-08-09 : Sat : Provided(values=(), complete=False)
+     2025-08-10 : Sun : Provided(values=(), complete=False)
+     2025-08-11 : Mon : Provided(values=(), complete=False)
+     2025-08-12 : Tue : Provided(values=(('MY VALUE', 'my value'),), complete=False)
+     2025-08-13 : Wed : Provided(values=(), complete=False)
+     2025-08-14 : Thu : Provided(values=(('MY VALUE', 'my value'),), complete=False)]
+
+
+## FlatMapProvider
+
+This provider, like the `MapProvider`, uses the specified transform function to transform the values provided
+by the specified provider. However, in this case the transform function should return a sequence and these
+sequences will be flattened in the resulting `Provided` instance.
+
+
+```python
+days = [START_DATE + timedelta(days=i) for i in range(10)]
+values = zip(days, map(FlatMapProvider(transform=lambda value: (value.upper(), value.lower()),
+                                       provider=ScheduledProvider(value='My value',
+                                                                  schedule=AnySchedule((WeeklySchedule(TUESDAY),
+                                                                                        WeeklySchedule(
+                                                                                            THURSDAY))))).get, days))
+print(format_values(values))
+```
+
+    [2025-08-05 : Tue : Provided(values=('MY VALUE', 'my value'), complete=False)
+     2025-08-06 : Wed : Provided(values=(), complete=False)
+     2025-08-07 : Thu : Provided(values=('MY VALUE', 'my value'), complete=False)
+     2025-08-08 : Fri : Provided(values=(), complete=False)
+     2025-08-09 : Sat : Provided(values=(), complete=False)
+     2025-08-10 : Sun : Provided(values=(), complete=False)
+     2025-08-11 : Mon : Provided(values=(), complete=False)
+     2025-08-12 : Tue : Provided(values=('MY VALUE', 'my value'), complete=False)
+     2025-08-13 : Wed : Provided(values=(), complete=False)
+     2025-08-14 : Thu : Provided(values=('MY VALUE', 'my value'), complete=False)]
+
+
+## MergeMapProvider
+
+This provider, like the `MapProvider`, uses the specified transform function to transform the values provided
+by the specified provider. However, in this case, the transform function should return a new `Provider` instance.
+The values from these providers will be merged in future resulting `Provided` instances.
+
+
+```python
+days = [START_DATE + timedelta(days=i) for i in range(15)]
+values = zip(days, map(MergeMapProvider(
+    transform=lambda current_date, value: SequenceProvider(((current_date + timedelta(days=1), f'{value}-1'),
+                                                            (current_date + timedelta(days=2), f'{value}-2'),
+                                                            (current_date + timedelta(days=3), f'{value}-3'))),
+    provider=SequenceProvider([(day, day.weekday()) for day in days])).get, days))
+print(format_values(values))
+```
+
+    [2025-08-05 : Tue : Provided(values=(), complete=False)
+     2025-08-06 : Wed : Provided(values=('1-1',), complete=False)
+     2025-08-07 : Thu : Provided(values=('1-2', '2-1'), complete=False)
+     2025-08-08 : Fri : Provided(values=('1-3', '2-2', '3-1'), complete=False)
+     2025-08-09 : Sat : Provided(values=('2-3', '3-2', '4-1'), complete=False)
+     2025-08-10 : Sun : Provided(values=('3-3', '4-2', '5-1'), complete=False)
+     2025-08-11 : Mon : Provided(values=('4-3', '5-2', '6-1'), complete=False)
+     2025-08-12 : Tue : Provided(values=('5-3', '6-2', '0-1'), complete=False)
+     2025-08-13 : Wed : Provided(values=('6-3', '0-2', '1-1'), complete=False)
+     2025-08-14 : Thu : Provided(values=('0-3', '1-2', '2-1'), complete=False)
+     2025-08-15 : Fri : Provided(values=('1-3', '2-2', '3-1'), complete=False)
+     2025-08-16 : Sat : Provided(values=('2-3', '3-2', '4-1'), complete=False)
+     2025-08-17 : Sun : Provided(values=('3-3', '4-2', '5-1'), complete=False)
+     2025-08-18 : Mon : Provided(values=('4-3', '5-2', '6-1'), complete=False)
+     2025-08-19 : Tue : Provided(values=('5-3', '6-2', '0-1'), complete=False)]
 

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from datetime import date
 from typing import TypeVar
 
-from .provider import Provider
+from .provider import Provider, Provided
 
 T = TypeVar('T')
 
@@ -11,5 +11,6 @@ T = TypeVar('T')
 class AlwaysProvider(Provider[T]):
     value: T = None
 
-    def get(self, current_date: date) -> T:
-        return self.value
+    def get(self, current_date: date) -> Provided[T]:
+        return Provided(values=(self.value,),
+                        complete=False)
