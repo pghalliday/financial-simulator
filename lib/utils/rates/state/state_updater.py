@@ -2,9 +2,9 @@ from dataclasses import replace
 from datetime import date
 from typing import Callable
 
+from .state import State
 from ....providers import Provider
 from ....rates import Rate
-from .state import State
 
 
 class StateUpdater(object):
@@ -27,5 +27,3 @@ class StateUpdater(object):
         # then apply the rate and accrue
         return replace(state,
                        interest_accrued=state.interest_accrued + calculation.calculation)
-
-

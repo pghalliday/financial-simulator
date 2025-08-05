@@ -6,7 +6,7 @@ from .schedule import Schedule
 
 @dataclass(frozen=True)
 class FromSchedule(Schedule):
-    from_date: date
+    from_date: date = date.today()
 
     def check(self, current_date: date) -> bool:
         return current_date >= self.from_date

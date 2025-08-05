@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from datetime import timedelta
 from decimal import Decimal
 from types import MappingProxyType
-from typing import Dict
 
 from .balance_change import BalanceChange
 from .bank_account import BankAccount
@@ -18,8 +17,8 @@ from ..schedules import Schedule
 class BankAccountReducer:
     rate_provider: Provider[Rate] = NeverProvider()
     interest_payment_schedule: Schedule = NeverProvider()
-    deposit_provider: Provider[Dict[str, Decimal]] = NeverProvider()
-    withdrawal_provider: Provider[Dict[str, Decimal]] = NeverProvider()
+    deposit_provider: Provider[MappingProxyType[str, Decimal]] = NeverProvider()
+    withdrawal_provider: Provider[MappingProxyType[str, Decimal]] = NeverProvider()
 
     def next(self, state: BankAccount) -> BankAccount:
         # add one day to the current date
@@ -35,14 +34,20 @@ class BankAccountReducer:
         opening_balance = state.opening_balance
         closing_interest_applied = state.closing_interest_applied
         opening_interest_applied = state.opening_interest_applied
+        closing_interest_accrued = state.closing_interest_applied
+        opening_interest_accrued = state.opening_interest_applied
         # if at the start of the year then update the closing and opening balances, etc.
         if current_date.month == JANUARY and current_date.day == 1:
-            closing_balance = MappingProxyType(closing_balance | {state.current_date.year: state.balance})
-            opening_balance = MappingProxyType(opening_balance | {current_date.year: state.balance})
+            closing_balance = MappingProxyType(dict(closing_balance) | {state.current_date.year: state.balance})
+            opening_balance = MappingProxyType(dict(opening_balance) | {current_date.year: state.balance})
             closing_interest_applied = MappingProxyType(
-                closing_interest_applied | {state.current_date.year: state.interest_applied})
+                dict(closing_interest_applied) | {state.current_date.year: state.interest_applied})
             opening_interest_applied = MappingProxyType(
-                opening_interest_applied | {current_date.year: state.interest_applied})
+                dict(opening_interest_applied) | {current_date.year: state.interest_applied})
+            closing_interest_accrued = MappingProxyType(
+                dict(closing_interest_accrued) | {state.current_date.year: state.interest_accrued})
+            opening_interest_accrued = MappingProxyType(
+                dict(opening_interest_accrued) | {current_date.year: state.interest_accrued})
         # Apply the accrued interest if it is an interest payment day
         if self.interest_payment_schedule.check(current_date):
             interest_applied += interest_accrued
@@ -95,4 +100,6 @@ class BankAccountReducer:
                            closing_balance=closing_balance,
                            opening_balance=opening_balance,
                            closing_interest_applied=closing_interest_applied,
-                           opening_interest_applied=opening_interest_applied)
+                           opening_interest_applied=opening_interest_applied,
+                           closing_interest_accrued=closing_interest_accrued,
+                           opening_interest_accrued=opening_interest_accrued)

@@ -3,9 +3,9 @@ from dataclasses import replace
 from datetime import date
 from decimal import Decimal
 
-from lib.providers import ScheduledProvider, AnyProvider, AlwaysProvider
-from lib.schedules import YearlySchedule, AnySchedule
 from .state import State
+from ....providers import ScheduledProvider, AnyProvider, AlwaysProvider
+from ....schedules import YearlySchedule, AnySchedule
 
 
 def payout(current_date: date, state: State) -> State:
@@ -21,14 +21,14 @@ def accrue(current_date: date, state: State) -> State:
 
 
 ANNUAL_PAYMENT_SCHEDULE = YearlySchedule(JANUARY, 1)
-ANNUAL_UPDATER_PROVIDER = AnyProvider([ScheduledProvider(payout, ANNUAL_PAYMENT_SCHEDULE),
-                                       AlwaysProvider(accrue)])
+ANNUAL_UPDATER_PROVIDER = AnyProvider({'payout on January 1st': ScheduledProvider(payout, ANNUAL_PAYMENT_SCHEDULE),
+                                       'otherwise accrue': AlwaysProvider(accrue)})
 
 QUARTERLY_PAYMENT_SCHEDULE = AnySchedule({'First quarter': YearlySchedule(APRIL, 1),
                                           'Second quarter': YearlySchedule(JULY, 1),
                                           'Third quarter': YearlySchedule(OCTOBER, 1),
                                           'Fourth quarter': YearlySchedule(JANUARY, 1)})
-QUARTERLY_UPDATER_PROVIDER = AnyProvider([ScheduledProvider(payout, QUARTERLY_PAYMENT_SCHEDULE),
-                                          AlwaysProvider(accrue)])
+QUARTERLY_UPDATER_PROVIDER = AnyProvider({'payout on quarters': ScheduledProvider(payout, QUARTERLY_PAYMENT_SCHEDULE),
+                                          'otherwise accrue': AlwaysProvider(accrue)})
 
 DAILY_UPDATER_PROVIDER = AlwaysProvider(payout)

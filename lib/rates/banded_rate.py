@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
-from typing import List, Tuple, Dict
+from typing import Tuple, Sequence, Mapping
 
 from prettytable import PrettyTable, TableStyle
 
@@ -15,7 +15,7 @@ from ..utils.format import format_day
 @dataclass(frozen=True)
 class BandedRateCalculation(RateCalculation):
     rate: BandedRate
-    calculations: List[RateCalculation]
+    calculations: Sequence[RateCalculation]
 
     def __str__(self):
         table = PrettyTable(['Band', 'Rate', 'Balance', 'Accrued', 'Calculation'])
@@ -43,7 +43,7 @@ class BandedRateCalculation(RateCalculation):
 
 @dataclass(frozen=True)
 class BandedRate(Rate):
-    bands: List[Tuple[Band, Rate]]
+    bands: Sequence[Tuple[Band, Rate]] = ()
 
     def __str__(self):
         table = PrettyTable(['Band', 'Rate'])
@@ -66,5 +66,5 @@ class BandedRate(Rate):
                                      calculations=calculations)
 
 
-def create_banded_rate(raw_bands: Dict[Decimal, Rate]) -> BandedRate:
+def create_banded_rate(raw_bands: Mapping[Decimal, Rate]) -> BandedRate:
     return BandedRate(create_bands(raw_bands))

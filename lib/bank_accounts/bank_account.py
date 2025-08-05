@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
 from types import MappingProxyType
-from typing import List, Dict, Tuple
+from typing import Sequence, Mapping
 
 from prettytable import PrettyTable, TableStyle
 
@@ -15,16 +15,18 @@ from ..utils.format import format_day
 @dataclass(frozen=True)
 class BankAccount:
     current_date: date = date.today()
-    balance_changes: Tuple[BalanceChange] = ()
-    interest_applications: Tuple[InterestApplication] = ()
-    interest_accruals: Tuple[InterestAccrual] = ()
+    balance_changes: Sequence[BalanceChange] = ()
+    interest_applications: Sequence[InterestApplication] = ()
+    interest_accruals: Sequence[InterestAccrual] = ()
     balance: Decimal = Decimal('0.0')
     interest_applied: Decimal = Decimal('0.0')
     interest_accrued: Decimal = Decimal('0.0')
-    closing_balance: Dict[int, Decimal] = MappingProxyType({})
-    opening_balance: Dict[int, Decimal] = MappingProxyType({})
-    closing_interest_applied: Dict[int, Decimal] = MappingProxyType({})
-    opening_interest_applied: Dict[int, Decimal] = MappingProxyType({})
+    closing_balance: Mapping[int, Decimal] = MappingProxyType({})
+    opening_balance: Mapping[int, Decimal] = MappingProxyType({})
+    closing_interest_applied: Mapping[int, Decimal] = MappingProxyType({})
+    opening_interest_applied: Mapping[int, Decimal] = MappingProxyType({})
+    closing_interest_accrued: Mapping[int, Decimal] = MappingProxyType({})
+    opening_interest_accrued: Mapping[int, Decimal] = MappingProxyType({})
 
     def __str__(self):
         table = PrettyTable(['label', 'value'])

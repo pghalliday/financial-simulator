@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import Dict, List, Tuple, TypeVar
+from typing import List, Tuple, TypeVar, Mapping, Sequence
 
 T = TypeVar('T')
 
@@ -39,14 +39,14 @@ class Band:
             return [Decimal('0.0')] * len(amounts)
 
 
-def create_bands(raw_bands: Dict[Decimal, T]) -> List[Tuple[Band, T]]:
+def create_bands(raw_bands: Mapping[Decimal, T]) -> Sequence[Tuple[Band, T]]:
     bands = []
     sorted_bands = sorted(raw_bands.items())
     last_value: T | None = None
     last_above: Decimal | None = None
     for above, value in sorted_bands:
         if last_value is not None:
-            bands.append((Band(lower=last_above, size=above-last_above), last_value))
+            bands.append((Band(lower=last_above, size=above - last_above), last_value))
         last_value = value
         last_above = above
     bands.append((Band(lower=last_above, size=None), last_value))

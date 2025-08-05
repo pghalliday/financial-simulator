@@ -6,7 +6,7 @@ from .schedule import Schedule
 
 @dataclass(frozen=True)
 class UntilSchedule(Schedule):
-    until_date: date
+    until_date: date = date.today()
 
     def check(self, current_date: date) -> bool:
         return current_date < self.until_date

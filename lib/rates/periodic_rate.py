@@ -34,8 +34,8 @@ class PeriodicRateCalculation(RateCalculation):
 
 @dataclass(frozen=True)
 class PeriodicRate(Rate):
-    annual_rate: Decimal
-    period_count: int
+    annual_rate: Decimal = Decimal('0.0')
+    period_count: int = 1
 
     def __str__(self):
         return f'PeriodicRate: {self.period_count} periods: {self.annual_rate * 100:.2f}%'

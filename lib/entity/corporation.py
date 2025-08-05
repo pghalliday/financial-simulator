@@ -2,8 +2,9 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Dict
 
-from lib.asset.asset import Asset
 from lib.amount.cash_schedule import Schedule
+from lib.asset.asset import Asset
+
 from lib.entity.entity import Entity, EntityState
 from lib.salaries.salary import Salary, sum_salary_payments
 

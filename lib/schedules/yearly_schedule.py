@@ -1,3 +1,4 @@
+from calendar import JANUARY
 from dataclasses import dataclass
 from datetime import date
 
@@ -7,8 +8,8 @@ from ..utils.date import correct_day_of_the_month
 
 @dataclass(frozen=True)
 class YearlySchedule(Schedule):
-    month: int
-    day: int
+    month: int = JANUARY
+    day: int = 1
 
     def check(self, current_date: date) -> bool:
         if current_date.month == self.month:

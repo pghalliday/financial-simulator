@@ -5,49 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b1e87e8-9ba2-412a-95d2-72bea0c3c29d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/bank_accounts/README.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bank_accounts/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bank_accounts/balance_change.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bank_accounts/bank_account.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bank_accounts/bank_account_reducer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bank_accounts/interest_accrual.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/bank_accounts/interest_application.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/providers/map_provider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/asset/asset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/asset/bank_account.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/asset/investment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bank_accounts/README.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bank_accounts/README.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bank_accounts/bank_account.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bank_accounts/bank_account.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bank_accounts/bank_account_reducer.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bank_accounts/bank_account_reducer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/entity/corporation.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/entity/corporation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/entity/individual.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/entity/individual.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/providers/README.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/README.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/providers/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/providers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/providers/all_provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/all_provider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/providers/always_provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/always_provider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/providers/any_provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/any_provider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/providers/never_provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/never_provider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/providers/provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/provider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/providers/map_provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/map_provider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/providers/scheduled_provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/providers/scheduled_provider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/rates/README.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/README.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/rates/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/rates/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/rates/rate.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/rate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/rates/banded_rate.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/banded_rate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/rates/continuous_rate.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/continuous_rate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/rates/periodic_rate.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rates/periodic_rate.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedules/README.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/README.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedules/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schedules/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedules/all_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/all_schedule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedules/any_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/any_schedule.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schedules/daily_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/daily_schedule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedules/day_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/day_schedule.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schedules/filter_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/filter_schedule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedules/from_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/from_schedule.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schedules/modulo_schedule.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedules/monthly_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/monthly_schedule.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schedules/never_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/never_schedule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedules/range_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/range_schedule.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schedules/schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/schedule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedules/until_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/until_schedule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedules/weekly_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/weekly_schedule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schedules/yearly_schedule.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schedules/yearly_schedule.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simulation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/simulation.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/bands.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/format.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/format.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/rates/state/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/rates/state/state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/rates/state/state_updater.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/rates/state/state_updater.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/rates/state/updater_providers.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/rates/state/updater_providers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/simulation.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +122,7 @@
       <updated>1753531462646</updated>
       <workItem from="1753531463671" duration="45586000" />
       <workItem from="1753738863863" duration="73447000" />
-      <workItem from="1754037206612" duration="81007000" />
+      <workItem from="1754037206612" duration="85720000" />
     </task>
     <servers />
   </component>

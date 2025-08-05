@@ -1,4 +1,4 @@
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
 
@@ -26,4 +26,3 @@ class State:
         table.align['value'] = 'r'
         table.header = False
         return table.get_string()
-

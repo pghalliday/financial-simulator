@@ -34,7 +34,7 @@ class ContinuousRateCalculation(RateCalculation):
 
 @dataclass(frozen=True)
 class ContinuousRate(Rate):
-    annual_rate: Decimal
+    annual_rate: Decimal = Decimal('0.0')
 
     def __str__(self):
         return f'ContinuousRate: {self.annual_rate * 100:.2f}%'
