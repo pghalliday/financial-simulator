@@ -112,8 +112,8 @@ This provider provides its value according to the specified schedule. If not sch
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
 values = zip(days, map(ScheduledProvider('My value',
-                                         AnySchedule({'Tuesdays': WeeklySchedule(TUESDAY),
-                                                      'Thursdays': WeeklySchedule(THURSDAY)})).get, days))
+                                         AnySchedule((WeeklySchedule(TUESDAY),
+                                                      WeeklySchedule(THURSDAY)))).get, days))
 print(format_values(values))
 ```
 
@@ -161,9 +161,9 @@ the providers provide `None` then `None` will be provided.
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
 values = zip(days, map(AnyProvider(
-    {'days 0 to 3': ScheduledProvider('Value 1', UntilSchedule(START_DATE + timedelta(days=3))),
-     'days 4 to 7': ScheduledProvider('Value 2', UntilSchedule(START_DATE + timedelta(days=7))),
-     'days 8 to 9': ScheduledProvider('Value 3', UntilSchedule(START_DATE + timedelta(days=9)))}).get,
+    (ScheduledProvider('Value 1', UntilSchedule(START_DATE + timedelta(days=3))),
+     ScheduledProvider('Value 2', UntilSchedule(START_DATE + timedelta(days=7))),
+     ScheduledProvider('Value 3', UntilSchedule(START_DATE + timedelta(days=9))))).get,
                        days))
 print(format_values(values))
 ```
@@ -187,33 +187,28 @@ This provider takes a dictionary of providers and provides a corresponding dicti
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(10)]
-values = zip(days, map(AllProvider({'Always': AlwaysProvider('My value'),
-                                    'Scheduled': ScheduledProvider('My value',
-                                                                   AnySchedule({'Tuesdays': WeeklySchedule(TUESDAY),
-                                                                                'Thursdays': WeeklySchedule(
-                                                                                    THURSDAY)})),
-                                    'Any': AnyProvider(
-                                        {'days 0 to 3': ScheduledProvider('Value 1', UntilSchedule(
-                                            START_DATE + timedelta(days=3))),
-                                         'days 4 to 7': ScheduledProvider('Value 2', UntilSchedule(
-                                             START_DATE + timedelta(days=7))),
-                                         'days 8 to 9': ScheduledProvider('Value 3',
-                                                                          UntilSchedule(
-                                                                              START_DATE + timedelta(days=9)))})}).get,
+values = zip(days, map(AllProvider((AlwaysProvider('Always value'),
+                                    ScheduledProvider('Sometimes value', AnySchedule((WeeklySchedule(TUESDAY),
+                                                                                      WeeklySchedule(THURSDAY)))),
+                                    AnyProvider(
+                                        (ScheduledProvider('Value 1', UntilSchedule(START_DATE + timedelta(days=3))),
+                                         ScheduledProvider('Value 2', UntilSchedule(START_DATE + timedelta(days=7))),
+                                         ScheduledProvider('Value 3',
+                                                           UntilSchedule(START_DATE + timedelta(days=9))))))).get,
                        days))
 print(format_values(values))
 ```
 
-    [2025-08-05 : Tue : {'Always': 'My value', 'Scheduled': 'My value', 'Any': 'Value 1'}
-     2025-08-06 : Wed : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 1'}
-     2025-08-07 : Thu : {'Always': 'My value', 'Scheduled': 'My value', 'Any': 'Value 1'}
-     2025-08-08 : Fri : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 2'}
-     2025-08-09 : Sat : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 2'}
-     2025-08-10 : Sun : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 2'}
-     2025-08-11 : Mon : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 2'}
-     2025-08-12 : Tue : {'Always': 'My value', 'Scheduled': 'My value', 'Any': 'Value 3'}
-     2025-08-13 : Wed : {'Always': 'My value', 'Scheduled': None, 'Any': 'Value 3'}
-     2025-08-14 : Thu : {'Always': 'My value', 'Scheduled': 'My value', 'Any': None}]
+    [2025-08-05 : Tue : ['Always value', 'Sometimes value', 'Value 1']
+     2025-08-06 : Wed : ['Always value', 'Value 1']
+     2025-08-07 : Thu : ['Always value', 'Sometimes value', 'Value 1']
+     2025-08-08 : Fri : ['Always value', 'Value 2']
+     2025-08-09 : Sat : ['Always value', 'Value 2']
+     2025-08-10 : Sun : ['Always value', 'Value 2']
+     2025-08-11 : Mon : ['Always value', 'Value 2']
+     2025-08-12 : Tue : ['Always value', 'Sometimes value', 'Value 3']
+     2025-08-13 : Wed : ['Always value', 'Value 3']
+     2025-08-14 : Thu : ['Always value', 'Sometimes value']]
 
 
 ## MapProvider
@@ -225,9 +220,9 @@ This provider uses the specified transform function to transform the values prov
 days = [START_DATE + timedelta(days=i) for i in range(10)]
 values = zip(days, map(MapProvider(transform=lambda value: value.upper(),
                                    provider=ScheduledProvider(value='My value',
-                                                              schedule=AnySchedule({'Tuesdays': WeeklySchedule(TUESDAY),
-                                                                                    'Thursdays': WeeklySchedule(
-                                                                                        THURSDAY)}))).get, days))
+                                                              schedule=AnySchedule((WeeklySchedule(TUESDAY),
+                                                                                    WeeklySchedule(
+                                                                                        THURSDAY))))).get, days))
 print(format_values(values))
 ```
 

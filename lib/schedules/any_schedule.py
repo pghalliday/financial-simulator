@@ -1,14 +1,13 @@
 from dataclasses import dataclass
 from datetime import date
-from types import MappingProxyType
-from typing import Mapping
+from typing import Sequence
 
 from .schedule import Schedule
 
 
 @dataclass(frozen=True)
 class AnySchedule(Schedule):
-    children: Mapping[str, Schedule] = MappingProxyType({})
+    children: Sequence[Schedule] = ()
 
     def check(self, current_date: date) -> bool:
-        return any([child.check(current_date) for child in self.children.values()])
+        return any([child.check(current_date) for child in self.children])

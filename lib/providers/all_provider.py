@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from datetime import date
-from types import MappingProxyType
-from typing import TypeVar, Dict, Mapping
+from typing import TypeVar, Sequence
 
 from .provider import Provider
 
@@ -9,8 +8,11 @@ T = TypeVar('T')
 
 
 @dataclass(frozen=True)
-class AllProvider(Provider[Dict[str, T]]):
-    providers: Mapping[str, Provider[T]] = MappingProxyType({})
+class AllProvider(Provider[Sequence[T]]):
+    providers: Sequence[Provider[T]] = ()
 
-    def get(self, current_date: date) -> Dict[str, T]:
-        return {k: provider.get(current_date) for k, provider in self.providers.items()}
+    def get(self, current_date: date) -> Sequence[T]:
+        return [x
+                for x
+                in [provider.get(current_date) for provider in self.providers]
+                if x is not None]

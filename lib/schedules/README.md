@@ -289,11 +289,10 @@ For example, to get a quarterly schedule, you could create four Yearly schedules
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(1000)]
-matches = filter(AnySchedule({
-    'Every January 1': YearlySchedule(JANUARY, 1),
-    'Every April 1': YearlySchedule(APRIL, 1),
-    'Every July 1': YearlySchedule(JULY, 1),
-    'Every October 1': YearlySchedule(OCTOBER, 1)}).check, days)
+matches = filter(AnySchedule((YearlySchedule(JANUARY, 1),
+                              YearlySchedule(APRIL, 1),
+                              YearlySchedule(JULY, 1),
+                              YearlySchedule(OCTOBER, 1))).check, days)
 print(format_days(matches))
 ```
 
@@ -320,9 +319,8 @@ For example, to get a weekly schedule but only from a certain date.
 
 ```python
 days = [START_DATE + timedelta(days=i) for i in range(50)]
-matches = filter(AllSchedule({
-    'Every Tuesday': WeeklySchedule(TUESDAY),
-    'From 10 days from now': FromSchedule(START_DATE + timedelta(days=10))}).check, days)
+matches = filter(AllSchedule((WeeklySchedule(TUESDAY),
+                              FromSchedule(START_DATE + timedelta(days=10)))).check, days)
 print(format_days(matches))
 ```
 
