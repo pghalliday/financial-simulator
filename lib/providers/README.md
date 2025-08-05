@@ -13,9 +13,10 @@ from lib.providers import \
     AlwaysProvider, \
     ScheduledProvider, \
     AnyProvider, \
-    AllProvider
-from lib.providers.map_provider import MapProvider
-from lib.providers.sequence_provider import SequenceProvider
+    AllProvider, \
+    SequenceProvider, \
+    FunctionProvider, \
+    MapProvider
 from lib.schedules import \
     WeeklySchedule, \
     AnySchedule, \
@@ -126,6 +127,29 @@ print(format_values(values))
      2025-08-12 : Tue : My value
      2025-08-13 : Wed : None
      2025-08-14 : Thu : My value]
+
+
+## FunctionProvider
+
+This provider uses the specified function to map the current date to a value.
+
+
+```python
+days = [START_DATE + timedelta(days=i) for i in range(10)]
+values = zip(days, map(FunctionProvider(lambda current_date: current_date.weekday()).get, days))
+print(format_values(values))
+```
+
+    [2025-08-05 : Tue : 1
+     2025-08-06 : Wed : 2
+     2025-08-07 : Thu : 3
+     2025-08-08 : Fri : 4
+     2025-08-09 : Sat : 5
+     2025-08-10 : Sun : 6
+     2025-08-11 : Mon : 0
+     2025-08-12 : Tue : 1
+     2025-08-13 : Wed : 2
+     2025-08-14 : Thu : 3]
 
 
 ## AnyProvider
