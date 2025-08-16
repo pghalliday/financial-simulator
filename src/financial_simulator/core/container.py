@@ -3,10 +3,10 @@ from dataclasses import dataclass, replace
 from datetime import date
 from typing import Tuple, Self, Sequence, TypeVar, Generic
 
-from financial_simulator.core.action import Action
-from financial_simulator.core.actor import Actor
-from financial_simulator.core.event import Event
-from financial_simulator.core.state import State
+from .action import Action
+from .actor import Actor
+from .event import Event
+from .state import State
 
 E = TypeVar('E', bound=Event)
 A = TypeVar('A', bound=Action)

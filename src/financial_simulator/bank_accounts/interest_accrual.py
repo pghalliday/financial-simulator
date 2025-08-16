@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
 
-from financial_simulator.util.rates import RateCalculation
+from financial_simulator.rates import RateCalculation
 
 
 @dataclass(frozen=True)

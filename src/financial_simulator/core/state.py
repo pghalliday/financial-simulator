@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Tuple, Self, Sequence, TypeVar, Generic
 
-from financial_simulator.core.action import Action
-from financial_simulator.core.event import Event
+from .action import Action
+from .event import Event
 
 E = TypeVar('E', bound=Event)
 A = TypeVar('A', bound=Action)

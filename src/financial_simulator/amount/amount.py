@@ -1,6 +1,6 @@
 from datetime import date
 
-from financial_simulator.core.schedule import Schedule
+from financial_simulator.schedules.schedule import Schedule
 
 
 class Amount(object):

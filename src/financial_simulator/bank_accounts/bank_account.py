@@ -8,12 +8,14 @@ from typing import Sequence, Mapping, Tuple, Self
 
 from prettytable import PrettyTable, TableStyle
 
-from financial_simulator.bank_accounts.balance_change import BalanceChange
-from financial_simulator.bank_accounts.interest_accrual import InterestAccrual
-from financial_simulator.bank_accounts.interest_application import InterestApplication
-from financial_simulator.core import Schedule, Event, Actor, Action, Provider
+from .balance_change import BalanceChange
+from .interest_accrual import InterestAccrual
+from .interest_application import InterestApplication
+from financial_simulator.core import Event, Actor, Action
+from financial_simulator.schedules import Schedule
+from financial_simulator.providers import Provider
+from financial_simulator.rates import Rate
 from financial_simulator.util.format import format_day
-from financial_simulator.util.rates import Rate
 
 
 @dataclass(frozen=True)

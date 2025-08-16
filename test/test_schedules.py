@@ -4,8 +4,7 @@ from datetime import date, timedelta
 from itertools import islice
 from typing import Tuple, Generator, Set
 
-from financial_simulator.core import Schedule
-from financial_simulator.util.schedules import NeverSchedule, DailySchedule, DaySchedule, MonthlySchedule, \
+from financial_simulator.schedules import Schedule, NeverSchedule, DailySchedule, DaySchedule, MonthlySchedule, \
     WeeklySchedule, YearlySchedule, FromSchedule, UntilSchedule, RangeSchedule, AnySchedule, AllSchedule, \
     FunctionSchedule
 

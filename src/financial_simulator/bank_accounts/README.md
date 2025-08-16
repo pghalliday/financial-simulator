@@ -10,10 +10,10 @@ from itertools import islice
 
 from financial_simulator import generate_states
 from financial_simulator.bank_accounts import BankAccount
+from financial_simulator.providers import AlwaysProvider
+from financial_simulator.rates import ContinuousRate
+from financial_simulator.schedules import DailySchedule
 from financial_simulator.util.date import days_in_year
-from financial_simulator.util.providers import AlwaysProvider
-from financial_simulator.util.rates import ContinuousRate
-from financial_simulator.util.schedules import DailySchedule
 
 decimal_context = getcontext()
 decimal_context.traps[FloatOperation] = True

@@ -2,9 +2,8 @@ from calendar import JANUARY
 from datetime import date
 from decimal import Decimal
 
-from financial_simulator.util.rates import ContinuousRate, ContinuousRateCalculation, PeriodicRate, \
-    PeriodicRateCalculation, create_banded_rate
-from financial_simulator.util.rates.banded_rate import BandedRateCalculation
+from financial_simulator.rates import ContinuousRate, ContinuousRateCalculation, PeriodicRate, \
+    PeriodicRateCalculation, create_banded_rate, BandedRateCalculation
 
 
 def test_continuous_rate():
