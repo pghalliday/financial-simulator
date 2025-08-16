@@ -1,12 +1,13 @@
 from calendar import JANUARY, TUESDAY, MARCH, FEBRUARY, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, \
-    DECEMBER
+    DECEMBER, SATURDAY
 from datetime import date, timedelta
 from itertools import islice
 from typing import Tuple, Generator, Set
 
 from financial_simulator.core import Schedule
 from financial_simulator.util.schedules import NeverSchedule, DailySchedule, DaySchedule, MonthlySchedule, \
-    WeeklySchedule, YearlySchedule, FromSchedule, UntilSchedule, RangeSchedule, AnySchedule, AllSchedule
+    WeeklySchedule, YearlySchedule, FromSchedule, UntilSchedule, RangeSchedule, AnySchedule, AllSchedule, \
+    FunctionSchedule
 
 
 def generate(schedule: Schedule, start_date: date) -> Generator[Tuple[date, bool | None]]:
@@ -108,6 +109,7 @@ def test_monthly_schedule():
           },
           completed_from=None)
 
+
 def test_yearly_schedule():
     # We choose day 30th February to verify rounding
     check(schedule=YearlySchedule(FEBRUARY, 30),
@@ -124,7 +126,6 @@ def test_yearly_schedule():
           completed_from=None)
 
 
-
 def test_day_schedule():
     check(schedule=DaySchedule(date(2021, MARCH, 7)),
           start_date=date(2021, JANUARY, 1),
@@ -133,6 +134,7 @@ def test_day_schedule():
               date(2021, MARCH, 7),
           },
           completed_from=date(2021, MARCH, 8))
+
 
 def test_from_schedule():
     check(schedule=FromSchedule(date(2021, MARCH, 20)),
@@ -154,6 +156,7 @@ def test_from_schedule():
           },
           completed_from=None)
 
+
 def test_until_schedule():
     check(schedule=UntilSchedule(date(2021, JANUARY, 7)),
           start_date=date(2021, JANUARY, 1),
@@ -167,6 +170,7 @@ def test_until_schedule():
               date(2021, JANUARY, 6),
           },
           completed_from=date(2021, JANUARY, 7))
+
 
 def test_range_schedule():
     check(schedule=RangeSchedule(from_date=date(2021, JANUARY, 7),
@@ -184,6 +188,29 @@ def test_range_schedule():
           },
           completed_from=date(2021, JANUARY, 14))
 
+
+def test_function_schedule():
+    check(schedule=FunctionSchedule(
+        function=lambda current_date: current_date.weekday() < SATURDAY if current_date < date(2021, JANUARY,
+                                                                                               16) else None),
+          start_date=date(2021, JANUARY, 1),
+          number_of_days=30,
+          scheduled_days={
+              date(2021, JANUARY, 1),
+              date(2021, JANUARY, 4),
+              date(2021, JANUARY, 5),
+              date(2021, JANUARY, 6),
+              date(2021, JANUARY, 7),
+              date(2021, JANUARY, 8),
+              date(2021, JANUARY, 11),
+              date(2021, JANUARY, 12),
+              date(2021, JANUARY, 13),
+              date(2021, JANUARY, 14),
+              date(2021, JANUARY, 15),
+          },
+          completed_from=date(2021, JANUARY, 16))
+
+
 def test_any_schedule():
     check(schedule=AnySchedule((DaySchedule(date(2021, JANUARY, 17)),
                                 DaySchedule(date(2021, FEBRUARY, 10)),
@@ -197,10 +224,11 @@ def test_any_schedule():
           },
           completed_from=date(2021, MARCH, 25))
 
+
 def test_all_schedule():
     check(schedule=AllSchedule((UntilSchedule(date(2021, JANUARY, 17)),
                                 FromSchedule(date(2021, JANUARY, 10)))),
-    start_date=date(2021, JANUARY, 1),
+          start_date=date(2021, JANUARY, 1),
           number_of_days=90,
           scheduled_days={
               date(2021, JANUARY, 10),
