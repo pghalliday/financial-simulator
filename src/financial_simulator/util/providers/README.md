@@ -5,28 +5,27 @@ valid for that date. If the provider has not completed, it will return a new pro
 in the next call and a sequence of values. If the provider has completed then it will return
 `None`.
 
-
 ```python
 from calendar import TUESDAY, THURSDAY
 from datetime import date, timedelta
 
 from doc.src.financial_simulator.util.providers import print_provided
-from financial_simulator.util.format import \
+from financial_simulator.util.format import
     format_day
-from financial_simulator.util.providers import \
-    NeverProvider, \
-    AlwaysProvider, \
-    ScheduledProvider, \
-    NextProvider, \
-    MergeProvider, \
-    FunctionProvider, \
-    MapProvider, \
-    FlatMapProvider, \
-    MergeMapProvider, \
+from financial_simulator.util.providers import
+    NeverProvider,
+    AlwaysProvider,
+    ScheduledProvider,
+    NextProvider,
+    MergeProvider,
+    FunctionProvider,
+    MapProvider,
+    FlatMapProvider,
+    MergeMapProvider,
     create_sequence_provider
-from financial_simulator.util.schedules import \
-    WeeklySchedule, \
-    AnySchedule, \
+from financial_simulator.util.schedules import
+    WeeklySchedule,
+    AnySchedule,
     UntilSchedule
 
 START_DATE = date.today()
@@ -41,11 +40,9 @@ print(f'Start Date: {format_day(START_DATE)}')
     Start Date: 2025-08-16 : Sat
     Start Date: 2025-08-16 : Sat
 
-
 ## NeverProvider
 
 This is a trivial provider that always provides an empty sequence.
-
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -65,11 +62,9 @@ print_provided(initial_date=START_DATE,
      2025-08-25 : Mon : None]
     Completed at: 2025-08-16 : Sat
 
-
 ## AlwaysProvider
 
 This is a trivial provider that always provides a single value sequence.
-
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -89,12 +84,10 @@ print_provided(initial_date=START_DATE,
      2025-08-25 : Mon : ('My value',)]
     Completed at: Not completed
 
-
 ## ScheduledProvider
 
 This provider provides a single value sequence according to the specified schedule. If not scheduled it
 provides an empty sequence.
-
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -116,11 +109,9 @@ print_provided(initial_date=START_DATE,
      2025-08-25 : Mon : ()]
     Completed at: Not completed
 
-
 ## FunctionProvider
 
 This provider uses the specified function to map the current date to an instance of `Provided`.
-
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -140,12 +131,10 @@ print_provided(initial_date=START_DATE,
      2025-08-25 : Mon : 0]
     Completed at: Not completed
 
-
 ## NextProvider
 
 This provider takes a sequence of providers and provides the values from the first provider that provides
 a non-empty sequence of values.
-
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -168,12 +157,10 @@ print_provided(initial_date=START_DATE,
      2025-08-25 : Mon : None]
     Completed at: 2025-08-25 : Mon
 
-
 ## MergeProvider
 
 This provider takes a sequence of providers and provides a corresponding sequence of the merged values provided
 by those providers.
-
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -204,11 +191,9 @@ print_provided(initial_date=START_DATE,
      2025-08-25 : Mon : ('Always value',)]
     Completed at: Not completed
 
-
 ## MapProvider
 
 This provider uses the specified transform function to transform the values provided by the specified provider
-
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -232,13 +217,11 @@ print_provided(initial_date=START_DATE,
      2025-08-25 : Mon : ()]
     Completed at: Not completed
 
-
 ## FlatMapProvider
 
 This provider, like the `MapProvider`, uses the specified transform function to transform the values provided
 by the specified provider. However, in this case the transform function should return a sequence and these
 sequences will be flattened in the resulting `Provided` instance.
-
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -263,13 +246,11 @@ print_provided(initial_date=START_DATE,
      2025-08-25 : Mon : ()]
     Completed at: Not completed
 
-
 ## MergeMapProvider
 
 This provider, like the `MapProvider`, uses the specified transform function to transform the values provided
 by the specified provider. However, in this case, the transform function should return a new `Provider` instance.
 The values from these providers will be merged in future resulting `Provided` instances.
-
 
 ```python
 sequence_days = [START_DATE + timedelta(days=i) for i in range(10)]
@@ -301,15 +282,14 @@ print_provided(initial_date=START_DATE,
      2025-08-30 : Sat : None]
     Completed at: 2025-08-30 : Sat
 
-
 ## Factories
 
 The following factory methods are available to construct combinations of providers to implement common patterns.
 
 ### create_sequence_provider
 
-This factory takes a mapping of days to values and returns a `Provider` that will provide the given values on the specified days.
-
+This factory takes a mapping of days to values and returns a `Provider` that will provide the given values on the
+specified days.
 
 ```python
 sequence_days = [START_DATE + timedelta(days=i) for i in range(9)]

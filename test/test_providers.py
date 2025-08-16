@@ -90,15 +90,15 @@ def test_function_provider():
     check(provider=FunctionProvider(
         lambda current_date: (f'Hi {current_date.strftime("%A")}!',) if current_date < date(2021, JANUARY,
                                                                                             5) else None),
-          start_date=date(2021, JANUARY, 1),
-          number_of_days=10,
-          provided_days={
-              date(2021, JANUARY, 1): ('Hi Friday!',),
-              date(2021, JANUARY, 2): ('Hi Saturday!',),
-              date(2021, JANUARY, 3): ('Hi Sunday!',),
-              date(2021, JANUARY, 4): ('Hi Monday!',),
-          },
-          completed_from=date(2021, JANUARY, 5))
+        start_date=date(2021, JANUARY, 1),
+        number_of_days=10,
+        provided_days={
+            date(2021, JANUARY, 1): ('Hi Friday!',),
+            date(2021, JANUARY, 2): ('Hi Saturday!',),
+            date(2021, JANUARY, 3): ('Hi Sunday!',),
+            date(2021, JANUARY, 4): ('Hi Monday!',),
+        },
+        completed_from=date(2021, JANUARY, 5))
 
 
 def test_map_provider():
@@ -279,6 +279,7 @@ def test_merge_map_provider_gaps():
               date(2021, JANUARY, 12): (250,),
           },
           completed_from=date(2021, JANUARY, 13))
+
 
 def test_create_sequence_provider():
     check(provider=create_sequence_provider({date(2021, JANUARY, 5): 200,

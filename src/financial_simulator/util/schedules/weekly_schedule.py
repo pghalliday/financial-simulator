@@ -1,4 +1,3 @@
-from calendar import MONDAY
 from dataclasses import dataclass
 from datetime import date
 from typing import Self, Tuple

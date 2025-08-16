@@ -5,26 +5,25 @@ is in the schedule. If the schedule is not complete, it will return a tuple of a
 use (in case of a state change) and a boolean indicating whether the date is in the schedule.
 If the schedule is complete then it will return `None`
 
-
 ```python
 from calendar import TUESDAY, SATURDAY, JANUARY, FEBRUARY, APRIL, JULY, OCTOBER
 from datetime import date, timedelta
 
 from doc.src.financial_simulator.util.schedules import print_scheduled
-from financial_simulator.util.format import \
+from financial_simulator.util.format import
     format_day
-from financial_simulator.util.schedules import \
-    NeverSchedule, \
-    DailySchedule, \
-    DaySchedule, \
-    FromSchedule, \
-    UntilSchedule, \
-    RangeSchedule, \
-    WeeklySchedule, \
-    MonthlySchedule, \
-    YearlySchedule, \
-    FunctionSchedule, \
-    AnySchedule, \
+from financial_simulator.util.schedules import
+    NeverSchedule,
+    DailySchedule,
+    DaySchedule,
+    FromSchedule,
+    UntilSchedule,
+    RangeSchedule,
+    WeeklySchedule,
+    MonthlySchedule,
+    YearlySchedule,
+    FunctionSchedule,
+    AnySchedule,
     AllSchedule
 
 START_DATE = date.today()
@@ -34,7 +33,6 @@ print(f'Start Date: {format_day(START_DATE)}')
 
     Start Date: 2025-08-16 : Sat
 
-
 ## Primitive schedules
 
 The following schedules are the basic building blocks of schedules.
@@ -42,7 +40,6 @@ The following schedules are the basic building blocks of schedules.
 ### NeverSchedule
 
 This is a trivial schedule in that it always returns False
-
 
 ```python
 print_scheduled(initial_date=START_DATE,
@@ -53,11 +50,9 @@ print_scheduled(initial_date=START_DATE,
     []
     Completed at: 2025-08-16 : Sat
 
-
 ### DailySchedule
 
 This is a trivial schedule in that it always returns True
-
 
 ```python
 print_scheduled(initial_date=START_DATE,
@@ -77,11 +72,9 @@ print_scheduled(initial_date=START_DATE,
      2025-08-25 : Mon]
     Completed at: Not completed
 
-
 ### DaySchedule
 
 This schedule will only match on the specified day
-
 
 ```python
 print_scheduled(initial_date=START_DATE,
@@ -92,11 +85,9 @@ print_scheduled(initial_date=START_DATE,
     [2025-10-05 : Sun]
     Completed at: 2025-10-06 : Mon
 
-
 ### FromSchedule
 
 This schedule will match on all dates after and including the specified day
-
 
 ```python
 print_scheduled(initial_date=START_DATE,
@@ -116,11 +107,9 @@ print_scheduled(initial_date=START_DATE,
      2025-09-04 : Thu]
     Completed at: Not completed
 
-
 ### UntilSchedule
 
 This schedule will match on all dates up to but not including the specified day
-
 
 ```python
 print_scheduled(initial_date=START_DATE,
@@ -140,12 +129,10 @@ print_scheduled(initial_date=START_DATE,
      2025-08-25 : Mon]
     Completed at: 2025-08-26 : Tue
 
-
 ### RangeSchedule
 
 This schedule will match on all dates after and including the `from_date` up to but not including
 the `until_date`
-
 
 ```python
 print_scheduled(initial_date=START_DATE,
@@ -166,11 +153,9 @@ print_scheduled(initial_date=START_DATE,
      2025-09-04 : Thu]
     Completed at: 2025-09-05 : Fri
 
-
 ### WeeklySchedule
 
 This schedule will match on the specified day of the week
-
 
 ```python
 print_scheduled(initial_date=START_DATE,
@@ -187,14 +172,12 @@ print_scheduled(initial_date=START_DATE,
      2025-09-30 : Tue]
     Completed at: Not completed
 
-
 ### MonthlySchedule
 
 This schedule will match on the specified day of the month.
 
 > **_NB._** If the current month does not have the specified day (e.g., there is no 30th of February in any year)
-then the last day of the month will match.
-
+> then the last day of the month will match.
 
 ```python
 print_scheduled(initial_date=START_DATE,
@@ -220,14 +203,12 @@ print_scheduled(initial_date=START_DATE,
      2026-11-30 : Mon]
     Completed at: Not completed
 
-
 ### YearlySchedule
 
 This schedule will match on the specified day of specified month.
 
 > **_NB._** If the current month does not have the specified day (e.g., there is no 30th of February in any year)
-then the last day of the month will match.
-
+> then the last day of the month will match.
 
 ```python
 print_scheduled(initial_date=START_DATE,
@@ -251,12 +232,10 @@ print_scheduled(initial_date=START_DATE,
      2039-02-28 : Mon]
     Completed at: Not completed
 
-
 ### FunctionSchedule
 
 This is a generic schedule that takes a callback function that will be used to check the supplied date.
 If the function returns None, then the schedule will be considered complete.
-
 
 ```python
 def func(current_date: date) -> bool | None:
@@ -284,7 +263,6 @@ print_scheduled(initial_date=START_DATE,
      2025-09-04 : Thu]
     Completed at: Not completed
 
-
 ## Schedule operators
 
 The following schedules take other schedules and apply an operator to them.
@@ -295,7 +273,6 @@ This represents a boolean `OR` operator for schedules. If any of the child sched
 then this schedule will match.
 
 For example, to get a quarterly schedule, you could create four Yearly schedules and Any them together.
-
 
 ```python
 print_scheduled(initial_date=START_DATE,
@@ -319,14 +296,12 @@ print_scheduled(initial_date=START_DATE,
      2028-04-01 : Sat]
     Completed at: Not completed
 
-
 ### AllSchedule
 
 This represents a boolean `AND` operator for schedules. Only if all the child schedules match the current date,
 will this schedule match.
 
 For example, to get a weekly schedule but only until a certain date.
-
 
 ```python
 print_scheduled(initial_date=START_DATE,

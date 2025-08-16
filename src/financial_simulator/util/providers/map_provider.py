@@ -3,7 +3,6 @@ from datetime import date
 from typing import TypeVar, Callable, Generic, Sequence, Self, Tuple
 
 from financial_simulator.core import Provider
-from financial_simulator.util.providers.never_provider import NeverProvider
 
 T = TypeVar('T')
 U = TypeVar('U')

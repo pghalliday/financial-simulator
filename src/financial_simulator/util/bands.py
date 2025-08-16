@@ -19,7 +19,7 @@ class Band:
             return 'always' if self.size is None else f'up to {self.lower + self.size:.2f}'
         return f'above {self.lower:.2f}' if self.size is None else f'from {self.lower:.2f} to {self.lower + self.size:.2f}'
 
-    def portion(self, amounts: List[Decimal]) -> List[Decimal]:
+    def portion(self, amounts: Sequence[Decimal]) -> Sequence[Decimal]:
         total = sum(amounts)
         remainder = total - self.lower
         if remainder > Decimal('0.0'):

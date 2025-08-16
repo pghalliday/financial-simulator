@@ -3,7 +3,6 @@ from datetime import date
 from typing import TypeVar, Sequence, Self, Tuple
 
 from financial_simulator.core import Schedule, Provider
-from financial_simulator.util.schedules import NeverSchedule
 
 T = TypeVar('T')
 

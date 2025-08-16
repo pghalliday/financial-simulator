@@ -193,22 +193,22 @@ def test_function_schedule():
     check(schedule=FunctionSchedule(
         function=lambda current_date: current_date.weekday() < SATURDAY if current_date < date(2021, JANUARY,
                                                                                                16) else None),
-          start_date=date(2021, JANUARY, 1),
-          number_of_days=30,
-          scheduled_days={
-              date(2021, JANUARY, 1),
-              date(2021, JANUARY, 4),
-              date(2021, JANUARY, 5),
-              date(2021, JANUARY, 6),
-              date(2021, JANUARY, 7),
-              date(2021, JANUARY, 8),
-              date(2021, JANUARY, 11),
-              date(2021, JANUARY, 12),
-              date(2021, JANUARY, 13),
-              date(2021, JANUARY, 14),
-              date(2021, JANUARY, 15),
-          },
-          completed_from=date(2021, JANUARY, 16))
+        start_date=date(2021, JANUARY, 1),
+        number_of_days=30,
+        scheduled_days={
+            date(2021, JANUARY, 1),
+            date(2021, JANUARY, 4),
+            date(2021, JANUARY, 5),
+            date(2021, JANUARY, 6),
+            date(2021, JANUARY, 7),
+            date(2021, JANUARY, 8),
+            date(2021, JANUARY, 11),
+            date(2021, JANUARY, 12),
+            date(2021, JANUARY, 13),
+            date(2021, JANUARY, 14),
+            date(2021, JANUARY, 15),
+        },
+        completed_from=date(2021, JANUARY, 16))
 
 
 def test_any_schedule():
