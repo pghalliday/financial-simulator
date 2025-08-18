@@ -101,7 +101,7 @@ def test_banded_rate():
                                                             accrued=accrued,
                                                             calculation=((band_2_start * daily_rate_1) +
                                                                          ((
-                                                                                      band_3_start - band_2_start) * daily_rate_2) +
+                                                                                  band_3_start - band_2_start) * daily_rate_2) +
                                                                          ((
                                                                                   balance + accrued - band_3_start) * daily_rate_3)),
                                                             calculations=(
@@ -119,7 +119,7 @@ def test_banded_rate():
                                                                                           accrued=Decimal('0.0'),
                                                                                           daily_rate=daily_rate_2,
                                                                                           calculation=(
-                                                                                                                  band_3_start - band_2_start) * daily_rate_2),
+                                                                                                              band_3_start - band_2_start) * daily_rate_2),
                                                                 ContinuousRateCalculation(rate=continuous_rate_3,
                                                                                           current_date=date(2021,
                                                                                                             JANUARY, 1),
@@ -127,4 +127,4 @@ def test_banded_rate():
                                                                                           accrued=accrued,
                                                                                           daily_rate=daily_rate_3,
                                                                                           calculation=(
-                                                                                                                  balance + accrued - band_3_start) * daily_rate_3)))
+                                                                                                              balance + accrued - band_3_start) * daily_rate_3)))
