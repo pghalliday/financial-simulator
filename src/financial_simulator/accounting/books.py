@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date
 from typing import Self, Sequence
 
@@ -13,19 +13,15 @@ class Books:
     ledger: Account
 
     def enter_transaction(self,
-                          date: date,
+                          transaction_date: date,
                           description: str,
                           changes: Sequence[Change]) -> Self:
-        transaction_index = len(self.journal)
-        return Books(journal=tuple(self.journal) + (Transaction(date=date,
+        return Books(journal=tuple(self.journal) + (Transaction(transaction_date=transaction_date,
                                                                 description=description,
                                                                 changes=changes),),
-                     ledger=self.ledger.enter_transaction(transaction_index=transaction_index,
-                                                          changes=changes))
+                     ledger=self.ledger.enter_transaction(changes))
 
-    def open_year(self, date: date) -> Self:
-        ledger, changes = self.ledger.open_year()
-        return Books(journal=(Transaction(date=date,
-                                          description='Open year',
-                                          changes=changes),),
-                     ledger=ledger)
+    def open_journal(self, transaction_date: date) -> Self:
+        return replace(self, journal=(Transaction(transaction_date=transaction_date,
+                                                  description='Open journal',
+                                                  changes=self.ledger.get_open_changes()),))

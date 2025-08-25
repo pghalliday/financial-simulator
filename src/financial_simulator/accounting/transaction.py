@@ -8,7 +8,7 @@ from .change import Change
 
 @dataclass(frozen=True)
 class Transaction:
-    date: date
+    transaction_date: date
     description: str
     changes: Sequence[Change]
 
