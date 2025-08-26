@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Self, Tuple
 
-from .schedule import Schedule
 from financial_simulator.util.date import correct_day_of_the_month
+from .schedule import Schedule
 
 
 @dataclass(frozen=True)

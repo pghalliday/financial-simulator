@@ -2,8 +2,8 @@ from dataclasses import dataclass, replace
 from datetime import date
 from typing import TypeVar, Sequence, Self, Tuple
 
-from .provider import Provider
 from financial_simulator.schedules import Schedule
+from .provider import Provider
 
 T = TypeVar('T')
 

@@ -1,9 +1,9 @@
 from datetime import date
 from typing import TypeVar, Mapping
 
-from .provider import Provider
 from financial_simulator.schedules import DaySchedule
 from .merge_provider import MergeProvider
+from .provider import Provider
 from .scheduled_provider import ScheduledProvider
 
 T = TypeVar('T')

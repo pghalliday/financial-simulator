@@ -29,8 +29,8 @@ $(info )
 	init_project \
 	create_notebook_files \
 	clean \
-	clean_papermill \
-	clean_notebook_files
+	clean_notebook_files \
+	clean_markdown_files
 
 .PRECIOUS: \
 	%.papermill
@@ -61,3 +61,6 @@ clean: clean_notebook_files
 
 clean_notebook_files:
 	find $(DOC_DIR) -name "*.ipynb" -type f -delete
+
+clean_markdown_files:
+	rm $(EXPECTED_MARKDOWN_FILES)

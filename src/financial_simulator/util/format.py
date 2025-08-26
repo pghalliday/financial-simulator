@@ -1,8 +1,6 @@
 from datetime import date
 from typing import Tuple, Sequence, TypeVar
 
-from financial_simulator.core import Event, EventEmitter
-
 T = TypeVar('T')
 
 
@@ -16,8 +14,3 @@ def format_days(days: Sequence[date]) -> str:
 
 def format_provided(values: Sequence[Tuple[date, Sequence[T] | None]]) -> str:
     return '[' + '\n '.join([f'{format_day(day)} : {value}' for day, value in values]) + ']'
-
-
-def format_events(states_and_events: Sequence[Tuple[EventEmitter, Sequence[Event]]]) -> str:
-    return '[' + '\n '.join(
-        [f'{format_day(provider.current_date)} : {events}' for provider, events in states_and_events]) + ']'

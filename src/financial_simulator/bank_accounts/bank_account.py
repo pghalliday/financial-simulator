@@ -6,16 +6,16 @@ from decimal import Decimal
 from types import MappingProxyType
 from typing import Sequence, Mapping, Tuple, Self
 
+from financial_simulator.core import Event, Actor, Action
 from prettytable import PrettyTable, TableStyle
 
+from financial_simulator.providers import Provider
+from financial_simulator.rates import Rate
+from financial_simulator.schedules import Schedule
+from financial_simulator.util.format import format_day
 from .balance_change import BalanceChange
 from .interest_accrual import InterestAccrual
 from .interest_application import InterestApplication
-from financial_simulator.core import Event, Actor, Action
-from financial_simulator.schedules import Schedule
-from financial_simulator.providers import Provider
-from financial_simulator.rates import Rate
-from financial_simulator.util.format import format_day
 
 
 @dataclass(frozen=True)

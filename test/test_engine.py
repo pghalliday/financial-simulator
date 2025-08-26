@@ -1,0 +1,63 @@
+from dataclasses import dataclass, replace
+from datetime import date, timedelta
+from itertools import islice
+from typing import Tuple, Self, Sequence
+
+from financial_simulator.actions import Action, TickAction
+from financial_simulator.engine import Engine
+from financial_simulator.entities import Entity
+
+
+@dataclass(frozen=True)
+class MockAction(Action):
+    target: str
+    source: str
+
+
+@dataclass(frozen=True)
+class MockEntity(Entity):
+    current_date: date
+    target: str
+    action_sources: Sequence[str] = ()
+
+    def _on_action(self, action: Action) -> Tuple[Self, Sequence[Action]]:
+        if isinstance(action, TickAction):
+            return (replace(self,
+                            current_date=action.current_date),
+                    (MockAction(self.target, self.name),))
+        if isinstance(action, MockAction) and action.target == self.name:
+            return (replace(self,
+                            action_sources=tuple(self.action_sources) + (action.source,)),
+                    ())
+        return self, ()
+
+
+INITIAL_DATE = date(2020, 1, 1)
+DAY_1 = INITIAL_DATE + timedelta(days=1)
+DAY_2 = INITIAL_DATE + timedelta(days=2)
+DAY_3 = INITIAL_DATE + timedelta(days=3)
+INITIAL_ENTITIES = (MockEntity('Entity 1', INITIAL_DATE, 'Entity 2'),
+                    MockEntity('Entity 2', INITIAL_DATE, 'Entity 3'),
+                    MockEntity('Entity 3', INITIAL_DATE, 'Entity 1'))
+
+
+def test_iterator():
+    engine = Engine(INITIAL_DATE, INITIAL_ENTITIES)
+    assert tuple(islice(engine, 3)) == ((DAY_1, (MockEntity('Entity 1', DAY_1, 'Entity 2', ('Entity 3',)),
+                                                 MockEntity('Entity 2', DAY_1, 'Entity 3', ('Entity 1',)),
+                                                 MockEntity('Entity 3', DAY_1, 'Entity 1', ('Entity 2',)))),
+                                        (DAY_2, (MockEntity('Entity 1', DAY_2, 'Entity 2', ('Entity 3',
+                                                                                            'Entity 3')),
+                                                 MockEntity('Entity 2', DAY_2, 'Entity 3', ('Entity 1',
+                                                                                            'Entity 1')),
+                                                 MockEntity('Entity 3', DAY_2, 'Entity 1', ('Entity 2',
+                                                                                            'Entity 2')))),
+                                        (DAY_3, (MockEntity('Entity 1', DAY_3, 'Entity 2', ('Entity 3',
+                                                                                            'Entity 3',
+                                                                                            'Entity 3')),
+                                                 MockEntity('Entity 2', DAY_3, 'Entity 3', ('Entity 1',
+                                                                                            'Entity 1',
+                                                                                            'Entity 1')),
+                                                 MockEntity('Entity 3', DAY_3, 'Entity 1', ('Entity 2',
+                                                                                            'Entity 2',
+                                                                                            'Entity 2')))))
