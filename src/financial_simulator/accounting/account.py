@@ -54,3 +54,21 @@ class Account:
                                  in sub_accounts_and_changes
                                  for change
                                  in sub_account_and_changes[1])
+
+    def get_balance(self, account_path: Sequence[str]) -> Decimal:
+        if account_path:
+            for sub_account in self.sub_accounts:
+                if sub_account.name == account_path[0]:
+                    return sub_account.get_balance(account_path[1:])
+            # for unknown accounts, we will return zero
+            return Decimal('0.0')
+        return self.balance
+
+    def get_total_balance(self, account_path: Sequence[str]) -> Decimal:
+        if account_path:
+            for sub_account in self.sub_accounts:
+                if sub_account.name == account_path[0]:
+                    return sub_account.get_total_balance(account_path[1:])
+            # for unknown accounts, we will return zero
+            return Decimal('0.0')
+        return self.total_balance
