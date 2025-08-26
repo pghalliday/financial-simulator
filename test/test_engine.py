@@ -4,7 +4,7 @@ from itertools import islice
 from typing import Tuple, Self, Sequence
 
 from financial_simulator.actions import Action, TickAction
-from financial_simulator.engine import Engine
+from financial_simulator import Engine
 from financial_simulator.entities import Entity
 
 
@@ -25,7 +25,7 @@ class MockEntity(Entity):
             return (replace(self,
                             current_date=action.current_date),
                     (MockAction(self.target, self.name),))
-        if isinstance(action, MockAction) and action.target == self.name:
+        if isinstance(action, MockAction):
             return (replace(self,
                             action_sources=tuple(self.action_sources) + (action.source,)),
                     ())

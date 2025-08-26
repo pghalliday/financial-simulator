@@ -1,5 +1,6 @@
 from dataclasses import dataclass, replace
 from datetime import date
+from decimal import Decimal
 from typing import Self, Sequence
 
 from .account import Account
@@ -25,3 +26,9 @@ class Books:
         return replace(self, journal=(Transaction(transaction_date=transaction_date,
                                                   description='Open journal',
                                                   changes=self.ledger.get_open_changes()),))
+
+    def get_balance(self, account_path: Sequence[str]) -> Decimal:
+        return self.ledger.get_balance(account_path)
+
+    def get_total_balance(self, account_path: Sequence[str]) -> Decimal:
+        return self.ledger.get_total_balance(account_path)

@@ -5,7 +5,7 @@ from financial_simulator.accounting import Books
 from financial_simulator.actions import Action
 from financial_simulator.amounts import Amount
 from financial_simulator.bank_accounts import BankAccount
-from financial_simulator.entities import Entity
+from financial_simulator.entities.entity import Entity
 from financial_simulator.investments.investment import Investment
 from financial_simulator.loans import Loan
 from financial_simulator.properties import Property
