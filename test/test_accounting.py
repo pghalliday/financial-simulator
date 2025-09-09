@@ -12,23 +12,23 @@ def generate_books() -> Generator[Books, None, None]:
                   ledger=Account(name='Ledger',
                                  sub_accounts=()))
     yield books
-    books = books.enter_transaction(transaction_date=date(2020, 1, 1),
-                                    description='Test transaction 1',
-                                    changes=(Change(amount=Decimal('100.0'),
-                                                    account_path=('Test account 1',)),
-                                             Change(amount=Decimal('-75.0'),
-                                                    account_path=('Test account 1', 'Test account 1-1')),
-                                             Change(amount=Decimal('-25.0'),
-                                                    account_path=('Test account 2',))))
+    books = books.enter_transaction(Transaction(transaction_date=date(2020, 1, 1),
+                                                description='Test transaction 1',
+                                                changes=(Change(amount=Decimal('100.0'),
+                                                                account_path=('Test account 1',)),
+                                                         Change(amount=Decimal('-75.0'),
+                                                                account_path=('Test account 1', 'Test account 1-1')),
+                                                         Change(amount=Decimal('-25.0'),
+                                                                account_path=('Test account 2',)))))
     yield books
-    books = books.enter_transaction(transaction_date=date(2020, 1, 2),
-                                    description='Test transaction 2',
-                                    changes=(Change(amount=Decimal('-150.0'),
-                                                    account_path=('Test account 1',)),
-                                             Change(amount=Decimal('100.0'),
-                                                    account_path=('Test account 1', 'Test account 1-1')),
-                                             Change(amount=Decimal('50.0'),
-                                                    account_path=('Test account 2',))))
+    books = books.enter_transaction(Transaction(transaction_date=date(2020, 1, 2),
+                                                description='Test transaction 2',
+                                                changes=(Change(amount=Decimal('-150.0'),
+                                                                account_path=('Test account 1',)),
+                                                         Change(amount=Decimal('100.0'),
+                                                                account_path=('Test account 1', 'Test account 1-1')),
+                                                         Change(amount=Decimal('50.0'),
+                                                                account_path=('Test account 2',)))))
     yield books
     books = books.open_journal(transaction_date=date(2020, 1, 3))
     yield books
@@ -76,7 +76,7 @@ def test_open_year():
     next(books_iterator)
     books = next(books_iterator)
     assert books == Books(journal=(Transaction(transaction_date=date(2020, 1, 3),
-                                               description='Open journal',
+                                               description='Open',
                                                changes=(Change(amount=Decimal('0.0'),
                                                                account_path=()),
                                                         Change(amount=Decimal('-50.0'),
@@ -101,13 +101,11 @@ def test_open_year():
 
 def test_unbalanced_transaction():
     with raises(AssertionError, match='Credits and debits in transactions must balance: '):
-        books_iterator = generate_books()
-        books = next(books_iterator)
-        books.enter_transaction(transaction_date=date(2020, 1, 1),
-                                description='Unbalanced transaction',
-                                changes=(Change(amount=Decimal('100.0'),
-                                                account_path=('Test account 1',)),
-                                         Change(amount=Decimal('-100.0'),
-                                                account_path=('Test account 2',)),
-                                         Change(amount=Decimal('-50.0'),
-                                                account_path=('Test account 3',))))
+        Transaction(transaction_date=date(2020, 1, 1),
+                    description='Unbalanced transaction',
+                    changes=(Change(amount=Decimal('100.0'),
+                                    account_path=('Test account 1',)),
+                             Change(amount=Decimal('-100.0'),
+                                    account_path=('Test account 2',)),
+                             Change(amount=Decimal('-50.0'),
+                                    account_path=('Test account 3',))))

@@ -50,7 +50,8 @@ create_notebook_files: $(EXPECTED_NOTEBOOK_FILES)
 
 define markdown_rule
 $1: $(DOC_DIR)/$(1:.md=.ipynb)
-	uv run jupyter nbconvert --execute --to markdown --stdout $$< > $$@
+	uv run jupyter nbconvert --execute --to markdown --stdout $$< | \
+	sed -re 's|<!-- INSERT_IMAGE:([^:]+):([^ ]+) -->|![\1]($(DOC_DIR)/$(1:.md=.assets)/\2)|g' > $$@
 endef
 $(foreach md,$(EXPECTED_MARKDOWN_FILES),$(eval $(call markdown_rule, $(md))))
 

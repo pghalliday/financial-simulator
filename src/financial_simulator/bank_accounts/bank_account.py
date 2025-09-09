@@ -6,7 +6,7 @@ from typing import Sequence, Tuple, Self
 from financial_simulator.providers import Provider
 from financial_simulator.rates import Rate
 from financial_simulator.schedules import Schedule
-from ..accounting import Books, Change
+from ..accounting import Books, Change, Transaction
 from ..util.immutable import provider_get, schedule_check
 
 
@@ -18,61 +18,61 @@ class BankFee:
 
 @dataclass(frozen=True)
 class BankAccount:
-    bank_account: Sequence[str]
-    interest_revenue: Sequence[str]
-    interest_receivable: Sequence[str]
-    fee_expenses: Sequence[str]
-    fees_payable: Sequence[str]
-    rate_provider: Provider[Rate] | None = None
+    asset_account: Sequence[str]
+    interest_income_account: Sequence[str]
+    interest_receivable_account: Sequence[str]
+    fee_expenses_account: Sequence[str]
+    fees_payable_account: Sequence[str]
     fees_provider: Provider[BankFee] | None = None
-    interest_payment_schedule: Schedule | None = None
     fee_payment_schedule: Schedule | None = None
+    rate_provider: Provider[Rate] | None = None
+    interest_payment_schedule: Schedule | None = None
 
     def __check_apply_interest(self, current_date: date, books: Books) -> Tuple[Self, Books]:
         bank_account, scheduled = schedule_check(self, 'interest_payment_schedule', current_date)
         if scheduled:
-            interest_receivable = books.get_balance(bank_account.interest_receivable)
-            return bank_account, books.enter_transaction(transaction_date=current_date,
-                                                         description='Interest applied',
-                                                         changes=(Change(amount=interest_receivable,
-                                                                         account_path=bank_account.interest_receivable),
-                                                                  Change(amount=-interest_receivable,
-                                                                         account_path=bank_account.bank_account)))
+            interest_receivable = books.get_balance(bank_account.interest_receivable_account)
+            return bank_account, books.enter_transaction(Transaction(transaction_date=current_date,
+                                                                     description='Interest applied',
+                                                                     changes=(Change(amount=interest_receivable,
+                                                                                     account_path=bank_account.interest_receivable_account),
+                                                                              Change(amount=-interest_receivable,
+                                                                                     account_path=bank_account.asset_account))))
         return bank_account, books
 
     def __accrue_interest(self, current_date: date, books: Books) -> Tuple[Self, Books]:
         bank_account, rates = provider_get(self, 'rate_provider', current_date)
         if rates:
             rate_calculation = rates[0].calculate(current_date,
-                                                  books.get_balance(bank_account.bank_account),
-                                                  books.get_balance(bank_account.interest_receivable))
-            return bank_account, books.enter_transaction(transaction_date=current_date,
-                                                         description='Interest accrued',
-                                                         changes=(Change(amount=rate_calculation.accrued,
-                                                                         account_path=bank_account.interest_revenue),
-                                                                  Change(amount=-rate_calculation.accrued,
-                                                                         account_path=bank_account.interest_receivable)))
+                                                  books.get_balance(bank_account.asset_account),
+                                                  books.get_balance(bank_account.interest_receivable_account))
+            return bank_account, books.enter_transaction(Transaction(transaction_date=current_date,
+                                                                     description='Interest accrued',
+                                                                     changes=(Change(amount=rate_calculation.accrued,
+                                                                                     account_path=bank_account.interest_income_account),
+                                                                              Change(amount=-rate_calculation.accrued,
+                                                                                     account_path=bank_account.interest_receivable_account))))
         return bank_account, books
 
     def __check_apply_fees(self, current_date: date, books: Books) -> Tuple[Self, Books]:
         bank_account, scheduled = schedule_check(self, 'fee_payment_schedule', current_date)
         if scheduled:
-            fees_payable = books.get_balance(bank_account.fees_payable)
-            return bank_account, books.enter_transaction(transaction_date=current_date,
-                                                         description='Fees applied',
-                                                         changes=(Change(amount=-fees_payable,
-                                                                         account_path=bank_account.fees_payable),
-                                                                  Change(amount=fees_payable,
-                                                                         account_path=bank_account.bank_account)))
+            fees_payable = books.get_balance(bank_account.fees_payable_account)
+            return bank_account, books.enter_transaction(Transaction(transaction_date=current_date,
+                                                                     description='Fees applied',
+                                                                     changes=(Change(amount=-fees_payable,
+                                                                                     account_path=bank_account.fees_payable_account),
+                                                                              Change(amount=fees_payable,
+                                                                                     account_path=bank_account.asset_account))))
         return bank_account, books
 
     def __enter_fee(self, current_date: date, fee: BankFee, books: Books) -> Books:
-        return books.enter_transaction(transaction_date=current_date,
-                                       description=fee.description,
-                                       changes=(Change(amount=-fee.amount,
-                                                       account_path=self.fee_expenses),
-                                                Change(amount=fee.amount,
-                                                       account_path=self.fees_payable)))
+        return books.enter_transaction(Transaction(transaction_date=current_date,
+                                                   description=fee.description,
+                                                   changes=(Change(amount=-fee.amount,
+                                                                   account_path=self.fee_expenses_account),
+                                                            Change(amount=fee.amount,
+                                                                   account_path=self.fees_payable_account))))
 
     def __accrue_fees(self, current_date: date, books: Books) -> Tuple[Self, Books]:
         bank_account, fees = provider_get(self, 'fees_provider', current_date)

@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Sequence, Tuple, Self
 
-from financial_simulator.accounting import Books
 from financial_simulator.actions import Action
 from financial_simulator.amounts import Amount
 from financial_simulator.bank_accounts import BankAccount
@@ -14,7 +13,6 @@ from financial_simulator.providers import Provider
 
 @dataclass(frozen=True)
 class Individual(Entity):
-    books: Books
     expenses: Provider[Amount]
     bank_accounts: Sequence[BankAccount]
     investments: Sequence[Investment]
@@ -22,4 +20,4 @@ class Individual(Entity):
     loans: Sequence[Loan]
 
     def _on_action(self, action: Action) -> Tuple[Self, Sequence[Action]]:
-        pass
+        return self, ()
