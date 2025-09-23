@@ -15,3 +15,10 @@ __pycache__
 
 # papermill
 *.papermill
+
+# Financial Simulator
+financial-simulator.toml
+financial-simulator.db
+financial-simulator.enc
+financial-simulator.salt
+financial-simulator.check
