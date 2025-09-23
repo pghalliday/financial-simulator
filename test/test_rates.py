@@ -2,7 +2,7 @@ from calendar import JANUARY
 from datetime import date
 from decimal import Decimal
 
-from financial_simulator.rates import ContinuousRate, ContinuousRateCalculation, PeriodicRate, \
+from financial_simulator.lib.rates import ContinuousRate, ContinuousRateCalculation, PeriodicRate, \
     PeriodicRateCalculation, create_banded_rate, BandedRateCalculation
 
 

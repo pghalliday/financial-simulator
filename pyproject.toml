@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [project.scripts]
-financial-simulator = "financial_simulator.cli:cli"
+financial-simulator = "financial_simulator.app.cli:cli"
 
 [build-system]
 requires = ["uv_build>=0.8.8,<0.9.0"]
@@ -46,7 +46,7 @@ addopts = "-ra -q"
 # this is typically a path given in POSIX (e.g. forward slashes)
 # format, relative to the token %(here)s which refers to the location of this
 # ini file
-script_location = "%(here)s/src/financial_simulator/database/alembic"
+script_location = "%(here)s/src/financial_simulator/app/database/alembic"
 
 # template used to generate migration file names; The default value is %%(rev)s_%%(slug)s
 # Uncomment the line below if you want the files to be prepended with date and time

@@ -3,9 +3,9 @@ from datetime import date, timedelta
 from itertools import islice
 from typing import Tuple, Generator, TypeVar, Sequence, Mapping
 
-from financial_simulator.providers import Provider, NeverProvider, AlwaysProvider, ScheduledProvider, FunctionProvider, \
+from financial_simulator.lib.providers import Provider, NeverProvider, AlwaysProvider, ScheduledProvider, FunctionProvider, \
     MapProvider, FlatMapProvider, NextProvider, MergeProvider, MergeMapProvider, create_sequence_provider
-from financial_simulator.schedules import DaySchedule, UntilSchedule
+from financial_simulator.lib.schedules import DaySchedule, UntilSchedule
 
 T = TypeVar("T")
 

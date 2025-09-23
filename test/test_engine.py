@@ -4,9 +4,9 @@ from itertools import islice
 from typing import Tuple, Self, Sequence
 
 from financial_simulator import Engine
-from financial_simulator.accounting import Books
-from financial_simulator.actions import Action, TickAction
-from financial_simulator.entities import Entity
+from financial_simulator.lib.accounting import Books
+from financial_simulator.lib.actions import Action, TickAction
+from financial_simulator.lib.entities import Entity
 
 
 @dataclass(frozen=True)

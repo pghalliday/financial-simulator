@@ -4,14 +4,15 @@ from decimal import Decimal
 from itertools import islice
 
 from financial_simulator import Engine
-from financial_simulator.accounting import Books, Transaction, Change
-from financial_simulator.entities import Individual, Corporation
-from financial_simulator.factories.bank_accounts import \
-    create_abn_amro_personal_current, \
-    create_abn_amro_personal_savings, \
-    create_ing_business_current
-from financial_simulator.providers import NeverProvider
-from financial_simulator.util.data import plot_account_balances
+from financial_simulator.lib.accounting import Books, Transaction, Change
+from financial_simulator.lib.entities import Individual, Corporation
+from financial_simulator.lib.factories.bank_accounts import
+
+create_abn_amro_personal_current,
+create_abn_amro_personal_savings,
+create_ing_business_current
+from financial_simulator.lib.providers import NeverProvider
+from financial_simulator.lib.util import plot_account_balances
 ```
 
 # Simulation

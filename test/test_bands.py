@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from pytest import raises
 
-from financial_simulator.util.bands import create_bands, Band
+from financial_simulator.lib.util import create_bands, Band
 
 
 def test_create_bands():

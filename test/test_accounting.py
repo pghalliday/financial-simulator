@@ -4,7 +4,7 @@ from typing import Generator
 
 from pytest import raises
 
-from financial_simulator.accounting import Books, Account, Change, Transaction
+from financial_simulator.lib.accounting import Books, Account, Change, Transaction
 
 
 def generate_books() -> Generator[Books, None, None]:
