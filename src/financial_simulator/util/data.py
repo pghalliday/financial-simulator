@@ -9,7 +9,7 @@ from plotly.graph_objs import Figure
 from financial_simulator.entities import Entity
 
 
-def extract_account_balances(days: Tuple[date, Sequence[Entity]],
+def extract_account_balances(days: Sequence[Tuple[date, Sequence[Entity]]],
                              account_path: Sequence[str],
                              columns: Sequence[str],
                              is_debit_account: bool = False) -> DataFrame:
@@ -27,7 +27,7 @@ def extract_account_balances(days: Tuple[date, Sequence[Entity]],
                                 value_name='Balance')
 
 
-def plot_account_balances(days: Tuple[date, Sequence[Entity]],
+def plot_account_balances(days: Sequence[Tuple[date, Sequence[Entity]]],
                           account_path: Sequence[str],
                           columns: Sequence[str],
                           title: str,
