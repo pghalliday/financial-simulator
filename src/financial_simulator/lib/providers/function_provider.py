@@ -4,7 +4,7 @@ from typing import TypeVar, Callable, Sequence, Self, Tuple
 
 from .provider import Provider
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 @dataclass(frozen=True)

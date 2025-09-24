@@ -18,19 +18,19 @@ class ContinuousRateCalculation(RateCalculation):
     daily_rate: Decimal
 
     @cache
-    def __str__(self):
-        table = PrettyTable(['label', 'value'])
-        table.add_row(['Current date', format_day(self.current_date)])
-        table.add_row(['Rate', str(self.rate)])
-        table.add_row(['Daily rate', f'{self.daily_rate * 100:.6f}'])
-        table.add_row(['Balance', f'{self.balance:.6f}'])
-        table.add_row(['Accrued', f'{self.accrued:.6f}'])
-        table.add_row(['Calculation', f'{self.calculation:.6f}'])
+    def __str__(self) -> str:  # type: ignore
+        table = PrettyTable(["label", "value"])
+        table.add_row(["Current date", format_day(self.current_date)])
+        table.add_row(["Rate", str(self.rate)])
+        table.add_row(["Daily rate", f"{self.daily_rate * 100:.6f}"])
+        table.add_row(["Balance", f"{self.balance:.6f}"])
+        table.add_row(["Accrued", f"{self.accrued:.6f}"])
+        table.add_row(["Calculation", f"{self.calculation:.6f}"])
         table.set_style(TableStyle.SINGLE_BORDER)
-        table.align['label'] = 'l'
-        table.align['value'] = 'r'
+        table.align["label"] = "l"
+        table.align["value"] = "r"
         table.header = False
-        return table.get_string()
+        return table.get_string()  # type: ignore
 
 
 @dataclass(frozen=True)
@@ -38,19 +38,23 @@ class ContinuousRate(Rate):
     annual_rate: Decimal
 
     @cache
-    def __str__(self):
-        return f'ContinuousRate: {self.annual_rate * 100:.2f}%'
+    def __str__(self) -> str:  # type: ignore
+        return f"ContinuousRate: {self.annual_rate * 100:.2f}%"
 
     @cache
     def __daily_rate(self, year: int) -> Decimal:
         return ((1 + self.annual_rate) ** (1 / Decimal(days_in_year(year)))) - 1
 
     @cache
-    def calculate(self, current_date: date, balance: Decimal, accrued: Decimal) -> ContinuousRateCalculation:
+    def calculate( # type: ignore
+        self, current_date: date, balance: Decimal, accrued: Decimal
+    ) -> ContinuousRateCalculation:
         daily_rate = self.__daily_rate(current_date.year)
-        return ContinuousRateCalculation(rate=self,
-                                         current_date=current_date,
-                                         daily_rate=daily_rate,
-                                         balance=balance,
-                                         accrued=accrued,
-                                         calculation=daily_rate * (balance + accrued))
+        return ContinuousRateCalculation(
+            rate=self,
+            current_date=current_date,
+            daily_rate=daily_rate,
+            balance=balance,
+            accrued=accrued,
+            calculation=daily_rate * (balance + accrued),
+        )

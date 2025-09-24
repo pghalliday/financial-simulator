@@ -11,4 +11,6 @@ class MonthlySchedule(Schedule):
     day: int
 
     def check(self, current_date: date) -> Tuple[Self, bool] | None:
-        return self, current_date.day == correct_day_of_the_month(self.day, current_date)
+        return self, current_date.day == correct_day_of_the_month(
+            self.day, current_date
+        )

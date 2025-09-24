@@ -19,28 +19,37 @@ class BandedRateCalculation(RateCalculation):
     calculations: Sequence[RateCalculation]
 
     @cache
-    def __str__(self):
-        table = PrettyTable(['Band', 'Rate', 'Balance', 'Accrued', 'Calculation'])
+    def __str__(self) -> str:  # type: ignore
+        table = PrettyTable(["Band", "Rate", "Balance", "Accrued", "Calculation"])
         table.set_style(TableStyle.SINGLE_BORDER)
-        table.add_rows([[str(band),
-                         str(rate),
-                         f'{calculation.balance:.6f}',
-                         f'{calculation.accrued:.6f}',
-                         f'{calculation.calculation:.6f}']
-                        for (band, rate), calculation
-                        in zip(self.rate.bands, self.calculations)])
+        table.add_rows(
+            [
+                [
+                    str(band),
+                    str(rate),
+                    f"{calculation.balance:.6f}",
+                    f"{calculation.accrued:.6f}",
+                    f"{calculation.calculation:.6f}",
+                ]
+                for (band, rate), calculation in zip(self.rate.bands, self.calculations)
+            ]
+        )
         table.add_divider()
-        table.add_row([format_day(self.current_date),
-                       'Totals',
-                       f'{self.balance:.6f}',
-                       f'{self.accrued:.6f}',
-                       f'{self.calculation:.6f}'])
-        table.align['Band'] = 'l'
-        table.align['Rate'] = 'r'
-        table.align['Balance'] = 'r'
-        table.align['Accrued'] = 'r'
-        table.align['Calculation'] = 'r'
-        return table.get_string()
+        table.add_row(
+            [
+                format_day(self.current_date),
+                "Totals",
+                f"{self.balance:.6f}",
+                f"{self.accrued:.6f}",
+                f"{self.calculation:.6f}",
+            ]
+        )
+        table.align["Band"] = "l"
+        table.align["Rate"] = "r"
+        table.align["Balance"] = "r"
+        table.align["Accrued"] = "r"
+        table.align["Calculation"] = "r"
+        return table.get_string()  # type: ignore
 
 
 @dataclass(frozen=True)
@@ -48,26 +57,32 @@ class BandedRate(Rate):
     bands: Sequence[Tuple[Band, Rate]] = ()
 
     @cache
-    def __str__(self):
-        table = PrettyTable(['Band', 'Rate'])
+    def __str__(self) -> str:  # type: ignore
+        table = PrettyTable(["Band", "Rate"])
         table.set_style(TableStyle.SINGLE_BORDER)
         table.add_rows([[str(band), str(rate)] for band, rate in self.bands])
-        table.align['Band'] = 'l'
-        table.align['Rate'] = 'r'
-        return table.get_string()
+        table.align["Band"] = "l"
+        table.align["Rate"] = "r"
+        return table.get_string()  # type: ignore
 
     @cache
-    def calculate(self, current_date: date, balance: Decimal, accrued: Decimal) -> BandedRateCalculation:
-        calculations = tuple(rate.calculate(current_date, *(band.portion([balance, accrued])))
-                             for band, rate
-                             in self.bands)
-        return BandedRateCalculation(rate=self,
-                                     current_date=current_date,
-                                     balance=balance,
-                                     accrued=accrued,
-                                     calculation=Decimal(
-                                         sum([calculation.calculation for calculation in calculations])),
-                                     calculations=calculations)
+    def calculate(  # type: ignore
+        self, current_date: date, balance: Decimal, accrued: Decimal
+    ) -> BandedRateCalculation:
+        calculations = tuple(
+            rate.calculate(current_date, *(band.portion([balance, accrued])))
+            for band, rate in self.bands
+        )
+        return BandedRateCalculation(
+            rate=self,
+            current_date=current_date,
+            balance=balance,
+            accrued=accrued,
+            calculation=Decimal(
+                sum([calculation.calculation for calculation in calculations])
+            ),
+            calculations=calculations,
+        )
 
 
 def create_banded_rate(raw_bands: Mapping[Decimal, Rate]) -> BandedRate:

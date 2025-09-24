@@ -21,32 +21,38 @@ def input_no_history(prompt: str) -> str:
     return text
 
 
-def parse_string_list(arg: str, allow_none: bool = False) -> Generator[str | None, None, None]:
+def parse_string_list(
+    arg: str, allow_none: bool = False
+) -> Generator[str | None, None, None]:
     names = arg.strip()
-    if names == '':
+    if names == "":
         if allow_none:
             yield None
     else:
-        string_list = names.split(',')
+        string_list = names.split(",")
         for string in string_list:
             yield string.strip()
 
 
-def parse_int_list(arg: str, allow_none: bool = False) -> Generator[int | None, None, None]:
+def parse_int_list(
+    arg: str, allow_none: bool = False
+) -> Generator[int | None, None, None]:
     string_ints = arg.strip()
-    if string_ints == '':
+    if string_ints == "":
         if allow_none:
             yield None
     else:
-        string_int_list = string_ints.split(',')
+        string_int_list = string_ints.split(",")
         for string_int in string_int_list:
             string_int = string_int.strip()
             yield int(string_int)
 
 
 class Shell(Cmd):
-    intro = 'Welcome to the Financial Simulator shell.   Type help or ? to list commands.\n'
-    prompt = '(FinSim) '
+    intro = (
+        "Welcome to the Financial Simulator shell.   Type help or ? to list commands.\n"
+    )
+    prompt = "(FinSim) "
     config: Config
     passphrase: str
     engine: Engine
@@ -65,11 +71,11 @@ class Shell(Cmd):
                 self.__decrypt_sqlite_file()
         else:
             confirm_passphrase(self.passphrase)
-        self.engine = create_engine(f'sqlite:///{sqlite_file}')
+        self.engine = create_engine(f"sqlite:///{sqlite_file}")
         self.migration = Migration(self.engine)
         self.migration.upgrade_database()
 
-    def onecmd(self, line):
+    def onecmd(self, line: str):
         try:
             return super().onecmd(line)
         except Exception as e:
@@ -77,34 +83,49 @@ class Shell(Cmd):
             return False
 
     def __check_passphrase(self):
-        check(check_file=self.config.encryption.check_file,
-              salt_file=self.config.encryption.salt_file,
-              passphrase=self.passphrase)
+        check(
+            check_file=self.config.encryption.check_file,
+            salt_file=self.config.encryption.salt_file,
+            passphrase=self.passphrase,
+        )
 
     def __decrypt_sqlite_file(self):
-        self.config.database.sqlite_file.write_bytes(read(encrypted_file=self.config.encryption.encrypted_sqlite_file,
-                                                          salt_file=self.config.encryption.salt_file,
-                                                          passphrase=self.passphrase))
+        self.config.database.sqlite_file.write_bytes(
+            read(
+                encrypted_file=self.config.encryption.encrypted_sqlite_file,
+                salt_file=self.config.encryption.salt_file,
+                passphrase=self.passphrase,
+            )
+        )
 
     def __encrypt_sqlite_file(self):
-        write(encrypted_file=self.config.encryption.encrypted_sqlite_file,
-              salt_file=self.config.encryption.salt_file,
-              check_file=self.config.encryption.check_file,
-              salt_size=self.config.encryption.salt_size,
-              compression_preset=self.config.encryption.compression_preset,
-              passphrase=self.passphrase,
-              data=self.config.database.sqlite_file.read_bytes())
+        write(
+            encrypted_file=self.config.encryption.encrypted_sqlite_file,
+            salt_file=self.config.encryption.salt_file,
+            check_file=self.config.encryption.check_file,
+            salt_size=self.config.encryption.salt_size,
+            compression_preset=self.config.encryption.compression_preset,
+            passphrase=self.passphrase,
+            data=self.config.database.sqlite_file.read_bytes(),
+        )
 
     def do_decrypt(self, arg: str):
         """Decrypt the encrypted SQLite file:  DECRYPT"""
         sqlite_file = self.config.database.sqlite_file
         if sqlite_file.exists():
-            overwrite = input_no_history(f'Overwrite SQLite file at {sqlite_file}? (y/N): ') or 'n'
-            if overwrite.lower() != 'y':
+            overwrite = (
+                input_no_history(f"Overwrite SQLite file at {sqlite_file}? (y/N): ")
+                or "n"
+            )
+            if overwrite.lower() != "y":
                 return
-        sqlite_file.write_bytes(read(encrypted_file=self.config.encryption.encrypted_sqlite_file,
-                                     salt_file=self.config.encryption.salt_file,
-                                     passphrase=self.passphrase))
+        sqlite_file.write_bytes(
+            read(
+                encrypted_file=self.config.encryption.encrypted_sqlite_file,
+                salt_file=self.config.encryption.salt_file,
+                passphrase=self.passphrase,
+            )
+        )
 
     def do_encrypt(self, arg: str):
         """Encrypt the SQLite file:  ENCRYPT"""
@@ -120,8 +141,13 @@ class Shell(Cmd):
     def do_quit(self, arg: str) -> bool:
         """Quit the Financial Simulator shell:  QUIT"""
         sqlite_file = self.config.database.sqlite_file
-        encrypt_and_delete = input_no_history(f'Encrypt and delete SQLite file at {sqlite_file}? (Y/n): ') or 'y'
-        if encrypt_and_delete.lower() == 'y':
+        encrypt_and_delete = (
+            input_no_history(
+                f"Encrypt and delete SQLite file at {sqlite_file}? (Y/n): "
+            )
+            or "y"
+        )
+        if encrypt_and_delete.lower() == "y":
             self.__encrypt_sqlite_file()
             sqlite_file.unlink()
         return True
@@ -132,8 +158,8 @@ class Shell(Cmd):
 
     def do_insert_scenario(self, arg: str):
         """Insert a scenario:  INSERT_SCENARIO"""
-        name = input_no_history(f'name: ')
-        description = input_no_history(f'description: ')
+        name = input_no_history("name: ")
+        description = input_no_history("description: ")
         with Session(self.engine) as session:
             scenario = Scenario(name=name, description=description)
             session.add(scenario)
@@ -156,7 +182,7 @@ class Shell(Cmd):
             scenarios = session.query(Scenario).all()
             for scenario in scenarios:
                 print(scenario)
-            print(f'count: {len(scenarios)}')
+            print(f"count: {len(scenarios)}")
 
     def do_get_entities(self, arg: str):
         """Get the entities included in a scenario:  GET_ENTITIES SCENARIO_ID"""
@@ -165,12 +191,12 @@ class Shell(Cmd):
             entities = session.get_one(Scenario, scenario_id).entities
             for entity in entities:
                 print(entity)
-            print(f'count: {len(entities)}')
+            print(f"count: {len(entities)}")
 
     def do_insert_entity(self, arg: str):
         """Insert an entity:  INSERT_ENTITY"""
-        name = input_no_history(f'name: ')
-        description = input_no_history(f'description: ')
+        name = input_no_history("name: ")
+        description = input_no_history("description: ")
         with Session(self.engine) as session:
             entity = Entity(name=name, description=description)
             session.add(entity)
@@ -193,7 +219,7 @@ class Shell(Cmd):
             entities = session.query(Entity).all()
             for entity in entities:
                 print(entity)
-            print(f'count: {len(entities)}')
+            print(f"count: {len(entities)}")
 
     def do_get_scenarios(self, arg: str):
         """Get the scenarios that include an entity:  GET_SCENARIOS ENTITY_ID"""
@@ -202,7 +228,7 @@ class Shell(Cmd):
             scenarios = session.get_one(Entity, entity_id).scenarios
             for scenario in scenarios:
                 print(scenario)
-            print(f'count: {len(scenarios)}')
+            print(f"count: {len(scenarios)}")
 
     def do_add_entity_to_scenario(self, arg: str):
         """Add an entity to a scenario:  ADD_ENTITY_TO_SCENARIO SCENARIO_ID ENTITY_ID"""

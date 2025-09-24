@@ -17,7 +17,6 @@ __pycache__
 *.papermill
 
 # Financial Simulator
-financial-simulator.toml
 financial-simulator.db
 financial-simulator.enc
 financial-simulator.salt

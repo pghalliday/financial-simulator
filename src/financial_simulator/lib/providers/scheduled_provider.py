@@ -5,7 +5,7 @@ from typing import TypeVar, Sequence, Self, Tuple
 from financial_simulator.lib.schedules import Schedule
 from .provider import Provider
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 @dataclass(frozen=True)

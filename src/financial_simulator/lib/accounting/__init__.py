@@ -4,8 +4,8 @@ from .change import Change
 from .transaction import Transaction
 
 __all__ = [
-    'Books',
-    'Transaction',
-    'Account',
-    'Change',
+    "Books",
+    "Transaction",
+    "Account",
+    "Change",
 ]

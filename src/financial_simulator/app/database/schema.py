@@ -17,12 +17,14 @@ constraint_naming_conventions = {
 class Base(DeclarativeBase):
     metadata = MetaData(naming_convention=constraint_naming_conventions)
 
+
 scenario_entity = Table(
     "scenario_entity",
     Base.metadata,
     Column("scenario_id", Integer, ForeignKey("scenario.id"), primary_key=True),
     Column("entity_id", Integer, ForeignKey("entity.id"), primary_key=True),
 )
+
 
 class Scenario(Base):
     __tablename__ = "scenario"
@@ -31,11 +33,12 @@ class Scenario(Base):
     name: Mapped[str] = mapped_column()
     description: Mapped[str] = mapped_column()
 
-    entities: Mapped[List[Entity]] = relationship(secondary=scenario_entity, back_populates="scenarios")
+    entities: Mapped[List[Entity]] = relationship(
+        secondary=scenario_entity, back_populates="scenarios"
+    )
 
     def __repr__(self) -> str:
         return f"Scenario(id={self.id!r}, name={self.name!r}, description={self.description!r})"
-
 
 
 class Entity(Base):
@@ -45,10 +48,9 @@ class Entity(Base):
     name: Mapped[str] = mapped_column()
     description: Mapped[str] = mapped_column()
 
-    scenarios: Mapped[List[Scenario]] = relationship(secondary=scenario_entity, back_populates="entities")
+    scenarios: Mapped[List[Scenario]] = relationship(
+        secondary=scenario_entity, back_populates="entities"
+    )
 
     def __repr__(self) -> str:
         return f"Entity(id={self.id!r}, name={self.name!r}, description={self.description!r})"
-
-
-

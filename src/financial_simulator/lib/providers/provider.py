@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import date
 from typing import TypeVar, Generic, Sequence, Self, Tuple
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 @dataclass(frozen=True)

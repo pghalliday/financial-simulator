@@ -4,8 +4,8 @@ from typing import TypeVar, Callable, Generic, Sequence, Self, Tuple
 
 from .provider import Provider
 
-T = TypeVar('T')
-U = TypeVar('U')
+T = TypeVar("T")
+U = TypeVar("U")
 
 
 @dataclass(frozen=True)
@@ -18,6 +18,6 @@ class MapProvider(Generic[T, U], Provider[T]):
         if provided is None:
             return None
         provider, sequence = provided
-        return replace(self, provider=provider), tuple(self.transform(value)
-                                                       for value
-                                                       in sequence)
+        return replace(self, provider=provider), tuple(
+            self.transform(value) for value in sequence
+        )

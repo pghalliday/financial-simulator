@@ -1,6 +1,10 @@
 from datetime import date
 
-from financial_simulator.lib.salaries.salary import Salary, SalaryPayment, ZERO_SALARY_PAYMENT
+from financial_simulator.lib.salaries.salary import (
+    Salary,
+    SalaryPayment,
+    ZERO_SALARY_PAYMENT,
+)
 from financial_simulator.lib.util.date import correct_day_of_the_month
 
 
@@ -18,8 +22,10 @@ class SimpleMonthlySalary(Salary):
 
     def next(self, current_date: date) -> SalaryPayment:
         if current_date.day == correct_day_of_the_month(self.day, current_date):
-            return SalaryPayment(gross=self.net + self.health_insurance + self.wage_tax,
-                                 net=self.net,
-                                 health_insurance=self.health_insurance,
-                                 wage_tax=self.wage_tax)
+            return SalaryPayment(
+                gross=self.net + self.health_insurance + self.wage_tax,
+                net=self.net,
+                health_insurance=self.health_insurance,
+                wage_tax=self.wage_tax,
+            )
         return ZERO_SALARY_PAYMENT

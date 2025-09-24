@@ -1,0 +1,13 @@
+[database]
+sqlite_file = "financial-simulator.db"
+sqlalchemy_log_level = "WARNING"
+
+[encryption]
+encrypted_sqlite_file = "financial-simulator.enc"
+salt_file = "financial-simulator.salt"
+check_file = "financial-simulator.check"
+salt_size = 16
+compression_preset = 0
+
+[logging]
+level = "DEBUG"

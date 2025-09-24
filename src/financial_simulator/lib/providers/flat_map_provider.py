@@ -4,8 +4,8 @@ from typing import TypeVar, Callable, Generic, Sequence, Self, Tuple
 
 from .provider import Provider
 
-T = TypeVar('T')
-U = TypeVar('U')
+T = TypeVar("T")
+U = TypeVar("U")
 
 
 @dataclass(frozen=True)
@@ -18,8 +18,8 @@ class FlatMapProvider(Generic[T, U], Provider[T]):
         if provided is None:
             return None
         provider, u_sequence = provided
-        return replace(self, provider=provider), tuple(t_value
-                                                       for t_sequence in (self.transform(u_value)
-                                                                          for u_value
-                                                                          in u_sequence)
-                                                       for t_value in t_sequence)
+        return replace(self, provider=provider), tuple(
+            t_value
+            for t_sequence in (self.transform(u_value) for u_value in u_sequence)
+            for t_value in t_sequence
+        )

@@ -25,4 +25,5 @@ __all__ = [
     "RangeSchedule",
     "UntilSchedule",
     "WeeklySchedule",
-    "YearlySchedule"]
+    "YearlySchedule",
+]
