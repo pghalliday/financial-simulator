@@ -9,6 +9,7 @@ from prettytable import PrettyTable, TableStyle
 
 from financial_simulator.lib.util.date import days_in_year
 from financial_simulator.lib.util.format import format_day
+
 from .rate import Rate, RateCalculation
 
 
@@ -46,7 +47,7 @@ class ContinuousRate(Rate):
         return ((1 + self.annual_rate) ** (1 / Decimal(days_in_year(year)))) - 1
 
     @cache
-    def calculate( # type: ignore
+    def calculate(  # type: ignore
         self, current_date: date, balance: Decimal, accrued: Decimal
     ) -> ContinuousRateCalculation:
         daily_rate = self.__daily_rate(current_date.year)

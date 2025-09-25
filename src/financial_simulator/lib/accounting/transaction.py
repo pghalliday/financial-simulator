@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
-from typing import Sequence, Self
+from typing import Self, Sequence
 
 from .change import Change
 

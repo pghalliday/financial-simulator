@@ -1,7 +1,8 @@
 from datetime import date
-from typing import TypeVar, Mapping
+from typing import Mapping, TypeVar
 
 from financial_simulator.lib.schedules import DaySchedule
+
 from .merge_provider import MergeProvider
 from .provider import Provider
 from .scheduled_provider import ScheduledProvider

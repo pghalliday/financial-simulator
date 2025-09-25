@@ -1,6 +1,6 @@
 from dataclasses import dataclass, replace
 from datetime import date
-from typing import TypeVar, Callable, Generic, Sequence, Self, Tuple
+from typing import Callable, Generic, Self, Sequence, Tuple, TypeVar
 
 from .provider import Provider
 

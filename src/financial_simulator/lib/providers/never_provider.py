@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import date
-from typing import TypeVar, Sequence, Self, Tuple
+from typing import Self, Sequence, Tuple, TypeVar
 
 from .provider import Provider
 

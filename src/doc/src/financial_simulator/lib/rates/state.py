@@ -15,14 +15,19 @@ class State:
     interest_accrued: Decimal
 
     def __str__(self) -> str:
-        table = PrettyTable(['label', 'value'])
-        table.add_row(['Current date', format_day(self.current_date)])
-        table.add_row(['Net deposits', f'{self.net_deposits:.20}'])
-        table.add_row(['Interest paid', f'{self.interest_paid:.20}'])
-        table.add_row(['Interest accrued', f'{self.interest_accrued:.20}'])
-        table.add_row(['Total', f'{self.net_deposits + self.interest_paid + self.interest_accrued:.20}'])
+        table = PrettyTable(["label", "value"])
+        table.add_row(["Current date", format_day(self.current_date)])
+        table.add_row(["Net deposits", f"{self.net_deposits:.20}"])
+        table.add_row(["Interest paid", f"{self.interest_paid:.20}"])
+        table.add_row(["Interest accrued", f"{self.interest_accrued:.20}"])
+        table.add_row(
+            [
+                "Total",
+                f"{self.net_deposits + self.interest_paid + self.interest_accrued:.20}",
+            ]
+        )
         table.set_style(TableStyle.SINGLE_BORDER)
-        table.align['label'] = 'l'
-        table.align['value'] = 'r'
+        table.align["label"] = "l"
+        table.align["value"] = "r"
         table.header = False
         return table.get_string()

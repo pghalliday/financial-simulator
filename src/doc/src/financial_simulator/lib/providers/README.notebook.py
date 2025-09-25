@@ -21,35 +21,32 @@
 # `None`.
 
 # %%
-from calendar import TUESDAY, THURSDAY
+from calendar import THURSDAY, TUESDAY
 from datetime import date, timedelta
 
 from doc.src.financial_simulator.lib.providers import print_provided
-from financial_simulator.lib.providers import \
-    NeverProvider, \
-    AlwaysProvider, \
-    ScheduledProvider, \
-    NextProvider, \
-    MergeProvider, \
-    FunctionProvider, \
-    MapProvider, \
-    FlatMapProvider, \
-    MergeMapProvider, \
-    create_sequence_provider
-from financial_simulator.lib.schedules import \
-    WeeklySchedule, \
-    AnySchedule, \
-    UntilSchedule
-from financial_simulator.lib.util.format import \
-    format_day
+from financial_simulator.lib.providers import (
+    AlwaysProvider,
+    FlatMapProvider,
+    FunctionProvider,
+    MapProvider,
+    MergeMapProvider,
+    MergeProvider,
+    NeverProvider,
+    NextProvider,
+    ScheduledProvider,
+    create_sequence_provider,
+)
+from financial_simulator.lib.schedules import AnySchedule, UntilSchedule, WeeklySchedule
+from financial_simulator.lib.util.format import format_day
 
 START_DATE = date.today()
 
-print(f'Start Date: {format_day(START_DATE)}')
+print(f"Start Date: {format_day(START_DATE)}")
 
 START_DATE = date.today()
 
-print(f'Start Date: {format_day(START_DATE)}')
+print(f"Start Date: {format_day(START_DATE)}")
 
 # %% [markdown]
 # ## NeverProvider
@@ -57,9 +54,9 @@ print(f'Start Date: {format_day(START_DATE)}')
 # This is a trivial provider that always provides an empty sequence.
 
 # %%
-print_provided(initial_date=START_DATE,
-               initial_provider=NeverProvider[str](),
-               number_of_days=10)
+print_provided(
+    initial_date=START_DATE, initial_provider=NeverProvider[str](), number_of_days=10
+)
 
 # %% [markdown]
 # ## AlwaysProvider
@@ -67,9 +64,11 @@ print_provided(initial_date=START_DATE,
 # This is a trivial provider that always provides a single value sequence.
 
 # %%
-print_provided(initial_date=START_DATE,
-               initial_provider=AlwaysProvider('My value'),
-               number_of_days=10)
+print_provided(
+    initial_date=START_DATE,
+    initial_provider=AlwaysProvider("My value"),
+    number_of_days=10,
+)
 
 # %% [markdown]
 # ## ScheduledProvider
@@ -78,11 +77,13 @@ print_provided(initial_date=START_DATE,
 # provides an empty sequence.
 
 # %%
-print_provided(initial_date=START_DATE,
-               initial_provider=ScheduledProvider('My value',
-                                                  AnySchedule((WeeklySchedule(TUESDAY),
-                                                               WeeklySchedule(THURSDAY)))),
-               number_of_days=10)
+print_provided(
+    initial_date=START_DATE,
+    initial_provider=ScheduledProvider(
+        "My value", AnySchedule((WeeklySchedule(TUESDAY), WeeklySchedule(THURSDAY)))
+    ),
+    number_of_days=10,
+)
 
 # %% [markdown]
 # ## FunctionProvider
@@ -90,9 +91,11 @@ print_provided(initial_date=START_DATE,
 # This provider uses the specified function to map the current date to an instance of `Provided`.
 
 # %%
-print_provided(initial_date=START_DATE,
-               initial_provider=FunctionProvider(lambda current_date: current_date.weekday()),
-               number_of_days=10)
+print_provided(
+    initial_date=START_DATE,
+    initial_provider=FunctionProvider(lambda current_date: current_date.weekday()),
+    number_of_days=10,
+)
 
 # %% [markdown]
 # ## NextProvider
@@ -101,12 +104,17 @@ print_provided(initial_date=START_DATE,
 # a non-empty sequence of values.
 
 # %%
-print_provided(initial_date=START_DATE,
-               initial_provider=NextProvider(
-                   (ScheduledProvider('Value 1', UntilSchedule(START_DATE + timedelta(days=3))),
-                    ScheduledProvider('Value 2', UntilSchedule(START_DATE + timedelta(days=7))),
-                    ScheduledProvider('Value 3', UntilSchedule(START_DATE + timedelta(days=9))))),
-               number_of_days=10)
+print_provided(
+    initial_date=START_DATE,
+    initial_provider=NextProvider(
+        (
+            ScheduledProvider("Value 1", UntilSchedule(START_DATE + timedelta(days=3))),
+            ScheduledProvider("Value 2", UntilSchedule(START_DATE + timedelta(days=7))),
+            ScheduledProvider("Value 3", UntilSchedule(START_DATE + timedelta(days=9))),
+        )
+    ),
+    number_of_days=10,
+)
 
 # %% [markdown]
 # ## MergeProvider
@@ -115,20 +123,32 @@ print_provided(initial_date=START_DATE,
 # by those providers.
 
 # %%
-print_provided(initial_date=START_DATE,
-               initial_provider=MergeProvider((AlwaysProvider('Always value'),
-                                               ScheduledProvider('Sometimes value',
-                                                                 AnySchedule((WeeklySchedule(TUESDAY),
-                                                                              WeeklySchedule(THURSDAY)))),
-                                               NextProvider(
-                                                   (ScheduledProvider('Value 1',
-                                                                      UntilSchedule(START_DATE + timedelta(days=3))),
-                                                    ScheduledProvider('Value 2',
-                                                                      UntilSchedule(START_DATE + timedelta(days=7))),
-                                                    ScheduledProvider('Value 3',
-                                                                      UntilSchedule(
-                                                                          START_DATE + timedelta(days=9))))))),
-               number_of_days=10)
+print_provided(
+    initial_date=START_DATE,
+    initial_provider=MergeProvider(
+        (
+            AlwaysProvider("Always value"),
+            ScheduledProvider(
+                "Sometimes value",
+                AnySchedule((WeeklySchedule(TUESDAY), WeeklySchedule(THURSDAY))),
+            ),
+            NextProvider(
+                (
+                    ScheduledProvider(
+                        "Value 1", UntilSchedule(START_DATE + timedelta(days=3))
+                    ),
+                    ScheduledProvider(
+                        "Value 2", UntilSchedule(START_DATE + timedelta(days=7))
+                    ),
+                    ScheduledProvider(
+                        "Value 3", UntilSchedule(START_DATE + timedelta(days=9))
+                    ),
+                )
+            ),
+        )
+    ),
+    number_of_days=10,
+)
 
 # %% [markdown]
 # ## MapProvider
@@ -136,13 +156,17 @@ print_provided(initial_date=START_DATE,
 # This provider uses the specified transform function to transform the values provided by the specified provider
 
 # %%
-print_provided(initial_date=START_DATE,
-               initial_provider=MapProvider(transform=lambda value: (value.upper(), value.lower()),
-                                            provider=ScheduledProvider(value='My value',
-                                                                       schedule=AnySchedule((WeeklySchedule(TUESDAY),
-                                                                                             WeeklySchedule(
-                                                                                                 THURSDAY))))),
-               number_of_days=10)
+print_provided(
+    initial_date=START_DATE,
+    initial_provider=MapProvider(
+        transform=lambda value: (value.upper(), value.lower()),
+        provider=ScheduledProvider(
+            value="My value",
+            schedule=AnySchedule((WeeklySchedule(TUESDAY), WeeklySchedule(THURSDAY))),
+        ),
+    ),
+    number_of_days=10,
+)
 
 # %% [markdown]
 # ## FlatMapProvider
@@ -152,14 +176,17 @@ print_provided(initial_date=START_DATE,
 # sequences will be flattened in the resulting `Provided` instance.
 
 # %%
-print_provided(initial_date=START_DATE,
-               initial_provider=FlatMapProvider(transform=lambda value: (value.upper(), value.lower()),
-                                                provider=ScheduledProvider(value='My value',
-                                                                           schedule=AnySchedule(
-                                                                               (WeeklySchedule(TUESDAY),
-                                                                                WeeklySchedule(
-                                                                                    THURSDAY))))),
-               number_of_days=10)
+print_provided(
+    initial_date=START_DATE,
+    initial_provider=FlatMapProvider(
+        transform=lambda value: (value.upper(), value.lower()),
+        provider=ScheduledProvider(
+            value="My value",
+            schedule=AnySchedule((WeeklySchedule(TUESDAY), WeeklySchedule(THURSDAY))),
+        ),
+    ),
+    number_of_days=10,
+)
 
 # %% [markdown]
 # ## MergeMapProvider
@@ -170,15 +197,23 @@ print_provided(initial_date=START_DATE,
 
 # %%
 sequence_days = [START_DATE + timedelta(days=i) for i in range(10)]
-print_provided(initial_date=START_DATE,
-               initial_provider=MergeMapProvider(transform=lambda current_date, value: create_sequence_provider(
-                   {current_date + timedelta(days=1): f'{value}-1',
-                    current_date + timedelta(days=2): f'{value}-2',
-                    current_date + timedelta(days=3): f'{value}-3',
-                    current_date + timedelta(days=4): f'{value}-4'}),
-                                                 provider=create_sequence_provider(
-                                                     {day: day.weekday() for day in sequence_days})),
-               number_of_days=15)
+print_provided(
+    initial_date=START_DATE,
+    initial_provider=MergeMapProvider(
+        transform=lambda current_date, value: create_sequence_provider(
+            {
+                current_date + timedelta(days=1): f"{value}-1",
+                current_date + timedelta(days=2): f"{value}-2",
+                current_date + timedelta(days=3): f"{value}-3",
+                current_date + timedelta(days=4): f"{value}-4",
+            }
+        ),
+        provider=create_sequence_provider(
+            {day: day.weekday() for day in sequence_days}
+        ),
+    ),
+    number_of_days=15,
+)
 
 # %% [markdown]
 # ## Factories
@@ -192,7 +227,10 @@ print_provided(initial_date=START_DATE,
 
 # %%
 sequence_days = [START_DATE + timedelta(days=i) for i in range(9)]
-print_provided(initial_date=START_DATE,
-               initial_provider=create_sequence_provider({day: format_day(day)
-                                                          for day in sequence_days}),
-               number_of_days=10)
+print_provided(
+    initial_date=START_DATE,
+    initial_provider=create_sequence_provider(
+        {day: format_day(day) for day in sequence_days}
+    ),
+    number_of_days=10,
+)

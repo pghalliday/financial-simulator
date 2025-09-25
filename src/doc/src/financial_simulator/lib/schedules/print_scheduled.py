@@ -1,12 +1,14 @@
 from datetime import date, timedelta
 from itertools import islice
-from typing import Tuple, Generator
+from typing import Generator, Tuple
 
 from financial_simulator.lib.schedules import Schedule
-from financial_simulator.lib.util.format import format_days, format_day
+from financial_simulator.lib.util.format import format_day, format_days
 
 
-def generate_schedule_results(initial_date: date, initial_schedule: Schedule) -> Generator[Tuple[date, bool | None]]:
+def generate_schedule_results(
+    initial_date: date, initial_schedule: Schedule
+) -> Generator[Tuple[date, bool | None]]:
     schedule: Schedule | None = initial_schedule
     current_date = initial_date
     while True:
@@ -24,9 +26,17 @@ def generate_schedule_results(initial_date: date, initial_schedule: Schedule) ->
         current_date = current_date + timedelta(days=1)
 
 
-def print_scheduled(initial_date: date, initial_schedule: Schedule, number_of_days: int) -> None:
-    results = tuple(islice(generate_schedule_results(initial_date, initial_schedule), number_of_days))
+def print_scheduled(
+    initial_date: date, initial_schedule: Schedule, number_of_days: int
+) -> None:
+    results = tuple(
+        islice(
+            generate_schedule_results(initial_date, initial_schedule), number_of_days
+        )
+    )
     completed_at = next((result for result in results if result[1] is None), None)
     scheduled = tuple(result[0] for result in results if result[1])
     print(format_days(scheduled))
-    print(f'Completed at: {format_day(completed_at[0]) if completed_at is not None else 'Not completed'}')
+    print(
+        f"Completed at: {format_day(completed_at[0]) if completed_at is not None else 'Not completed'}"
+    )

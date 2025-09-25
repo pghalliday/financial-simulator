@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
-from typing import Tuple, Self, Sequence
+from typing import Self, Sequence, Tuple
 
 from financial_simulator.lib.accounting import Books
 from financial_simulator.lib.actions import Action

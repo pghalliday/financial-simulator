@@ -1,5 +1,5 @@
 from datetime import date
-from typing import Tuple, Sequence, TypeVar
+from typing import Sequence, Tuple, TypeVar
 
 T = TypeVar("T")
 

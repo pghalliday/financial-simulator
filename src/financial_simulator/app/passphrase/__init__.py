@@ -1,4 +1,4 @@
-from .passphrase import get_passphrase, confirm_passphrase
+from .passphrase import confirm_passphrase, get_passphrase
 
 __all__ = [
     "get_passphrase",

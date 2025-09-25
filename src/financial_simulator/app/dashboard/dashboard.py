@@ -1,79 +1,78 @@
 import logging
 
-import dash_mantine_components as dmc
-from dash import html, dcc, Dash, Output, Input
+import dash
+import dash_mantine_components as dmc  # type: ignore
+from dash import Dash, Input, Output, State, callback
 
 from financial_simulator.app.api import API
 from financial_simulator.app.config import Config
-from financial_simulator.lib.util.data import plot_account_balances
+from financial_simulator.app.dashboard.globals import set_api
 
 logger = logging.getLogger(__name__)
 
-api: API | None = None
-
-theme={
+theme = {
     "primaryColor": "teal",
     "defaultRadius": "sm",
     "components": {
-        "Card": {
-            "defaultProps": {
-                "shadow": "md"
-            }
-        }
-    }
+        "Card": {"defaultProps": {"shadow": "md"}},
+    },
 }
 
+app = Dash(__name__, use_pages=True)
 
-app = Dash(__name__)
+layout = dmc.AppShell(
+    [
+        dmc.AppShellHeader(
+            dmc.Group(
+                [
+                    dmc.Burger(id="burger", size="sm", hiddenFrom="sm", opened=False),
+                    dmc.Title("Financial Simulator"),
+                ],
+                h="100%",
+                px="md",
+            )
+        ),
+        dmc.AppShellNavbar(
+            id="navbar",
+            children=[
+                dmc.NavLink(
+                    label=page["name"],
+                    href=page["relative_path"],
+                    active="exact",
+                )
+                for page in dash.page_registry.values()
+            ],
+            p="md",
+        ),
+        dmc.AppShellMain(dash.page_container),
+    ],
+    header={"height": 60},
+    padding="md",
+    navbar={
+        "width": 300,
+        "breakpoint": "sm",
+        "collapsed": {"mobile": True},
+    },
+    id="appshell",
+)
+
+
 app.layout = dmc.MantineProvider(
     theme=theme,
-    children=html.Div(
-        children=[
-            dcc.Store(id="days"),
-            html.H1(children="Financial Simulator"),
-            html.P(
-                children=("Do stuff"),
-            ),
-            dcc.Graph(
-                id="current-account-balances",
-            ),
-            dcc.Graph(
-                id="savings-account-balances",
-            ),
-        ]
-    )
+    children=layout,
 )
 
-@app.callback(
-    Output("current-account-balances", "figure"),
-    Output("savings-account-balances", "figure"),
-    Input("current-account-balances", "figure"),
-    Input("savings-account-balances", "figure"),
+
+@callback(
+    Output("appshell", "navbar"),
+    Input("burger", "opened"),
+    State("appshell", "navbar"),
 )
-def initialize_charts(_0, _1):
-    logger.info("Initializing charts")
+def navbar_is_open(opened, navbar):
+    navbar["collapsed"] = {"mobile": not opened}
+    return navbar
 
-    days = api.get_days()
-
-    current_account_balances_figure = plot_account_balances(
-        days=days,
-        account_path=("assets", "bank_accounts", "current"),
-        columns=("Jack", "Jill", "Widgets LTD"),
-        title="Savings Account Balances",
-        is_debit_account=True,
-    )
-
-    savings_account_balances_figure = plot_account_balances(
-        days=days,
-        account_path=("assets", "bank_accounts", "savings"),
-        columns=("Jack", "Jill", "Widgets LTD"),
-        title="Savings Account Balances",
-        is_debit_account=True,
-    )
-
-    return current_account_balances_figure, savings_account_balances_figure
 
 def start_dashboard(config: Config):
-    global api
-    api = API(config)
-    app.run(debug=True) # type: ignore
+    set_api(API(config))
+    app.run(debug=True)  # type: ignore

@@ -1,132 +1,107 @@
+import logging
 from datetime import date
-from decimal import Decimal
-from itertools import islice
 from typing import Sequence, Tuple
 
 from sqlalchemy import Engine, create_engine
+from sqlalchemy.orm import Session
 
-from financial_simulator import FinancialSimulator
+from financial_simulator.app.api.init_dummy_days import init_dummy_days
 from financial_simulator.app.config import Config
-from financial_simulator.lib.accounting import Books, Transaction, Change
-from financial_simulator.lib.entities import Individual, Corporation, Entity
-from financial_simulator.lib.factories.bank_accounts import (
-    create_abn_amro_personal_current,
-    create_abn_amro_personal_savings,
-    create_ing_business_current,
-)
-from financial_simulator.lib.providers import NeverProvider
+from financial_simulator.app.database.schema import Entity, Scenario
+from financial_simulator.lib.entities import Entity as FSEntity
+
+logger = logging.getLogger(__name__)
 
 
 class API:
     config: Config
     engine: Engine
-    days: Sequence[Tuple[date, Sequence[Entity]]]
+    days: Sequence[Tuple[date, Sequence[FSEntity]]]
 
     def __init__(self, config: Config):
         super().__init__()
         self.config = config
         sqlite_file = self.config.database.sqlite_file
         self.engine = create_engine(f"sqlite:///{sqlite_file}")
+        self.days = init_dummy_days()
 
-        initial_date = date(2019, 12, 31)
-
-        jack = Individual(
-            name="jack",
-            books=Books.create(
-                Transaction(
-                    transaction_date=initial_date,
-                    description="Initial transaction",
-                    changes=(
-                        Change(
-                            amount=Decimal("-100.0"),
-                            account_path=("assets", "bank_accounts", "current"),
-                        ),
-                        Change(
-                            amount=Decimal("-5000.0"),
-                            account_path=("assets", "bank_accounts", "savings"),
-                        ),
-                        Change(
-                            amount=Decimal("5100.0"),
-                            account_path=("liabilities", "equity"),
-                        ),
-                    ),
-                )
-            ),
-            expenses=NeverProvider(),
-            bank_accounts=(
-                create_abn_amro_personal_current("current"),
-                create_abn_amro_personal_savings("savings"),
-            ),
-            investments=(),
-            properties=(),
-            loans=(),
-        )
-
-        jill = Individual(
-            name="jill",
-            books=Books.create(
-                Transaction(
-                    transaction_date=initial_date,
-                    description="Initial transaction",
-                    changes=(
-                        Change(
-                            amount=Decimal("-200.0"),
-                            account_path=("assets", "bank_accounts", "current"),
-                        ),
-                        Change(
-                            amount=Decimal("-3000.0"),
-                            account_path=("assets", "bank_accounts", "savings"),
-                        ),
-                        Change(
-                            amount=Decimal("3200.0"),
-                            account_path=("liabilities", "equity"),
-                        ),
-                    ),
-                )
-            ),
-            expenses=NeverProvider(),
-            bank_accounts=(
-                create_abn_amro_personal_current("current"),
-                create_abn_amro_personal_savings("savings"),
-            ),
-            investments=(),
-            properties=(),
-            loans=(),
-        )
-
-        widgets_ltd = Corporation(
-            name="widgets_ltd",
-            books=Books.create(
-                Transaction(
-                    transaction_date=initial_date,
-                    description="Initial transaction",
-                    changes=(
-                        Change(
-                            amount=Decimal("-300.0"),
-                            account_path=("assets", "bank_accounts", "current"),
-                        ),
-                        Change(
-                            amount=Decimal("300.0"),
-                            account_path=("liabilities", "equity"),
-                        ),
-                    ),
-                )
-            ),
-            operating_expenses=NeverProvider(),
-            capital_expenses=NeverProvider(),
-            depreciation=NeverProvider(),
-            income=NeverProvider(),
-            bank_accounts=(create_ing_business_current("current"),),
-            investments=(),
-            properties=(),
-            loans=(),
-            salaries=(),
-        )
-
-        fs = FinancialSimulator(
-            current_date=initial_date, current_entities=(jack, jill, widgets_ltd)
-        )
-        self.days = list(islice(fs, 5000))
-
-    def get_days(self) -> Sequence[Tuple[date, Sequence[Entity]]]:
+    def get_days(self) -> Sequence[Tuple[date, Sequence[FSEntity]]]:
         return self.days
+
+    def get_scenario(self, scenario_id: int) -> Scenario:
+        with Session(self.engine) as session:
+            return session.get_one(Scenario, scenario_id)
+
+    def list_scenarios(self) -> Sequence[Scenario]:
+        with Session(self.engine) as session:
+            return session.query(Scenario).all()
+
+    def insert_scenario(self, scenario: Scenario) -> Scenario:
+        with Session(self.engine, expire_on_commit=False) as session:
+            logger.debug(f"Inserting scenario: {scenario}")
+            session.add(scenario)
+            session.commit()
+            return scenario
+
+    def upsert_scenario(self, scenario: Scenario) -> Scenario:
+        with Session(self.engine, expire_on_commit=False) as session:
+            merged = session.merge(scenario)
+            session.commit()
+            return merged
+
+    def delete_scenario(self, scenario: Scenario) -> None:
+        with Session(self.engine, expire_on_commit=False) as session:
+            session.delete(scenario)
+            session.commit()
+
+    def get_entities(self, scenario_id: int) -> Sequence[Entity]:
+        with Session(self.engine) as session:
+            scenario: Scenario = session.get_one(Scenario, scenario_id)
+            return scenario.entities
+
+    def get_entity(self, entity_id: int) -> Entity:
+        with Session(self.engine) as session:
+            return session.get_one(Entity, entity_id)
+
+    def list_entities(self) -> Sequence[Entity]:
+        with Session(self.engine) as session:
+            return session.query(Entity).all()
+
+    def insert_entity(self, entity: Entity) -> Entity:
+        with Session(self.engine, expire_on_commit=False) as session:
+            logger.debug(f"Inserting entity: {entity}")
+            session.add(entity)
+            session.commit()
+            return entity
+
+    def upsert_entity(self, entity: Entity) -> Entity:
+        with Session(self.engine, expire_on_commit=False) as session:
+            merged = session.merge(entity)
+            session.commit()
+            return merged
+
+    def delete_entity(self, entity: Entity) -> None:
+        with Session(self.engine, expire_on_commit=False) as session:
+            session.delete(entity)
+            session.commit()
+
+    def get_scenarios(self, entity_id: int) -> Sequence[Scenario]:
+        with Session(self.engine) as session:
+            entity: Entity = session.get_one(Entity, entity_id)
+            return entity.scenarios
+
+    def add_entity_to_scenario(self, scenario_id: int, entity_id: int) -> Tuple[Scenario, Entity]:
+        with Session(self.engine, expire_on_commit=False) as session:
+            scenario: Scenario = session.get_one(Scenario, scenario_id)
+            entity: Entity = session.get_one(Entity, entity_id)
+            scenario.entities.append(entity)
+            session.commit()
+            return scenario, entity
+
+    def remove_entity_from_scenario(self, scenario_id: int, entity_id: int) -> Tuple[Scenario, Entity]:
+        with Session(self.engine, expire_on_commit=False) as session:
+            scenario: Scenario = session.get_one(Scenario, scenario_id)
+            entity: Entity = session.get_one(Entity, entity_id)
+            scenario.entities.remove(entity)
+            session.commit()
+            return scenario, entity

@@ -1,6 +1,6 @@
 from dataclasses import dataclass, replace
 from datetime import date
-from typing import Sequence, Self, Tuple
+from typing import Self, Sequence, Tuple
 
 from .schedule import Schedule
 

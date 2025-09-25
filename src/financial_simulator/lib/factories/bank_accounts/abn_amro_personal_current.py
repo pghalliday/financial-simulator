@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from financial_simulator.lib.bank_accounts import BankAccount, BankFee
 from financial_simulator.lib.providers import NeverProvider, ScheduledProvider
-from financial_simulator.lib.schedules import NeverSchedule, MonthlySchedule
+from financial_simulator.lib.schedules import MonthlySchedule, NeverSchedule
 
 
 def create_abn_amro_personal_current(name: str):

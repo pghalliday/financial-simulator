@@ -2,6 +2,7 @@ import logging
 from argparse import ArgumentParser
 
 from financial_simulator.app.config import Config
+
 from .dashboard import add_dashboard_command
 from .decrypt import add_decrypt_command
 from .encrypt import add_encrypt_command

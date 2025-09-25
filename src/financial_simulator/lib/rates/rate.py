@@ -18,5 +18,7 @@ class RateCalculation:
 @dataclass(frozen=True)
 class Rate(metaclass=ABCMeta):
     @abstractmethod
-    def calculate(self, current_date: date, balance: Decimal, accrued: Decimal) -> RateCalculation:
+    def calculate(
+        self, current_date: date, balance: Decimal, accrued: Decimal
+    ) -> RateCalculation:
         raise NotImplementedError

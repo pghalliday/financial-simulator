@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 from itertools import islice
-from typing import Tuple, Generator, TypeVar, Sequence
+from typing import Generator, Sequence, Tuple, TypeVar
 
 from financial_simulator.lib.providers import Provider
 from financial_simulator.lib.util.format import format_day, format_provided

@@ -1,9 +1,9 @@
 from datetime import date
 
 from financial_simulator.lib.salaries.salary import (
+    ZERO_SALARY_PAYMENT,
     Salary,
     SalaryPayment,
-    ZERO_SALARY_PAYMENT,
 )
 from financial_simulator.lib.util.date import correct_day_of_the_month
 

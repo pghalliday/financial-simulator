@@ -9,6 +9,7 @@ from prettytable import PrettyTable, TableStyle
 
 from financial_simulator.lib.util.date import days_in_year
 from financial_simulator.lib.util.format import format_day
+
 from .rate import Rate, RateCalculation
 
 
@@ -18,7 +19,7 @@ class PeriodicRateCalculation(RateCalculation):
     daily_rate: Decimal
 
     @cache
-    def __str__(self) -> str: # type: ignore
+    def __str__(self) -> str:  # type: ignore
         table = PrettyTable(["label", "value"])
         table.add_row(["Current date", format_day(self.current_date)])
         table.add_row(["Rate", str(self.rate)])
@@ -30,7 +31,7 @@ class PeriodicRateCalculation(RateCalculation):
         table.align["label"] = "l"
         table.align["value"] = "r"
         table.header = False
-        return table.get_string() # type: ignore
+        return table.get_string()  # type: ignore
 
 
 @dataclass(frozen=True)
@@ -39,7 +40,7 @@ class PeriodicRate(Rate):
     period_count: int
 
     @cache
-    def __str__(self) -> str: # type: ignore
+    def __str__(self) -> str:  # type: ignore
         return (
             f"PeriodicRate: {self.period_count} periods: {self.annual_rate * 100:.2f}%"
         )
@@ -52,7 +53,7 @@ class PeriodicRate(Rate):
         ) / days_in_year(year)
 
     @cache
-    def calculate( # type: ignore
+    def calculate(  # type: ignore
         self, current_date: date, balance: Decimal, accrued: Decimal
     ) -> PeriodicRateCalculation:
         daily_rate = self.__daily_rate(current_date.year)

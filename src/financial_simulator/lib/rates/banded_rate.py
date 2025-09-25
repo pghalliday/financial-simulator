@@ -4,12 +4,13 @@ from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
 from functools import cache
-from typing import Tuple, Sequence, Mapping
+from typing import Mapping, Sequence, Tuple
 
 from prettytable import PrettyTable, TableStyle
 
 from financial_simulator.lib.util.bands import Band, create_bands
 from financial_simulator.lib.util.format import format_day
+
 from .rate import Rate, RateCalculation
 
 

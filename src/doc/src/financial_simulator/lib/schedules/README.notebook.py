@@ -21,29 +21,29 @@
 # If the schedule is complete then it will return `None`
 
 # %%
-from calendar import TUESDAY, SATURDAY, JANUARY, FEBRUARY, APRIL, JULY, OCTOBER
+from calendar import APRIL, FEBRUARY, JANUARY, JULY, OCTOBER, SATURDAY, TUESDAY
 from datetime import date, timedelta
 
 from doc.src.financial_simulator.lib.schedules import print_scheduled
-from financial_simulator.lib.schedules import \
-    NeverSchedule, \
-    DailySchedule, \
-    DaySchedule, \
-    FromSchedule, \
-    UntilSchedule, \
-    RangeSchedule, \
-    WeeklySchedule, \
-    MonthlySchedule, \
-    YearlySchedule, \
-    FunctionSchedule, \
-    AnySchedule, \
-    AllSchedule
-from financial_simulator.lib.util.format import \
-    format_day
+from financial_simulator.lib.schedules import (
+    AllSchedule,
+    AnySchedule,
+    DailySchedule,
+    DaySchedule,
+    FromSchedule,
+    FunctionSchedule,
+    MonthlySchedule,
+    NeverSchedule,
+    RangeSchedule,
+    UntilSchedule,
+    WeeklySchedule,
+    YearlySchedule,
+)
+from financial_simulator.lib.util.format import format_day
 
 START_DATE = date.today()
 
-print(f'Start Date: {format_day(START_DATE)}')
+print(f"Start Date: {format_day(START_DATE)}")
 
 # %% [markdown]
 # ## Primitive schedules
@@ -56,9 +56,9 @@ print(f'Start Date: {format_day(START_DATE)}')
 # This is a trivial schedule in that it always returns False
 
 # %%
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=NeverSchedule(),
-                number_of_days=1000)
+print_scheduled(
+    initial_date=START_DATE, initial_schedule=NeverSchedule(), number_of_days=1000
+)
 
 # %% [markdown]
 # ### DailySchedule
@@ -66,9 +66,9 @@ print_scheduled(initial_date=START_DATE,
 # This is a trivial schedule in that it always returns True
 
 # %%
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=DailySchedule(),
-                number_of_days=10)
+print_scheduled(
+    initial_date=START_DATE, initial_schedule=DailySchedule(), number_of_days=10
+)
 
 # %% [markdown]
 # ### DaySchedule
@@ -76,9 +76,11 @@ print_scheduled(initial_date=START_DATE,
 # This schedule will only match on the specified day
 
 # %%
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=DaySchedule(START_DATE + timedelta(days=50)),
-                number_of_days=1000)
+print_scheduled(
+    initial_date=START_DATE,
+    initial_schedule=DaySchedule(START_DATE + timedelta(days=50)),
+    number_of_days=1000,
+)
 
 # %% [markdown]
 # ### FromSchedule
@@ -86,9 +88,11 @@ print_scheduled(initial_date=START_DATE,
 # This schedule will match on all dates after and including the specified day
 
 # %%
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=FromSchedule(START_DATE + timedelta(days=10)),
-                number_of_days=20)
+print_scheduled(
+    initial_date=START_DATE,
+    initial_schedule=FromSchedule(START_DATE + timedelta(days=10)),
+    number_of_days=20,
+)
 
 # %% [markdown]
 # ### UntilSchedule
@@ -96,9 +100,11 @@ print_scheduled(initial_date=START_DATE,
 # This schedule will match on all dates up to but not including the specified day
 
 # %%
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=UntilSchedule(START_DATE + timedelta(days=10)),
-                number_of_days=20)
+print_scheduled(
+    initial_date=START_DATE,
+    initial_schedule=UntilSchedule(START_DATE + timedelta(days=10)),
+    number_of_days=20,
+)
 
 # %% [markdown]
 # ### RangeSchedule
@@ -107,10 +113,14 @@ print_scheduled(initial_date=START_DATE,
 # the `until_date`
 
 # %%
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=RangeSchedule(from_date=START_DATE + timedelta(days=10),
-                                               until_date=START_DATE + timedelta(days=20)),
-                number_of_days=30)
+print_scheduled(
+    initial_date=START_DATE,
+    initial_schedule=RangeSchedule(
+        from_date=START_DATE + timedelta(days=10),
+        until_date=START_DATE + timedelta(days=20),
+    ),
+    number_of_days=30,
+)
 
 # %% [markdown]
 # ### WeeklySchedule
@@ -118,9 +128,9 @@ print_scheduled(initial_date=START_DATE,
 # This schedule will match on the specified day of the week
 
 # %%
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=WeeklySchedule(TUESDAY),
-                number_of_days=50)
+print_scheduled(
+    initial_date=START_DATE, initial_schedule=WeeklySchedule(TUESDAY), number_of_days=50
+)
 
 # %% [markdown]
 # ### MonthlySchedule
@@ -131,9 +141,9 @@ print_scheduled(initial_date=START_DATE,
 # then the last day of the month will match.
 
 # %%
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=MonthlySchedule(30),
-                number_of_days=500)
+print_scheduled(
+    initial_date=START_DATE, initial_schedule=MonthlySchedule(30), number_of_days=500
+)
 
 # %% [markdown]
 # ### YearlySchedule
@@ -144,9 +154,11 @@ print_scheduled(initial_date=START_DATE,
 # then the last day of the month will match.
 
 # %%
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=YearlySchedule(FEBRUARY, 30),
-                number_of_days=5000)
+print_scheduled(
+    initial_date=START_DATE,
+    initial_schedule=YearlySchedule(FEBRUARY, 30),
+    number_of_days=5000,
+)
 
 
 # %% [markdown]
@@ -155,14 +167,15 @@ print_scheduled(initial_date=START_DATE,
 # This is a generic schedule that takes a callback function that will be used to check the supplied date.
 # If the function returns None, then the schedule will be considered complete.
 
+
 # %%
 def func(current_date: date) -> bool | None:
     return current_date.weekday() < SATURDAY
 
 
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=FunctionSchedule(func),
-                number_of_days=20)
+print_scheduled(
+    initial_date=START_DATE, initial_schedule=FunctionSchedule(func), number_of_days=20
+)
 
 # %% [markdown]
 # ## Schedule operators
@@ -178,12 +191,18 @@ print_scheduled(initial_date=START_DATE,
 # For example, to get a quarterly schedule, you could create four Yearly schedules and Any them together.
 
 # %%
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=AnySchedule((YearlySchedule(JANUARY, 1),
-                                              YearlySchedule(APRIL, 1),
-                                              YearlySchedule(JULY, 1),
-                                              YearlySchedule(OCTOBER, 1))),
-                number_of_days=1000)
+print_scheduled(
+    initial_date=START_DATE,
+    initial_schedule=AnySchedule(
+        (
+            YearlySchedule(JANUARY, 1),
+            YearlySchedule(APRIL, 1),
+            YearlySchedule(JULY, 1),
+            YearlySchedule(OCTOBER, 1),
+        )
+    ),
+    number_of_days=1000,
+)
 
 # %% [markdown]
 # ### AllSchedule
@@ -194,7 +213,10 @@ print_scheduled(initial_date=START_DATE,
 # For example, to get a weekly schedule but only until a certain date.
 
 # %%
-print_scheduled(initial_date=START_DATE,
-                initial_schedule=AllSchedule((WeeklySchedule(TUESDAY),
-                                              UntilSchedule(START_DATE + timedelta(days=30)))),
-                number_of_days=50)
+print_scheduled(
+    initial_date=START_DATE,
+    initial_schedule=AllSchedule(
+        (WeeklySchedule(TUESDAY), UntilSchedule(START_DATE + timedelta(days=30)))
+    ),
+    number_of_days=50,
+)

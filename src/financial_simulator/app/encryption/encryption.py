@@ -1,7 +1,7 @@
 import base64
 import logging
 import os
-from lzma import compress, FORMAT_XZ, CHECK_SHA256, decompress
+from lzma import CHECK_SHA256, FORMAT_XZ, compress, decompress
 from pathlib import Path
 
 from cryptography.fernet import Fernet

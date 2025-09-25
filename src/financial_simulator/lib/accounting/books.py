@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from dataclasses import dataclass, replace
 from datetime import date
 from decimal import Decimal

@@ -37,7 +37,7 @@ taxable
 
 # %%
 
-taxBandsByYear = TaxBandsByYear('../../data/corporation_tax_bands.json')
+taxBandsByYear = TaxBandsByYear("../../data/corporation_tax_bands.json")
 taxBands2025 = taxBandsByYear.get_bands(2025)
 print(taxBands2025)
 

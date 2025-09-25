@@ -3,7 +3,7 @@ from typing import Any
 
 from financial_simulator.app.config import Config
 from financial_simulator.app.encryption import write
-from financial_simulator.app.passphrase import get_passphrase, confirm_passphrase
+from financial_simulator.app.passphrase import confirm_passphrase, get_passphrase
 
 
 def encrypt(args: Namespace, config: Config):

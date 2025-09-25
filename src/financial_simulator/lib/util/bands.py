@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import List, Tuple, TypeVar, Mapping, Sequence
+from typing import List, Mapping, Sequence, Tuple, TypeVar
 
 T = TypeVar("T")
 

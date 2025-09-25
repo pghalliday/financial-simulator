@@ -1,6 +1,6 @@
 from dataclasses import dataclass, replace
 from decimal import Decimal
-from typing import Sequence, Self
+from typing import Self, Sequence
 
 from .change import Change
 

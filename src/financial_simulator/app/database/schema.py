@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List
 
-from sqlalchemy import MetaData, ForeignKey, Table, Column, Integer
+from sqlalchemy import Column, ForeignKey, Integer, MetaData, Table
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 constraint_naming_conventions = {

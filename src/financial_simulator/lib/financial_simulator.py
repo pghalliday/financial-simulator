@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from datetime import date, timedelta
-from typing import Iterator, Tuple, Sequence
+from typing import Iterator, Sequence, Tuple
 
-from financial_simulator.lib.actions import TickAction, Action
+from financial_simulator.lib.actions import Action, TickAction
 from financial_simulator.lib.entities import Entity
 
 

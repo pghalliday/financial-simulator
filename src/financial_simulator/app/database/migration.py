@@ -1,9 +1,11 @@
+from pathlib import Path
 from typing import Sequence
+
 from alembic.config import Config
 from alembic.runtime.environment import EnvironmentContext
 from alembic.runtime.migration import MigrationContext, MigrationStep
 from alembic.script import ScriptDirectory
-from sqlalchemy import Engine
+from sqlalchemy import Engine, create_engine
 
 from .schema import Base
 
@@ -14,8 +16,8 @@ class Migration:
     __script_directory: ScriptDirectory
     __environment_context: EnvironmentContext
 
-    def __init__(self, engine: Engine):
-        self.__engine = engine
+    def __init__(self, sqlite_file: Path):
+        self.__engine = create_engine("sqlite:///" + str(sqlite_file))
         self.__config = Config()
         self.__config.set_main_option(
             "script_location", "financial_simulator.app.database:alembic"
@@ -26,10 +28,12 @@ class Migration:
         )
 
     def upgrade_database(self):
+        # noinspection PyUnusedLocal
         def do_upgrade(
             revision: str, context: MigrationContext
         ) -> Sequence[MigrationStep]:
-            return self.__script_directory._upgrade_revs( # type: ignore
+            # noinspection PyProtectedMember
+            return self.__script_directory._upgrade_revs(  # type: ignore
                 "head",
                 revision,
             )

@@ -3,14 +3,12 @@ import readline
 from cmd import Cmd
 from typing import Generator
 
-from sqlalchemy import create_engine, Engine
-from sqlalchemy.orm import Session
-
+from financial_simulator.app.api import API
 from financial_simulator.app.config import Config
 from financial_simulator.app.database import Migration
-from financial_simulator.app.database.schema import Scenario, Entity
-from financial_simulator.app.encryption import read, write, check
-from financial_simulator.app.passphrase import get_passphrase, confirm_passphrase
+from financial_simulator.app.database.schema import Entity, Scenario
+from financial_simulator.app.encryption import check, read, write
+from financial_simulator.app.passphrase import confirm_passphrase, get_passphrase
 
 logger = logging.getLogger(__name__)
 
@@ -55,8 +53,7 @@ class Shell(Cmd):
     prompt = "(FinSim) "
     config: Config
     passphrase: str
-    engine: Engine
-    migration: Migration
+    api: API
 
     def __init__(self, config: Config):
         super().__init__()
@@ -71,9 +68,9 @@ class Shell(Cmd):
                 self.__decrypt_sqlite_file()
         else:
             confirm_passphrase(self.passphrase)
-        self.engine = create_engine(f"sqlite:///{sqlite_file}")
-        self.migration = Migration(self.engine)
-        self.migration.upgrade_database()
+        migration = Migration(config.database.sqlite_file)
+        migration.upgrade_database()
+        self.api = API(config)
 
     def onecmd(self, line: str):
         try:
@@ -160,75 +157,53 @@ class Shell(Cmd):
         """Insert a scenario:  INSERT_SCENARIO"""
         name = input_no_history("name: ")
         description = input_no_history("description: ")
-        with Session(self.engine) as session:
-            scenario = Scenario(name=name, description=description)
-            session.add(scenario)
-            session.commit()
-            print(scenario)
+        print(self.api.insert_scenario(Scenario(name=name, description=description)))
 
     def do_delete_scenario(self, arg: str):
         """Delete a scenario:  DELETE_SCENARIO SCENARIO_ID"""
-        scenario_id = int(arg)
-        with Session(self.engine) as session:
-            scenario = session.get(Scenario, scenario_id)
-            if scenario:
-                session.delete(scenario)
-                session.commit()
-            print(scenario)
+        scenario = self.api.get_scenario(int(arg))
+        self.api.delete_scenario(scenario)
+        print(scenario)
 
     def do_list_scenarios(self, arg: str):
         """List the scenarios:  LIST_SCENARIOS"""
-        with Session(self.engine) as session:
-            scenarios = session.query(Scenario).all()
-            for scenario in scenarios:
-                print(scenario)
-            print(f"count: {len(scenarios)}")
+        scenarios = self.api.list_scenarios()
+        for scenario in scenarios:
+            print(scenario)
+        print(f"count: {len(scenarios)}")
 
     def do_get_entities(self, arg: str):
         """Get the entities included in a scenario:  GET_ENTITIES SCENARIO_ID"""
-        scenario_id = int(arg)
-        with Session(self.engine) as session:
-            entities = session.get_one(Scenario, scenario_id).entities
-            for entity in entities:
-                print(entity)
-            print(f"count: {len(entities)}")
+        scenario_entities = self.api.get_entities(int(arg))
+        for entity in scenario_entities:
+            print(entity)
+        print(f"count: {len(scenario_entities)}")
 
     def do_insert_entity(self, arg: str):
         """Insert an entity:  INSERT_ENTITY"""
         name = input_no_history("name: ")
         description = input_no_history("description: ")
-        with Session(self.engine) as session:
-            entity = Entity(name=name, description=description)
-            session.add(entity)
-            session.commit()
-            print(entity)
+        print(self.api.insert_entity(Entity(name=name, description=description)))
 
     def do_delete_entity(self, arg: str):
         """Delete an entity:  DELETE_ENTITY ENTITY_ID"""
-        entity_id = int(arg)
-        with Session(self.engine) as session:
-            entity = session.get(Entity, entity_id)
-            if entity:
-                session.delete(entity)
-                session.commit()
-            print(entity)
+        entity = self.api.get_entity(int(arg))
+        self.api.delete_entity(entity)
+        print(entity)
 
     def do_list_entities(self, arg: str):
         """List the entities:  LIST_ENTITIES"""
-        with Session(self.engine) as session:
-            entities = session.query(Entity).all()
-            for entity in entities:
-                print(entity)
-            print(f"count: {len(entities)}")
+        entities = self.api.list_entities()
+        for entity in entities:
+            print(entity)
+        print(f"count: {len(entities)}")
 
     def do_get_scenarios(self, arg: str):
         """Get the scenarios that include an entity:  GET_SCENARIOS ENTITY_ID"""
-        entity_id = int(arg)
-        with Session(self.engine) as session:
-            scenarios = session.get_one(Entity, entity_id).scenarios
-            for scenario in scenarios:
-                print(scenario)
-            print(f"count: {len(scenarios)}")
+        entity_scenarios = self.api.get_scenarios(int(arg))
+        for scenario in entity_scenarios:
+            print(scenario)
+        print(f"count: {len(entity_scenarios)}")
 
     def do_add_entity_to_scenario(self, arg: str):
         """Add an entity to a scenario:  ADD_ENTITY_TO_SCENARIO SCENARIO_ID ENTITY_ID"""
@@ -236,13 +211,9 @@ class Shell(Cmd):
         assert len(ids) == 2
         scenario_id = int(ids[0])
         entity_id = int(ids[1])
-        with Session(self.engine) as session:
-            scenario = session.get_one(Scenario, scenario_id)
-            entity = session.get_one(Entity, entity_id)
-            scenario.entities.append(entity)
-            session.commit()
-            print(scenario)
-            print(entity)
+        scenario, entity = self.api.add_entity_to_scenario(scenario_id, entity_id)
+        print(scenario)
+        print(entity)
 
     def do_remove_entity_from_scenario(self, arg: str):
         """Remove an entity from a scenario:  REMOVE_ENTITY_FROM_SCENARIO SCENARIO_ID ENTITY_ID"""
@@ -250,10 +221,6 @@ class Shell(Cmd):
         assert len(ids) == 2
         scenario_id = int(ids[0])
         entity_id = int(ids[1])
-        with Session(self.engine) as session:
-            scenario = session.get_one(Scenario, scenario_id)
-            entity = session.get_one(Entity, entity_id)
-            scenario.entities.remove(entity)
-            session.commit()
-            print(scenario)
-            print(entity)
+        scenario, entity = self.api.remove_entity_from_scenario(scenario_id, entity_id)
+        print(scenario)
+        print(entity)

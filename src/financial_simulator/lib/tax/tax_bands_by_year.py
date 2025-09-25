@@ -1,5 +1,5 @@
 import json
-from typing import List, Tuple, Dict
+from typing import Dict, List, Tuple
 
 from prettytable import PrettyTable, TableStyle
 
@@ -73,7 +73,7 @@ class TaxCalculations(object):
         tax_dues: List[str]
         taxable_portions, tax_dues = zip(
             *[calculation.format_columns() for calculation in self.calculations]
-        ) # type: ignore
+        )  # type: ignore
         return taxable_portions, tax_dues
 
     def format_totals(self) -> Tuple[str, str]:
@@ -90,7 +90,7 @@ class TaxCalculations(object):
         table.add_column(TAX_DUE_COLUMN_NAME, tax_due_portions, "r")
         table.add_divider()
         table.add_row(["", TOTAL_LABEL, taxable, tax_due])
-        return table.get_string() # type: ignore
+        return table.get_string()  # type: ignore
 
 
 class TaxBand(object):
@@ -146,7 +146,7 @@ class TaxBands(object):
                 self.bands.append(TaxBand(last_above, above, last_rate))
             last_rate = rate
             last_above = above
-        self.bands.append(TaxBand(last_above, None, last_rate)) # type: ignore
+        self.bands.append(TaxBand(last_above, None, last_rate))  # type: ignore
 
     def calculate(self, taxable: float):
         labels, rates = self.format_columns()
@@ -157,7 +157,7 @@ class TaxBands(object):
     def format_columns(self) -> Tuple[List[str], List[str]]:
         labels: List[str]
         rates: List[str]
-        labels, rates = zip(*[band.format_columns() for band in self.bands]) # type: ignore
+        labels, rates = zip(*[band.format_columns() for band in self.bands])  # type: ignore
         return labels, rates
 
     def __str__(self):
@@ -166,7 +166,7 @@ class TaxBands(object):
         table.set_style(TableStyle.SINGLE_BORDER)
         table.add_column(LABEL_COLUMN_NAME, labels, "l")
         table.add_column(RATE_COLUMN_NAME, rates, "r")
-        return table.get_string() # type: ignore
+        return table.get_string()  # type: ignore
 
 
 class TaxBandsByYear(object):

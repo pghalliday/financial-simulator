@@ -10,5 +10,7 @@ def dashboard(args: Namespace, config: Config):
 
 
 def add_dashboard_command(subparsers: Any):
-    sub_parser = subparsers.add_parser("dashboard", help="Start the Financial Simulator dashboard")
+    sub_parser = subparsers.add_parser(
+        "dashboard", help="Start the Financial Simulator dashboard"
+    )
     sub_parser.set_defaults(func=dashboard)

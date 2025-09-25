@@ -19,19 +19,21 @@
 
 # %%
 from datetime import date, timedelta
-from decimal import Decimal, getcontext, FloatOperation
+from decimal import Decimal, FloatOperation, getcontext
 from functools import reduce
 
-from doc.src.financial_simulator.lib.rates import \
-    State, \
-    StateUpdater, \
-    ANNUAL_UPDATER_PROVIDER, \
-    QUARTERLY_UPDATER_PROVIDER, \
-    DAILY_UPDATER_PROVIDER
-from financial_simulator.lib.rates import \
-    ContinuousRate, \
-    PeriodicRate, \
-    create_banded_rate
+from doc.src.financial_simulator.lib.rates import (
+    ANNUAL_UPDATER_PROVIDER,
+    DAILY_UPDATER_PROVIDER,
+    QUARTERLY_UPDATER_PROVIDER,
+    State,
+    StateUpdater,
+)
+from financial_simulator.lib.rates import (
+    ContinuousRate,
+    PeriodicRate,
+    create_banded_rate,
+)
 from financial_simulator.lib.util.date import days_in_year
 
 decimal_context = getcontext()
@@ -39,21 +41,27 @@ decimal_context.traps[FloatOperation] = True
 decimal_context.prec = 1000
 
 START_DATE = date(date.today().year, 1, 1)
-DAYS = [START_DATE + timedelta(days=day) for day in range(days_in_year(START_DATE.year))]
-RATE = Decimal('0.015')
-BANDS = {Decimal('0.0'): Decimal('0.10'),
-         Decimal('1000.0'): Decimal('0.20'),
-         Decimal('2000.0'): Decimal('0.30'),
-         Decimal('3000.0'): Decimal('0.40'),
-         Decimal('4000.0'): Decimal('0.0')}
-STARTING_BALANCE = Decimal('10_000')
+DAYS = [
+    START_DATE + timedelta(days=day) for day in range(days_in_year(START_DATE.year))
+]
+RATE = Decimal("0.015")
+BANDS = {
+    Decimal("0.0"): Decimal("0.10"),
+    Decimal("1000.0"): Decimal("0.20"),
+    Decimal("2000.0"): Decimal("0.30"),
+    Decimal("3000.0"): Decimal("0.40"),
+    Decimal("4000.0"): Decimal("0.0"),
+}
+STARTING_BALANCE = Decimal("10_000")
 
-INITIAL_STATE = State(current_date=START_DATE - timedelta(days=1),
-                      net_deposits=STARTING_BALANCE,
-                      interest_paid=Decimal('0.0'),
-                      interest_accrued=Decimal('0.0'))
+INITIAL_STATE = State(
+    current_date=START_DATE - timedelta(days=1),
+    net_deposits=STARTING_BALANCE,
+    interest_paid=Decimal("0.0"),
+    interest_accrued=Decimal("0.0"),
+)
 
-print(f'Decimal context: {decimal_context}')
+print(f"Decimal context: {decimal_context}")
 print(INITIAL_STATE)
 
 # %% [markdown]
@@ -67,9 +75,9 @@ print(INITIAL_STATE)
 
 # %%
 rate = ContinuousRate(RATE)
-calculation = rate.calculate(current_date=START_DATE,
-                             balance=STARTING_BALANCE,
-                             accrued=Decimal('0.0'))
+calculation = rate.calculate(
+    current_date=START_DATE, balance=STARTING_BALANCE, accrued=Decimal("0.0")
+)
 print(calculation)
 
 # %% [markdown]
@@ -77,17 +85,23 @@ print(calculation)
 
 # %%
 state_updater = StateUpdater(rate, ANNUAL_UPDATER_PROVIDER)
-final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+final_state = reduce(
+    lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE
+)
 print(final_state)
 
 # %%
 state_updater = StateUpdater(rate, QUARTERLY_UPDATER_PROVIDER)
-final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+final_state = reduce(
+    lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE
+)
 print(final_state)
 
 # %%
 state_updater = StateUpdater(rate, DAILY_UPDATER_PROVIDER)
-final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+final_state = reduce(
+    lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE
+)
 print(final_state)
 
 # %% [markdown]
@@ -103,9 +117,9 @@ print(final_state)
 
 # %%
 rate = PeriodicRate(RATE, 1)
-calculation = rate.calculate(current_date=START_DATE,
-                             balance=STARTING_BALANCE,
-                             accrued=Decimal('0.0'))
+calculation = rate.calculate(
+    current_date=START_DATE, balance=STARTING_BALANCE, accrued=Decimal("0.0")
+)
 print(calculation)
 
 # %% [markdown]
@@ -113,19 +127,23 @@ print(calculation)
 
 # %%
 state_updater = StateUpdater(rate, ANNUAL_UPDATER_PROVIDER)
-final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+final_state = reduce(
+    lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE
+)
 print(final_state)
 
 # %%
 rate = PeriodicRate(RATE, 4)
-calculation = rate.calculate(current_date=START_DATE,
-                             balance=STARTING_BALANCE,
-                             accrued=Decimal('0.0'))
+calculation = rate.calculate(
+    current_date=START_DATE, balance=STARTING_BALANCE, accrued=Decimal("0.0")
+)
 print(calculation)
 
 # %%
 state_updater = StateUpdater(rate, QUARTERLY_UPDATER_PROVIDER)
-final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+final_state = reduce(
+    lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE
+)
 print(final_state)
 
 # %% [markdown]
@@ -143,8 +161,8 @@ print(final_state)
 # > compensate for the missing days.
 
 # %%
-print('Days in first half of the year', (date(2025, 7, 1) - date(2025, 1, 1)).days)
-print('Days in second half of the year', (date(2026, 1, 1) - date(2025, 7, 1)).days)
+print("Days in first half of the year", (date(2025, 7, 1) - date(2025, 1, 1)).days)
+print("Days in second half of the year", (date(2026, 1, 1) - date(2025, 7, 1)).days)
 
 
 # %% [markdown]
@@ -172,9 +190,9 @@ print('Days in second half of the year', (date(2026, 1, 1) - date(2025, 7, 1)).d
 
 # %%
 rate = create_banded_rate({k: ContinuousRate(v) for k, v in BANDS.items()})
-calculation = rate.calculate(current_date=START_DATE,
-                             balance=STARTING_BALANCE,
-                             accrued=Decimal('0.0'))
+calculation = rate.calculate(
+    current_date=START_DATE, balance=STARTING_BALANCE, accrued=Decimal("0.0")
+)
 print(calculation)
 
 # %% [markdown]
@@ -182,17 +200,21 @@ print(calculation)
 
 # %%
 state_updater = StateUpdater(rate, DAILY_UPDATER_PROVIDER)
-final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+final_state = reduce(
+    lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE
+)
 print(final_state)
 
 # %%
 rate = create_banded_rate({k: PeriodicRate(v, 4) for k, v in BANDS.items()})
-calculation = rate.calculate(current_date=START_DATE,
-                             balance=STARTING_BALANCE,
-                             accrued=Decimal('0.0'))
+calculation = rate.calculate(
+    current_date=START_DATE, balance=STARTING_BALANCE, accrued=Decimal("0.0")
+)
 print(calculation)
 
 # %%
 state_updater = StateUpdater(rate, QUARTERLY_UPDATER_PROVIDER)
-final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
+final_state = reduce(
+    lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE
+)
 print(final_state)

@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
 from datetime import date
-from typing import TypeVar, Generic, Sequence, Self, Tuple
+from typing import Generic, Self, Sequence, Tuple, TypeVar
 
 T = TypeVar("T")
 

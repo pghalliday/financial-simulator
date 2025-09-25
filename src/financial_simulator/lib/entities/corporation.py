@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Sequence, Tuple, Self
+from typing import Self, Sequence, Tuple
 
 from financial_simulator.lib.actions import Action
 from financial_simulator.lib.amounts import Amount

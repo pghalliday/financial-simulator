@@ -3,6 +3,7 @@ from datetime import date
 from typing import Self, Tuple
 
 from financial_simulator.lib.util.date import correct_day_of_the_month
+
 from .schedule import Schedule
 
 

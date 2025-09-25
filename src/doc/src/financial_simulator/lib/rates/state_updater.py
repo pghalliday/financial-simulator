@@ -1,4 +1,4 @@
-from dataclasses import replace, dataclass
+from dataclasses import dataclass, replace
 from datetime import date
 from typing import Callable
 
@@ -18,9 +18,12 @@ class StateUpdater(object):
         self.updater_provider = provider
         state = updater[0](current_date, state)
         # calculate the accrual
-        calculation = self.rate.calculate(current_date,
-                                          state.net_deposits + state.interest_paid,
-                                          state.interest_accrued)
+        calculation = self.rate.calculate(
+            current_date,
+            state.net_deposits + state.interest_paid,
+            state.interest_accrued,
+        )
         # then apply the rate and accrue
-        return replace(state,
-                       interest_accrued=state.interest_accrued + calculation.calculation)
+        return replace(
+            state, interest_accrued=state.interest_accrued + calculation.calculation
+        )

@@ -1,7 +1,7 @@
 from decimal import Decimal
 
 from financial_simulator.lib.bank_accounts import BankAccount, BankFee
-from financial_simulator.lib.providers import ScheduledProvider, NeverProvider
+from financial_simulator.lib.providers import NeverProvider, ScheduledProvider
 from financial_simulator.lib.schedules import MonthlySchedule, NeverSchedule
 
 

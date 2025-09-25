@@ -1,12 +1,13 @@
 from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal
-from typing import Sequence, Tuple, Self
+from typing import Self, Sequence, Tuple
 
 from financial_simulator.lib.providers import Provider
 from financial_simulator.lib.rates import Rate
 from financial_simulator.lib.schedules import Schedule
 from financial_simulator.lib.util.immutable import provider_get, schedule_check
+
 from ..accounting import Books, Change, Transaction
 
 

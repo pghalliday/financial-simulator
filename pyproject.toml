@@ -18,6 +18,7 @@ dependencies = [
     "plotly-stubs>=0.0.6",
     "pandas-stubs>=2.3.0.250703",
     "dash-mantine-components>=2.3.0",
+    "dash-iconify>=0.1.2",
 ]
 
 [project.scripts]
@@ -32,10 +33,17 @@ dev = [
     "jupyter>=1.1.1",
     "jupytext>=1.17.2",
     "kaleido>=1.0.0",
+    "mypy>=1.18.2",
     "notebook>=7.4.5",
     "pytest>=8.4.1",
     "ruff>=0.12.8",
+    "sqlalchemy[mypy]>=2.0.43",
     "uv-build>=0.8.8",
+]
+
+[tool.mypy]
+plugins = [
+    "sqlalchemy.ext.mypy.plugin",
 ]
 
 [tool.pytest.ini_options]

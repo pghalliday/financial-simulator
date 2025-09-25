@@ -1,10 +1,10 @@
-from calendar import JANUARY, APRIL, JULY, OCTOBER
+from calendar import APRIL, JANUARY, JULY, OCTOBER
 from decimal import Decimal
 
 from financial_simulator.lib.bank_accounts import BankAccount
-from financial_simulator.lib.providers import NeverProvider, AlwaysProvider
-from financial_simulator.lib.rates import create_banded_rate, ContinuousRate
-from financial_simulator.lib.schedules import NeverSchedule, YearlySchedule, AllSchedule
+from financial_simulator.lib.providers import AlwaysProvider, NeverProvider
+from financial_simulator.lib.rates import ContinuousRate, create_banded_rate
+from financial_simulator.lib.schedules import AllSchedule, NeverSchedule, YearlySchedule
 
 
 def create_abn_amro_personal_savings(name: str):
