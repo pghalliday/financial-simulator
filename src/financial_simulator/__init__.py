@@ -1,5 +1,5 @@
-from financial_simulator.lib import Engine
+from financial_simulator.lib import FinancialSimulator
 
 __all__ = [
-    "Engine",
+    "FinancialSimulator",
 ]

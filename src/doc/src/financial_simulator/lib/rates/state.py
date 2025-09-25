@@ -4,7 +4,7 @@ from decimal import Decimal
 
 from prettytable import PrettyTable, TableStyle
 
-from financial_simulator.lib.util import format_day
+from financial_simulator.lib.util.format import format_day
 
 
 @dataclass(frozen=True)

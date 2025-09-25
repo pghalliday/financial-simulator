@@ -7,7 +7,7 @@ from financial_simulator.lib.entities import Entity
 
 
 @dataclass
-class Engine(Iterator[Tuple[date, Sequence[Entity]]]):
+class FinancialSimulator(Iterator[Tuple[date, Sequence[Entity]]]):
     current_date: date
     current_entities: Sequence[Entity]
 

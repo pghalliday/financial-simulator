@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from itertools import islice
 from typing import Tuple, Self, Sequence
 
-from financial_simulator import Engine
+from financial_simulator import FinancialSimulator
 from financial_simulator.lib.accounting import Books
 from financial_simulator.lib.actions import Action, TickAction
 from financial_simulator.lib.entities import Entity
@@ -44,7 +44,7 @@ INITIAL_ENTITIES = (MockEntity('Entity 1', EMPTY_BOOKS, INITIAL_DATE, 'Entity 2'
 
 
 def test_iterator():
-    engine = Engine(INITIAL_DATE, INITIAL_ENTITIES)
+    engine = FinancialSimulator(INITIAL_DATE, INITIAL_ENTITIES)
     assert tuple(islice(engine, 3)) == ((DAY_1, (MockEntity('Entity 1', EMPTY_BOOKS, DAY_1, 'Entity 2', ('Entity 3',)),
                                                  MockEntity('Entity 2', EMPTY_BOOKS, DAY_1, 'Entity 3', ('Entity 1',)),
                                                  MockEntity('Entity 3', EMPTY_BOOKS, DAY_1, 'Entity 1',

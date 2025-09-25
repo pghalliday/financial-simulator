@@ -3,7 +3,7 @@ from itertools import islice
 from typing import Tuple, Generator
 
 from financial_simulator.lib.schedules import Schedule
-from financial_simulator.lib.util import format_days, format_day
+from financial_simulator.lib.util.format import format_days, format_day
 
 
 def generate_schedule_results(initial_date: date, initial_schedule: Schedule) -> Generator[Tuple[date, bool | None]]:

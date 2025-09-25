@@ -2,24 +2,23 @@
 
 A collection of daily rate calculation algorithms.
 
+
 ```python
 from datetime import date, timedelta
 from decimal import Decimal, getcontext, FloatOperation
 from functools import reduce
 
-from doc.src.financial_simulator.lib.rates import
-
-State,
-StateUpdater,
-ANNUAL_UPDATER_PROVIDER,
-QUARTERLY_UPDATER_PROVIDER,
-DAILY_UPDATER_PROVIDER
-from financial_simulator.lib.rates import
-
-ContinuousRate,
-PeriodicRate,
-create_banded_rate
-from financial_simulator.lib.util import days_in_year
+from doc.src.financial_simulator.lib.rates import \
+    State, \
+    StateUpdater, \
+    ANNUAL_UPDATER_PROVIDER, \
+    QUARTERLY_UPDATER_PROVIDER, \
+    DAILY_UPDATER_PROVIDER
+from financial_simulator.lib.rates import \
+    ContinuousRate, \
+    PeriodicRate, \
+    create_banded_rate
+from financial_simulator.lib.util.date import days_in_year
 
 decimal_context = getcontext()
 decimal_context.traps[FloatOperation] = True
@@ -53,12 +52,14 @@ print(INITIAL_STATE)
     │ Total            │          10000.0 │
     └──────────────────┴──────────────────┘
 
+
 ## ContinuousRate
 
 This calculator applies a continuously compounding algorithm, which most accurately reflects a
 continuous return given a desired annual rate.
 
 Each call to calculate will return the daily amount associated with the given annual rate.
+
 
 ```python
 rate = ContinuousRate(RATE)
@@ -77,7 +78,9 @@ print(calculation)
     │ Calculation  │              0.407916 │
     └──────────────┴───────────────────────┘
 
+
 So collecting the daily amounts over a full year, we can see the compounded result.
+
 
 ```python
 state_updater = StateUpdater(rate, ANNUAL_UPDATER_PROVIDER)
@@ -93,6 +96,8 @@ print(final_state)
     │ Total            │ 10150.000000000000000 │
     └──────────────────┴───────────────────────┘
 
+
+
 ```python
 state_updater = StateUpdater(rate, QUARTERLY_UPDATER_PROVIDER)
 final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
@@ -106,6 +111,8 @@ print(final_state)
     │ Interest accrued │ 38.018991122208639007 │
     │ Total            │ 10150.000000000000000 │
     └──────────────────┴───────────────────────┘
+
+
 
 ```python
 state_updater = StateUpdater(rate, DAILY_UPDATER_PROVIDER)
@@ -121,6 +128,7 @@ print(final_state)
     │ Total            │  10150.000000000000000 │
     └──────────────────┴────────────────────────┘
 
+
 ## PeriodicRate
 
 This calculator applies a periodic compounding algorithm by applying the same rate to the
@@ -129,6 +137,7 @@ balance, this should provide the same return as the `ContinuousRate`. However,
 for a falling balance it will return less and for a rising balance it will return more.
 
 Each call to calculate will return the daily amount associated with the given annual rate.
+
 
 ```python
 rate = PeriodicRate(RATE, 1)
@@ -147,7 +156,9 @@ print(calculation)
     │ Calculation  │                       0.410959 │
     └──────────────┴────────────────────────────────┘
 
+
 So collecting the daily amounts over a full year, we can see the compounded result.
+
 
 ```python
 state_updater = StateUpdater(rate, ANNUAL_UPDATER_PROVIDER)
@@ -162,6 +173,8 @@ print(final_state)
     │ Interest accrued │ 150.00000000000000000 │
     │ Total            │ 10150.000000000000000 │
     └──────────────────┴───────────────────────┘
+
+
 
 ```python
 rate = PeriodicRate(RATE, 4)
@@ -180,6 +193,8 @@ print(calculation)
     │ Calculation  │                       0.408667 │
     └──────────────┴────────────────────────────────┘
 
+
+
 ```python
 state_updater = StateUpdater(rate, QUARTERLY_UPDATER_PROVIDER)
 final_state = reduce(lambda state, day: state_updater.update(day, state), DAYS, INITIAL_STATE)
@@ -194,6 +209,7 @@ print(final_state)
     │ Total            │ 10149.999976864426049 │
     └──────────────────┴───────────────────────┘
 
+
 > **_NB._** We can see an error here as the total is slightly less than the expected 10,150.
 > This is due to an inadequacy in the algorithm. The rate calculation assumes that
 > quarters are of equal length. This is not the case and can't really be the case, as years
@@ -207,6 +223,7 @@ print(final_state)
 > length. The fact that those days compound for more time, as the payment is earlier, does not
 > compensate for the missing days.
 
+
 ```python
 print('Days in first half of the year', (date(2025, 7, 1) - date(2025, 1, 1)).days)
 print('Days in second half of the year', (date(2026, 1, 1) - date(2025, 7, 1)).days)
@@ -214,6 +231,7 @@ print('Days in second half of the year', (date(2026, 1, 1) - date(2025, 7, 1)).d
 
     Days in first half of the year 181
     Days in second half of the year 184
+
 
 > **_NBB._** It may be possible to correct this algorithm, but any solution is likely to throw
 > up more problems. For instance what should we do if a period crosses between a regular year
@@ -224,8 +242,7 @@ print('Days in second half of the year', (date(2026, 1, 1) - date(2025, 7, 1)).d
 > insignificant.
 >
 > So why is it here? Well, when investigating how banks calculate interest. It was found that
-> this is how they say they do it. For
-> instance: https://www.abnamro.nl/en/personal/savings/interest-rates/when-and-how-often-do-you-receive-interest.html
+> this is how they say they do it. For instance: https://www.abnamro.nl/en/personal/savings/interest-rates/when-and-how-often-do-you-receive-interest.html
 >
 > However, this did not give any indication of how they compensate for unequal quarters or
 > leap years. As such, the implementation here is probably wrong anyway, so just don't use it!
@@ -235,6 +252,7 @@ print('Days in second half of the year', (date(2026, 1, 1) - date(2025, 7, 1)).d
 This rate combines a dictionary of rates that will be applied at different balance amounts.
 
 Each call to calculate will return the daily amount associated with the given annual rate.
+
 
 ```python
 rate = create_banded_rate({k: ContinuousRate(v) for k, v in BANDS.items()})
@@ -256,7 +274,9 @@ print(calculation)
     │ 2025-01-01 : Wed        │                 Totals │ 10000.000000 │ 0.000000 │    2.402125 │
     └─────────────────────────┴────────────────────────┴──────────────┴──────────┴─────────────┘
 
+
 So collecting the daily amounts over a full year, we can see the compounded result.
+
 
 ```python
 state_updater = StateUpdater(rate, DAILY_UPDATER_PROVIDER)
@@ -271,6 +291,8 @@ print(final_state)
     │ Interest accrued │ 2.4021251449943965929 │
     │ Total            │ 10876.775677922954756 │
     └──────────────────┴───────────────────────┘
+
+
 
 ```python
 rate = create_banded_rate({k: PeriodicRate(v, 4) for k, v in BANDS.items()})
@@ -291,6 +313,8 @@ print(calculation)
     ├─────────────────────────┼─────────────────────────────────┼──────────────┼──────────┼─────────────┤
     │ 2025-01-01 : Wed        │                          Totals │ 10000.000000 │ 0.000000 │    2.479957 │
     └─────────────────────────┴─────────────────────────────────┴──────────────┴──────────┴─────────────┘
+
+
 
 ```python
 state_updater = StateUpdater(rate, QUARTERLY_UPDATER_PROVIDER)

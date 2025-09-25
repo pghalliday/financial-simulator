@@ -4,6 +4,7 @@ The annual corporate tax for a BV is calculated on a taxable amount which is the
 
 Given:
 
+
 ```python
 from financial_simulator.lib.tax import TaxBandsByYear
 

@@ -32,7 +32,7 @@ from financial_simulator.lib.rates import \
     ContinuousRate, \
     PeriodicRate, \
     create_banded_rate
-from financial_simulator.lib.util import days_in_year
+from financial_simulator.lib.util.date import days_in_year
 
 decimal_context = getcontext()
 decimal_context.traps[FloatOperation] = True
@@ -145,6 +145,7 @@ print(final_state)
 # %%
 print('Days in first half of the year', (date(2025, 7, 1) - date(2025, 1, 1)).days)
 print('Days in second half of the year', (date(2026, 1, 1) - date(2025, 7, 1)).days)
+
 
 # %% [markdown]
 # > **_NBB._** It may be possible to correct this algorithm, but any solution is likely to throw

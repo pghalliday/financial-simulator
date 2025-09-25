@@ -40,7 +40,7 @@ from financial_simulator.lib.schedules import \
     WeeklySchedule, \
     AnySchedule, \
     UntilSchedule
-from financial_simulator.lib.util import \
+from financial_simulator.lib.util.format import \
     format_day
 
 START_DATE = date.today()

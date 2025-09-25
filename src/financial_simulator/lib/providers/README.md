@@ -5,31 +5,29 @@ valid for that date. If the provider has not completed, it will return a new pro
 in the next call and a sequence of values. If the provider has completed then it will return
 `None`.
 
+
 ```python
 from calendar import TUESDAY, THURSDAY
 from datetime import date, timedelta
 
 from doc.src.financial_simulator.lib.providers import print_provided
-from financial_simulator.lib.providers import
-
-NeverProvider,
-AlwaysProvider,
-ScheduledProvider,
-NextProvider,
-MergeProvider,
-FunctionProvider,
-MapProvider,
-FlatMapProvider,
-MergeMapProvider,
-create_sequence_provider
-from financial_simulator.lib.schedules import
-
-WeeklySchedule,
-AnySchedule,
-UntilSchedule
-from financial_simulator.lib.util import
-
-format_day
+from financial_simulator.lib.providers import \
+    NeverProvider, \
+    AlwaysProvider, \
+    ScheduledProvider, \
+    NextProvider, \
+    MergeProvider, \
+    FunctionProvider, \
+    MapProvider, \
+    FlatMapProvider, \
+    MergeMapProvider, \
+    create_sequence_provider
+from financial_simulator.lib.schedules import \
+    WeeklySchedule, \
+    AnySchedule, \
+    UntilSchedule
+from financial_simulator.lib.util.format import \
+    format_day
 
 START_DATE = date.today()
 
@@ -40,12 +38,14 @@ START_DATE = date.today()
 print(f'Start Date: {format_day(START_DATE)}')
 ```
 
-    Start Date: 2025-08-26 : Tue
-    Start Date: 2025-08-26 : Tue
+    Start Date: 2025-09-25 : Thu
+    Start Date: 2025-09-25 : Thu
+
 
 ## NeverProvider
 
 This is a trivial provider that always provides an empty sequence.
+
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -53,21 +53,23 @@ print_provided(initial_date=START_DATE,
                number_of_days=10)
 ```
 
-    [2025-08-26 : Tue : None
-     2025-08-27 : Wed : None
-     2025-08-28 : Thu : None
-     2025-08-29 : Fri : None
-     2025-08-30 : Sat : None
-     2025-08-31 : Sun : None
-     2025-09-01 : Mon : None
-     2025-09-02 : Tue : None
-     2025-09-03 : Wed : None
-     2025-09-04 : Thu : None]
-    Completed at: 2025-08-26 : Tue
+    [2025-09-25 : Thu : None
+     2025-09-26 : Fri : None
+     2025-09-27 : Sat : None
+     2025-09-28 : Sun : None
+     2025-09-29 : Mon : None
+     2025-09-30 : Tue : None
+     2025-10-01 : Wed : None
+     2025-10-02 : Thu : None
+     2025-10-03 : Fri : None
+     2025-10-04 : Sat : None]
+    Completed at: 2025-09-25 : Thu
+
 
 ## AlwaysProvider
 
 This is a trivial provider that always provides a single value sequence.
+
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -75,22 +77,24 @@ print_provided(initial_date=START_DATE,
                number_of_days=10)
 ```
 
-    [2025-08-26 : Tue : ('My value',)
-     2025-08-27 : Wed : ('My value',)
-     2025-08-28 : Thu : ('My value',)
-     2025-08-29 : Fri : ('My value',)
-     2025-08-30 : Sat : ('My value',)
-     2025-08-31 : Sun : ('My value',)
-     2025-09-01 : Mon : ('My value',)
-     2025-09-02 : Tue : ('My value',)
-     2025-09-03 : Wed : ('My value',)
-     2025-09-04 : Thu : ('My value',)]
+    [2025-09-25 : Thu : ('My value',)
+     2025-09-26 : Fri : ('My value',)
+     2025-09-27 : Sat : ('My value',)
+     2025-09-28 : Sun : ('My value',)
+     2025-09-29 : Mon : ('My value',)
+     2025-09-30 : Tue : ('My value',)
+     2025-10-01 : Wed : ('My value',)
+     2025-10-02 : Thu : ('My value',)
+     2025-10-03 : Fri : ('My value',)
+     2025-10-04 : Sat : ('My value',)]
     Completed at: Not completed
+
 
 ## ScheduledProvider
 
 This provider provides a single value sequence according to the specified schedule. If not scheduled it
 provides an empty sequence.
+
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -100,21 +104,23 @@ print_provided(initial_date=START_DATE,
                number_of_days=10)
 ```
 
-    [2025-08-26 : Tue : ('My value',)
-     2025-08-27 : Wed : ()
-     2025-08-28 : Thu : ('My value',)
-     2025-08-29 : Fri : ()
-     2025-08-30 : Sat : ()
-     2025-08-31 : Sun : ()
-     2025-09-01 : Mon : ()
-     2025-09-02 : Tue : ('My value',)
-     2025-09-03 : Wed : ()
-     2025-09-04 : Thu : ('My value',)]
+    [2025-09-25 : Thu : ('My value',)
+     2025-09-26 : Fri : ()
+     2025-09-27 : Sat : ()
+     2025-09-28 : Sun : ()
+     2025-09-29 : Mon : ()
+     2025-09-30 : Tue : ('My value',)
+     2025-10-01 : Wed : ()
+     2025-10-02 : Thu : ('My value',)
+     2025-10-03 : Fri : ()
+     2025-10-04 : Sat : ()]
     Completed at: Not completed
+
 
 ## FunctionProvider
 
 This provider uses the specified function to map the current date to an instance of `Provided`.
+
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -122,22 +128,24 @@ print_provided(initial_date=START_DATE,
                number_of_days=10)
 ```
 
-    [2025-08-26 : Tue : 1
-     2025-08-27 : Wed : 2
-     2025-08-28 : Thu : 3
-     2025-08-29 : Fri : 4
-     2025-08-30 : Sat : 5
-     2025-08-31 : Sun : 6
-     2025-09-01 : Mon : 0
-     2025-09-02 : Tue : 1
-     2025-09-03 : Wed : 2
-     2025-09-04 : Thu : 3]
+    [2025-09-25 : Thu : 3
+     2025-09-26 : Fri : 4
+     2025-09-27 : Sat : 5
+     2025-09-28 : Sun : 6
+     2025-09-29 : Mon : 0
+     2025-09-30 : Tue : 1
+     2025-10-01 : Wed : 2
+     2025-10-02 : Thu : 3
+     2025-10-03 : Fri : 4
+     2025-10-04 : Sat : 5]
     Completed at: Not completed
+
 
 ## NextProvider
 
 This provider takes a sequence of providers and provides the values from the first provider that provides
 a non-empty sequence of values.
+
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -148,22 +156,24 @@ print_provided(initial_date=START_DATE,
                number_of_days=10)
 ```
 
-    [2025-08-26 : Tue : ('Value 1',)
-     2025-08-27 : Wed : ('Value 1',)
-     2025-08-28 : Thu : ('Value 1',)
-     2025-08-29 : Fri : ('Value 2',)
-     2025-08-30 : Sat : ('Value 2',)
-     2025-08-31 : Sun : ('Value 2',)
-     2025-09-01 : Mon : ('Value 2',)
-     2025-09-02 : Tue : ('Value 3',)
-     2025-09-03 : Wed : ('Value 3',)
-     2025-09-04 : Thu : None]
-    Completed at: 2025-09-04 : Thu
+    [2025-09-25 : Thu : ('Value 1',)
+     2025-09-26 : Fri : ('Value 1',)
+     2025-09-27 : Sat : ('Value 1',)
+     2025-09-28 : Sun : ('Value 2',)
+     2025-09-29 : Mon : ('Value 2',)
+     2025-09-30 : Tue : ('Value 2',)
+     2025-10-01 : Wed : ('Value 2',)
+     2025-10-02 : Thu : ('Value 3',)
+     2025-10-03 : Fri : ('Value 3',)
+     2025-10-04 : Sat : None]
+    Completed at: 2025-10-04 : Sat
+
 
 ## MergeProvider
 
 This provider takes a sequence of providers and provides a corresponding sequence of the merged values provided
 by those providers.
+
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -182,21 +192,23 @@ print_provided(initial_date=START_DATE,
                number_of_days=10)
 ```
 
-    [2025-08-26 : Tue : ('Always value', 'Sometimes value', 'Value 1')
-     2025-08-27 : Wed : ('Always value', 'Value 1')
-     2025-08-28 : Thu : ('Always value', 'Sometimes value', 'Value 1')
-     2025-08-29 : Fri : ('Always value', 'Value 2')
-     2025-08-30 : Sat : ('Always value', 'Value 2')
-     2025-08-31 : Sun : ('Always value', 'Value 2')
-     2025-09-01 : Mon : ('Always value', 'Value 2')
-     2025-09-02 : Tue : ('Always value', 'Sometimes value', 'Value 3')
-     2025-09-03 : Wed : ('Always value', 'Value 3')
-     2025-09-04 : Thu : ('Always value', 'Sometimes value')]
+    [2025-09-25 : Thu : ('Always value', 'Sometimes value', 'Value 1')
+     2025-09-26 : Fri : ('Always value', 'Value 1')
+     2025-09-27 : Sat : ('Always value', 'Value 1')
+     2025-09-28 : Sun : ('Always value', 'Value 2')
+     2025-09-29 : Mon : ('Always value', 'Value 2')
+     2025-09-30 : Tue : ('Always value', 'Sometimes value', 'Value 2')
+     2025-10-01 : Wed : ('Always value', 'Value 2')
+     2025-10-02 : Thu : ('Always value', 'Sometimes value', 'Value 3')
+     2025-10-03 : Fri : ('Always value', 'Value 3')
+     2025-10-04 : Sat : ('Always value',)]
     Completed at: Not completed
+
 
 ## MapProvider
 
 This provider uses the specified transform function to transform the values provided by the specified provider
+
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -208,23 +220,25 @@ print_provided(initial_date=START_DATE,
                number_of_days=10)
 ```
 
-    [2025-08-26 : Tue : (('MY VALUE', 'my value'),)
-     2025-08-27 : Wed : ()
-     2025-08-28 : Thu : (('MY VALUE', 'my value'),)
-     2025-08-29 : Fri : ()
-     2025-08-30 : Sat : ()
-     2025-08-31 : Sun : ()
-     2025-09-01 : Mon : ()
-     2025-09-02 : Tue : (('MY VALUE', 'my value'),)
-     2025-09-03 : Wed : ()
-     2025-09-04 : Thu : (('MY VALUE', 'my value'),)]
+    [2025-09-25 : Thu : (('MY VALUE', 'my value'),)
+     2025-09-26 : Fri : ()
+     2025-09-27 : Sat : ()
+     2025-09-28 : Sun : ()
+     2025-09-29 : Mon : ()
+     2025-09-30 : Tue : (('MY VALUE', 'my value'),)
+     2025-10-01 : Wed : ()
+     2025-10-02 : Thu : (('MY VALUE', 'my value'),)
+     2025-10-03 : Fri : ()
+     2025-10-04 : Sat : ()]
     Completed at: Not completed
+
 
 ## FlatMapProvider
 
 This provider, like the `MapProvider`, uses the specified transform function to transform the values provided
 by the specified provider. However, in this case the transform function should return a sequence and these
 sequences will be flattened in the resulting `Provided` instance.
+
 
 ```python
 print_provided(initial_date=START_DATE,
@@ -237,23 +251,25 @@ print_provided(initial_date=START_DATE,
                number_of_days=10)
 ```
 
-    [2025-08-26 : Tue : ('MY VALUE', 'my value')
-     2025-08-27 : Wed : ()
-     2025-08-28 : Thu : ('MY VALUE', 'my value')
-     2025-08-29 : Fri : ()
-     2025-08-30 : Sat : ()
-     2025-08-31 : Sun : ()
-     2025-09-01 : Mon : ()
-     2025-09-02 : Tue : ('MY VALUE', 'my value')
-     2025-09-03 : Wed : ()
-     2025-09-04 : Thu : ('MY VALUE', 'my value')]
+    [2025-09-25 : Thu : ('MY VALUE', 'my value')
+     2025-09-26 : Fri : ()
+     2025-09-27 : Sat : ()
+     2025-09-28 : Sun : ()
+     2025-09-29 : Mon : ()
+     2025-09-30 : Tue : ('MY VALUE', 'my value')
+     2025-10-01 : Wed : ()
+     2025-10-02 : Thu : ('MY VALUE', 'my value')
+     2025-10-03 : Fri : ()
+     2025-10-04 : Sat : ()]
     Completed at: Not completed
+
 
 ## MergeMapProvider
 
 This provider, like the `MapProvider`, uses the specified transform function to transform the values provided
 by the specified provider. However, in this case, the transform function should return a new `Provider` instance.
 The values from these providers will be merged in future resulting `Provided` instances.
+
 
 ```python
 sequence_days = [START_DATE + timedelta(days=i) for i in range(10)]
@@ -268,22 +284,23 @@ print_provided(initial_date=START_DATE,
                number_of_days=15)
 ```
 
-    [2025-08-26 : Tue : ()
-     2025-08-27 : Wed : ('1-1',)
-     2025-08-28 : Thu : ('1-2', '2-1')
-     2025-08-29 : Fri : ('1-3', '2-2', '3-1')
-     2025-08-30 : Sat : ('1-4', '2-3', '3-2', '4-1')
-     2025-08-31 : Sun : ('2-4', '3-3', '4-2', '5-1')
-     2025-09-01 : Mon : ('3-4', '4-3', '5-2', '6-1')
-     2025-09-02 : Tue : ('4-4', '5-3', '6-2', '0-1')
-     2025-09-03 : Wed : ('5-4', '6-3', '0-2', '1-1')
-     2025-09-04 : Thu : ('6-4', '0-3', '1-2', '2-1')
-     2025-09-05 : Fri : ('0-4', '1-3', '2-2', '3-1')
-     2025-09-06 : Sat : ('1-4', '2-3', '3-2')
-     2025-09-07 : Sun : ('2-4', '3-3')
-     2025-09-08 : Mon : ('3-4',)
-     2025-09-09 : Tue : None]
-    Completed at: 2025-09-09 : Tue
+    [2025-09-25 : Thu : ()
+     2025-09-26 : Fri : ('3-1',)
+     2025-09-27 : Sat : ('3-2', '4-1')
+     2025-09-28 : Sun : ('3-3', '4-2', '5-1')
+     2025-09-29 : Mon : ('3-4', '4-3', '5-2', '6-1')
+     2025-09-30 : Tue : ('4-4', '5-3', '6-2', '0-1')
+     2025-10-01 : Wed : ('5-4', '6-3', '0-2', '1-1')
+     2025-10-02 : Thu : ('6-4', '0-3', '1-2', '2-1')
+     2025-10-03 : Fri : ('0-4', '1-3', '2-2', '3-1')
+     2025-10-04 : Sat : ('1-4', '2-3', '3-2', '4-1')
+     2025-10-05 : Sun : ('2-4', '3-3', '4-2', '5-1')
+     2025-10-06 : Mon : ('3-4', '4-3', '5-2')
+     2025-10-07 : Tue : ('4-4', '5-3')
+     2025-10-08 : Wed : ('5-4',)
+     2025-10-09 : Thu : None]
+    Completed at: 2025-10-09 : Thu
+
 
 ## Factories
 
@@ -291,8 +308,8 @@ The following factory methods are available to construct combinations of provide
 
 ### create_sequence_provider
 
-This factory takes a mapping of days to values and returns a `Provider` that will provide the given values on the
-specified days.
+This factory takes a mapping of days to values and returns a `Provider` that will provide the given values on the specified days.
+
 
 ```python
 sequence_days = [START_DATE + timedelta(days=i) for i in range(9)]
@@ -302,15 +319,15 @@ print_provided(initial_date=START_DATE,
                number_of_days=10)
 ```
 
-    [2025-08-26 : Tue : ('2025-08-26 : Tue',)
-     2025-08-27 : Wed : ('2025-08-27 : Wed',)
-     2025-08-28 : Thu : ('2025-08-28 : Thu',)
-     2025-08-29 : Fri : ('2025-08-29 : Fri',)
-     2025-08-30 : Sat : ('2025-08-30 : Sat',)
-     2025-08-31 : Sun : ('2025-08-31 : Sun',)
-     2025-09-01 : Mon : ('2025-09-01 : Mon',)
-     2025-09-02 : Tue : ('2025-09-02 : Tue',)
-     2025-09-03 : Wed : ('2025-09-03 : Wed',)
-     2025-09-04 : Thu : None]
-    Completed at: 2025-09-04 : Thu
+    [2025-09-25 : Thu : ('2025-09-25 : Thu',)
+     2025-09-26 : Fri : ('2025-09-26 : Fri',)
+     2025-09-27 : Sat : ('2025-09-27 : Sat',)
+     2025-09-28 : Sun : ('2025-09-28 : Sun',)
+     2025-09-29 : Mon : ('2025-09-29 : Mon',)
+     2025-09-30 : Tue : ('2025-09-30 : Tue',)
+     2025-10-01 : Wed : ('2025-10-01 : Wed',)
+     2025-10-02 : Thu : ('2025-10-02 : Thu',)
+     2025-10-03 : Fri : ('2025-10-03 : Fri',)
+     2025-10-04 : Sat : None]
+    Completed at: 2025-10-04 : Sat
 

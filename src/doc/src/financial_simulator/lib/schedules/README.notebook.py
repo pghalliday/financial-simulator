@@ -38,7 +38,7 @@ from financial_simulator.lib.schedules import \
     FunctionSchedule, \
     AnySchedule, \
     AllSchedule
-from financial_simulator.lib.util import \
+from financial_simulator.lib.util.format import \
     format_day
 
 START_DATE = date.today()

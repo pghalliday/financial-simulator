@@ -3,7 +3,7 @@ from itertools import islice
 from typing import Tuple, Generator, TypeVar, Sequence
 
 from financial_simulator.lib.providers import Provider
-from financial_simulator.lib.util import format_day, format_provided
+from financial_simulator.lib.util.format import format_day, format_provided
 
 T = TypeVar('T')
 

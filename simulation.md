@@ -3,16 +3,15 @@ from datetime import date
 from decimal import Decimal
 from itertools import islice
 
-from financial_simulator import Engine
+from financial_simulator import FinancialSimulator
 from financial_simulator.lib.accounting import Books, Transaction, Change
 from financial_simulator.lib.entities import Individual, Corporation
-from financial_simulator.lib.factories.bank_accounts import
-
-create_abn_amro_personal_current,
-create_abn_amro_personal_savings,
-create_ing_business_current
+from financial_simulator.lib.factories.bank_accounts import \
+    create_abn_amro_personal_current, \
+    create_abn_amro_personal_savings, \
+    create_ing_business_current
 from financial_simulator.lib.providers import NeverProvider
-from financial_simulator.lib.util import plot_account_balances
+from financial_simulator.lib.util.data import plot_account_balances
 ```
 
 # Simulation
@@ -73,10 +72,10 @@ widgets_ltd = Corporation(name='widgets_ltd',
                           loans=(),
                           salaries=())
 
-engine = Engine(current_date=initial_date,
-                current_entities=(jack, jill, widgets_ltd))
+engine = FinancialSimulator(current_date=initial_date,
+                            current_entities=(jack, jill, widgets_ltd))
 
-days = list(islice(engine, 366))
+days = list(islice(engine, 5000))
 ```
 
 ## Current account balances
