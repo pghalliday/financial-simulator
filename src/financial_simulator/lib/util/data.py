@@ -16,7 +16,7 @@ def extract_account_balances(
     is_debit_account: bool = False,
 ) -> DataFrame:
     sign = Decimal("-1.0") if is_debit_account else Decimal("1.0")
-    wide_data_frame = DataFrame.from_records( # type: ignore
+    wide_data_frame = DataFrame.from_records(  # type: ignore
         (
             (current_date,)
             + tuple(
@@ -27,7 +27,7 @@ def extract_account_balances(
         ),
         columns=("Date",) + tuple(columns),
     )
-    return wide_data_frame.melt( # type: ignore
+    return wide_data_frame.melt(  # type: ignore
         id_vars="Date", value_vars=columns, var_name="Entity", value_name="Balance"
     )
 

@@ -1,6 +1,7 @@
 import logging
 from datetime import date
 from typing import Sequence, Tuple
+from uuid import UUID
 
 from sqlalchemy import Engine, create_engine
 from sqlalchemy.orm import Session
@@ -28,7 +29,7 @@ class API:
     def get_days(self) -> Sequence[Tuple[date, Sequence[FSEntity]]]:
         return self.days
 
-    def get_scenario(self, scenario_id: int) -> Scenario:
+    def get_scenario(self, scenario_id: UUID) -> Scenario:
         with Session(self.engine) as session:
             return session.get_one(Scenario, scenario_id)
 
@@ -54,12 +55,12 @@ class API:
             session.delete(scenario)
             session.commit()
 
-    def get_entities(self, scenario_id: int) -> Sequence[Entity]:
+    def get_entities(self, scenario_id: UUID) -> Sequence[Entity]:
         with Session(self.engine) as session:
             scenario: Scenario = session.get_one(Scenario, scenario_id)
             return scenario.entities
 
-    def get_entity(self, entity_id: int) -> Entity:
+    def get_entity(self, entity_id: UUID) -> Entity:
         with Session(self.engine) as session:
             return session.get_one(Entity, entity_id)
 
@@ -85,13 +86,13 @@ class API:
             session.delete(entity)
             session.commit()
 
-    def get_scenarios(self, entity_id: int) -> Sequence[Scenario]:
+    def get_scenarios(self, entity_id: UUID) -> Sequence[Scenario]:
         with Session(self.engine) as session:
             entity: Entity = session.get_one(Entity, entity_id)
             return entity.scenarios
 
     def add_entity_to_scenario(
-        self, scenario_id: int, entity_id: int
+        self, scenario_id: UUID, entity_id: UUID
     ) -> Tuple[Scenario, Entity]:
         with Session(self.engine, expire_on_commit=False) as session:
             scenario: Scenario = session.get_one(Scenario, scenario_id)
@@ -101,7 +102,7 @@ class API:
             return scenario, entity
 
     def remove_entity_from_scenario(
-        self, scenario_id: int, entity_id: int
+        self, scenario_id: UUID, entity_id: UUID
     ) -> Tuple[Scenario, Entity]:
         with Session(self.engine, expire_on_commit=False) as session:
             scenario: Scenario = session.get_one(Scenario, scenario_id)

@@ -2,6 +2,7 @@ import logging
 import readline
 from cmd import Cmd
 from typing import Generator
+from uuid import UUID
 
 from financial_simulator.app.api import API
 from financial_simulator.app.config import Config
@@ -161,7 +162,7 @@ class Shell(Cmd):
 
     def do_delete_scenario(self, arg: str):
         """Delete a scenario:  DELETE_SCENARIO SCENARIO_ID"""
-        scenario = self.api.get_scenario(int(arg))
+        scenario = self.api.get_scenario(UUID(arg.strip()))
         self.api.delete_scenario(scenario)
         print(scenario)
 
@@ -174,7 +175,7 @@ class Shell(Cmd):
 
     def do_get_entities(self, arg: str):
         """Get the entities included in a scenario:  GET_ENTITIES SCENARIO_ID"""
-        scenario_entities = self.api.get_entities(int(arg))
+        scenario_entities = self.api.get_entities(UUID(arg.strip()))
         for entity in scenario_entities:
             print(entity)
         print(f"count: {len(scenario_entities)}")
@@ -187,7 +188,7 @@ class Shell(Cmd):
 
     def do_delete_entity(self, arg: str):
         """Delete an entity:  DELETE_ENTITY ENTITY_ID"""
-        entity = self.api.get_entity(int(arg))
+        entity = self.api.get_entity(UUID(arg.strip()))
         self.api.delete_entity(entity)
         print(entity)
 
@@ -200,7 +201,7 @@ class Shell(Cmd):
 
     def do_get_scenarios(self, arg: str):
         """Get the scenarios that include an entity:  GET_SCENARIOS ENTITY_ID"""
-        entity_scenarios = self.api.get_scenarios(int(arg))
+        entity_scenarios = self.api.get_scenarios(UUID(arg.strip()))
         for scenario in entity_scenarios:
             print(scenario)
         print(f"count: {len(entity_scenarios)}")
@@ -209,8 +210,8 @@ class Shell(Cmd):
         """Add an entity to a scenario:  ADD_ENTITY_TO_SCENARIO SCENARIO_ID ENTITY_ID"""
         ids = arg.split()
         assert len(ids) == 2
-        scenario_id = int(ids[0])
-        entity_id = int(ids[1])
+        scenario_id = UUID(ids[0])
+        entity_id = UUID(ids[1])
         scenario, entity = self.api.add_entity_to_scenario(scenario_id, entity_id)
         print(scenario)
         print(entity)
@@ -219,8 +220,8 @@ class Shell(Cmd):
         """Remove an entity from a scenario:  REMOVE_ENTITY_FROM_SCENARIO SCENARIO_ID ENTITY_ID"""
         ids = arg.split()
         assert len(ids) == 2
-        scenario_id = int(ids[0])
-        entity_id = int(ids[1])
+        scenario_id = UUID(ids[0])
+        entity_id = UUID(ids[1])
         scenario, entity = self.api.remove_entity_from_scenario(scenario_id, entity_id)
         print(scenario)
         print(entity)

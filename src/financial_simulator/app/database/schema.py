@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 from typing import List
+from uuid import UUID, uuid4
 
-from sqlalchemy import Column, ForeignKey, Integer, MetaData, Table
+from sqlalchemy import ForeignKey, MetaData
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 constraint_naming_conventions = {
@@ -18,23 +19,15 @@ class Base(DeclarativeBase):
     metadata = MetaData(naming_convention=constraint_naming_conventions)
 
 
-scenario_entity = Table(
-    "scenario_entity",
-    Base.metadata,
-    Column("scenario_id", Integer, ForeignKey("scenario.id"), primary_key=True),
-    Column("entity_id", Integer, ForeignKey("entity.id"), primary_key=True),
-)
-
-
 class Scenario(Base):
     __tablename__ = "scenario"
 
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column()
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    name: Mapped[str] = mapped_column(unique=True)
     description: Mapped[str] = mapped_column()
 
     entities: Mapped[List[Entity]] = relationship(
-        secondary=scenario_entity, back_populates="scenarios"
+        secondary="scenario_entity", back_populates="scenarios"
     )
 
     def __repr__(self) -> str:
@@ -44,13 +37,23 @@ class Scenario(Base):
 class Entity(Base):
     __tablename__ = "entity"
 
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column()
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    name: Mapped[str] = mapped_column(unique=True)
     description: Mapped[str] = mapped_column()
 
     scenarios: Mapped[List[Scenario]] = relationship(
-        secondary=scenario_entity, back_populates="entities"
+        secondary="scenario_entity", back_populates="entities"
     )
 
     def __repr__(self) -> str:
         return f"Entity(id={self.id!r}, name={self.name!r}, description={self.description!r})"
+
+
+class ScenarioEntity(Base):
+    __tablename__ = "scenario_entity"
+
+    scenario_id: Mapped[UUID] = mapped_column(ForeignKey("scenario.id"), primary_key=True)
+    entity_id: Mapped[UUID] = mapped_column(ForeignKey("entity.id"), primary_key=True)
+
+    def __repr__(self) -> str:
+        return f"ScenarioEntity(scenario_id={self.scenario_id!r}, entity_id={self.entity_id!r})"
