@@ -90,7 +90,9 @@ class API:
             entity: Entity = session.get_one(Entity, entity_id)
             return entity.scenarios
 
-    def add_entity_to_scenario(self, scenario_id: int, entity_id: int) -> Tuple[Scenario, Entity]:
+    def add_entity_to_scenario(
+        self, scenario_id: int, entity_id: int
+    ) -> Tuple[Scenario, Entity]:
         with Session(self.engine, expire_on_commit=False) as session:
             scenario: Scenario = session.get_one(Scenario, scenario_id)
             entity: Entity = session.get_one(Entity, entity_id)
@@ -98,7 +100,9 @@ class API:
             session.commit()
             return scenario, entity
 
-    def remove_entity_from_scenario(self, scenario_id: int, entity_id: int) -> Tuple[Scenario, Entity]:
+    def remove_entity_from_scenario(
+        self, scenario_id: int, entity_id: int
+    ) -> Tuple[Scenario, Entity]:
         with Session(self.engine, expire_on_commit=False) as session:
             scenario: Scenario = session.get_one(Scenario, scenario_id)
             entity: Entity = session.get_one(Entity, entity_id)

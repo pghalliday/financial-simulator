@@ -55,5 +55,5 @@ def create_bands(raw_bands: Mapping[Decimal, T]) -> Sequence[Tuple[Band, T]]:
             bands.append((Band(lower=last_above, size=above - last_above), last_value))
         last_value = value
         last_above = above
-    bands.append((Band(lower=last_above, size=None), last_value)) # type: ignore
+    bands.append((Band(lower=last_above, size=None), last_value))  # type: ignore
     return tuple(bands)

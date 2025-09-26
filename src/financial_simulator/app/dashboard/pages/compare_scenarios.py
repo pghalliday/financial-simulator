@@ -40,10 +40,7 @@ layout = html.Div(
     Input("savings-account-balances", "figure"),
 )
 def initialize_charts(_0, _1):
-    logger.info("Initializing charts")
-
     days = get_api().get_days()
-
     current_account_balances_figure = plot_account_balances(
         days=days,
         account_path=("assets", "bank_accounts", "current"),
@@ -51,7 +48,6 @@ def initialize_charts(_0, _1):
         title="Savings Account Balances",
         is_debit_account=True,
     )
-
     savings_account_balances_figure = plot_account_balances(
         days=days,
         account_path=("assets", "bank_accounts", "savings"),
@@ -59,5 +55,4 @@ def initialize_charts(_0, _1):
         title="Savings Account Balances",
         is_debit_account=True,
     )
-
     return current_account_balances_figure, savings_account_balances_figure

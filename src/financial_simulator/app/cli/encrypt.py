@@ -24,7 +24,7 @@ def encrypt(args: Namespace, config: Config):
 
 
 def add_encrypt_command(subparsers: Any):
-    sub_parser = subparsers.add_parser("encrypt", help="Encrypt SQLite database file")
+    sub_parser = subparsers.add_parser("encrypt", help="Encrypt an SQLite database file")
     sub_parser.add_argument(
         "-d",
         "--delete",

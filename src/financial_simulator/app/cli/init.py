@@ -3,14 +3,10 @@ from typing import Any  # type: ignore
 
 from financial_simulator.app.config import Config
 from financial_simulator.app.database import Migration
-from financial_simulator.app.encryption import read
-from financial_simulator.app.passphrase import get_passphrase
 
 
-def decrypt(args: Namespace, config: Config):
+def init(args: Namespace, config: Config):
     sqlite_file = config.database.sqlite_file
-    encrypted_sqlite_file = config.encryption.encrypted_sqlite_file
-    salt_file = config.encryption.salt_file
     if not args.overwrite:
         if sqlite_file.exists():
             overwrite = (
@@ -19,21 +15,13 @@ def decrypt(args: Namespace, config: Config):
             )
             if overwrite.lower() != "y":
                 return
-    passphrase = get_passphrase()
-    sqlite_file.write_bytes(
-        read(
-            encrypted_file=encrypted_sqlite_file,
-            salt_file=salt_file,
-            passphrase=passphrase,
-        )
-    )
     migration = Migration(sqlite_file)
     migration.upgrade_database()
 
 
-def add_decrypt_command(subparsers: Any):
+def add_init_command(subparsers: Any):
     sub_parser = subparsers.add_parser(
-        "decrypt", help="Decrypt and migrate an SQLite database file"
+        "init", help="Initialize or migrate an SQLite database file"
     )
     sub_parser.add_argument(
         "-o",
@@ -41,4 +29,4 @@ def add_decrypt_command(subparsers: Any):
         help="Overwrite any existing SQLite database file",
         action="store_true",
     )
-    sub_parser.set_defaults(func=decrypt)
+    sub_parser.set_defaults(func=init)

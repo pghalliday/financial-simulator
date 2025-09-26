@@ -6,6 +6,7 @@ from financial_simulator.app.config import Config
 from .dashboard import add_dashboard_command
 from .decrypt import add_decrypt_command
 from .encrypt import add_encrypt_command
+from .init import add_init_command
 from .shell import add_shell_command
 
 logger = logging.getLogger(__name__)
@@ -20,6 +21,7 @@ def cli():
     parser.set_defaults(func=None)
     parser.add_argument("-c", "--config", help="Path to the config file")
     sub_parsers = parser.add_subparsers(title="subcommands")
+    add_init_command(sub_parsers)
     add_encrypt_command(sub_parsers)
     add_decrypt_command(sub_parsers)
     add_shell_command(sub_parsers)

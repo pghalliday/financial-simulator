@@ -1,4 +1,6 @@
 import logging
+from collections import defaultdict
+from typing import List, Sequence
 
 import dash
 import dash_mantine_components as dmc  # type: ignore
@@ -20,6 +22,42 @@ theme = {
 
 app = Dash(__name__, use_pages=True)
 
+
+def get_nav_links() -> Sequence[dmc.NavLink]:
+    sections: defaultdict[str | None, List] = defaultdict(list)
+    for key, page in dash.page_registry.items():
+        parts = key.split(".")
+        if len(parts) == 2:
+            sections[None].append(page)
+        elif len(parts) == 3:
+            sections[parts[1]].append(page)
+    root_nav_links = [
+        dmc.NavLink(
+            label=page["name"],
+            href=page["relative_path"],
+            active="exact",
+        )
+        for page in sections[None]
+    ]
+    section_nav_links = [
+        dmc.NavLink(
+            label=section.title(),
+            childrenOffset=28,
+            children=[
+                dmc.NavLink(
+                    label=page["name"],
+                    href=page["relative_path"],
+                    active="exact",
+                )
+                for page in pages
+            ],
+        )
+        for section, pages in sections.items()
+        if section is not None
+    ]
+    return root_nav_links + section_nav_links
+
+
 layout = dmc.AppShell(
     [
         dmc.AppShellHeader(
@@ -34,14 +72,7 @@ layout = dmc.AppShell(
         ),
         dmc.AppShellNavbar(
             id="navbar",
-            children=[
-                dmc.NavLink(
-                    label=page["name"],
-                    href=page["relative_path"],
-                    active="exact",
-                )
-                for page in dash.page_registry.values()
-            ],
+            children=get_nav_links(),
             p="md",
         ),
         dmc.AppShellMain(dash.page_container),
@@ -49,7 +80,7 @@ layout = dmc.AppShell(
     header={"height": 60},
     padding="md",
     navbar={
-        "width": 300,
+        "width": 200,
         "breakpoint": "sm",
         "collapsed": {"mobile": True},
     },
