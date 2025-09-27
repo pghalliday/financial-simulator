@@ -10,7 +10,7 @@ from .provider import Provider
 from .schedule import Schedule
 
 if TYPE_CHECKING:
-    from .entities import IndividualEntity, CorporationEntity
+    from .entity import IndividualEntity, CorporationEntity
 else:
     IndividualEntity = "IndividualEntity"
     CorporationEntity = "CorporationEntity"

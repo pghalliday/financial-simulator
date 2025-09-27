@@ -174,7 +174,7 @@ class Shell(Cmd):
         print(f"count: {len(scenarios)}")
 
     def do_get_entities(self, arg: str):
-        """Get the entities included in a scenario:  GET_ENTITIES SCENARIO_ID"""
+        """Get the entity included in a scenario:  GET_ENTITIES SCENARIO_ID"""
         scenario_entities = self.api.get_entities(UUID(arg.strip()))
         for entity in scenario_entities:
             print(entity)
@@ -193,7 +193,7 @@ class Shell(Cmd):
         print(entity)
 
     def do_list_entities(self, arg: str):
-        """List the entities:  LIST_ENTITIES"""
+        """List the entity:  LIST_ENTITIES"""
         entities = self.api.list_entities()
         for entity in entities:
             print(entity)

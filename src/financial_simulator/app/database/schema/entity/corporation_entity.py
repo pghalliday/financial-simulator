@@ -5,7 +5,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from financial_simulator.app.database.schema.base import Base
-from financial_simulator.app.database.schema.entities.entity import Entity
+from .entity import Entity
 
 if TYPE_CHECKING:
     from financial_simulator.app.database.schema.bank_account import BankAccount

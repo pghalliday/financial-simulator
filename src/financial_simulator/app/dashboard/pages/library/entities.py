@@ -11,7 +11,7 @@ EDIT_ENTITY_SELECTOR = "edit-entity-selector"
 
 dash.register_page(__name__)
 
-ENTITIES_TABLE_BODY = "entities-table-body"
+ENTITIES_TABLE_BODY = "entity-table-body"
 
 head = dmc.TableThead(
     dmc.TableTr(

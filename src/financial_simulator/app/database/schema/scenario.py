@@ -7,7 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
 
 if TYPE_CHECKING:
-    from .entities import Entity
+    from .entity import Entity
 else:
     Entity = "Entity"
 
