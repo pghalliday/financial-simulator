@@ -499,7 +499,7 @@
     </routine>
     <schema id="191" parent="1" name="main">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2025-09-24.23:47:19</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-09-27.11:03:20</LastIntrospectionLocalTimestamp>
     </schema>
     <argument id="192" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1591,114 +1591,499 @@
       <Position>1</Position>
     </argument>
     <table id="555" parent="191" name="alembic_version"/>
-    <table id="556" parent="191" name="entity"/>
-    <table id="557" parent="191" name="scenario"/>
-    <table id="558" parent="191" name="scenario_entity"/>
-    <table id="559" parent="191" name="sqlite_master">
+    <table id="556" parent="191" name="bank_account"/>
+    <table id="557" parent="191" name="corporation_entity"/>
+    <table id="558" parent="191" name="corporation_entity_bank_account"/>
+    <table id="559" parent="191" name="entity"/>
+    <table id="560" parent="191" name="individual_entity"/>
+    <table id="561" parent="191" name="individual_entity_bank_account"/>
+    <table id="562" parent="191" name="ledger_account"/>
+    <table id="563" parent="191" name="ledger_account_component"/>
+    <table id="564" parent="191" name="provider"/>
+    <table id="565" parent="191" name="scenario"/>
+    <table id="566" parent="191" name="scenario_entity"/>
+    <table id="567" parent="191" name="schedule"/>
+    <table id="568" parent="191" name="sqlite_master">
       <System>1</System>
     </table>
-    <column id="560" parent="555" name="version_num">
+    <column id="569" parent="555" name="version_num">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>VARCHAR(32)|0s</StoredType>
     </column>
-    <index id="561" parent="555" name="sqlite_autoindex_alembic_version_1">
+    <index id="570" parent="555" name="sqlite_autoindex_alembic_version_1">
       <ColNames>version_num</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="562" parent="555" name="alembic_version_pkc">
+    <key id="571" parent="555" name="alembic_version_pkc">
       <ColNames>version_num</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_alembic_version_1</UnderlyingIndexName>
     </key>
-    <column id="563" parent="556" name="id">
+    <column id="572" parent="556" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>INTEGER|0s</StoredType>
+      <StoredType>CHAR(32)|0s</StoredType>
     </column>
-    <column id="564" parent="556" name="name">
+    <column id="573" parent="556" name="name">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>VARCHAR|0s</StoredType>
     </column>
-    <column id="565" parent="556" name="description">
+    <column id="574" parent="556" name="description">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>VARCHAR|0s</StoredType>
     </column>
-    <key id="566" parent="556" name="pk_entity">
+    <column id="575" parent="556" name="asset_account">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="576" parent="556" name="interest_income_account">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="577" parent="556" name="interest_receivable_account">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="578" parent="556" name="fee_expenses_account">
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="579" parent="556" name="fees_payable_account">
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="580" parent="556" name="fees_provider_id">
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="581" parent="556" name="fee_payment_schedule_id">
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="582" parent="556" name="rate_provider_id">
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="583" parent="556" name="interest_payment_schedule_id">
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <foreign-key id="584" parent="556" name="fk_bank_account_asset_account_ledger_account">
+      <ColNames>asset_account</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>ledger_account</RefTableName>
+    </foreign-key>
+    <foreign-key id="585" parent="556" name="fk_bank_account_interest_income_account_ledger_account">
+      <ColNames>interest_income_account</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>ledger_account</RefTableName>
+    </foreign-key>
+    <foreign-key id="586" parent="556" name="fk_bank_account_interest_receivable_account_ledger_account">
+      <ColNames>interest_receivable_account</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>ledger_account</RefTableName>
+    </foreign-key>
+    <foreign-key id="587" parent="556" name="fk_bank_account_fee_expenses_account_ledger_account">
+      <ColNames>fee_expenses_account</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>ledger_account</RefTableName>
+    </foreign-key>
+    <foreign-key id="588" parent="556" name="fk_bank_account_fees_payable_account_ledger_account">
+      <ColNames>fees_payable_account</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>ledger_account</RefTableName>
+    </foreign-key>
+    <foreign-key id="589" parent="556" name="fk_bank_account_fees_provider_id_provider">
+      <ColNames>fees_provider_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>provider</RefTableName>
+    </foreign-key>
+    <foreign-key id="590" parent="556" name="fk_bank_account_fee_payment_schedule_id_schedule">
+      <ColNames>fee_payment_schedule_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>schedule</RefTableName>
+    </foreign-key>
+    <foreign-key id="591" parent="556" name="fk_bank_account_rate_provider_id_provider">
+      <ColNames>rate_provider_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>provider</RefTableName>
+    </foreign-key>
+    <foreign-key id="592" parent="556" name="fk_bank_account_interest_payment_schedule_id_schedule">
+      <ColNames>interest_payment_schedule_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>schedule</RefTableName>
+    </foreign-key>
+    <index id="593" parent="556" name="sqlite_autoindex_bank_account_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <index id="594" parent="556" name="sqlite_autoindex_bank_account_2">
+      <ColNames>name</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="595" parent="556" name="pk_bank_account">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_bank_account_1</UnderlyingIndexName>
     </key>
-    <column id="567" parent="557" name="id">
+    <key id="596" parent="556" name="uq_bank_account_name">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_bank_account_2</UnderlyingIndexName>
+    </key>
+    <column id="597" parent="557" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>INTEGER|0s</StoredType>
+      <StoredType>CHAR(32)|0s</StoredType>
     </column>
-    <column id="568" parent="557" name="name">
+    <foreign-key id="598" parent="557" name="fk_corporation_entity_id_entity">
+      <ColNames>id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>entity</RefTableName>
+    </foreign-key>
+    <index id="599" parent="557" name="sqlite_autoindex_corporation_entity_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="600" parent="557" name="pk_corporation_entity">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_corporation_entity_1</UnderlyingIndexName>
+    </key>
+    <column id="601" parent="558" name="corporation_entity_id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="602" parent="558" name="bank_account_id">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <foreign-key id="603" parent="558" name="fk_corporation_entity_bank_account_corporation_entity_id_corporation_entity">
+      <ColNames>corporation_entity_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>corporation_entity</RefTableName>
+    </foreign-key>
+    <foreign-key id="604" parent="558" name="fk_corporation_entity_bank_account_bank_account_id_bank_account">
+      <ColNames>bank_account_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>bank_account</RefTableName>
+    </foreign-key>
+    <index id="605" parent="558" name="sqlite_autoindex_corporation_entity_bank_account_1">
+      <ColNames>corporation_entity_id
+bank_account_id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="606" parent="558" name="pk_corporation_entity_bank_account">
+      <ColNames>corporation_entity_id
+bank_account_id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_corporation_entity_bank_account_1</UnderlyingIndexName>
+    </key>
+    <column id="607" parent="559" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="608" parent="559" name="name">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>VARCHAR|0s</StoredType>
     </column>
-    <column id="569" parent="557" name="description">
+    <column id="609" parent="559" name="description">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>VARCHAR|0s</StoredType>
     </column>
-    <key id="570" parent="557" name="pk_scenario">
+    <index id="610" parent="559" name="sqlite_autoindex_entity_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <index id="611" parent="559" name="sqlite_autoindex_entity_2">
+      <ColNames>name</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="612" parent="559" name="pk_entity">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_entity_1</UnderlyingIndexName>
     </key>
-    <column id="571" parent="558" name="scenario_id">
+    <key id="613" parent="559" name="uq_entity_name">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_entity_2</UnderlyingIndexName>
+    </key>
+    <column id="614" parent="560" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>INTEGER|0s</StoredType>
+      <StoredType>CHAR(32)|0s</StoredType>
     </column>
-    <column id="572" parent="558" name="entity_id">
+    <foreign-key id="615" parent="560" name="fk_individual_entity_id_entity">
+      <ColNames>id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>entity</RefTableName>
+    </foreign-key>
+    <index id="616" parent="560" name="sqlite_autoindex_individual_entity_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="617" parent="560" name="pk_individual_entity">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_individual_entity_1</UnderlyingIndexName>
+    </key>
+    <column id="618" parent="561" name="individual_entity_id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="619" parent="561" name="bank_account_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <foreign-key id="620" parent="561" name="fk_individual_entity_bank_account_individual_entity_id_individual_entity">
+      <ColNames>individual_entity_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>individual_entity</RefTableName>
+    </foreign-key>
+    <foreign-key id="621" parent="561" name="fk_individual_entity_bank_account_bank_account_id_bank_account">
+      <ColNames>bank_account_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>bank_account</RefTableName>
+    </foreign-key>
+    <index id="622" parent="561" name="sqlite_autoindex_individual_entity_bank_account_1">
+      <ColNames>individual_entity_id
+bank_account_id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="623" parent="561" name="pk_individual_entity_bank_account">
+      <ColNames>individual_entity_id
+bank_account_id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_individual_entity_bank_account_1</UnderlyingIndexName>
+    </key>
+    <column id="624" parent="562" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <index id="625" parent="562" name="sqlite_autoindex_ledger_account_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="626" parent="562" name="pk_ledger_account">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_ledger_account_1</UnderlyingIndexName>
+    </key>
+    <column id="627" parent="563" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="628" parent="563" name="ledger_account_id">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="629" parent="563" name="position">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <foreign-key id="573" parent="558" name="fk_scenario_entity_scenario_id_scenario">
+    <column id="630" parent="563" name="name">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>VARCHAR|0s</StoredType>
+    </column>
+    <foreign-key id="631" parent="563" name="fk_ledger_account_component_ledger_account_id_ledger_account">
+      <ColNames>ledger_account_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>ledger_account</RefTableName>
+    </foreign-key>
+    <index id="632" parent="563" name="sqlite_autoindex_ledger_account_component_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="633" parent="563" name="pk_ledger_account_component">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_ledger_account_component_1</UnderlyingIndexName>
+    </key>
+    <column id="634" parent="564" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="635" parent="564" name="name">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>VARCHAR|0s</StoredType>
+    </column>
+    <column id="636" parent="564" name="description">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>VARCHAR|0s</StoredType>
+    </column>
+    <index id="637" parent="564" name="sqlite_autoindex_provider_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <index id="638" parent="564" name="sqlite_autoindex_provider_2">
+      <ColNames>name</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="639" parent="564" name="pk_provider">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_provider_1</UnderlyingIndexName>
+    </key>
+    <key id="640" parent="564" name="uq_provider_name">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_provider_2</UnderlyingIndexName>
+    </key>
+    <column id="641" parent="565" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="642" parent="565" name="name">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>VARCHAR|0s</StoredType>
+    </column>
+    <column id="643" parent="565" name="description">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>VARCHAR|0s</StoredType>
+    </column>
+    <index id="644" parent="565" name="sqlite_autoindex_scenario_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <index id="645" parent="565" name="sqlite_autoindex_scenario_2">
+      <ColNames>name</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="646" parent="565" name="pk_scenario">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_scenario_1</UnderlyingIndexName>
+    </key>
+    <key id="647" parent="565" name="uq_scenario_name">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_scenario_2</UnderlyingIndexName>
+    </key>
+    <column id="648" parent="566" name="scenario_id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="649" parent="566" name="entity_id">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <foreign-key id="650" parent="566" name="fk_scenario_entity_scenario_id_scenario">
       <ColNames>scenario_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>scenario</RefTableName>
     </foreign-key>
-    <foreign-key id="574" parent="558" name="fk_scenario_entity_entity_id_entity">
+    <foreign-key id="651" parent="566" name="fk_scenario_entity_entity_id_entity">
       <ColNames>entity_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>entity</RefTableName>
     </foreign-key>
-    <index id="575" parent="558" name="sqlite_autoindex_scenario_entity_1">
+    <index id="652" parent="566" name="sqlite_autoindex_scenario_entity_1">
       <ColNames>scenario_id
 entity_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="576" parent="558" name="pk_scenario_entity">
+    <key id="653" parent="566" name="pk_scenario_entity">
       <ColNames>scenario_id
 entity_id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_scenario_entity_1</UnderlyingIndexName>
     </key>
-    <column id="577" parent="559" name="type">
+    <column id="654" parent="567" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>CHAR(32)|0s</StoredType>
+    </column>
+    <column id="655" parent="567" name="name">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>VARCHAR|0s</StoredType>
+    </column>
+    <column id="656" parent="567" name="description">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>VARCHAR|0s</StoredType>
+    </column>
+    <index id="657" parent="567" name="sqlite_autoindex_schedule_1">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <index id="658" parent="567" name="sqlite_autoindex_schedule_2">
+      <ColNames>name</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="659" parent="567" name="pk_schedule">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_schedule_1</UnderlyingIndexName>
+    </key>
+    <key id="660" parent="567" name="uq_schedule_name">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_schedule_2</UnderlyingIndexName>
+    </key>
+    <column id="661" parent="568" name="type">
       <Position>1</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="578" parent="559" name="name">
+    <column id="662" parent="568" name="name">
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="579" parent="559" name="tbl_name">
+    <column id="663" parent="568" name="tbl_name">
       <Position>3</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="580" parent="559" name="rootpage">
+    <column id="664" parent="568" name="rootpage">
       <Position>4</Position>
       <StoredType>INT|0s</StoredType>
     </column>
-    <column id="581" parent="559" name="sql">
+    <column id="665" parent="568" name="sql">
       <Position>5</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>

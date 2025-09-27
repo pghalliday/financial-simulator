@@ -28,7 +28,7 @@ def decrypt(args: Namespace, config: Config):
         )
     )
     migration = Migration(sqlite_file)
-    migration.upgrade_database()
+    migration.migrate()
 
 
 def add_decrypt_command(subparsers: Any):

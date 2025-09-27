@@ -70,7 +70,7 @@ class Shell(Cmd):
         else:
             confirm_passphrase(self.passphrase)
         migration = Migration(config.database.sqlite_file)
-        migration.upgrade_database()
+        migration.migrate()
         self.api = API(config)
 
     def onecmd(self, line: str):

@@ -27,20 +27,27 @@ class Migration:
             self.__config, self.__script_directory, as_sql=False
         )
 
-    def upgrade_database(self):
+    def migrate(self, destination: str = "head", downgrade: bool = False):
         # noinspection PyUnusedLocal
-        def do_upgrade(
+        def do_migrate(
             revision: str, context: MigrationContext
         ) -> Sequence[MigrationStep]:
-            # noinspection PyProtectedMember
-            return self.__script_directory._upgrade_revs(  # type: ignore
-                "head",
-                revision,
-            )
+            if downgrade:
+                # noinspection PyProtectedMember
+                return self.__script_directory._downgrade_revs(
+                    destination,
+                    revision,
+                )
+            else:
+                # noinspection PyProtectedMember
+                return self.__script_directory._upgrade_revs(
+                    destination,
+                    revision,
+                )
 
         with self.__engine.connect() as connection:
             self.__environment_context.configure(
-                connection=connection, target_metadata=Base.metadata, fn=do_upgrade
+                connection=connection, target_metadata=Base.metadata, fn=do_migrate
             )
             with self.__environment_context.begin_transaction():
                 self.__environment_context.run_migrations()
