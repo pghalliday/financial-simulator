@@ -6,21 +6,23 @@ import dash
 import dash_mantine_components as dmc  # type: ignore
 from dash import Dash, Input, Output, State, callback
 
-from financial_simulator.app.api import API
 from financial_simulator.app.config import Config
-from financial_simulator.app.dashboard.globals import set_api
+from financial_simulator.app.dashboard.globals import init_api, init_engine
 
 logger = logging.getLogger(__name__)
 
 theme = {
-    "primaryColor": "teal",
+    "primaryColor": "blue",
     "defaultRadius": "sm",
     "components": {
         "Card": {"defaultProps": {"shadow": "md"}},
     },
 }
 
-app = Dash(__name__, use_pages=True)
+app = Dash(
+    __name__,
+    use_pages=True,
+)
 
 
 def get_nav_links() -> Sequence[dmc.NavLink]:
@@ -35,9 +37,9 @@ def get_nav_links() -> Sequence[dmc.NavLink]:
         dmc.NavLink(
             label=page["name"],
             href=page["relative_path"],
-            active="exact",
+            active="partial",
         )
-        for page in sections[None]
+        for page in sections[None] if not page.get("exclude_from_navbar")
     ]
     section_nav_links = [
         dmc.NavLink(
@@ -47,9 +49,9 @@ def get_nav_links() -> Sequence[dmc.NavLink]:
                 dmc.NavLink(
                     label=page["name"],
                     href=page["relative_path"],
-                    active="exact",
+                    active="partial",
                 )
-                for page in pages
+                for page in pages if not page.get("exclude_from_navbar")
             ],
         )
         for section, pages in sections.items()
@@ -105,5 +107,6 @@ def navbar_is_open(opened, navbar):
 
 
 def start_dashboard(config: Config):
-    set_api(API(config))
+    init_engine(config)
+    init_api(config)
     app.run(debug=True)  # type: ignore

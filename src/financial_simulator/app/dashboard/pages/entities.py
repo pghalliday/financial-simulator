@@ -3,13 +3,15 @@ from typing import Sequence
 import dash
 import dash_mantine_components as dmc  # type: ignore
 from dash import Input, Output, callback
+from sqlalchemy.orm import Session
 
-from financial_simulator.app.dashboard.globals import get_api
+from financial_simulator.app.dashboard.globals import get_engine
+from financial_simulator.app.database.schema import Entity
 
 EDIT_ENTITY_SELECTED = "edit-entity-selected"
 EDIT_ENTITY_SELECTOR = "edit-entity-selector"
 
-dash.register_page(__name__)
+dash.register_page(__name__, order=2)
 
 ENTITIES_TABLE_BODY = "entity-table-body"
 
@@ -81,4 +83,6 @@ def select_value(value):
     Input(EDIT_ENTITY_SELECTOR, "data"),
 )
 def initialize_entities_selector(_) -> Sequence[str]:
-    return [entity.name for entity in get_api().list_entities()]
+    with Session(get_engine()) as session:
+        entities = session.query(Entity).all()
+        return [str(entity.name) for entity in entities]

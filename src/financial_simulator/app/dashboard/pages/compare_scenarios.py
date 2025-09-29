@@ -14,7 +14,7 @@ SCENARIO_SELECTOR = "scenario-selector"
 
 logger = logging.getLogger(__name__)
 
-dash.register_page(__name__, path="/")
+dash.register_page(__name__, path="/", order=0)
 
 layout = html.Div(
     [
