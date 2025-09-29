@@ -39,7 +39,8 @@ def get_nav_links() -> Sequence[dmc.NavLink]:
             href=page["relative_path"],
             active="partial",
         )
-        for page in sections[None] if not page.get("exclude_from_navbar")
+        for page in sections[None]
+        if not page.get("exclude_from_navbar")
     ]
     section_nav_links = [
         dmc.NavLink(
@@ -51,7 +52,8 @@ def get_nav_links() -> Sequence[dmc.NavLink]:
                     href=page["relative_path"],
                     active="partial",
                 )
-                for page in pages if not page.get("exclude_from_navbar")
+                for page in pages
+                if not page.get("exclude_from_navbar")
             ],
         )
         for section, pages in sections.items()

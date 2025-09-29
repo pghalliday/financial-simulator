@@ -10,11 +10,11 @@ logger = logging.getLogger(__name__)
 
 
 def create_list_page(
-        name: str,
-        label: str,
-        get_items_context,
-        add_item_context,
-        delete_item_context,
+    name: str,
+    label: str,
+    get_items_context,
+    add_item_context,
+    delete_item_context,
 ):
     LIST_LOCATION = f"{name}-location"
     LIST_GRID = f"{name}-grid"
@@ -99,12 +99,14 @@ def create_list_page(
             return True, False
 
     @callback(
+        Output(LIST_ADD_NAME, "value"),
+        Output(LIST_ADD_DESCRIPTION, "value"),
         Output(LIST_ADD_POPUP, "opened", allow_duplicate=True),
         Input(LIST_ADD, "n_clicks"),
         config_prevent_initial_callbacks=True,
     )
-    def add_item(_n_clicks: int) -> bool:
-        return True
+    def add_item(_n_clicks: int) -> Tuple[str, str, bool]:
+        return "", "", True
 
     @callback(
         Output(LIST_ADD_POPUP, "opened", allow_duplicate=True),
@@ -166,7 +168,7 @@ def create_list_page(
                     ],
                 ),
                 dmc.Anchor(
-                    href=f"/scenarios/{str(item.id)}",
+                    href=f"/{name}/{str(item.id)}",
                     children=dmc.Text(str(item.name), fw="bold"),
                 ),
                 dmc.Text(str(item.description), size="sm", c="dimmed"),
