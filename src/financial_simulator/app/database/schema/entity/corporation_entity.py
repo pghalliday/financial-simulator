@@ -5,6 +5,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from financial_simulator.app.database.schema.base import Base
+
 from .entity import Entity
 
 if TYPE_CHECKING:
@@ -25,8 +26,13 @@ class CorporationEntity(Entity):
 
     __mapper_args__ = {"polymorphic_identity": "corporation_entity"}
 
+
 class CorporationEntityBankAccount(Base):
     __tablename__ = "corporation_entity_bank_account"
 
-    corporation_entity_id: Mapped[UUID] = mapped_column(ForeignKey("corporation_entity.id"), primary_key=True)
-    bank_account_id: Mapped[UUID] = mapped_column(ForeignKey("bank_account.id"), primary_key=True)
+    corporation_entity_id: Mapped[UUID] = mapped_column(
+        ForeignKey("corporation_entity.id"), primary_key=True
+    )
+    bank_account_id: Mapped[UUID] = mapped_column(
+        ForeignKey("bank_account.id"), primary_key=True
+    )

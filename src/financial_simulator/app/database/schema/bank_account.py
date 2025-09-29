@@ -1,27 +1,24 @@
 from typing import TYPE_CHECKING, List
-from uuid import UUID, uuid4
+from uuid import UUID
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base
+from .base import Base, HasId, HasName
 from .ledger_account import LedgerAccount
 from .provider import Provider
 from .schedule import Schedule
 
 if TYPE_CHECKING:
-    from .entity import IndividualEntity, CorporationEntity
+    from .entity import CorporationEntity, IndividualEntity
 else:
     IndividualEntity = "IndividualEntity"
     CorporationEntity = "CorporationEntity"
 
 
-class BankAccount(Base):
+class BankAccount(Base, HasId, HasName):
     __tablename__ = "bank_account"
 
-    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
-    name: Mapped[str] = mapped_column(unique=True)
-    description: Mapped[str] = mapped_column()
     asset_account: Mapped[LedgerAccount] = mapped_column(ForeignKey("ledger_account.id"))
     interest_income_account: Mapped[LedgerAccount] = mapped_column(ForeignKey("ledger_account.id"))
     interest_receivable_account: Mapped[LedgerAccount] = mapped_column(ForeignKey("ledger_account.id"))

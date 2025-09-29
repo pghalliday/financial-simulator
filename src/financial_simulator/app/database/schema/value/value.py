@@ -1,16 +1,13 @@
-from uuid import UUID, uuid4
-
-from sqlalchemy.orm import Mapped, mapped_column
-
-from financial_simulator.app.database.schema.base import Base
 
 
-class Value(Base):
+from financial_simulator.app.database.schema.base import Base, HasId, HasName, HasType
+
+
+class Value(Base, HasId, HasName, HasType):
     __tablename__ = "value"
 
-    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
-    name: Mapped[str] = mapped_column(unique=True)
-    description: Mapped[str] = mapped_column()
+    __mapper_args__ = {
+        "polymorphic_identity": "value",
+        "polymorphic_on": "type",
+    }
 
-    def __repr__(self) -> str:
-        return f"Value(id={self.id!r}, name={self.name!r}, description={self.description!r})"

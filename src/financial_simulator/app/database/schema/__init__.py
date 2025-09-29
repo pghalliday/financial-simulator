@@ -1,15 +1,17 @@
-from .base import Base
-from .scenario import Scenario
-from .entity import Entity, CorporationEntity, IndividualEntity
 from .bank_account import BankAccount
+from .base import Base, HasId, HasName
+from .entity import CorporationEntity, Entity, IndividualEntity
 from .ledger_account import LedgerAccount
 from .provider import Provider
+from .rate import BandedRate, BandedRateBand, ContinuousRate, PeriodicRate, Rate
+from .scenario import Scenario
 from .schedule import Schedule
-from .value import Value, DecimalValue, RateValue
-from .rate import Rate, ContinuousRate, PeriodicRate, BandedRate, BandedRateBand
+from .value import DecimalValue, RateValue, Value
 
 __all__ = [
     "Base",
+    "HasId",
+    "HasName",
     "Scenario",
     "Entity",
     "CorporationEntity",
