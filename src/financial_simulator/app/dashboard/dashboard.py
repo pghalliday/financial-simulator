@@ -4,7 +4,7 @@ from typing import List, Sequence
 
 import dash
 import dash_mantine_components as dmc  # type: ignore
-from dash import Dash, Input, Output, State, callback
+from dash import ALL, Dash, Input, Output, State, callback
 
 from financial_simulator.app.config import Config
 from financial_simulator.app.dashboard.globals import init_api, init_engine
@@ -24,6 +24,7 @@ app = Dash(
     use_pages=True,
 )
 
+NAV_LINK = lambda relative_path: {"type": "nav_link", "relative_path": relative_path}
 
 def get_nav_links() -> Sequence[dmc.NavLink]:
     sections: defaultdict[str | None, List] = defaultdict(list)
@@ -35,6 +36,7 @@ def get_nav_links() -> Sequence[dmc.NavLink]:
             sections[parts[1]].append(page)
     root_nav_links = [
         dmc.NavLink(
+            id=NAV_LINK(page["relative_path"]),
             label=page["name"],
             href=page["relative_path"],
             active="partial",
@@ -48,6 +50,7 @@ def get_nav_links() -> Sequence[dmc.NavLink]:
             childrenOffset=28,
             children=[
                 dmc.NavLink(
+                    id=NAV_LINK(page["relative_path"]),
                     label=page["name"],
                     href=page["relative_path"],
                     active="partial",
@@ -99,11 +102,20 @@ app.layout = dmc.MantineProvider(
 
 
 @callback(
+    Output("burger", "opened"),
+    Input(NAV_LINK(ALL), "n_clicks"),
+    config_prevent_initial_callbacks=True,
+)
+def navbar_click_link(_n_clicks):
+    return False
+
+
+@callback(
     Output("appshell", "navbar"),
     Input("burger", "opened"),
     State("appshell", "navbar"),
 )
-def navbar_is_open(opened, navbar):
+def burger_toggled(opened, navbar):
     navbar["collapsed"] = {"mobile": not opened}
     return navbar
 

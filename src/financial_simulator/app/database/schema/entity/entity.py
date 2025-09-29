@@ -22,4 +22,3 @@ class Entity(Base, HasId, HasName, HasType):
         "polymorphic_identity": "entity",
         "polymorphic_on": "type",
     }
-

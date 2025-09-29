@@ -1,5 +1,3 @@
-
-
 from financial_simulator.app.database.schema.base import Base, HasId, HasName, HasType
 
 
@@ -10,4 +8,3 @@ class Value(Base, HasId, HasName, HasType):
         "polymorphic_identity": "value",
         "polymorphic_on": "type",
     }
-

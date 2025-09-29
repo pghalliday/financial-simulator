@@ -1,5 +1,3 @@
-
-
 from financial_simulator.app.database.schema.base import Base, HasId, HasName, HasType
 
 
@@ -10,4 +8,3 @@ class Provider(Base, HasId, HasName, HasType):
         "polymorphic_identity": "provider",
         "polymorphic_on": "type",
     }
-

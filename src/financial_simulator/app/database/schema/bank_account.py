@@ -19,20 +19,40 @@ else:
 class BankAccount(Base, HasId, HasName):
     __tablename__ = "bank_account"
 
-    asset_account: Mapped[LedgerAccount] = mapped_column(ForeignKey("ledger_account.id"))
-    interest_income_account: Mapped[LedgerAccount] = mapped_column(ForeignKey("ledger_account.id"))
-    interest_receivable_account: Mapped[LedgerAccount] = mapped_column(ForeignKey("ledger_account.id"))
-    fee_expenses_account: Mapped[LedgerAccount] = mapped_column(ForeignKey("ledger_account.id"))
-    fees_payable_account: Mapped[LedgerAccount] = mapped_column(ForeignKey("ledger_account.id"))
+    asset_account: Mapped[LedgerAccount] = mapped_column(
+        ForeignKey("ledger_account.id")
+    )
+    interest_income_account: Mapped[LedgerAccount] = mapped_column(
+        ForeignKey("ledger_account.id")
+    )
+    interest_receivable_account: Mapped[LedgerAccount] = mapped_column(
+        ForeignKey("ledger_account.id")
+    )
+    fee_expenses_account: Mapped[LedgerAccount] = mapped_column(
+        ForeignKey("ledger_account.id")
+    )
+    fees_payable_account: Mapped[LedgerAccount] = mapped_column(
+        ForeignKey("ledger_account.id")
+    )
     fees_provider_id: Mapped[UUID] = mapped_column(ForeignKey("provider.id"))
     fee_payment_schedule_id: Mapped[UUID] = mapped_column(ForeignKey("schedule.id"))
     rate_provider_id: Mapped[UUID] = mapped_column(ForeignKey("provider.id"))
-    interest_payment_schedule_id: Mapped[UUID] = mapped_column(ForeignKey("schedule.id"))
+    interest_payment_schedule_id: Mapped[UUID] = mapped_column(
+        ForeignKey("schedule.id")
+    )
 
-    fees_provider: Mapped[Provider] = relationship(foreign_keys="BankAccount.fees_provider_id")
-    fee_payment_schedule: Mapped[Schedule] = relationship(foreign_keys="BankAccount.fee_payment_schedule_id")
-    rate_provider: Mapped[Provider] = relationship(foreign_keys="BankAccount.rate_provider_id")
-    interest_payment_schedule: Mapped[Schedule] = relationship(foreign_keys="BankAccount.interest_payment_schedule_id")
+    fees_provider: Mapped[Provider] = relationship(
+        foreign_keys="BankAccount.fees_provider_id"
+    )
+    fee_payment_schedule: Mapped[Schedule] = relationship(
+        foreign_keys="BankAccount.fee_payment_schedule_id"
+    )
+    rate_provider: Mapped[Provider] = relationship(
+        foreign_keys="BankAccount.rate_provider_id"
+    )
+    interest_payment_schedule: Mapped[Schedule] = relationship(
+        foreign_keys="BankAccount.interest_payment_schedule_id"
+    )
 
     individual_entities: Mapped[List[IndividualEntity]] = relationship(
         secondary="individual_entity_bank_account",

@@ -7,15 +7,15 @@ from datetime import date, timedelta
 from decimal import Decimal, getcontext, FloatOperation
 from functools import reduce
 
-from doc.src.financial_simulator.lib.rates import \
-    State, \
-    StateUpdater, \
-    ANNUAL_UPDATER_PROVIDER, \
-    QUARTERLY_UPDATER_PROVIDER, \
+from doc.src.financial_simulator.lib.rates import
+    State,
+    StateUpdater,
+    ANNUAL_UPDATER_PROVIDER,
+    QUARTERLY_UPDATER_PROVIDER,
     DAILY_UPDATER_PROVIDER
-from financial_simulator.lib.rates import \
-    ContinuousRate, \
-    PeriodicRate, \
+from financial_simulator.lib.rates import
+    ContinuousRate,
+    PeriodicRate,
     create_banded_rate
 from financial_simulator.lib.util.date import days_in_year
 
