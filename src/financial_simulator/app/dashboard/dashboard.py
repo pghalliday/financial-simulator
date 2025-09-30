@@ -1,10 +1,10 @@
 import logging
-from collections import defaultdict
-from typing import List, Sequence
+import re
+from typing import Sequence
 
 import dash
 import dash_mantine_components as dmc  # type: ignore
-from dash import ALL, Dash, Input, Output, State, callback
+from dash import ALL, Dash, Input, Output, State, callback, dcc
 
 from financial_simulator.app.config import Config
 from financial_simulator.app.dashboard.globals import init_api, init_engine
@@ -26,79 +26,103 @@ app = Dash(
 
 NAV_LINK = lambda relative_path: {"type": "nav_link", "relative_path": relative_path}
 
+COLLECTION_PATHNAME_REGEX = re.compile(r"^/[^/]+$")
+COLLECTION_ITEM_PATHNAME_REGEX = re.compile(r"^/([^/]+)/[^/]+$")
+
+
 def get_nav_links() -> Sequence[dmc.NavLink]:
-    sections: defaultdict[str | None, List] = defaultdict(list)
-    for key, page in dash.page_registry.items():
-        parts = key.split(".")
-        if len(parts) == 2:
-            sections[None].append(page)
-        elif len(parts) == 3:
-            sections[parts[1]].append(page)
-    root_nav_links = [
+    return [
         dmc.NavLink(
             id=NAV_LINK(page["relative_path"]),
             label=page["name"],
             href=page["relative_path"],
             active="partial",
         )
-        for page in sections[None]
+        for page in dash.page_registry.values()
         if not page.get("exclude_from_navbar")
     ]
-    section_nav_links = [
-        dmc.NavLink(
-            label=section.title(),
-            childrenOffset=28,
-            children=[
-                dmc.NavLink(
-                    id=NAV_LINK(page["relative_path"]),
-                    label=page["name"],
-                    href=page["relative_path"],
-                    active="partial",
-                )
-                for page in pages
-                if not page.get("exclude_from_navbar")
-            ],
-        )
-        for section, pages in sections.items()
-        if section is not None
-    ]
-    return root_nav_links + section_nav_links
 
 
-layout = dmc.AppShell(
-    [
-        dmc.AppShellHeader(
-            dmc.Group(
-                [
-                    dmc.Burger(id="burger", size="sm", hiddenFrom="sm", opened=False),
-                    dmc.Title("Financial Simulator"),
-                ],
-                h="100%",
-                px="md",
-            )
-        ),
-        dmc.AppShellNavbar(
-            id="navbar",
-            children=get_nav_links(),
-            p="md",
-        ),
-        dmc.AppShellMain(dash.page_container),
-    ],
-    header={"height": 60},
-    padding="md",
-    navbar={
-        "width": 200,
-        "breakpoint": "sm",
-        "collapsed": {"mobile": True},
-    },
-    id="appshell",
-)
+layout = [
+    dcc.Location(
+        id="location",
+    ),
+    dmc.AppShell(
+        [
+            dmc.AppShellHeader(
+                dmc.Group(
+                    [
+                        dmc.Burger(
+                            id="burger", size="sm", hiddenFrom="sm", opened=False
+                        ),
+                        dmc.Stack(
+                            [
+                                dmc.Title(
+                                    id="header-title",
+                                    children="Financial Simulator",
+                                    size="lg",
+                                ),
+                                dmc.Breadcrumbs(
+                                    id="header-breadcrumbs",
+                                    separator="→",
+                                    children=[
+                                        dmc.Anchor("Home", href="/", underline="never"),
+                                    ],
+                                ),
+                            ],
+                            gap=2,
+                        ),
+                    ],
+                    h="100%",
+                    px="md",
+                ),
+            ),
+            dmc.AppShellNavbar(
+                id="navbar",
+                children=get_nav_links(),
+                p="md",
+            ),
+            dmc.AppShellMain(dash.page_container),
+        ],
+        header={"height": 60},
+        padding="md",
+        navbar={
+            "width": 200,
+            "breakpoint": "sm",
+            "collapsed": {"mobile": True},
+        },
+        id="appshell",
+    ),
+]
 
 
 app.layout = dmc.MantineProvider(
     theme=theme,
     children=layout,
 )
+
+
+@callback(
+    Output("header-title", "children"),
+    Output("header-breadcrumbs", "children"),
+    Input("location", "pathname"),
+    State("header-title", "children"),
+    State("header-breadcrumbs", "children"),
+)
+def set_header(pathname, header_title, header_breadcrumbs):
+    for page in dash.page_registry.values():
+        link_data = page["match_path"](pathname)
+        if link_data:
+            header_data = page["header_data"](link_data)
+            header_title = header_data["title"]
+            header_breadcrumbs = [
+                dmc.Anchor(
+                    breadcrumb["label"], href=breadcrumb["href"], underline="never"
+                )
+                for breadcrumb in header_data["breadcrumbs"]
+            ]
+            break
+    return header_title, header_breadcrumbs
 
 
 @callback(

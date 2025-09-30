@@ -16,7 +16,6 @@ def create_list_page(
     add_item_context,
     delete_item_context,
 ):
-    LIST_LOCATION = f"{name}-location"
     LIST_GRID = f"{name}-grid"
     LIST_ADD = f"{name}-add"
     LIST_CARD = lambda item_id: {"type": f"{name}-card", "id": item_id}
@@ -192,7 +191,6 @@ def create_list_page(
 
     return dmc.Container(
         [
-            dcc.Location(id=LIST_LOCATION),
             dmc.SimpleGrid(
                 id=LIST_GRID,
                 cols={"base": 1, "sm": 2, "lg": 5},

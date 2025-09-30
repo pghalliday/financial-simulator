@@ -1,8 +1,8 @@
 import logging
 
 import dash
+import dash_mantine_components as dmc
 from dash import Input, Output, callback, dcc, html
-from dash_mantine_components import Box  # type: ignore
 
 from financial_simulator.app.dashboard.components.scenario_selector import (
     create_scenario_selector,
@@ -14,12 +14,26 @@ SCENARIO_SELECTOR = "scenario-selector"
 
 logger = logging.getLogger(__name__)
 
-dash.register_page(__name__, path="/", order=0)
+dash.register_page(
+    __name__,
+    order=0,
+    path="/",
+    name="Compare scenarios",
+    title="Compare scenarios",
+    match_path=lambda path: path == "/",
+    header_data=lambda _: {
+        "title": "Compare scenarios",
+        "breadcrumbs": [
+            {"label": "Home", "href": "/"},
+        ],
+    },
+)
+
 
 layout = html.Div(
     [
         create_scenario_selector(SCENARIO_SELECTOR),
-        Box(
+        dmc.Box(
             children=[
                 dcc.Graph(
                     id="current-account-balances",

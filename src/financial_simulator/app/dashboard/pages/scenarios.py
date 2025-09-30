@@ -11,7 +11,21 @@ from financial_simulator.app.database.schema import Scenario
 
 logger = logging.getLogger(__name__)
 
-dash.register_page(__name__, order=1)
+dash.register_page(
+    __name__,
+    order=1,
+    path="/scenarios",
+    name="Scenarios",
+    title="Scenarios",
+    match_path=lambda path: path == "/scenarios",
+    header_data=lambda _: {
+        "title": "Scenarios",
+        "breadcrumbs": [
+            {"label": "Home", "href": "/"},
+            {"label": "Scenarios", "href": "/scenarios"},
+        ],
+    },
+)
 
 
 @contextmanager

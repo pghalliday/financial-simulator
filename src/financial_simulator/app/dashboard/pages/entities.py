@@ -11,7 +11,21 @@ from financial_simulator.app.database.schema import Entity
 
 logger = logging.getLogger(__name__)
 
-dash.register_page(__name__, order=2)
+dash.register_page(
+    __name__,
+    order=2,
+    path="/entities",
+    name="Entities",
+    title="Entities",
+    match_path=lambda path: path == "/entities",
+    header_data=lambda _: {
+        "title": "Entities",
+        "breadcrumbs": [
+            {"label": "Home", "href": "/"},
+            {"label": "Entities", "href": "/entities"},
+        ],
+    },
+)
 
 
 @contextmanager
