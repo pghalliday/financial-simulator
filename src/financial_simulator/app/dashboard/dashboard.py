@@ -7,7 +7,7 @@ import dash_mantine_components as dmc  # type: ignore
 from dash import ALL, Dash, Input, Output, State, callback, dcc
 
 from financial_simulator.app.config import Config
-from financial_simulator.app.dashboard.globals import init_api, init_engine
+from financial_simulator.app.dashboard.globals import init_engine
 
 logger = logging.getLogger(__name__)
 
@@ -146,5 +146,4 @@ def burger_toggled(opened, navbar):
 
 def start_dashboard(config: Config):
     init_engine(config)
-    init_api(config)
     app.run(debug=True)  # type: ignore
