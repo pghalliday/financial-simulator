@@ -1,11 +1,12 @@
 import logging
 from contextlib import contextmanager
+from typing import Any
 from uuid import UUID
 
 import dash
 from sqlalchemy.orm import Session
 
-from financial_simulator.app.dashboard.components.list_page import create_list_page
+from financial_simulator.app.dashboard.components.list import create_list
 from financial_simulator.app.dashboard.globals import get_engine
 from financial_simulator.app.database.schema import Scenario
 
@@ -35,9 +36,11 @@ def get_scenarios():
 
 
 @contextmanager
-def add_scenario(name: str, description: str):
+def add_scenario(add_action_data: Any):
     with Session(get_engine()) as session:
-        scenario = Scenario(name=name, description=description)
+        scenario = Scenario(
+            name=add_action_data["name"], description=add_action_data["description"]
+        )
         session.add(scenario)
         session.commit()
         yield scenario
@@ -53,8 +56,9 @@ def delete_scenario(scenario_id: UUID):
         yield scenario
 
 
-layout = create_list_page(
+layout = create_list(
     "scenarios",
+    "/scenarios",
     "scenario",
     get_scenarios,
     add_scenario,
