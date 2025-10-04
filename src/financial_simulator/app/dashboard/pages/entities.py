@@ -8,7 +8,11 @@ from sqlalchemy.orm import Session
 
 from financial_simulator.app.dashboard.components.list import create_list
 from financial_simulator.app.dashboard.globals import get_engine
-from financial_simulator.app.database.schema import Entity
+from financial_simulator.app.database.schema import (
+    CorporationEntity,
+    Entity,
+    IndividualEntity,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -38,9 +42,17 @@ def get_entities():
 @contextmanager
 def add_entity(add_action_data: Any):
     with Session(get_engine()) as session:
-        entity = Entity(
-            name=add_action_data["name"], description=add_action_data["description"]
-        )
+        match add_action_data["type"]:
+            case "individual":
+                entity = IndividualEntity(
+                    name=add_action_data["name"], description=add_action_data["description"]
+                )
+            case "corporation":
+                entity = CorporationEntity(
+                    name=add_action_data["name"], description=add_action_data["description"]
+                )
+            case _:
+                raise Exception(f"Unknown type: {add_action_data["type"]}")
         session.add(entity)
         session.commit()
         yield entity
@@ -60,6 +72,7 @@ layout = create_list(
     "entities",
     "/entities",
     "entity",
+    ["individual", "corporation"],
     get_entities,
     add_entity,
     delete_entity,

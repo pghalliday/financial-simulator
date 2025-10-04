@@ -21,6 +21,7 @@ def create_list(
     list_id: str,
     list_href: str,
     label: str,
+    types: Sequence[str],
     get_items_context,
     add_item_context,
     delete_item_context,
@@ -135,18 +136,19 @@ def create_list(
         config_prevent_initial_callbacks=True,
     )
     def click_delete_button(all_n_clicks, all_item_data):
-        item_id = ctx.triggered_id["id"]
-        idx, item_data = next(
-            (idx, item_data)
-            for idx, item_data in enumerate(all_item_data)
-            if item_id == item_data["id"]
-        )
-        if all_n_clicks[idx] > 0:
-            return {
-                "action": "init",
-                "idx": idx,
-                "data": item_data,
-            }
+        if ctx.triggered_id is not None:
+            item_id = ctx.triggered_id["id"]
+            idx, item_data = next(
+                (idx, item_data)
+                for idx, item_data in enumerate(all_item_data)
+                if item_id == item_data["id"]
+            )
+            if all_n_clicks[idx] > 0:
+                return {
+                    "action": "init",
+                    "idx": idx,
+                    "data": item_data,
+                }
         return {
             "action": "none",
         }
@@ -154,7 +156,7 @@ def create_list(
     return dmc.Box(
         [
             dcc.Store(id=add_action_store_id),
-            create_add_item_popup(add_item_popup_id, label, add_action_store_id),
+            create_add_item_popup(add_item_popup_id, label, types, add_action_store_id),
             dcc.Store(id=delete_action_store_id),
             create_confirm_delete_item_popup(
                 confirm_delete_item_popup_id, label, delete_action_store_id

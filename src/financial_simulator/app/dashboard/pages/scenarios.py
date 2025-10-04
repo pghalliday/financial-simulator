@@ -60,6 +60,7 @@ layout = create_list(
     "scenarios",
     "/scenarios",
     "scenario",
+    None,
     get_scenarios,
     add_scenario,
     delete_scenario,

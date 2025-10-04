@@ -4,10 +4,10 @@ import dash
 import dash_mantine_components as dmc
 from dash import Input, Output, callback, dcc, html
 
-from financial_simulator.app.dummy_days import init_dummy_days
 from financial_simulator.app.dashboard.components.scenario_selector import (
     create_scenario_selector,
 )
+from financial_simulator.app.dummy_days import init_dummy_days
 from financial_simulator.lib.util.data import plot_account_balances
 
 SCENARIO_SELECTOR = "scenario-selector"

@@ -13,6 +13,7 @@ def create_list_item(list_href: str, item, delete_button_id) -> dmc.Card:
                 href=f"{list_href}/{str(item.id)}",
                 children=dmc.Text(str(item.name), fw="bold"),
             ),
+            dmc.Text(str(item.type), size="sm") if hasattr(item, "type") else None,
             dmc.Text(str(item.description), size="sm", c="dimmed"),
             dmc.Space(h=10),
             dmc.Divider(),
