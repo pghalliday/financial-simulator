@@ -7,7 +7,9 @@ from dash import Input, Output, State, callback
 logger = logging.getLogger(__name__)
 
 
-def create_add_item_popup(popup_id: str, label: str, types: Sequence[str] | None, action_store_id: str) -> dmc.Modal:
+def create_add_item_popup(
+    popup_id: str, label: str, types: Sequence[str] | None, action_store_id: str
+) -> dmc.Modal:
     cancel_button_id = f"{popup_id}--cancel-button"
     submit_button_id = f"{popup_id}--submit-button"
     name_input_id = f"{popup_id}--name-input"
@@ -22,10 +24,9 @@ def create_add_item_popup(popup_id: str, label: str, types: Sequence[str] | None
         State(name_input_id, "value"),
         State(type_select_id, "value"),
         State(description_input_id, "value"),
-        State(type_select_id, "display"),
         config_prevent_initial_callbacks=True,
     )
-    def init(add_action_data, name, type, description, display) -> Tuple[str, str | None, str]:
+    def init(add_action_data, name, type, description) -> Tuple[str, str | None, str]:
         if add_action_data["action"] == "init":
             return "", types[0] if types else None, ""
         return name, type, description
@@ -73,8 +74,10 @@ def create_add_item_popup(popup_id: str, label: str, types: Sequence[str] | None
             dmc.Select(
                 id=type_select_id,
                 label="Type",
-                value = types[0] if types else None,
-                data=[{"value": type, "label": type.capitalize()} for type in types] if types else [],
+                value=types[0] if types else None,
+                data=[{"value": type, "label": type.capitalize()} for type in types]
+                if types
+                else [],
                 display=None if types else "none",
             ),
             dmc.TextInput(

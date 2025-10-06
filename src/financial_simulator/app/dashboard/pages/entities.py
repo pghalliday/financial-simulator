@@ -45,14 +45,16 @@ def add_entity(add_action_data: Any):
         match add_action_data["type"]:
             case "individual":
                 entity = IndividualEntity(
-                    name=add_action_data["name"], description=add_action_data["description"]
+                    name=add_action_data["name"],
+                    description=add_action_data["description"],
                 )
             case "corporation":
                 entity = CorporationEntity(
-                    name=add_action_data["name"], description=add_action_data["description"]
+                    name=add_action_data["name"],
+                    description=add_action_data["description"],
                 )
             case _:
-                raise Exception(f"Unknown type: {add_action_data["type"]}")
+                raise Exception(f"Unknown type: {add_action_data['type']}")
         session.add(entity)
         session.commit()
         yield entity
@@ -70,9 +72,10 @@ def delete_entity(entity_id: UUID):
 
 layout = create_list(
     "entities",
-    "/entities",
+    "/entities/",
     "entity",
     ["individual", "corporation"],
+    "location",
     get_entities,
     add_entity,
     delete_entity,

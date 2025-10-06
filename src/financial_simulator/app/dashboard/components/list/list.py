@@ -1,5 +1,6 @@
 import logging
 from typing import Any, Sequence, Tuple
+from urllib.parse import urljoin
 from uuid import UUID
 
 import dash_mantine_components as dmc
@@ -22,6 +23,7 @@ def create_list(
     list_href: str,
     label: str,
     types: Sequence[str],
+    location_id: str,
     get_items_context,
     add_item_context,
     delete_item_context,
@@ -68,37 +70,41 @@ def create_list(
     @callback(
         Output(list_id, "children", allow_duplicate=True),
         Output(add_item_popup_id, "opened"),
+        Output(location_id, "href", allow_duplicate=True),
         Input(add_action_store_id, "data"),
+        State(location_id, "href"),
         config_prevent_initial_callbacks=True,
     )
-    def add_item(add_action_data: Any) -> Tuple[Patch, bool]:
+    def add_item(add_action_data: Any, location: str) -> Tuple[Patch, bool, str]:
         patch = Patch()
-        if add_action_data["action"] == "submit":
-            with add_item_context(add_action_data["data"]) as item:
-                patch.append(
-                    dmc.Box(
-                        [
-                            dcc.Store(
-                                id=create_item_data_store_id(str(item.id)),
-                                data={
-                                    "id": str(item.id),
-                                    "name": item.name,
-                                },
-                            ),
-                            create_list_item(
-                                list_href,
-                                item,
-                                create_delete_button_id(str(item.id)),
-                            ),
-                        ]
+        if add_action_data:
+            if add_action_data["action"] == "submit":
+                with add_item_context(add_action_data["data"]) as item:
+                    patch.append(
+                        dmc.Box(
+                            [
+                                dcc.Store(
+                                    id=create_item_data_store_id(str(item.id)),
+                                    data={
+                                        "id": str(item.id),
+                                        "name": item.name,
+                                    },
+                                ),
+                                create_list_item(
+                                    list_href,
+                                    item,
+                                    create_delete_button_id(str(item.id)),
+                                ),
+                            ]
+                        )
                     )
-                )
-            return patch, False
-        elif add_action_data["action"] == "cancel":
-            return patch, False
-        # the other action is "init", which should
-        # trigger displaying the popup
-        return patch, True
+                return patch, False, urljoin(list_href, str(item.id))
+            elif add_action_data["action"] == "cancel":
+                return patch, False, location
+            # the other action is "init", which should
+            # trigger displaying the popup
+            return patch, True, location
+        return patch, False, location
 
     @callback(
         Output(add_action_store_id, "data", allow_duplicate=True),

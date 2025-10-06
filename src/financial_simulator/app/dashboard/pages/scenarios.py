@@ -58,9 +58,10 @@ def delete_scenario(scenario_id: UUID):
 
 layout = create_list(
     "scenarios",
-    "/scenarios",
+    "/scenarios/",
     "scenario",
     None,
+    "location",
     get_scenarios,
     add_scenario,
     delete_scenario,

@@ -1,4 +1,5 @@
 import logging
+from urllib.parse import urljoin
 
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
@@ -10,7 +11,7 @@ def create_list_item(list_href: str, item, delete_button_id) -> dmc.Card:
     return dmc.Card(
         children=[
             dmc.Anchor(
-                href=f"{list_href}/{str(item.id)}",
+                href=urljoin(list_href, str(item.id)),
                 children=dmc.Text(str(item.name), fw="bold"),
             ),
             dmc.Text(str(item.type), size="sm") if hasattr(item, "type") else None,
