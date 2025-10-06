@@ -7,23 +7,37 @@ from dash import Input, Output, State, callback
 logger = logging.getLogger(__name__)
 
 
-def create_add_item_popup(
-    popup_id: str, label: str, types: Sequence[str] | None, action_store_id: str
-) -> dmc.Modal:
-    cancel_button_id = f"{popup_id}--cancel-button"
-    submit_button_id = f"{popup_id}--submit-button"
-    name_input_id = f"{popup_id}--name-input"
-    type_select_id = f"{popup_id}--type-select"
-    description_input_id = f"{popup_id}--description-input"
+def cancel_button_id(popup_id):
+    return f"{popup_id}--cancel-button"
 
+
+def submit_button_id(popup_id):
+    return f"{popup_id}--submit-button"
+
+
+def name_input_id(popup_id):
+    return f"{popup_id}--name-input"
+
+
+def type_select_id(popup_id):
+    return f"{popup_id}--type-select"
+
+
+def description_input_id(popup_id):
+    return f"{popup_id}--description-input"
+
+
+def create_add_item_popup_callbacks(
+    popup_id: str, types: Sequence[str] | None, action_store_id: str
+):
     @callback(
-        Output(name_input_id, "value"),
-        Output(type_select_id, "value"),
-        Output(description_input_id, "value"),
+        Output(name_input_id(popup_id), "value"),
+        Output(type_select_id(popup_id), "value"),
+        Output(description_input_id(popup_id), "value"),
         Input(action_store_id, "data"),
-        State(name_input_id, "value"),
-        State(type_select_id, "value"),
-        State(description_input_id, "value"),
+        State(name_input_id(popup_id), "value"),
+        State(type_select_id(popup_id), "value"),
+        State(description_input_id(popup_id), "value"),
         config_prevent_initial_callbacks=True,
     )
     def init(add_action_data, name, type, description) -> Tuple[str, str | None, str]:
@@ -33,7 +47,7 @@ def create_add_item_popup(
 
     @callback(
         Output(action_store_id, "data", allow_duplicate=True),
-        Input(cancel_button_id, "n_clicks"),
+        Input(cancel_button_id(popup_id), "n_clicks"),
         config_prevent_initial_callbacks=True,
     )
     def cancel(_n_clicks: int):
@@ -43,10 +57,10 @@ def create_add_item_popup(
 
     @callback(
         Output(action_store_id, "data", allow_duplicate=True),
-        Input(submit_button_id, "n_clicks"),
-        State(name_input_id, "value"),
-        State(type_select_id, "value"),
-        State(description_input_id, "value"),
+        Input(submit_button_id(popup_id), "n_clicks"),
+        State(name_input_id(popup_id), "value"),
+        State(type_select_id(popup_id), "value"),
+        State(description_input_id(popup_id), "value"),
         config_prevent_initial_callbacks=True,
     )
     def submit(_n_clicks: int, name: str, type: str | None, description: str):
@@ -59,12 +73,16 @@ def create_add_item_popup(
             },
         }
 
+
+def create_add_item_popup(
+    popup_id: str, label: str, types: Sequence[str] | None
+) -> dmc.Modal:
     return dmc.Modal(
         id=popup_id,
         title=dmc.Title(f"Add {label}", order=3),
         children=[
             dmc.TextInput(
-                id=name_input_id,
+                id=name_input_id(popup_id),
                 label="Name",
                 placeholder=f"{label.capitalize()} name",
                 description=f"Enter a name for the new {label}",
@@ -72,7 +90,7 @@ def create_add_item_popup(
                 required=True,
             ),
             dmc.Select(
-                id=type_select_id,
+                id=type_select_id(popup_id),
                 label="Type",
                 value=types[0] if types else None,
                 data=[{"value": type, "label": type.capitalize()} for type in types]
@@ -81,7 +99,7 @@ def create_add_item_popup(
                 display=None if types else "none",
             ),
             dmc.TextInput(
-                id=description_input_id,
+                id=description_input_id(popup_id),
                 label="Description",
                 placeholder=f"{label.capitalize()} description",
                 description=f"Enter a description for the new {label}",
@@ -92,13 +110,13 @@ def create_add_item_popup(
                 [
                     dmc.Button(
                         "Submit",
-                        id=submit_button_id,
+                        id=submit_button_id(popup_id),
                     ),
                     dmc.Button(
                         "Cancel",
                         color="red",
                         variant="outline",
-                        id=cancel_button_id,
+                        id=cancel_button_id(popup_id),
                     ),
                 ],
                 justify="flex-end",

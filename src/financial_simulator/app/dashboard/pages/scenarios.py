@@ -6,9 +6,18 @@ from uuid import UUID
 import dash
 from sqlalchemy.orm import Session
 
+from financial_simulator.app.dashboard.component_ids import (
+    LOCATION_ID,
+    SCENARIOS_LIST_ID,
+)
 from financial_simulator.app.dashboard.components.list import create_list
-from financial_simulator.app.dashboard.globals import get_engine
+from financial_simulator.app.dashboard.components.list.list import create_list_callbacks
+from financial_simulator.app.dashboard.globals import get_db_engine
 from financial_simulator.app.database.schema import Scenario
+
+SCENARIO_TYPES = None
+SCENARIO_LABEL = "scenario"
+SCENARIO_ROOT_HREF = "/scenarios/"
 
 logger = logging.getLogger(__name__)
 
@@ -31,13 +40,13 @@ dash.register_page(
 
 @contextmanager
 def get_scenarios():
-    with Session(get_engine()) as session:
+    with Session(get_db_engine()) as session:
         yield session.query(Scenario).all()
 
 
 @contextmanager
 def add_scenario(add_action_data: Any):
-    with Session(get_engine()) as session:
+    with Session(get_db_engine()) as session:
         scenario = Scenario(
             name=add_action_data["name"], description=add_action_data["description"]
         )
@@ -48,7 +57,7 @@ def add_scenario(add_action_data: Any):
 
 @contextmanager
 def delete_scenario(scenario_id: UUID):
-    with Session(get_engine()) as session:
+    with Session(get_db_engine()) as session:
         scenario = session.get(Scenario, scenario_id)
         if scenario is not None:
             session.delete(scenario)
@@ -56,13 +65,22 @@ def delete_scenario(scenario_id: UUID):
         yield scenario
 
 
-layout = create_list(
-    "scenarios",
-    "/scenarios/",
-    "scenario",
-    None,
-    "location",
-    get_scenarios,
+create_list_callbacks(
+    SCENARIOS_LIST_ID,
+    SCENARIO_ROOT_HREF,
+    SCENARIO_LABEL,
+    SCENARIO_TYPES,
+    LOCATION_ID,
     add_scenario,
     delete_scenario,
 )
+
+
+def layout():
+    return create_list(
+        SCENARIOS_LIST_ID,
+        SCENARIO_ROOT_HREF,
+        SCENARIO_LABEL,
+        SCENARIO_TYPES,
+        get_scenarios,
+    )

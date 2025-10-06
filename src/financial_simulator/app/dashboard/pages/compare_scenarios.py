@@ -2,10 +2,11 @@ import logging
 
 import dash
 import dash_mantine_components as dmc
-from dash import Input, Output, callback, dcc, html
+from dash import Input, Output, callback, dcc
 
 from financial_simulator.app.dashboard.components.scenario_selector import (
     create_scenario_selector,
+    create_scenario_selector_callbacks,
 )
 from financial_simulator.app.dummy_days import init_dummy_days
 from financial_simulator.lib.util.data import plot_account_balances
@@ -27,23 +28,6 @@ dash.register_page(
             {"label": "Home", "href": "/"},
         ],
     },
-)
-
-
-layout = html.Div(
-    [
-        create_scenario_selector(SCENARIO_SELECTOR),
-        dmc.Box(
-            children=[
-                dcc.Graph(
-                    id="current-account-balances",
-                ),
-                dcc.Graph(
-                    id="savings-account-balances",
-                ),
-            ]
-        ),
-    ]
 )
 
 
@@ -70,3 +54,24 @@ def initialize_charts(_0, _1):
         is_debit_account=True,
     )
     return current_account_balances_figure, savings_account_balances_figure
+
+
+create_scenario_selector_callbacks(SCENARIO_SELECTOR)
+
+
+def layout():
+    return dmc.Box(
+        [
+            create_scenario_selector(SCENARIO_SELECTOR),
+            dmc.Box(
+                children=[
+                    dcc.Graph(
+                        id="current-account-balances",
+                    ),
+                    dcc.Graph(
+                        id="savings-account-balances",
+                    ),
+                ]
+            ),
+        ]
+    )

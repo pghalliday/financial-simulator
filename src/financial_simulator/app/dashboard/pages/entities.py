@@ -6,13 +6,22 @@ from uuid import UUID
 import dash
 from sqlalchemy.orm import Session
 
+from financial_simulator.app.dashboard.component_ids import (
+    ENTITIES_LIST_ID,
+    LOCATION_ID,
+)
 from financial_simulator.app.dashboard.components.list import create_list
-from financial_simulator.app.dashboard.globals import get_engine
+from financial_simulator.app.dashboard.components.list.list import create_list_callbacks
+from financial_simulator.app.dashboard.globals import get_db_engine
 from financial_simulator.app.database.schema import (
     CorporationEntity,
     Entity,
     IndividualEntity,
 )
+
+ENTITY_TYPES = ["individual", "corporation"]
+ENTITY_LABEL = "entity"
+ENTITY_ROOT_HREF = "/entities/"
 
 logger = logging.getLogger(__name__)
 
@@ -35,13 +44,13 @@ dash.register_page(
 
 @contextmanager
 def get_entities():
-    with Session(get_engine()) as session:
+    with Session(get_db_engine()) as session:
         yield session.query(Entity).all()
 
 
 @contextmanager
 def add_entity(add_action_data: Any):
-    with Session(get_engine()) as session:
+    with Session(get_db_engine()) as session:
         match add_action_data["type"]:
             case "individual":
                 entity = IndividualEntity(
@@ -62,7 +71,7 @@ def add_entity(add_action_data: Any):
 
 @contextmanager
 def delete_entity(entity_id: UUID):
-    with Session(get_engine()) as session:
+    with Session(get_db_engine()) as session:
         entity = session.get(Entity, entity_id)
         if entity is not None:
             session.delete(entity)
@@ -70,13 +79,22 @@ def delete_entity(entity_id: UUID):
         yield entity
 
 
-layout = create_list(
-    "entities",
-    "/entities/",
-    "entity",
-    ["individual", "corporation"],
-    "location",
-    get_entities,
+create_list_callbacks(
+    ENTITIES_LIST_ID,
+    ENTITY_ROOT_HREF,
+    ENTITY_LABEL,
+    ENTITY_TYPES,
+    LOCATION_ID,
     add_entity,
     delete_entity,
 )
+
+
+def layout():
+    return create_list(
+        ENTITIES_LIST_ID,
+        ENTITY_ROOT_HREF,
+        ENTITY_LABEL,
+        ENTITY_TYPES,
+        get_entities,
+    )
