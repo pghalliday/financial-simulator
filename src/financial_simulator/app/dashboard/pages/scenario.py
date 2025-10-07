@@ -9,12 +9,20 @@ import dash_mantine_components as dmc
 from dash import Input, Output, State, callback, dcc
 from sqlalchemy.orm import Session
 
+from financial_simulator.app.dashboard.constants import (
+    COMPARE_SCENARIOS_HREF,
+    COMPARE_SCENARIOS_NAME,
+    SCENARIO_HREF_REGEX,
+    SCENARIO_HREF_TEMPLATE,
+    SCENARIO_NAME,
+    SCENARIOS_HREF,
+    SCENARIOS_NAME,
+    get_scenario_href,
+)
 from financial_simulator.app.dashboard.globals import get_db_engine
 from financial_simulator.app.database.schema import Scenario
 
 logger = logging.getLogger(__name__)
-
-SCENARIO_PATH_REGEX = r"/scenarios/([^/]+)"
 
 
 @contextmanager
@@ -24,7 +32,7 @@ def get_scenario(scenario_id: str):
 
 
 def format_title(scenario_name: str) -> str:
-    return f"Scenario - {scenario_name}"
+    return f"{SCENARIO_NAME} - {scenario_name}"
 
 
 def get_title(scenario_id: str) -> str:
@@ -33,7 +41,7 @@ def get_title(scenario_id: str) -> str:
 
 
 def match_path(path: str) -> str | None:
-    match = re.match(SCENARIO_PATH_REGEX, path)
+    match = re.match(SCENARIO_HREF_REGEX, path)
     if match:
         return match.group(1)
     return None
@@ -45,9 +53,9 @@ def header_data(scenario_id: str):
         return {
             "title": format_title(scenario_name),
             "breadcrumbs": [
-                {"label": "Home", "href": "/"},
-                {"label": "Scenarios", "href": "/scenarios"},
-                {"label": scenario_name, "href": f"/scenarios/{scenario_id}"},
+                {"label": COMPARE_SCENARIOS_NAME, "href": COMPARE_SCENARIOS_HREF},
+                {"label": SCENARIOS_NAME, "href": SCENARIOS_HREF},
+                {"label": scenario_name, "href": get_scenario_href(scenario_id)},
             ],
         }
 
@@ -55,8 +63,8 @@ def header_data(scenario_id: str):
 dash.register_page(
     __name__,
     exclude_from_navbar=True,
-    path_template="/scenarios/<scenario_id>",
-    name="Scenario",
+    path_template=SCENARIO_HREF_TEMPLATE,
+    name=SCENARIO_NAME,
     title=get_title,
     match_path=match_path,
     header_data=header_data,

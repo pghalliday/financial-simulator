@@ -8,10 +8,18 @@ import dash_mantine_components as dmc
 from dash import Input, Output, State, callback, dcc
 from sqlalchemy.orm import Session
 
+from financial_simulator.app.dashboard.constants import (
+    COMPARE_SCENARIOS_HREF,
+    COMPARE_SCENARIOS_NAME,
+    ENTITIES_HREF,
+    ENTITIES_NAME,
+    ENTITY_HREF_REGEX,
+    ENTITY_HREF_TEMPLATE,
+    ENTITY_NAME,
+    get_entity_href,
+)
 from financial_simulator.app.dashboard.globals import get_db_engine
 from financial_simulator.app.database.schema import Entity
-
-ENTITY_PATH_REGEX = r"/entities/([^/]+)"
 
 
 @contextmanager
@@ -26,7 +34,7 @@ def get_name(entity_id: str) -> str:
 
 
 def format_title(entity_name: str) -> str:
-    return f"Entity - {entity_name}"
+    return f"{ENTITY_NAME} - {entity_name}"
 
 
 def get_title(entity_id: str) -> str:
@@ -34,7 +42,7 @@ def get_title(entity_id: str) -> str:
 
 
 def match_path(path: str) -> str | None:
-    match = re.match(ENTITY_PATH_REGEX, path)
+    match = re.match(ENTITY_HREF_REGEX, path)
     if match:
         return match.group(1)
     return None
@@ -45,9 +53,9 @@ def header_data(entity_id: str):
     return {
         "title": format_title(entity_name),
         "breadcrumbs": [
-            {"label": "Home", "href": "/"},
-            {"label": "Entities", "href": "/entities"},
-            {"label": entity_name, "href": f"/entities/{entity_id}"},
+            {"label": COMPARE_SCENARIOS_NAME, "href": COMPARE_SCENARIOS_HREF},
+            {"label": ENTITIES_NAME, "href": ENTITIES_HREF},
+            {"label": entity_name, "href": get_entity_href(entity_id)},
         ],
     }
 
@@ -55,8 +63,8 @@ def header_data(entity_id: str):
 dash.register_page(
     __name__,
     exclude_from_navbar=True,
-    path_template="/entities/<entity_id>",
-    name="Entity",
+    path_template=ENTITY_HREF_TEMPLATE,
+    name=ENTITY_NAME,
     title=get_title,
     match_path=match_path,
     header_data=header_data,
@@ -104,7 +112,7 @@ def revert(_n_clicks: int, entity_id: str) -> Tuple[bool, bool, str, str]:
     config_prevent_initial_callbacks=True,
 )
 def save(
-        _n_clicks: int, entity_id: str, name: str, description: str
+    _n_clicks: int, entity_id: str, name: str, description: str
 ) -> Tuple[bool, bool]:
     with Session(get_db_engine()) as session:
         entity = session.get_one(Entity, UUID(entity_id))
@@ -112,6 +120,7 @@ def save(
         entity.description = description
         session.commit()
         return True, True
+
 
 def layout(entity_id=None):
     if entity_id is None:

@@ -4,28 +4,28 @@ import dash
 import dash_mantine_components as dmc
 from dash import Input, Output, callback, dcc
 
-from financial_simulator.app.dashboard.components.scenario_selector import (
-    create_scenario_selector,
-    create_scenario_selector_callbacks,
+import financial_simulator.app.dashboard.aio as aio
+from financial_simulator.app.dashboard.constants import (
+    COMPARE_SCENARIOS_HREF,
+    COMPARE_SCENARIOS_NAME,
+    COMPARE_SCENARIOS_SCENARIO_SELECTOR_ID,
 )
 from financial_simulator.app.dummy_days import init_dummy_days
 from financial_simulator.lib.util.data import plot_account_balances
-
-SCENARIO_SELECTOR = "scenario-selector"
 
 logger = logging.getLogger(__name__)
 
 dash.register_page(
     __name__,
     order=0,
-    path="/",
-    name="Compare scenarios",
-    title="Compare scenarios",
-    match_path=lambda path: path == "/",
+    path=COMPARE_SCENARIOS_HREF,
+    name=COMPARE_SCENARIOS_NAME,
+    title=COMPARE_SCENARIOS_NAME,
+    match_path=lambda path: path == COMPARE_SCENARIOS_HREF,
     header_data=lambda _: {
-        "title": "Compare scenarios",
+        "title": COMPARE_SCENARIOS_NAME,
         "breadcrumbs": [
-            {"label": "Home", "href": "/"},
+            {"label": COMPARE_SCENARIOS_NAME, "href": COMPARE_SCENARIOS_HREF},
         ],
     },
 )
@@ -56,13 +56,10 @@ def initialize_charts(_0, _1):
     return current_account_balances_figure, savings_account_balances_figure
 
 
-create_scenario_selector_callbacks(SCENARIO_SELECTOR)
-
-
 def layout():
     return dmc.Box(
         [
-            create_scenario_selector(SCENARIO_SELECTOR),
+            aio.ScenarioSelector(aio_id=COMPARE_SCENARIOS_SCENARIO_SELECTOR_ID),
             dmc.Box(
                 children=[
                     dcc.Graph(
