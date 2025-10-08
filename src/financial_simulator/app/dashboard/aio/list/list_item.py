@@ -27,7 +27,7 @@ def list_item_aio_id_creator(sub_component: str):
     return aio_id_creator("ListItemAIO", sub_component)
 
 
-class ListItem(dmc.Card):
+class ListItem(dmc.TableTr):
     class ids:
         list_item = list_item_aio_id_creator("list-item")
         delete_button = list_item_aio_id_creator("delete-button")
@@ -51,32 +51,35 @@ class ListItem(dmc.Card):
         super().__init__(
             id=self.ids.list_item(aio_id),
             children=[
-                html.Div(id=self.ids.dummy_output(aio_id)),
-                dcc.Store(
-                    id=self.ids.item_data_store(aio_id),
-                    data=ListItemData(
-                        name=name,
-                        to_delete_store_id=to_delete_store_id,
-                    ).model_dump()
+                dmc.TableTd(
+                    dmc.Anchor(
+                        href=href,
+                        children=dmc.Text(name, fw="bold"),
+                    ),
                 ),
-                dmc.Anchor(
-                    href=href,
-                    children=dmc.Text(name, fw="bold"),
-                ),
-                dmc.Text(item_type.label if item_type else None, size="sm"),
-                dmc.Text(description, size="sm", c="dimmed"),
-                dmc.Space(h=10),
-                dmc.Divider(),
-                dmc.Space(h=10),
-                dmc.Group(
-                    justify="flex-end",
-                    children=[
-                        dmc.ActionIcon(
-                            DashIconify(icon="zondicons:trash", width=100),
-                            id=self.ids.delete_button(aio_id),
-                            size="sm",
-                            n_clicks=0,
-                            variant="white",
+                dmc.TableTd(item_type.label) if item_type else None,
+                dmc.TableTd(description),
+                dmc.TableTd(
+                    [
+                        html.Div(id=self.ids.dummy_output(aio_id)),
+                        dcc.Store(
+                            id=self.ids.item_data_store(aio_id),
+                            data=ListItemData(
+                                name=name,
+                                to_delete_store_id=to_delete_store_id,
+                            ).model_dump(),
+                        ),
+                        dmc.Group(
+                            justify="flex-end",
+                            children=[
+                                dmc.ActionIcon(
+                                    DashIconify(icon="zondicons:trash", width=100),
+                                    id=self.ids.delete_button(aio_id),
+                                    size="sm",
+                                    n_clicks=0,
+                                    variant="transparent",
+                                ),
+                            ],
                         ),
                     ],
                 ),

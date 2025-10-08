@@ -11,7 +11,6 @@ from financial_simulator.app.dashboard.aio.list.list import ListItemData
 from financial_simulator.app.dashboard.constants import (
     COMPARE_SCENARIOS_HREF,
     COMPARE_SCENARIOS_NAME,
-    LOCATION_ID,
     SCENARIO_LABEL,
     SCENARIOS_HREF,
     SCENARIOS_LIST_ID,
@@ -105,5 +104,4 @@ def layout():
         aio_id=SCENARIOS_LIST_ID,
         label=SCENARIO_LABEL,
         items=items,
-        location_id=LOCATION_ID,
     )

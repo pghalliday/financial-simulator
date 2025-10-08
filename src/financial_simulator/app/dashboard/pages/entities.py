@@ -16,7 +16,6 @@ from financial_simulator.app.dashboard.constants import (
     ENTITIES_LIST_ID,
     ENTITIES_NAME,
     ENTITY_TYPES,
-    LOCATION_ID,
     EntityType,
     get_entity_href,
     get_entity_type,
@@ -122,5 +121,4 @@ def layout():
         label=ENTITIES_LABEL,
         items=items,
         types=ENTITY_TYPES,
-        location_id=LOCATION_ID,
     )
