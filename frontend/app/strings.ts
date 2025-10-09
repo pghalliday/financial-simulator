@@ -1,0 +1,12 @@
+export const APP_NAME = 'Financial Simulator';
+export const TITLE = (name: string) => `${APP_NAME} - ${name}`;
+export const COMPARE_SCENARIOS_NAME = 'Compare scenarios';
+export const COMPARE_SCENARIOS_HREF = '/';
+export const SCENARIOS_NAME = 'Scenarios';
+export const SCENARIOS_HREF = '/scenarios';
+export const ENTITIES_NAME = 'Entities';
+export const ENTITIES_HREF = '/entities';
+export const SCENARIO_NAME = (scenarioId: string) => `Scenario - ${scenarioId}`;
+export const SCENARIO_HREF = (scenarioId: string) => `${SCENARIOS_HREF}/${scenarioId}`;
+export const ENTITY_NAME = (entityId: string) => `Entity - ${entityId}`;
+export const ENTITY_HREF = (entityId: string) => `${ENTITIES_NAME}/${entityId}`;

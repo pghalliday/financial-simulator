@@ -7,6 +7,7 @@ from .dashboard import add_dashboard_command
 from .decrypt import add_decrypt_command
 from .encrypt import add_encrypt_command
 from .init import add_init_command
+from .server import add_server_command
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +24,7 @@ def cli():
     add_init_command(sub_parsers)
     add_encrypt_command(sub_parsers)
     add_decrypt_command(sub_parsers)
+    add_server_command(sub_parsers)
     add_dashboard_command(sub_parsers)
     args = parser.parse_args()
     if args.func is None:
