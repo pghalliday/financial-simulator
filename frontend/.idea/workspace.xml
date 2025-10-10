@@ -6,22 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="93565140-8846-4472-bdaf-36985489ef20" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/HeaderDataProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/HeaderDataProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/NavLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/NavLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/NavbarLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/NavbarLink.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/root.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/entities.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/entities.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/entity.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/entity.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/scenario.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/scenario.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/scenarios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/scenarios.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react-router.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/react-router.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/financial_simulator/app/server/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../src/financial_simulator/app/server/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/financial_simulator/app/server/globals.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/financial_simulator/app/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/../src/financial_simulator/app/server/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../uv.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../uv.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +69,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760022135007</updated>
-      <workItem from="1760022136773" duration="20026000" />
+      <workItem from="1760022136773" duration="21383000" />
     </task>
     <servers />
   </component>
