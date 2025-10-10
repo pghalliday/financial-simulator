@@ -5,20 +5,16 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.ext.orderinglist import ordering_list
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base, HasId, HasName
+from .base import HasId, HasName, db
 
 
-class LedgerAccountComponent(Base, HasId):
-    __tablename__ = "ledger_account_component"
-
+class LedgerAccountComponent(db.Model, HasId):
     ledger_account_id: Mapped[UUID] = mapped_column(ForeignKey("ledger_account.id"))
     position: Mapped[int]
     name: Mapped[str]
 
 
-class LedgerAccount(Base, HasId, HasName):
-    __tablename__ = "ledger_account"
-
+class LedgerAccount(db.Model, HasId, HasName):
     components: Mapped[List[LedgerAccountComponent]] = relationship(
         order_by="LedgerAccountComponent.position",
         collection_class=ordering_list("position"),

@@ -1,4 +1,4 @@
-import { type RouteConfig, index, route } from "@react-router/dev/routes";
+import {index, route, type RouteConfig} from "@react-router/dev/routes";
 import {ENTITIES_HREF, ENTITY_HREF, SCENARIO_HREF, SCENARIOS_HREF} from "./strings";
 
 export default [

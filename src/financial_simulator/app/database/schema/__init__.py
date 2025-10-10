@@ -1,5 +1,5 @@
 from .bank_account import BankAccount
-from .base import Base, HasId, HasName
+from .base import Base, HasId, HasName, db
 from .entity import CorporationEntity, Entity, IndividualEntity
 from .ledger_account import LedgerAccount
 from .provider import Provider
@@ -9,6 +9,7 @@ from .schedule import Schedule
 from .value import DecimalValue, RateValue, Value
 
 __all__ = [
+    "db",
     "Base",
     "HasId",
     "HasName",

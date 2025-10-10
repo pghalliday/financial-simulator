@@ -5,14 +5,12 @@ from uuid import UUID
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from financial_simulator.app.database.schema.base import Base, HasId
+from financial_simulator.app.database.schema.base import HasId, db
 
 from .rate import Rate
 
 
-class BandedRateBand(Base, HasId):
-    __tablename__ = "banded_rate_band"
-
+class BandedRateBand(db.Model, HasId):
     banded_rate_id: Mapped[UUID] = mapped_column(ForeignKey("banded_rate.id"))
     lower_bound: Mapped[Decimal] = mapped_column()
     size: Mapped[Optional[Decimal]] = mapped_column()
@@ -20,8 +18,6 @@ class BandedRateBand(Base, HasId):
 
 
 class BandedRate(Rate):
-    __tablename__ = "banded_rate"
-
     id: Mapped[UUID] = mapped_column(ForeignKey("rate.id"), primary_key=True)
 
     bands: Mapped[List[BandedRateBand]] = relationship()

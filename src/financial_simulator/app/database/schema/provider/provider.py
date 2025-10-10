@@ -1,9 +1,12 @@
-from financial_simulator.app.database.schema.base import Base, HasId, HasName, HasType
+from financial_simulator.app.database.schema.base import (
+    HasId,
+    HasName,
+    HasType,
+    db,
+)
 
 
-class Provider(Base, HasId, HasName, HasType):
-    __tablename__ = "provider"
-
+class Provider(db.Model, HasId, HasName, HasType):
     __mapper_args__ = {
         "polymorphic_identity": "provider",
         "polymorphic_on": "type",

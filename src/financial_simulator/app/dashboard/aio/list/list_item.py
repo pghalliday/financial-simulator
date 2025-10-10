@@ -19,9 +19,11 @@ class ListItemData(BaseModel):
     name: str
     to_delete_store_id: Any
 
+
 class ListItemToDeleteData(BaseModel):
     id: str
     name: str
+
 
 def list_item_aio_id_creator(sub_component: str):
     return aio_id_creator("ListItemAIO", sub_component)

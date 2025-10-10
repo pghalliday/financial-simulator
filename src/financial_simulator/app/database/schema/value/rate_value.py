@@ -9,8 +9,6 @@ from .value import Value
 
 
 class RateValue(Value):
-    __tablename__ = "rate_value"
-
     id: Mapped[UUID] = mapped_column(ForeignKey("value.id"), primary_key=True)
     rate_id: Mapped[UUID] = mapped_column(ForeignKey("rate.id"))
 

@@ -1,17 +1,18 @@
-import { AppShell, Burger, Group, Stack, Title, Breadcrumbs, Anchor } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import {Anchor, AppShell, Breadcrumbs, Burger, Group, Stack, Title} from '@mantine/core';
+import {useDisclosure} from '@mantine/hooks';
 import {NavbarLink} from "~/components/NavbarLink";
 import {useHeaderData} from "~/components/HeaderDataProvider";
 import {
     COMPARE_SCENARIOS_HREF,
     COMPARE_SCENARIOS_NAME,
-    ENTITIES_HREF, ENTITIES_NAME,
+    ENTITIES_HREF,
+    ENTITIES_NAME,
     SCENARIOS_HREF,
     SCENARIOS_NAME
 } from "~/strings";
 
-export function NavLayout({ children }: { children: React.ReactNode }) {
-    const [opened, { toggle, close }] = useDisclosure();
+export function NavLayout({children}: { children: React.ReactNode }) {
+    const [opened, {toggle, close}] = useDisclosure();
     const [headerData] = useHeaderData();
 
     const breadcrumbs = headerData.breadcrumbs.map(breadcrumb => (
@@ -23,11 +24,11 @@ export function NavLayout({ children }: { children: React.ReactNode }) {
     return (
         <AppShell
             padding="md"
-            header={{ height: 60 }}
+            header={{height: 60}}
             navbar={{
                 width: 100,
                 breakpoint: 'xs',
-                collapsed: { mobile: !opened },
+                collapsed: {mobile: !opened},
             }}
         >
             <AppShell.Header>

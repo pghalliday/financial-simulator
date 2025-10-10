@@ -1,9 +1,12 @@
-from financial_simulator.app.database.schema.base import Base, HasId, HasName, HasType
+from financial_simulator.app.database.schema.base import (
+    HasId,
+    HasName,
+    HasType,
+    db,
+)
 
 
-class Rate(Base, HasId, HasName, HasType):
-    __tablename__ = "rate"
-
+class Rate(db.Model, HasId, HasName, HasType):
     __mapper_args__ = {
         "polymorphic_identity": "rate",
         "polymorphic_on": "type",
