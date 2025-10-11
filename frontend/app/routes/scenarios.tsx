@@ -1,14 +1,21 @@
 import {useEffect} from "react";
+import {useLoaderData} from "react-router";
 import type {Route} from "./+types/scenarios";
 import {useHeaderData} from "~/components/HeaderDataProvider";
 import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_NAME, SCENARIOS_HREF, SCENARIOS_NAME, TITLE} from "~/strings";
+import {getScenariosScenariosGet} from "~/client"
 
 export async function clientLoader({params}: Route.LoaderArgs) {
-    //                           ^? { scenarioId: string }
+    const response = await getScenariosScenariosGet()
+    if (response.data) {
+        return response.data
+    }
+    throw response.error
 }
 
 export default function Scenarios({params}: Route.ComponentProps) {
     const [_, setHeaderData] = useHeaderData();
+    const scenarios = useLoaderData<typeof clientLoader>()
 
     const description = SCENARIOS_NAME
     const title = TITLE(description)
@@ -33,6 +40,6 @@ export default function Scenarios({params}: Route.ComponentProps) {
         <title>{title}</title>
         <meta property="og:title" content={title}/>
         <meta property="description" content={description}/>
-        {description}
+        {scenarios.map(scenario => scenario.name)}
     </>
 }

@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93565140-8846-4472-bdaf-36985489ef20" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/environment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/globals.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/scenarios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/scenarios.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +73,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760022135007</updated>
-      <workItem from="1760022136773" duration="22295000" />
+      <workItem from="1760022136773" duration="24604000" />
     </task>
     <servers />
   </component>
