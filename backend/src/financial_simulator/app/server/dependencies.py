@@ -1,8 +1,6 @@
 import os
-from typing import Annotated
 from pathlib import Path
 
-from fastapi import Depends
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
@@ -14,5 +12,3 @@ db_engine = create_engine("sqlite:///" + str(db_path))
 def get_db_session():
     with Session(db_engine) as session:
         yield session
-
-DBSessionDependency = Annotated[Session, Depends(get_db_session)]
