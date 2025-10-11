@@ -4,17 +4,17 @@ from uuid import UUID
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from financial_simulator.app.database.schema.base import db
-
-from .entity import Entity
+from ..entity import Entity
 
 if TYPE_CHECKING:
-    from financial_simulator.app.database.schema.bank_account import BankAccount
+    from ...bank_account import BankAccount
 else:
     BankAccount = "BankAccount"
 
 
 class CorporationEntity(Entity):
+    __tablename__ = "corporation_entity"
+
     id: Mapped[UUID] = mapped_column(ForeignKey("entity.id"), primary_key=True)
 
     bank_accounts: Mapped[List[BankAccount]] = relationship(
@@ -25,10 +25,3 @@ class CorporationEntity(Entity):
     __mapper_args__ = {"polymorphic_identity": "corporation_entity"}
 
 
-class CorporationEntityBankAccount(db.Model):
-    corporation_entity_id: Mapped[UUID] = mapped_column(
-        ForeignKey("corporation_entity.id"), primary_key=True
-    )
-    bank_account_id: Mapped[UUID] = mapped_column(
-        ForeignKey("bank_account.id"), primary_key=True
-    )

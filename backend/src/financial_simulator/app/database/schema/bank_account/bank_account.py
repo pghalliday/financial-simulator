@@ -4,32 +4,34 @@ from uuid import UUID
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import HasId, HasName, db
-from .ledger_account import LedgerAccount
-from .provider import Provider
-from .schedule import Schedule
+from ..base import Base, HasId, HasName
+from ..ledger_account import LedgerAccount
+from ..provider import Provider
+from ..schedule import Schedule
 
 if TYPE_CHECKING:
-    from .entity import CorporationEntity, IndividualEntity
+    from ..entity import CorporationEntity, IndividualEntity
 else:
     IndividualEntity = "IndividualEntity"
     CorporationEntity = "CorporationEntity"
 
 
-class BankAccount(db.Model, HasId, HasName):
-    asset_account: Mapped[LedgerAccount] = mapped_column(
+class BankAccount(Base, HasId, HasName):
+    __tablename__ = "bank_account"
+
+    asset_account_id: Mapped[UUID] = mapped_column(
         ForeignKey("ledger_account.id")
     )
-    interest_income_account: Mapped[LedgerAccount] = mapped_column(
+    interest_income_account_id: Mapped[UUID] = mapped_column(
         ForeignKey("ledger_account.id")
     )
-    interest_receivable_account: Mapped[LedgerAccount] = mapped_column(
+    interest_receivable_account_id: Mapped[UUID] = mapped_column(
         ForeignKey("ledger_account.id")
     )
-    fee_expenses_account: Mapped[LedgerAccount] = mapped_column(
+    fee_expenses_account_id: Mapped[UUID] = mapped_column(
         ForeignKey("ledger_account.id")
     )
-    fees_payable_account: Mapped[LedgerAccount] = mapped_column(
+    fees_payable_account_id: Mapped[UUID] = mapped_column(
         ForeignKey("ledger_account.id")
     )
     fees_provider_id: Mapped[UUID] = mapped_column(ForeignKey("provider.id"))
@@ -39,6 +41,21 @@ class BankAccount(db.Model, HasId, HasName):
         ForeignKey("schedule.id")
     )
 
+    asset_account: Mapped[LedgerAccount] = relationship(
+        foreign_keys="BankAccount.asset_account_id",
+    )
+    interest_income_account: Mapped[LedgerAccount] = relationship(
+        foreign_keys="BankAccount.interest_income_account_id",
+    )
+    interest_receivable_account: Mapped[LedgerAccount] = relationship(
+        foreign_keys="BankAccount.interest_receivable_account_id",
+    )
+    fee_expenses_account: Mapped[LedgerAccount] = relationship(
+        foreign_keys="BankAccount.fee_expenses_account_id",
+    )
+    fees_payable_account: Mapped[LedgerAccount] = relationship(
+        foreign_keys="BankAccount.fees_payable_account_id",
+    )
     fees_provider: Mapped[Provider] = relationship(
         foreign_keys="BankAccount.fees_provider_id"
     )

@@ -1,32 +1,33 @@
 import logging
+from typing import Sequence
 
-from flask import Flask
+import uvicorn
+from fastapi import FastAPI
+from sqlalchemy import select
 
 from financial_simulator.app.config import Config
-from financial_simulator.app.database.schema import Scenario, db
+from financial_simulator.app.database.schema import Scenario
+from financial_simulator.app.server.globals import (
+    init_globals,
+    DBSessionDependency,
+)
 
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello World"}
 
 
-@app.route("/scenarios")
-def scenarios_list():
-    scenarios = db.session.execute(db.select(Scenario).order_by(Scenario.name)).scalars()
+@app.get("/scenarios")
+def scenarios_list(session: DBSessionDependency) -> Sequence[str]:
+    scenarios = session.execute(select(Scenario).order_by(Scenario.name)).scalars()
     logger.info(scenarios)
     return [scenario.name for scenario in scenarios]
 
 
 def start_server(config: Config):
-    # need to use the absolute path to stop flask-alchemy
-    # creating a new file under `src/instance/`
-    db_path = config.database.sqlite_file.absolute()
-    logger.info(db_path)
-    app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path}"
-    db.init_app(app)
-    # Create tables if they don't already exist
-    # TODO: do we really want to do this?
-    #  We have a different way to dela with migrations
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+    init_globals(config)
+    uvicorn.run(app, port=5000)

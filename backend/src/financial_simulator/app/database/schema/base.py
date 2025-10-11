@@ -1,6 +1,5 @@
 from uuid import UUID, uuid4
 
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
@@ -28,6 +27,3 @@ class HasName:
 
 class HasType:
     type: Mapped[str] = mapped_column()
-
-
-db = SQLAlchemy(model_class=Base)
