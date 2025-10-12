@@ -2,11 +2,9 @@ import logging
 from typing import Sequence, Annotated, Optional
 from uuid import UUID
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
 from fastapi.params import Depends
-from sqlalchemy.exc import IntegrityError
 
 from financial_simulator.app.database.schema import Scenario
 from pydantic import BaseModel
@@ -14,6 +12,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from ..dependencies import get_db_session
+from ..errors import HTTPIntegrityError, HTTPNotFoundError, NotFoundError
 
 logger = logging.getLogger(__name__)
 
@@ -37,13 +36,6 @@ class ScenarioGet(BaseModel):
     name: str
     description: str
 
-class ScenarioNotFound(BaseModel):
-    id: UUID
-
-class ScenarioAlreadyExists(BaseModel):
-    name: str
-
-
 @router.get(
     "/",
     response_model=Sequence[ScenarioGet],
@@ -60,16 +52,13 @@ async def get_scenarios(session: DBSessionDependency):
     "/{scenario_id}",
     response_model=ScenarioGet,
     responses={
-        404: {"model": ScenarioNotFound, "description": "Scenario not found"},
+        404: {"model": HTTPNotFoundError, "description": "Not found"},
     },
 )
 async def get_scenario(scenario_id: UUID, session: DBSessionDependency):
     scenario = session.get(Scenario, scenario_id)
     if not scenario:
-        return JSONResponse(
-            status_code=404,
-            content=jsonable_encoder(ScenarioNotFound(id=scenario_id)),
-        )
+        raise HTTPException(status_code=404, detail=jsonable_encoder(NotFoundError(id=scenario_id)))
     return ScenarioGet(
         id=scenario.id,
         name=scenario.name,
@@ -80,22 +69,16 @@ async def get_scenario(scenario_id: UUID, session: DBSessionDependency):
     "/",
     response_model=ScenarioGet,
     responses={
-        409: {"model": ScenarioAlreadyExists, "description": "Scenario already exists"},
+        409: {"model": HTTPIntegrityError, "description": "Database integrity error"},
     },
 )
 async def post_scenario(scenario_post: ScenarioPost, session: DBSessionDependency):
-    try:
-        scenario = Scenario(
-            name=scenario_post.name,
-            description=scenario_post.description,
-        )
-        session.add(scenario)
-        session.commit()
-    except IntegrityError:
-        return JSONResponse(
-            status_code=409,
-            content=jsonable_encoder(ScenarioAlreadyExists(name=scenario_post.name)),
-        )
+    scenario = Scenario(
+        name=scenario_post.name,
+        description=scenario_post.description,
+    )
+    session.add(scenario)
+    session.commit()
     return ScenarioGet(
         id=scenario.id,
         name=scenario.name,
@@ -106,23 +89,17 @@ async def post_scenario(scenario_post: ScenarioPost, session: DBSessionDependenc
     "/{scenario_id}",
     response_model=ScenarioGet,
     responses={
-        409: {"model": ScenarioAlreadyExists, "description": "Scenario already exists"},
+        409: {"model": HTTPIntegrityError, "description": "Database integrity error"},
     },
 )
 async def put_scenario(scenario_id: UUID, scenario_post: ScenarioPost, session: DBSessionDependency):
-    try:
-        scenario = Scenario(
-            id=scenario_id,
-            name=scenario_post.name,
-            description=scenario_post.description,
-        )
-        merged = session.merge(scenario)
-        session.commit()
-    except IntegrityError:
-        return JSONResponse(
-            status_code=409,
-            content=jsonable_encoder(ScenarioAlreadyExists(name=scenario_post.name)),
-        )
+    scenario = Scenario(
+        id=scenario_id,
+        name=scenario_post.name,
+        description=scenario_post.description,
+    )
+    merged = session.merge(scenario)
+    session.commit()
     return ScenarioGet(
         id=merged.id,
         name=merged.name,
@@ -133,28 +110,18 @@ async def put_scenario(scenario_id: UUID, scenario_post: ScenarioPost, session: 
     "/{scenario_id}",
     response_model=ScenarioGet,
     responses={
-        404: {"model": ScenarioNotFound, "description": "Scenario not found"},
-        409: {"model": ScenarioAlreadyExists, "description": "Scenario already exists"}
+        404: {"model": HTTPNotFoundError, "description": "Not found"},
+        409: {"model": HTTPIntegrityError, "description": "Database integrity error"},
     },
 )
 async def patch_scenario(scenario_id: UUID, scenario_patch: ScenarioPatch, session: DBSessionDependency):
-    try:
-        scenario = session.get(Scenario, scenario_id)
-        if not scenario:
-            return JSONResponse(
-                status_code=404,
-                content=jsonable_encoder(ScenarioNotFound(id=scenario_id)),
-            )
-        if scenario_patch.name:
-            scenario.name = scenario_patch.name
-        if scenario_patch.description:
-            scenario.description = scenario_patch.description
-        session.commit()
-    except IntegrityError:
-        return JSONResponse(
-            status_code=409,
-            content=jsonable_encoder(ScenarioAlreadyExists(name=scenario_patch.name)),
-        )
+    scenario = session.get(Scenario, scenario_id)
+    if not scenario:
+        raise HTTPException(status_code=404, detail=jsonable_encoder(NotFoundError(id=scenario_id)))
+    updated_data = scenario_patch.model_dump(exclude_unset=True)
+    for key, value in updated_data.items():
+        setattr(scenario, key, value)
+    session.commit()
     return ScenarioGet(
         id=scenario.id,
         name=scenario.name,
