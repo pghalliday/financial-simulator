@@ -1,5 +1,5 @@
 from .bank_account import BankAccount
-from .base import Base, HasId, HasName
+from .base import Base, HasId, HasName, HasType
 from .entity import CorporationEntity, Entity, IndividualEntity, CorporationEntityBankAccount, IndividualEntityBankAccount
 from .ledger_account import LedgerAccount, LedgerAccountComponent
 from .provider import Provider
@@ -12,6 +12,7 @@ __all__ = [
     "Base",
     "HasId",
     "HasName",
+    "HasType",
     "Scenario",
     "Entity",
     "ScenarioEntity",
