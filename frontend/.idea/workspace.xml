@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93565140-8846-4472-bdaf-36985489ef20" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/components/AddItemModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/ConfirmDeleteModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/ItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ItemList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/entities.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/entities.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/scenarios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/scenarios.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +20,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -37,7 +42,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;react&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/pghalliday/projects/github/pghalliday/financial-simulator/frontend/app/routes&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/pghalliday/projects/github/pghalliday/financial-simulator/frontend/app/components&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -49,6 +54,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/components" />
       <recent name="$PROJECT_DIR$/app/routes" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -69,7 +75,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760022135007</updated>
-      <workItem from="1760022136773" duration="44476000" />
+      <workItem from="1760022136773" duration="50427000" />
     </task>
     <servers />
   </component>

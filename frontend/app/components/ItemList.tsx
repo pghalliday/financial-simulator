@@ -8,10 +8,12 @@ interface Item {
     type?: string
 }
 
-export function ItemList({items, types, href}: {
+export function ItemList({items, types, href, onAdd, onDelete}: {
     items: Item[],
     types?: Record<string, string>,
-    href: (id: string) => string
+    href: (id: string) => string,
+    onAdd: () => void,
+    onDelete: (id: string, name: string) => void,
 }) {
     function TypeH() {
         if (types === undefined) {
@@ -36,7 +38,11 @@ export function ItemList({items, types, href}: {
             <Table.Td>{item.description}</Table.Td>
             <Table.Td>
                 <Group justify="center">
-                    <ActionIcon variant="transparent" size="sm">
+                    <ActionIcon
+                        variant="transparent"
+                        size="sm"
+                        onClick={() => onDelete(item.id, item.name)}
+                    >
                         <IconTrash/>
                     </ActionIcon>
                 </Group>
@@ -52,7 +58,11 @@ export function ItemList({items, types, href}: {
                     <Table.Th>Description</Table.Th>
                     <Table.Th>
                         <Group justify="center">
-                            <ActionIcon variant="transparent" size="sm">
+                            <ActionIcon
+                                variant="transparent"
+                                size="sm"
+                                onClick={onAdd}
+                            >
                                 <IconCirclePlus/>
                             </ActionIcon>
                         </Group>

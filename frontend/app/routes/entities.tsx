@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import type {Route} from "./+types/entities";
 import {useHeaderData} from "~/components/HeaderDataProvider";
 import {
@@ -14,6 +14,9 @@ import {getItemsEntitiesGet} from "~/client";
 import {ApiError} from "~/ApiError";
 import {useLoaderData} from "react-router";
 import {ItemList} from "~/components/ItemList";
+import {AddItemModal} from "~/components/AddItemModal";
+import {useDisclosure} from "@mantine/hooks";
+import {ConfirmDeleteModal} from "~/components/ConfirmDeleteModal";
 
 export async function clientLoader({params}: Route.LoaderArgs) {
     const response = await getItemsEntitiesGet()
@@ -26,6 +29,9 @@ export async function clientLoader({params}: Route.LoaderArgs) {
 export default function Entities({params}: Route.ComponentProps) {
     const [_, setHeaderData] = useHeaderData();
     const entities = useLoaderData<typeof clientLoader>()
+    const [addItemOpened, {open: openAddItem, close: closeAddItem}] = useDisclosure()
+    const [confirmDeleteOpened, {open: openConfirmDelete, close: closeConfirmDelete}] = useDisclosure()
+    const [toDelete, setToDelete] = useState<string>("scenario name")
 
     const description = ENTITIES_NAME
     const title = TITLE(description)
@@ -50,6 +56,29 @@ export default function Entities({params}: Route.ComponentProps) {
         <title>{title}</title>
         <meta property="og:title" content={title}/>
         <meta property="description" content={description}/>
-        <ItemList items={entities} types={ENTITY_TYPES} href={ENTITY_HREF}/>
+        <AddItemModal
+            opened={addItemOpened}
+            onCancel={closeAddItem}
+            onSubmit={closeAddItem}
+            label="entity"
+            types={ENTITY_TYPES}
+        />
+        <ConfirmDeleteModal
+            opened={confirmDeleteOpened}
+            onCancel={closeConfirmDelete}
+            onConfirm={closeConfirmDelete}
+            label="entity"
+            name={toDelete}
+        />
+        <ItemList
+            items={entities}
+            types={ENTITY_TYPES}
+            href={ENTITY_HREF}
+            onAdd={openAddItem}
+            onDelete={(id, name) => {
+                setToDelete(name);
+                openConfirmDelete();
+            }}
+        />
     </>
 }

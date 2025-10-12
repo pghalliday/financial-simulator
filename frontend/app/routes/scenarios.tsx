@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useLoaderData} from "react-router";
 import type {Route} from "./+types/scenarios";
 import {useHeaderData} from "~/components/HeaderDataProvider";
@@ -13,6 +13,9 @@ import {
 import {getItemsScenariosGet} from "~/client"
 import {ItemList} from "~/components/ItemList";
 import {ApiError} from "~/ApiError";
+import {useDisclosure} from "@mantine/hooks";
+import {AddItemModal} from "~/components/AddItemModal";
+import {ConfirmDeleteModal} from "~/components/ConfirmDeleteModal";
 
 export async function clientLoader({params}: Route.LoaderArgs) {
     const response = await getItemsScenariosGet()
@@ -25,6 +28,9 @@ export async function clientLoader({params}: Route.LoaderArgs) {
 export default function Scenarios({params}: Route.ComponentProps) {
     const [_, setHeaderData] = useHeaderData();
     const scenarios = useLoaderData<typeof clientLoader>()
+    const [addItemOpened, {open: openAddItem, close: closeAddItem}] = useDisclosure()
+    const [confirmDeleteOpened, {open: openConfirmDelete, close: closeConfirmDelete}] = useDisclosure()
+    const [toDelete, setToDelete] = useState<string>("scenario name")
 
     const description = SCENARIOS_NAME
     const title = TITLE(description)
@@ -49,6 +55,27 @@ export default function Scenarios({params}: Route.ComponentProps) {
         <title>{title}</title>
         <meta property="og:title" content={title}/>
         <meta property="description" content={description}/>
-        <ItemList items={scenarios} href={SCENARIO_HREF}/>
+        <AddItemModal
+            opened={addItemOpened}
+            onCancel={closeAddItem}
+            onSubmit={closeAddItem}
+            label="scenario"
+        />
+        <ConfirmDeleteModal
+            opened={confirmDeleteOpened}
+            onCancel={closeConfirmDelete}
+            onConfirm={closeConfirmDelete}
+            label="scenario"
+            name={toDelete}
+        />
+        <ItemList
+            items={scenarios}
+            href={SCENARIO_HREF}
+            onAdd={openAddItem}
+            onDelete={(id, name) => {
+                setToDelete(name);
+                openConfirmDelete();
+            }}
+        />
     </>
 }
