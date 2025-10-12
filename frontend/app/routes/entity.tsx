@@ -10,15 +10,25 @@ import {
     ENTITY_NAME,
     TITLE
 } from "~/strings";
+import {getItemEntitiesItemIdGet} from "~/client";
+import {ApiError} from "~/ApiError";
+import {useLoaderData} from "react-router";
 
 export async function clientLoader({params}: Route.LoaderArgs) {
-    //                           ^? { entityId: string }
+    const response = await getItemEntitiesItemIdGet({
+        path: {item_id: params.entityId},
+    });
+    if (response.data !== undefined) {
+        return response.data
+    }
+    throw new ApiError(response.response.status, response.response.statusText, response.error)
 }
 
 export default function Entity({params}: Route.ComponentProps) {
     const [_, setHeaderData] = useHeaderData();
+    const entity = useLoaderData<typeof clientLoader>()
 
-    const description = ENTITY_NAME(params.entityId)
+    const description = ENTITY_NAME(entity.name)
     const title = TITLE(description)
 
     useEffect(() => {
@@ -34,8 +44,8 @@ export default function Entity({params}: Route.ComponentProps) {
                     href: ENTITIES_HREF,
                 },
                 {
-                    title: params.entityId,
-                    href: ENTITY_HREF(params.entityId),
+                    title: entity.name,
+                    href: ENTITY_HREF(entity.id),
                 },
             ],
         });
@@ -45,6 +55,6 @@ export default function Entity({params}: Route.ComponentProps) {
         <title>{title}</title>
         <meta property="og:title" content={title}/>
         <meta property="description" content={description}/>
-        {description}
+        {entity.name}
     </>
 }

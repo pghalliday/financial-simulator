@@ -1,14 +1,31 @@
 import {useEffect} from "react";
 import type {Route} from "./+types/entities";
 import {useHeaderData} from "~/components/HeaderDataProvider";
-import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_NAME, ENTITIES_HREF, ENTITIES_NAME, TITLE} from "~/strings";
+import {
+    COMPARE_SCENARIOS_HREF,
+    COMPARE_SCENARIOS_NAME,
+    ENTITIES_HREF,
+    ENTITIES_NAME,
+    ENTITY_HREF,
+    ENTITY_TYPES,
+    TITLE
+} from "~/strings";
+import {getItemsEntitiesGet} from "~/client";
+import {ApiError} from "~/ApiError";
+import {useLoaderData} from "react-router";
+import {ItemList} from "~/components/ItemList";
 
 export async function clientLoader({params}: Route.LoaderArgs) {
-    //                           ^? { scenarioId: string }
+    const response = await getItemsEntitiesGet()
+    if (response.data !== undefined) {
+        return response.data
+    }
+    throw new ApiError(response.response.status, response.response.statusText, response.error)
 }
 
 export default function Entities({params}: Route.ComponentProps) {
     const [_, setHeaderData] = useHeaderData();
+    const entities = useLoaderData<typeof clientLoader>()
 
     const description = ENTITIES_NAME
     const title = TITLE(description)
@@ -33,6 +50,6 @@ export default function Entities({params}: Route.ComponentProps) {
         <title>{title}</title>
         <meta property="og:title" content={title}/>
         <meta property="description" content={description}/>
-        {description}
+        <ItemList items={entities} types={ENTITY_TYPES} href={ENTITY_HREF}/>
     </>
 }

@@ -3,20 +3,40 @@
 import type {Client, Options as Options2, TDataShape} from './client';
 import {client} from './client.gen';
 import type {
-    GetScenarioScenariosScenarioIdGetData,
-    GetScenarioScenariosScenarioIdGetErrors,
-    GetScenarioScenariosScenarioIdGetResponses,
-    GetScenariosScenariosGetData,
-    GetScenariosScenariosGetResponses,
-    PatchScenarioScenariosScenarioIdPatchData,
-    PatchScenarioScenariosScenarioIdPatchErrors,
-    PatchScenarioScenariosScenarioIdPatchResponses,
-    PostScenarioScenariosPostData,
-    PostScenarioScenariosPostErrors,
-    PostScenarioScenariosPostResponses,
-    PutScenarioScenariosScenarioIdPutData,
-    PutScenarioScenariosScenarioIdPutErrors,
-    PutScenarioScenariosScenarioIdPutResponses
+    DeleteItemEntitiesItemIdDeleteData,
+    DeleteItemEntitiesItemIdDeleteErrors,
+    DeleteItemEntitiesItemIdDeleteResponses,
+    DeleteItemScenariosItemIdDeleteData,
+    DeleteItemScenariosItemIdDeleteErrors,
+    DeleteItemScenariosItemIdDeleteResponses,
+    GetItemEntitiesItemIdGetData,
+    GetItemEntitiesItemIdGetErrors,
+    GetItemEntitiesItemIdGetResponses,
+    GetItemScenariosItemIdGetData,
+    GetItemScenariosItemIdGetErrors,
+    GetItemScenariosItemIdGetResponses,
+    GetItemsEntitiesGetData,
+    GetItemsEntitiesGetResponses,
+    GetItemsScenariosGetData,
+    GetItemsScenariosGetResponses,
+    PatchItemEntitiesItemIdPatchData,
+    PatchItemEntitiesItemIdPatchErrors,
+    PatchItemEntitiesItemIdPatchResponses,
+    PatchItemScenariosItemIdPatchData,
+    PatchItemScenariosItemIdPatchErrors,
+    PatchItemScenariosItemIdPatchResponses,
+    PostItemEntitiesPostData,
+    PostItemEntitiesPostErrors,
+    PostItemEntitiesPostResponses,
+    PostItemScenariosPostData,
+    PostItemScenariosPostErrors,
+    PostItemScenariosPostResponses,
+    PutItemEntitiesItemIdPutData,
+    PutItemEntitiesItemIdPutErrors,
+    PutItemEntitiesItemIdPutResponses,
+    PutItemScenariosItemIdPutData,
+    PutItemScenariosItemIdPutErrors,
+    PutItemScenariosItemIdPutResponses
 } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> =
@@ -36,20 +56,20 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
- * Get Scenarios
+ * Get Items
  */
-export const getScenariosScenariosGet = <ThrowOnError extends boolean = false>(options?: Options<GetScenariosScenariosGetData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetScenariosScenariosGetResponses, unknown, ThrowOnError>({
+export const getItemsScenariosGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsScenariosGetData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetItemsScenariosGetResponses, unknown, ThrowOnError>({
         url: '/scenarios/',
         ...options
     });
 };
 
 /**
- * Post Scenario
+ * Post Item
  */
-export const postScenarioScenariosPost = <ThrowOnError extends boolean = false>(options: Options<PostScenarioScenariosPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<PostScenarioScenariosPostResponses, PostScenarioScenariosPostErrors, ThrowOnError>({
+export const postItemScenariosPost = <ThrowOnError extends boolean = false>(options: Options<PostItemScenariosPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<PostItemScenariosPostResponses, PostItemScenariosPostErrors, ThrowOnError>({
         url: '/scenarios/',
         ...options,
         headers: {
@@ -60,21 +80,31 @@ export const postScenarioScenariosPost = <ThrowOnError extends boolean = false>(
 };
 
 /**
- * Get Scenario
+ * Delete Item
  */
-export const getScenarioScenariosScenarioIdGet = <ThrowOnError extends boolean = false>(options: Options<GetScenarioScenariosScenarioIdGetData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetScenarioScenariosScenarioIdGetResponses, GetScenarioScenariosScenarioIdGetErrors, ThrowOnError>({
-        url: '/scenarios/{scenario_id}',
+export const deleteItemScenariosItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteItemScenariosItemIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteItemScenariosItemIdDeleteResponses, DeleteItemScenariosItemIdDeleteErrors, ThrowOnError>({
+        url: '/scenarios/{item_id}',
         ...options
     });
 };
 
 /**
- * Patch Scenario
+ * Get Item
  */
-export const patchScenarioScenariosScenarioIdPatch = <ThrowOnError extends boolean = false>(options: Options<PatchScenarioScenariosScenarioIdPatchData, ThrowOnError>) => {
-    return (options.client ?? client).patch<PatchScenarioScenariosScenarioIdPatchResponses, PatchScenarioScenariosScenarioIdPatchErrors, ThrowOnError>({
-        url: '/scenarios/{scenario_id}',
+export const getItemScenariosItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetItemScenariosItemIdGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetItemScenariosItemIdGetResponses, GetItemScenariosItemIdGetErrors, ThrowOnError>({
+        url: '/scenarios/{item_id}',
+        ...options
+    });
+};
+
+/**
+ * Patch Item
+ */
+export const patchItemScenariosItemIdPatch = <ThrowOnError extends boolean = false>(options: Options<PatchItemScenariosItemIdPatchData, ThrowOnError>) => {
+    return (options.client ?? client).patch<PatchItemScenariosItemIdPatchResponses, PatchItemScenariosItemIdPatchErrors, ThrowOnError>({
+        url: '/scenarios/{item_id}',
         ...options,
         headers: {
             'Content-Type': 'application/json',
@@ -84,11 +114,83 @@ export const patchScenarioScenariosScenarioIdPatch = <ThrowOnError extends boole
 };
 
 /**
- * Put Scenario
+ * Put Item
  */
-export const putScenarioScenariosScenarioIdPut = <ThrowOnError extends boolean = false>(options: Options<PutScenarioScenariosScenarioIdPutData, ThrowOnError>) => {
-    return (options.client ?? client).put<PutScenarioScenariosScenarioIdPutResponses, PutScenarioScenariosScenarioIdPutErrors, ThrowOnError>({
-        url: '/scenarios/{scenario_id}',
+export const putItemScenariosItemIdPut = <ThrowOnError extends boolean = false>(options: Options<PutItemScenariosItemIdPutData, ThrowOnError>) => {
+    return (options.client ?? client).put<PutItemScenariosItemIdPutResponses, PutItemScenariosItemIdPutErrors, ThrowOnError>({
+        url: '/scenarios/{item_id}',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Get Items
+ */
+export const getItemsEntitiesGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsEntitiesGetData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetItemsEntitiesGetResponses, unknown, ThrowOnError>({
+        url: '/entities/',
+        ...options
+    });
+};
+
+/**
+ * Post Item
+ */
+export const postItemEntitiesPost = <ThrowOnError extends boolean = false>(options: Options<PostItemEntitiesPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<PostItemEntitiesPostResponses, PostItemEntitiesPostErrors, ThrowOnError>({
+        url: '/entities/',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Delete Item
+ */
+export const deleteItemEntitiesItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteItemEntitiesItemIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteItemEntitiesItemIdDeleteResponses, DeleteItemEntitiesItemIdDeleteErrors, ThrowOnError>({
+        url: '/entities/{item_id}',
+        ...options
+    });
+};
+
+/**
+ * Get Item
+ */
+export const getItemEntitiesItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetItemEntitiesItemIdGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetItemEntitiesItemIdGetResponses, GetItemEntitiesItemIdGetErrors, ThrowOnError>({
+        url: '/entities/{item_id}',
+        ...options
+    });
+};
+
+/**
+ * Patch Item
+ */
+export const patchItemEntitiesItemIdPatch = <ThrowOnError extends boolean = false>(options: Options<PatchItemEntitiesItemIdPatchData, ThrowOnError>) => {
+    return (options.client ?? client).patch<PatchItemEntitiesItemIdPatchResponses, PatchItemEntitiesItemIdPatchErrors, ThrowOnError>({
+        url: '/entities/{item_id}',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Put Item
+ */
+export const putItemEntitiesItemIdPut = <ThrowOnError extends boolean = false>(options: Options<PutItemEntitiesItemIdPutData, ThrowOnError>) => {
+    return (options.client ?? client).put<PutItemEntitiesItemIdPutResponses, PutItemEntitiesItemIdPutErrors, ThrowOnError>({
+        url: '/entities/{item_id}',
         ...options,
         headers: {
             'Content-Type': 'application/json',

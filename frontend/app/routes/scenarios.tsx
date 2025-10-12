@@ -10,12 +10,12 @@ import {
     SCENARIOS_NAME,
     TITLE
 } from "~/strings";
-import {getScenariosScenariosGet} from "~/client"
+import {getItemsScenariosGet} from "~/client"
 import {ItemList} from "~/components/ItemList";
 import {ApiError} from "~/ApiError";
 
 export async function clientLoader({params}: Route.LoaderArgs) {
-    const response = await getScenariosScenariosGet()
+    const response = await getItemsScenariosGet()
     if (response.data !== undefined) {
         return response.data
     }

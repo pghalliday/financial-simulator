@@ -10,3 +10,7 @@ export const SCENARIO_NAME = (scenarioId: string) => `Scenario - ${scenarioId}`;
 export const SCENARIO_HREF = (scenarioId: string) => `${SCENARIOS_HREF}/${scenarioId}`;
 export const ENTITY_NAME = (entityId: string) => `Entity - ${entityId}`;
 export const ENTITY_HREF = (entityId: string) => `${ENTITIES_NAME}/${entityId}`;
+export const ENTITY_TYPES = {
+    "individual_entity": "Individual",
+    "corporation_entity": "Corporation",
+}

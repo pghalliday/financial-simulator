@@ -5,6 +5,102 @@ export type ClientOptions = {
 };
 
 /**
+ * ChangeTypeError
+ */
+export type ChangeTypeError = {
+    /**
+     * Current Type
+     */
+    current_type: string;
+    /**
+     * New Type
+     */
+    new_type: string;
+};
+
+/**
+ * CorporationEntityGet
+ */
+export type CorporationEntityGet = {
+    /**
+     * Type
+     */
+    type: 'corporation_entity';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+};
+
+/**
+ * CorporationEntityPatch
+ */
+export type CorporationEntityPatch = {
+    /**
+     * Type
+     */
+    type: 'corporation_entity';
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * CorporationEntityPost
+ */
+export type CorporationEntityPost = {
+    /**
+     * Type
+     */
+    type: 'corporation_entity';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+};
+
+/**
+ * HTTPChangeTypeError
+ */
+export type HttpChangeTypeError = {
+    detail: ChangeTypeError;
+};
+
+/**
+ * HTTPIntegrityError
+ */
+export type HttpIntegrityError = {
+    /**
+     * Detail
+     */
+    detail: string;
+};
+
+/**
+ * HTTPNotFoundError
+ */
+export type HttpNotFoundError = {
+    detail: NotFoundError;
+};
+
+/**
  * HTTPValidationError
  */
 export type HttpValidationError = {
@@ -15,13 +111,71 @@ export type HttpValidationError = {
 };
 
 /**
- * ScenarioAlreadyExists
+ * IndividualEntityGet
  */
-export type ScenarioAlreadyExists = {
+export type IndividualEntityGet = {
+    /**
+     * Type
+     */
+    type: 'individual_entity';
+    /**
+     * Id
+     */
+    id: string;
     /**
      * Name
      */
     name: string;
+    /**
+     * Description
+     */
+    description: string;
+};
+
+/**
+ * IndividualEntityPatch
+ */
+export type IndividualEntityPatch = {
+    /**
+     * Type
+     */
+    type: 'individual_entity';
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * IndividualEntityPost
+ */
+export type IndividualEntityPost = {
+    /**
+     * Type
+     */
+    type: 'individual_entity';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+};
+
+/**
+ * NotFoundError
+ */
+export type NotFoundError = {
+    /**
+     * Id
+     */
+    id: string;
 };
 
 /**
@@ -40,16 +194,6 @@ export type ScenarioGet = {
      * Description
      */
     description: string;
-};
-
-/**
- * ScenarioNotFound
- */
-export type ScenarioNotFound = {
-    /**
-     * Id
-     */
-    id: string;
 };
 
 /**
@@ -98,154 +242,390 @@ export type ValidationError = {
     type: string;
 };
 
-export type GetScenariosScenariosGetData = {
+export type GetItemsScenariosGetData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/scenarios/';
 };
 
-export type GetScenariosScenariosGetResponses = {
+export type GetItemsScenariosGetResponses = {
     /**
-     * Response Get Scenarios Scenarios  Get
+     * Response Get Items Scenarios  Get
      * Successful Response
      */
     200: Array<ScenarioGet>;
 };
 
-export type GetScenariosScenariosGetResponse = GetScenariosScenariosGetResponses[keyof GetScenariosScenariosGetResponses];
+export type GetItemsScenariosGetResponse = GetItemsScenariosGetResponses[keyof GetItemsScenariosGetResponses];
 
-export type PostScenarioScenariosPostData = {
+export type PostItemScenariosPostData = {
     body: ScenarioPost;
     path?: never;
     query?: never;
     url: '/scenarios/';
 };
 
-export type PostScenarioScenariosPostErrors = {
+export type PostItemScenariosPostErrors = {
     /**
-     * Scenario already exists
+     * Database integrity error
      */
-    409: ScenarioAlreadyExists;
+    409: HttpIntegrityError;
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type PostScenarioScenariosPostError = PostScenarioScenariosPostErrors[keyof PostScenarioScenariosPostErrors];
+export type PostItemScenariosPostError = PostItemScenariosPostErrors[keyof PostItemScenariosPostErrors];
 
-export type PostScenarioScenariosPostResponses = {
+export type PostItemScenariosPostResponses = {
     /**
      * Successful Response
      */
     200: ScenarioGet;
 };
 
-export type PostScenarioScenariosPostResponse = PostScenarioScenariosPostResponses[keyof PostScenarioScenariosPostResponses];
+export type PostItemScenariosPostResponse = PostItemScenariosPostResponses[keyof PostItemScenariosPostResponses];
 
-export type GetScenarioScenariosScenarioIdGetData = {
+export type DeleteItemScenariosItemIdDeleteData = {
     body?: never;
     path: {
         /**
-         * Scenario Id
+         * Item Id
          */
-        scenario_id: string;
+        item_id: string;
     };
     query?: never;
-    url: '/scenarios/{scenario_id}';
+    url: '/scenarios/{item_id}';
 };
 
-export type GetScenarioScenariosScenarioIdGetErrors = {
+export type DeleteItemScenariosItemIdDeleteErrors = {
     /**
-     * Scenario not found
+     * Not found
      */
-    404: ScenarioNotFound;
+    404: HttpNotFoundError;
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type GetScenarioScenariosScenarioIdGetError = GetScenarioScenariosScenarioIdGetErrors[keyof GetScenarioScenariosScenarioIdGetErrors];
+export type DeleteItemScenariosItemIdDeleteError = DeleteItemScenariosItemIdDeleteErrors[keyof DeleteItemScenariosItemIdDeleteErrors];
 
-export type GetScenarioScenariosScenarioIdGetResponses = {
+export type DeleteItemScenariosItemIdDeleteResponses = {
     /**
      * Successful Response
      */
     200: ScenarioGet;
 };
 
-export type GetScenarioScenariosScenarioIdGetResponse = GetScenarioScenariosScenarioIdGetResponses[keyof GetScenarioScenariosScenarioIdGetResponses];
+export type DeleteItemScenariosItemIdDeleteResponse = DeleteItemScenariosItemIdDeleteResponses[keyof DeleteItemScenariosItemIdDeleteResponses];
 
-export type PatchScenarioScenariosScenarioIdPatchData = {
+export type GetItemScenariosItemIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/scenarios/{item_id}';
+};
+
+export type GetItemScenariosItemIdGetErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetItemScenariosItemIdGetError = GetItemScenariosItemIdGetErrors[keyof GetItemScenariosItemIdGetErrors];
+
+export type GetItemScenariosItemIdGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: ScenarioGet;
+};
+
+export type GetItemScenariosItemIdGetResponse = GetItemScenariosItemIdGetResponses[keyof GetItemScenariosItemIdGetResponses];
+
+export type PatchItemScenariosItemIdPatchData = {
     body: ScenarioPatch;
     path: {
         /**
-         * Scenario Id
+         * Item Id
          */
-        scenario_id: string;
+        item_id: string;
     };
     query?: never;
-    url: '/scenarios/{scenario_id}';
+    url: '/scenarios/{item_id}';
 };
 
-export type PatchScenarioScenariosScenarioIdPatchErrors = {
+export type PatchItemScenariosItemIdPatchErrors = {
     /**
-     * Scenario not found
+     * Not found
      */
-    404: ScenarioNotFound;
+    404: HttpNotFoundError;
     /**
-     * Scenario already exists
+     * Database integrity error
      */
-    409: ScenarioAlreadyExists;
+    409: HttpIntegrityError;
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type PatchScenarioScenariosScenarioIdPatchError = PatchScenarioScenariosScenarioIdPatchErrors[keyof PatchScenarioScenariosScenarioIdPatchErrors];
+export type PatchItemScenariosItemIdPatchError = PatchItemScenariosItemIdPatchErrors[keyof PatchItemScenariosItemIdPatchErrors];
 
-export type PatchScenarioScenariosScenarioIdPatchResponses = {
+export type PatchItemScenariosItemIdPatchResponses = {
     /**
      * Successful Response
      */
     200: ScenarioGet;
 };
 
-export type PatchScenarioScenariosScenarioIdPatchResponse = PatchScenarioScenariosScenarioIdPatchResponses[keyof PatchScenarioScenariosScenarioIdPatchResponses];
+export type PatchItemScenariosItemIdPatchResponse = PatchItemScenariosItemIdPatchResponses[keyof PatchItemScenariosItemIdPatchResponses];
 
-export type PutScenarioScenariosScenarioIdPutData = {
+export type PutItemScenariosItemIdPutData = {
     body: ScenarioPost;
     path: {
         /**
-         * Scenario Id
+         * Item Id
          */
-        scenario_id: string;
+        item_id: string;
     };
     query?: never;
-    url: '/scenarios/{scenario_id}';
+    url: '/scenarios/{item_id}';
 };
 
-export type PutScenarioScenariosScenarioIdPutErrors = {
+export type PutItemScenariosItemIdPutErrors = {
     /**
-     * Scenario already exists
+     * Database integrity error
      */
-    409: ScenarioAlreadyExists;
+    409: HttpIntegrityError;
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type PutScenarioScenariosScenarioIdPutError = PutScenarioScenariosScenarioIdPutErrors[keyof PutScenarioScenariosScenarioIdPutErrors];
+export type PutItemScenariosItemIdPutError = PutItemScenariosItemIdPutErrors[keyof PutItemScenariosItemIdPutErrors];
 
-export type PutScenarioScenariosScenarioIdPutResponses = {
+export type PutItemScenariosItemIdPutResponses = {
     /**
      * Successful Response
      */
     200: ScenarioGet;
 };
 
-export type PutScenarioScenariosScenarioIdPutResponse = PutScenarioScenariosScenarioIdPutResponses[keyof PutScenarioScenariosScenarioIdPutResponses];
+export type PutItemScenariosItemIdPutResponse = PutItemScenariosItemIdPutResponses[keyof PutItemScenariosItemIdPutResponses];
+
+export type GetItemsEntitiesGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/entities/';
+};
+
+export type GetItemsEntitiesGetResponses = {
+    /**
+     * Response Get Items Entities  Get
+     * Successful Response
+     */
+    200: Array<IndividualEntityGet | CorporationEntityGet>;
+};
+
+export type GetItemsEntitiesGetResponse = GetItemsEntitiesGetResponses[keyof GetItemsEntitiesGetResponses];
+
+export type PostItemEntitiesPostData = {
+    /**
+     * Item Post
+     */
+    body: IndividualEntityPost | CorporationEntityPost;
+    path?: never;
+    query?: never;
+    url: '/entities/';
+};
+
+export type PostItemEntitiesPostErrors = {
+    /**
+     * Database integrity error
+     */
+    409: HttpIntegrityError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PostItemEntitiesPostError = PostItemEntitiesPostErrors[keyof PostItemEntitiesPostErrors];
+
+export type PostItemEntitiesPostResponses = {
+    /**
+     * Response Post Item Entities  Post
+     * Successful Response
+     */
+    200: IndividualEntityGet | CorporationEntityGet;
+};
+
+export type PostItemEntitiesPostResponse = PostItemEntitiesPostResponses[keyof PostItemEntitiesPostResponses];
+
+export type DeleteItemEntitiesItemIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/entities/{item_id}';
+};
+
+export type DeleteItemEntitiesItemIdDeleteErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteItemEntitiesItemIdDeleteError = DeleteItemEntitiesItemIdDeleteErrors[keyof DeleteItemEntitiesItemIdDeleteErrors];
+
+export type DeleteItemEntitiesItemIdDeleteResponses = {
+    /**
+     * Response Delete Item Entities  Item Id  Delete
+     * Successful Response
+     */
+    200: IndividualEntityGet | CorporationEntityGet;
+};
+
+export type DeleteItemEntitiesItemIdDeleteResponse = DeleteItemEntitiesItemIdDeleteResponses[keyof DeleteItemEntitiesItemIdDeleteResponses];
+
+export type GetItemEntitiesItemIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/entities/{item_id}';
+};
+
+export type GetItemEntitiesItemIdGetErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetItemEntitiesItemIdGetError = GetItemEntitiesItemIdGetErrors[keyof GetItemEntitiesItemIdGetErrors];
+
+export type GetItemEntitiesItemIdGetResponses = {
+    /**
+     * Response Get Item Entities  Item Id  Get
+     * Successful Response
+     */
+    200: IndividualEntityGet | CorporationEntityGet;
+};
+
+export type GetItemEntitiesItemIdGetResponse = GetItemEntitiesItemIdGetResponses[keyof GetItemEntitiesItemIdGetResponses];
+
+export type PatchItemEntitiesItemIdPatchData = {
+    /**
+     * Item Patch
+     */
+    body: IndividualEntityPatch | CorporationEntityPatch;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/entities/{item_id}';
+};
+
+export type PatchItemEntitiesItemIdPatchErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Response 409 Patch Item Entities  Item Id  Patch
+     * Database error
+     */
+    409: HttpIntegrityError | HttpChangeTypeError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PatchItemEntitiesItemIdPatchError = PatchItemEntitiesItemIdPatchErrors[keyof PatchItemEntitiesItemIdPatchErrors];
+
+export type PatchItemEntitiesItemIdPatchResponses = {
+    /**
+     * Response Patch Item Entities  Item Id  Patch
+     * Successful Response
+     */
+    200: IndividualEntityGet | CorporationEntityGet;
+};
+
+export type PatchItemEntitiesItemIdPatchResponse = PatchItemEntitiesItemIdPatchResponses[keyof PatchItemEntitiesItemIdPatchResponses];
+
+export type PutItemEntitiesItemIdPutData = {
+    /**
+     * Item Post
+     */
+    body: IndividualEntityPost | CorporationEntityPost;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/entities/{item_id}';
+};
+
+export type PutItemEntitiesItemIdPutErrors = {
+    /**
+     * Response 409 Put Item Entities  Item Id  Put
+     * Database error
+     */
+    409: HttpIntegrityError | HttpChangeTypeError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PutItemEntitiesItemIdPutError = PutItemEntitiesItemIdPutErrors[keyof PutItemEntitiesItemIdPutErrors];
+
+export type PutItemEntitiesItemIdPutResponses = {
+    /**
+     * Response Put Item Entities  Item Id  Put
+     * Successful Response
+     */
+    200: IndividualEntityGet | CorporationEntityGet;
+};
+
+export type PutItemEntitiesItemIdPutResponse = PutItemEntitiesItemIdPutResponses[keyof PutItemEntitiesItemIdPutResponses];

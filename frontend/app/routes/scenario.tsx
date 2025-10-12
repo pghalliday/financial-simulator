@@ -10,13 +10,13 @@ import {
     SCENARIOS_NAME,
     TITLE
 } from "~/strings";
-import {getScenarioScenariosScenarioIdGet} from "~/client";
+import {getItemScenariosItemIdGet} from "~/client";
 import {useLoaderData} from "react-router";
 import {ApiError} from "~/ApiError";
 
 export async function clientLoader({params}: Route.LoaderArgs) {
-    const response = await getScenarioScenariosScenarioIdGet({
-        path: {scenario_id: params.scenarioId},
+    const response = await getItemScenariosItemIdGet({
+        path: {item_id: params.scenarioId},
     });
     if (response.data !== undefined) {
         return response.data
