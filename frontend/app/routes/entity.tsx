@@ -2,13 +2,13 @@ import {useEffect} from "react";
 import type {Route} from "./+types/entity";
 import {useHeaderData} from "~/components/HeaderDataProvider";
 import {
-  COMPARE_SCENARIOS_HREF,
-  COMPARE_SCENARIOS_NAME,
-  ENTITIES_HREF,
-  ENTITIES_NAME,
-  ENTITY_HREF,
-  ENTITY_NAME,
-  TITLE
+    COMPARE_SCENARIOS_HREF,
+    COMPARE_SCENARIOS_NAME,
+    ENTITIES_HREF,
+    ENTITIES_NAME,
+    ENTITY_HREF,
+    ENTITY_NAME,
+    TITLE
 } from "~/strings";
 
 export async function clientLoader({params}: Route.LoaderArgs) {

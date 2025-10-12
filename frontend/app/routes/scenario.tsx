@@ -2,23 +2,33 @@ import {useEffect} from "react";
 import type {Route} from "./+types/scenario";
 import {useHeaderData} from "~/components/HeaderDataProvider";
 import {
-  COMPARE_SCENARIOS_HREF,
-  COMPARE_SCENARIOS_NAME,
-  SCENARIO_HREF,
-  SCENARIO_NAME,
-  SCENARIOS_HREF,
-  SCENARIOS_NAME,
-  TITLE
+    COMPARE_SCENARIOS_HREF,
+    COMPARE_SCENARIOS_NAME,
+    SCENARIO_HREF,
+    SCENARIO_NAME,
+    SCENARIOS_HREF,
+    SCENARIOS_NAME,
+    TITLE
 } from "~/strings";
+import {getScenarioScenariosScenarioIdGet} from "~/client";
+import {useLoaderData} from "react-router";
+import {ApiError} from "~/ApiError";
 
 export async function clientLoader({params}: Route.LoaderArgs) {
-    //                           ^? { scenarioId: string }
+    const response = await getScenarioScenariosScenarioIdGet({
+        path: {scenario_id: params.scenarioId},
+    });
+    if (response.data !== undefined) {
+        return response.data
+    }
+    throw new ApiError(response.response.status, response.response.statusText, response.error)
 }
 
 export default function Scenario({params}: Route.ComponentProps) {
     const [_, setHeaderData] = useHeaderData();
+    const scenario = useLoaderData<typeof clientLoader>()
 
-    const description = SCENARIO_NAME(params.scenarioId)
+    const description = SCENARIO_NAME(scenario.name)
     const title = TITLE(description)
 
     useEffect(() => {
@@ -34,8 +44,8 @@ export default function Scenario({params}: Route.ComponentProps) {
                     href: SCENARIOS_HREF,
                 },
                 {
-                    title: params.scenarioId,
-                    href: SCENARIO_HREF(params.scenarioId),
+                    title: scenario.name,
+                    href: SCENARIO_HREF(scenario.id),
                 },
             ],
         });
@@ -45,6 +55,6 @@ export default function Scenario({params}: Route.ComponentProps) {
         <title>{title}</title>
         <meta property="og:title" content={title}/>
         <meta property="description" content={description}/>
-        {description}
+        {scenario.name}
     </>
 }

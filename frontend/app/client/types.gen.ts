@@ -15,6 +15,16 @@ export type HttpValidationError = {
 };
 
 /**
+ * ScenarioAlreadyExists
+ */
+export type ScenarioAlreadyExists = {
+    /**
+     * Name
+     */
+    name: string;
+};
+
+/**
  * ScenarioGet
  */
 export type ScenarioGet = {
@@ -30,6 +40,16 @@ export type ScenarioGet = {
      * Description
      */
     description: string;
+};
+
+/**
+ * ScenarioNotFound
+ */
+export type ScenarioNotFound = {
+    /**
+     * Id
+     */
+    id: string;
 };
 
 /**
@@ -85,13 +105,6 @@ export type GetScenariosScenariosGetData = {
     url: '/scenarios/';
 };
 
-export type GetScenariosScenariosGetErrors = {
-    /**
-     * Not found
-     */
-    404: unknown;
-};
-
 export type GetScenariosScenariosGetResponses = {
     /**
      * Response Get Scenarios Scenarios  Get
@@ -111,9 +124,9 @@ export type PostScenarioScenariosPostData = {
 
 export type PostScenarioScenariosPostErrors = {
     /**
-     * Not found
+     * Scenario already exists
      */
-    404: unknown;
+    409: ScenarioAlreadyExists;
     /**
      * Validation Error
      */
@@ -145,9 +158,9 @@ export type GetScenarioScenariosScenarioIdGetData = {
 
 export type GetScenarioScenariosScenarioIdGetErrors = {
     /**
-     * Not found
+     * Scenario not found
      */
-    404: unknown;
+    404: ScenarioNotFound;
     /**
      * Validation Error
      */
@@ -179,9 +192,13 @@ export type PatchScenarioScenariosScenarioIdPatchData = {
 
 export type PatchScenarioScenariosScenarioIdPatchErrors = {
     /**
-     * Not found
+     * Scenario not found
      */
-    404: unknown;
+    404: ScenarioNotFound;
+    /**
+     * Scenario already exists
+     */
+    409: ScenarioAlreadyExists;
     /**
      * Validation Error
      */
@@ -199,7 +216,7 @@ export type PatchScenarioScenariosScenarioIdPatchResponses = {
 
 export type PatchScenarioScenariosScenarioIdPatchResponse = PatchScenarioScenariosScenarioIdPatchResponses[keyof PatchScenarioScenariosScenarioIdPatchResponses];
 
-export type PatchScenarioScenariosScenarioIdPutData = {
+export type PutScenarioScenariosScenarioIdPutData = {
     body: ScenarioPost;
     path: {
         /**
@@ -211,24 +228,24 @@ export type PatchScenarioScenariosScenarioIdPutData = {
     url: '/scenarios/{scenario_id}';
 };
 
-export type PatchScenarioScenariosScenarioIdPutErrors = {
+export type PutScenarioScenariosScenarioIdPutErrors = {
     /**
-     * Not found
+     * Scenario already exists
      */
-    404: unknown;
+    409: ScenarioAlreadyExists;
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type PatchScenarioScenariosScenarioIdPutError = PatchScenarioScenariosScenarioIdPutErrors[keyof PatchScenarioScenariosScenarioIdPutErrors];
+export type PutScenarioScenariosScenarioIdPutError = PutScenarioScenariosScenarioIdPutErrors[keyof PutScenarioScenariosScenarioIdPutErrors];
 
-export type PatchScenarioScenariosScenarioIdPutResponses = {
+export type PutScenarioScenariosScenarioIdPutResponses = {
     /**
      * Successful Response
      */
     200: ScenarioGet;
 };
 
-export type PatchScenarioScenariosScenarioIdPutResponse = PatchScenarioScenariosScenarioIdPutResponses[keyof PatchScenarioScenariosScenarioIdPutResponses];
+export type PutScenarioScenariosScenarioIdPutResponse = PutScenarioScenariosScenarioIdPutResponses[keyof PutScenarioScenariosScenarioIdPutResponses];
