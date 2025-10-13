@@ -34,6 +34,11 @@ export function NavLayout({children}: { children: React.ReactNode }) {
             <AppShell.Header>
                 <Group
                     h="100%"
+                    styles={{
+                        root: {
+                            paddingLeft: 11,
+                        },
+                    }}
                 >
                     <Burger
                         opened={opened}
