@@ -12,7 +12,6 @@ import {
 } from "~/strings";
 import {getItemEntitiesItemIdGet} from "~/client";
 import {ApiError} from "~/ApiError";
-import {useLoaderData} from "react-router";
 
 export async function clientLoader({params}: Route.LoaderArgs) {
     const response = await getItemEntitiesItemIdGet({
@@ -24,9 +23,8 @@ export async function clientLoader({params}: Route.LoaderArgs) {
     throw new ApiError(response.response.status, response.response.statusText, response.error)
 }
 
-export default function Entity({params}: Route.ComponentProps) {
+export default function Entity({loaderData: entity}: Route.ComponentProps) {
     const [_, setHeaderData] = useHeaderData();
-    const entity = useLoaderData<typeof clientLoader>()
 
     const description = ENTITY_NAME(entity.name)
     const title = TITLE(description)

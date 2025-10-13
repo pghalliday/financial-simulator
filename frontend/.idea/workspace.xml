@@ -5,11 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93565140-8846-4472-bdaf-36985489ef20" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/components/AddItemModal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/ConfirmDeleteModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/client.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/client/client.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/client.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/client/types.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/types.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/client/utils.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/utils.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/bodySerializer.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/bodySerializer.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/serverSentEvents.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/serverSentEvents.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/types.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/types.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/utils.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/utils.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/sdk.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/sdk.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/AddItemModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/AddItemModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/ItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ItemList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/entities.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/entities.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/entity.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/entity.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/scenario.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/scenario.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/scenarios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/scenarios.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -75,7 +85,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760022135007</updated>
-      <workItem from="1760022136773" duration="50427000" />
+      <workItem from="1760022136773" duration="55649000" />
     </task>
     <servers />
   </component>

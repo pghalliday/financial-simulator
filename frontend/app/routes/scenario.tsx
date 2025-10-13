@@ -11,7 +11,6 @@ import {
     TITLE
 } from "~/strings";
 import {getItemScenariosItemIdGet} from "~/client";
-import {useLoaderData} from "react-router";
 import {ApiError} from "~/ApiError";
 
 export async function clientLoader({params}: Route.LoaderArgs) {
@@ -24,9 +23,8 @@ export async function clientLoader({params}: Route.LoaderArgs) {
     throw new ApiError(response.response.status, response.response.statusText, response.error)
 }
 
-export default function Scenario({params}: Route.ComponentProps) {
+export default function Scenario({loaderData: scenario}: Route.ComponentProps) {
     const [_, setHeaderData] = useHeaderData();
-    const scenario = useLoaderData<typeof clientLoader>()
 
     const description = SCENARIO_NAME(scenario.name)
     const title = TITLE(description)

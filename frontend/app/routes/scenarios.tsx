@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import {useLoaderData} from "react-router";
 import type {Route} from "./+types/scenarios";
 import {useHeaderData} from "~/components/HeaderDataProvider";
 import {
@@ -11,13 +10,13 @@ import {
     TITLE
 } from "~/strings";
 import {getItemsScenariosGet} from "~/client"
-import {ItemList} from "~/components/ItemList";
+import {ItemList, type ToDeleteData} from "~/components/ItemList";
 import {ApiError} from "~/ApiError";
 import {useDisclosure} from "@mantine/hooks";
 import {AddItemModal} from "~/components/AddItemModal";
 import {ConfirmDeleteModal} from "~/components/ConfirmDeleteModal";
 
-export async function clientLoader({params}: Route.LoaderArgs) {
+export async function clientLoader() {
     const response = await getItemsScenariosGet()
     if (response.data !== undefined) {
         return response.data
@@ -25,12 +24,15 @@ export async function clientLoader({params}: Route.LoaderArgs) {
     throw new ApiError(response.response.status, response.response.statusText, response.error)
 }
 
-export default function Scenarios({params}: Route.ComponentProps) {
+export default function Scenarios({loaderData}: Route.ComponentProps) {
     const [_, setHeaderData] = useHeaderData();
-    const scenarios = useLoaderData<typeof clientLoader>()
+    const [scenarios, setScenarios] = useState(loaderData)
     const [addItemOpened, {open: openAddItem, close: closeAddItem}] = useDisclosure()
     const [confirmDeleteOpened, {open: openConfirmDelete, close: closeConfirmDelete}] = useDisclosure()
-    const [toDelete, setToDelete] = useState<string>("scenario name")
+    const [toDeleteData, setToDeleteData] = useState<ToDeleteData>({
+        id: "scenario id",
+        name: "scenario name",
+    })
 
     const description = SCENARIOS_NAME
     const title = TITLE(description)
@@ -58,22 +60,28 @@ export default function Scenarios({params}: Route.ComponentProps) {
         <AddItemModal
             opened={addItemOpened}
             onCancel={closeAddItem}
-            onSubmit={closeAddItem}
+            onSubmit={(toAddData) => {
+                console.info(toAddData);
+                closeAddItem();
+            }}
             label="scenario"
         />
         <ConfirmDeleteModal
             opened={confirmDeleteOpened}
             onCancel={closeConfirmDelete}
-            onConfirm={closeConfirmDelete}
+            onConfirm={() => {
+                console.info(toDeleteData);
+                closeConfirmDelete();
+            }}
             label="scenario"
-            name={toDelete}
+            name={toDeleteData.name}
         />
         <ItemList
             items={scenarios}
             href={SCENARIO_HREF}
             onAdd={openAddItem}
-            onDelete={(id, name) => {
-                setToDelete(name);
+            onDelete={toDeleteData => {
+                setToDeleteData(toDeleteData);
                 openConfirmDelete();
             }}
         />

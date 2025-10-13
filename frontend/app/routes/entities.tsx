@@ -12,13 +12,12 @@ import {
 } from "~/strings";
 import {getItemsEntitiesGet} from "~/client";
 import {ApiError} from "~/ApiError";
-import {useLoaderData} from "react-router";
-import {ItemList} from "~/components/ItemList";
+import {ItemList, type ToDeleteData} from "~/components/ItemList";
 import {AddItemModal} from "~/components/AddItemModal";
 import {useDisclosure} from "@mantine/hooks";
 import {ConfirmDeleteModal} from "~/components/ConfirmDeleteModal";
 
-export async function clientLoader({params}: Route.LoaderArgs) {
+export async function clientLoader() {
     const response = await getItemsEntitiesGet()
     if (response.data !== undefined) {
         return response.data
@@ -26,12 +25,15 @@ export async function clientLoader({params}: Route.LoaderArgs) {
     throw new ApiError(response.response.status, response.response.statusText, response.error)
 }
 
-export default function Entities({params}: Route.ComponentProps) {
+export default function Entities({loaderData}: Route.ComponentProps) {
     const [_, setHeaderData] = useHeaderData();
-    const entities = useLoaderData<typeof clientLoader>()
+    const [entities, setEntities] = useState(loaderData)
     const [addItemOpened, {open: openAddItem, close: closeAddItem}] = useDisclosure()
     const [confirmDeleteOpened, {open: openConfirmDelete, close: closeConfirmDelete}] = useDisclosure()
-    const [toDelete, setToDelete] = useState<string>("scenario name")
+    const [toDeleteData, setToDeleteData] = useState<ToDeleteData>({
+        id: "entity id",
+        name: "entity name",
+    })
 
     const description = ENTITIES_NAME
     const title = TITLE(description)
@@ -59,24 +61,30 @@ export default function Entities({params}: Route.ComponentProps) {
         <AddItemModal
             opened={addItemOpened}
             onCancel={closeAddItem}
-            onSubmit={closeAddItem}
+            onSubmit={(toAddData) => {
+                console.info(toAddData);
+                closeAddItem();
+            }}
             label="entity"
             types={ENTITY_TYPES}
         />
         <ConfirmDeleteModal
             opened={confirmDeleteOpened}
             onCancel={closeConfirmDelete}
-            onConfirm={closeConfirmDelete}
+            onConfirm={() => {
+                console.info(toDeleteData);
+                closeConfirmDelete()
+            }}
             label="entity"
-            name={toDelete}
+            name={toDeleteData.name}
         />
         <ItemList
             items={entities}
             types={ENTITY_TYPES}
             href={ENTITY_HREF}
             onAdd={openAddItem}
-            onDelete={(id, name) => {
-                setToDelete(name);
+            onDelete={(toDeleteData) => {
+                setToDeleteData(toDeleteData);
                 openConfirmDelete();
             }}
         />

@@ -1,11 +1,16 @@
 import {ActionIcon, Anchor, Group, Table} from "@mantine/core";
 import {IconCirclePlus, IconTrash} from "@tabler/icons-react";
 
-interface Item {
+export interface Item {
     id: string
     name: string
     description: string
     type?: string
+}
+
+export interface ToDeleteData {
+    id: string
+    name: string
 }
 
 export function ItemList({items, types, href, onAdd, onDelete}: {
@@ -13,7 +18,7 @@ export function ItemList({items, types, href, onAdd, onDelete}: {
     types?: Record<string, string>,
     href: (id: string) => string,
     onAdd: () => void,
-    onDelete: (id: string, name: string) => void,
+    onDelete: (toDeleteData: ToDeleteData) => void,
 }) {
     function TypeH() {
         if (types === undefined) {
@@ -41,7 +46,10 @@ export function ItemList({items, types, href, onAdd, onDelete}: {
                     <ActionIcon
                         variant="transparent"
                         size="sm"
-                        onClick={() => onDelete(item.id, item.name)}
+                        onClick={() => onDelete({
+                            id: item.id,
+                            name: item.name
+                        })}
                     >
                         <IconTrash/>
                     </ActionIcon>
