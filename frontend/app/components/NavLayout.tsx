@@ -26,7 +26,7 @@ export function NavLayout({children}: { children: React.ReactNode }) {
             padding="md"
             header={{height: 60}}
             navbar={{
-                width: 100,
+                width: 250,
                 breakpoint: 'xs',
                 collapsed: {mobile: !opened},
             }}

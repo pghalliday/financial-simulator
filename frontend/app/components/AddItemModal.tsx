@@ -1,4 +1,4 @@
-import {Button, Group, Modal, Select, Space, TextInput} from "@mantine/core";
+import {Button, Group, LoadingOverlay, Modal, Select, Space, TextInput} from "@mantine/core";
 import {useEffect, useState} from "react";
 
 export interface ToAddData {
@@ -10,6 +10,7 @@ export interface ToAddData {
 export function AddItemModal(
     {
         opened,
+        working,
         initialData,
         onSubmit,
         onCancel,
@@ -17,6 +18,7 @@ export function AddItemModal(
         typeSelectData,
     }: {
         opened: boolean,
+        working: boolean,
         initialData: ToAddData,
         onSubmit: (toAddData: ToAddData) => void,
         onCancel: () => void,
@@ -55,6 +57,11 @@ export function AddItemModal(
         onClose={onCancel}
         title={`Add ${collectionLabel}`}
     >
+        <LoadingOverlay
+            visible={working}
+            zIndex={1000}
+            overlayProps={{blur: 2}}
+        />
         <TextInput
             data-autofocus
             label="Name"

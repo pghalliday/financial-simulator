@@ -1,14 +1,16 @@
-import {Button, Group, Modal, Space, Text} from "@mantine/core";
+import {Button, Group, LoadingOverlay, Modal, Space, Text} from "@mantine/core";
 
 export function ConfirmDeleteModal(
     {
         opened,
+        working,
         onConfirm,
         onCancel,
         collectionLabel,
         itemName,
     }: {
         opened: boolean,
+        working: boolean,
         onConfirm: () => void,
         onCancel: () => void,
         collectionLabel: string,
@@ -20,6 +22,11 @@ export function ConfirmDeleteModal(
         onClose={onCancel}
         title={`Confirm delete ${collectionLabel}`}
     >
+        <LoadingOverlay
+            visible={working}
+            zIndex={1000}
+            overlayProps={{blur: 2}}
+        />
         <Text>{`Are you sure you want to delete ${collectionLabel}: "${itemName}"?`}</Text>
         <Space h={20}/>
         <Group justify="flex-end">
