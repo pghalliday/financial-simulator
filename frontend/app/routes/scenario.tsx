@@ -13,14 +13,14 @@ import {
 import {getItemScenariosItemIdGet} from "~/client";
 import {ApiError} from "~/ApiError";
 
-export async function clientLoader({params}: Route.LoaderArgs) {
-    const response = await getItemScenariosItemIdGet({
+export async function clientLoader({params}: Route.ClientLoaderArgs) {
+    const {data, error, response} = await getItemScenariosItemIdGet({
         path: {item_id: params.scenarioId},
     });
-    if (response.data !== undefined) {
-        return response.data
+    if (data !== undefined) {
+        return data
     }
-    throw new ApiError(response.response.status, response.response.statusText, response.error)
+    throw new ApiError(response.status, response.statusText, error)
 }
 
 export default function Scenario({loaderData: scenario}: Route.ComponentProps) {

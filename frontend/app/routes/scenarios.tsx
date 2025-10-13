@@ -9,19 +9,25 @@ import {
     SCENARIOS_NAME,
     TITLE
 } from "~/strings";
-import {getItemsScenariosGet} from "~/client"
+import {deleteItemScenariosItemIdDelete, getItemsScenariosGet, postItemScenariosPost, type ScenarioPost} from "~/client"
 import {ItemList, type ToDeleteData} from "~/components/ItemList";
 import {ApiError} from "~/ApiError";
 import {useDisclosure} from "@mantine/hooks";
-import {AddItemModal} from "~/components/AddItemModal";
+import {AddItemModal, type ToAddData} from "~/components/AddItemModal";
 import {ConfirmDeleteModal} from "~/components/ConfirmDeleteModal";
 
+const INITIAL_TO_ADD_DATA: ToAddData = {
+    name: "",
+    description: "",
+    type: null,
+}
+
 export async function clientLoader() {
-    const response = await getItemsScenariosGet()
-    if (response.data !== undefined) {
-        return response.data
+    const {data, error, response} = await getItemsScenariosGet()
+    if (data !== undefined) {
+        return data
     }
-    throw new ApiError(response.response.status, response.response.statusText, response.error)
+    throw new ApiError(response.status, response.statusText, error)
 }
 
 export default function Scenarios({loaderData}: Route.ComponentProps) {
@@ -33,6 +39,8 @@ export default function Scenarios({loaderData}: Route.ComponentProps) {
         id: "scenario id",
         name: "scenario name",
     })
+    const [confirmDeleteData, setConfirmDeleteData] = useState<string>()
+    const [toAddData, setToAddData] = useState<ToAddData>()
 
     const description = SCENARIOS_NAME
     const title = TITLE(description)
@@ -53,28 +61,58 @@ export default function Scenarios({loaderData}: Route.ComponentProps) {
         });
     }, []);
 
+    useEffect(() => {
+        if (toAddData !== undefined) {
+            postItemScenariosPost({
+                // TODO: can we properly type toAddData?
+                body: toAddData as ScenarioPost,
+            }).then(({data, error, response}) => {
+                if (data != undefined) {
+                    setScenarios(scenarios.concat([data]))
+                    closeAddItem()
+                } else {
+                    console.error(`${response.status}: ${response.statusText}: ${error}`)
+                }
+            })
+        }
+    }, [toAddData])
+
+    useEffect(() => {
+        if (confirmDeleteData != undefined) {
+            deleteItemScenariosItemIdDelete({
+                path: {
+                    item_id: confirmDeleteData
+                }
+            }).then(({data, error, response}) => {
+                if (data != undefined) {
+                    setScenarios(scenarios.filter(scenario => scenario.id !== data.id))
+                    closeConfirmDelete()
+                } else {
+                    console.error(`${response.status}: ${response.statusText}: ${error}`)
+                }
+            })
+        }
+    }, [confirmDeleteData])
+
     return <>
         <title>{title}</title>
         <meta property="og:title" content={title}/>
         <meta property="description" content={description}/>
         <AddItemModal
             opened={addItemOpened}
+            initialData={INITIAL_TO_ADD_DATA}
             onCancel={closeAddItem}
-            onSubmit={(toAddData) => {
-                console.info(toAddData);
-                closeAddItem();
-            }}
-            label="scenario"
+            onSubmit={setToAddData}
+            collectionLabel="scenario"
         />
         <ConfirmDeleteModal
             opened={confirmDeleteOpened}
             onCancel={closeConfirmDelete}
             onConfirm={() => {
-                console.info(toDeleteData);
-                closeConfirmDelete();
+                setConfirmDeleteData(toDeleteData.id)
             }}
-            label="scenario"
-            name={toDeleteData.name}
+            collectionLabel="scenario"
+            itemName={toDeleteData.name}
         />
         <ItemList
             items={scenarios}

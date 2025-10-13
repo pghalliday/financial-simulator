@@ -1,5 +1,5 @@
 import {Button, Group, Modal, Select, Space, TextInput} from "@mantine/core";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export interface ToAddData {
     name: string
@@ -10,36 +10,40 @@ export interface ToAddData {
 export function AddItemModal(
     {
         opened,
+        initialData,
         onSubmit,
         onCancel,
-        label,
-        types,
+        collectionLabel,
+        typeSelectData,
     }: {
         opened: boolean,
+        initialData: ToAddData,
         onSubmit: (toAddData: ToAddData) => void,
         onCancel: () => void,
-        label: string,
-        types?: Record<string, string>,
+        collectionLabel: string,
+        typeSelectData?: { value: string, label: string }[]
     }
 ) {
-    const capitalizedLabel = label.replace(/^./, label[0].toUpperCase())
-    const typeSelectData = types === undefined ? null : Object.entries(types)
-        .map(entry => ({
-            value: entry[0],
-            label: entry[1]
-        }));
-    const typeInitialValue = typeSelectData === null ? null : typeSelectData[0].value
-    const [typeValue, setTypeValue] = useState<string | null>(typeInitialValue)
-    const [nameValue, setNameValue] = useState<string>("")
-    const [descriptionValue, setDescriptionValue] = useState<string>("")
+    const capitalizedLabel = collectionLabel.replace(/^./, collectionLabel[0].toUpperCase())
+    const [typeValue, setTypeValue] = useState<string | null>(initialData.type)
+    const [nameValue, setNameValue] = useState<string>(initialData.name)
+    const [descriptionValue, setDescriptionValue] = useState<string>(initialData.description)
+
+    useEffect(() => {
+        if (!opened) {
+            setNameValue(initialData.name)
+            setTypeValue(initialData.type)
+            setDescriptionValue(initialData.description)
+        }
+    }, [opened]);
 
     function TypeSelect() {
-        if (typeSelectData === null) {
+        if (typeSelectData === undefined) {
             return null;
         }
         return <Select
             label="Type"
-            description={`Select the ${label} type`}
+            description={`Select the ${collectionLabel} type`}
             value={typeValue}
             onChange={setTypeValue}
             data={typeSelectData}
@@ -49,12 +53,13 @@ export function AddItemModal(
     return <Modal
         opened={opened}
         onClose={onCancel}
-        title={`Add ${label}`}
+        title={`Add ${collectionLabel}`}
     >
         <TextInput
+            data-autofocus
             label="Name"
             placeholder={`${capitalizedLabel} name`}
-            description={`Enter a name for the new ${label}`}
+            description={`Enter a name for the new ${collectionLabel}`}
             size="sm"
             required={true}
             value={nameValue}
@@ -64,7 +69,7 @@ export function AddItemModal(
         <TextInput
             label="Description"
             placeholder={`${capitalizedLabel} description`}
-            description={`Enter a description for the new ${label}`}
+            description={`Enter a description for the new ${collectionLabel}`}
             size="sm"
             value={descriptionValue}
             onChange={event => setDescriptionValue(event.currentTarget.value)}

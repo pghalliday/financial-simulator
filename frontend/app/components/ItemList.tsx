@@ -13,25 +13,25 @@ export interface ToDeleteData {
     name: string
 }
 
-export function ItemList({items, types, href, onAdd, onDelete}: {
+export function ItemList({items, itemTypes, href, onAdd, onDelete}: {
     items: Item[],
-    types?: Record<string, string>,
+    itemTypes?: Record<string, string>,
     href: (id: string) => string,
     onAdd: () => void,
     onDelete: (toDeleteData: ToDeleteData) => void,
 }) {
     function TypeH() {
-        if (types === undefined) {
+        if (itemTypes === undefined) {
             return null
         }
         return <Table.Th>Type</Table.Th>
     }
 
     function TypeD({item}: { item: Item }) {
-        if (types === undefined) {
+        if (itemTypes === undefined) {
             return null
         }
-        return <Table.Td>{types[item.type!]}</Table.Td>
+        return <Table.Td>{itemTypes[item.type!]}</Table.Td>
     }
 
     const rows = items.map(item => (

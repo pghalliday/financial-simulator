@@ -5,22 +5,22 @@ export function ConfirmDeleteModal(
         opened,
         onConfirm,
         onCancel,
-        label,
-        name,
+        collectionLabel,
+        itemName,
     }: {
         opened: boolean,
         onConfirm: () => void,
         onCancel: () => void,
-        label: string,
-        name: string,
+        collectionLabel: string,
+        itemName: string,
     }
 ) {
     return <Modal
         opened={opened}
         onClose={onCancel}
-        title={`Confirm delete ${label}`}
+        title={`Confirm delete ${collectionLabel}`}
     >
-        <Text>{`Are you sure you want to delete ${label}: "${name}"?`}</Text>
+        <Text>{`Are you sure you want to delete ${collectionLabel}: "${itemName}"?`}</Text>
         <Space h={20}/>
         <Group justify="flex-end">
             <Button
