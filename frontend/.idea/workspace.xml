@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93565140-8846-4472-bdaf-36985489ef20" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/NavLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/NavLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/HeaderDataProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/HeaderDataProvider.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +15,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -71,7 +70,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760022135007</updated>
-      <workItem from="1760022136773" duration="72476000" />
+      <workItem from="1760022136773" duration="76795000" />
     </task>
     <servers />
   </component>

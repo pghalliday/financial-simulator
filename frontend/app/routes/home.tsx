@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import type {Route} from "./+types/home";
 import {useHeaderData} from "~/components/HeaderDataProvider";
-import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_NAME, TITLE} from "~/strings";
+import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_PAGE_DESCRIPTION, PAGE_TITLE} from "~/strings";
 
 export async function clientLoader({params}: Route.LoaderArgs) {
     //                           ^? { scenarioId: string }
@@ -10,8 +10,8 @@ export async function clientLoader({params}: Route.LoaderArgs) {
 export default function CompareScenarios({params}: Route.ComponentProps) {
     const [_, setHeaderData] = useHeaderData();
 
-    const description = COMPARE_SCENARIOS_NAME;
-    const title = TITLE(description)
+    const description = COMPARE_SCENARIOS_PAGE_DESCRIPTION;
+    const title = PAGE_TITLE(description)
 
     useEffect(() => {
         setHeaderData({

@@ -1,58 +1,45 @@
-import {useEffect} from "react";
 import type {Route} from "./+types/entity";
-import {useHeaderData} from "~/components/HeaderDataProvider";
 import {
     COMPARE_SCENARIOS_HREF,
-    COMPARE_SCENARIOS_NAME,
+    COMPARE_SCENARIOS_PAGE_DESCRIPTION,
     ENTITIES_HREF,
-    ENTITIES_NAME,
+    ENTITIES_PAGE_DESCRIPTION,
     ENTITY_HREF,
-    ENTITY_NAME,
-    TITLE
+    ENTITY_PAGE_DESCRIPTION,
+    PAGE_TITLE
 } from "~/strings";
 import {getItemEntitiesItemIdGet} from "~/client";
-import {ApiError} from "~/ApiError";
+import {ItemPage} from "~/components/ItemPage";
 
-export async function clientLoader({params}: Route.ClientLoaderArgs) {
-    const {data, error, response} = await getItemEntitiesItemIdGet({
-        path: {item_id: params.entityId},
-    });
-    if (data !== undefined) {
-        return data
-    }
-    throw new ApiError(response.status, response.statusText, error)
-}
-
-export default function Entity({loaderData: entity}: Route.ComponentProps) {
-    const [_, setHeaderData] = useHeaderData();
-
-    const description = ENTITY_NAME(entity.name)
-    const title = TITLE(description)
-
-    useEffect(() => {
-        setHeaderData({
-            title: title,
-            breadcrumbs: [
+export default function Entity({params}: Route.ComponentProps) {
+    return <ItemPage
+        itemId={params.entityId}
+        getItem={itemId => getItemEntitiesItemIdGet({
+            path: {
+                item_id: itemId,
+            },
+        })}
+        getTitle={(itemId, item) => {
+            return PAGE_TITLE(ENTITY_PAGE_DESCRIPTION(item === undefined ? itemId : item.name))
+        }}
+        getDescription={(itemId, item) => {
+            return ENTITY_PAGE_DESCRIPTION(item === undefined ? itemId : item.name)
+        }}
+        getBreadcrumbs={(itemId, item) => {
+            return [
                 {
-                    title: COMPARE_SCENARIOS_NAME,
+                    title: COMPARE_SCENARIOS_PAGE_DESCRIPTION,
                     href: COMPARE_SCENARIOS_HREF,
                 },
                 {
-                    title: ENTITIES_NAME,
+                    title: ENTITIES_PAGE_DESCRIPTION,
                     href: ENTITIES_HREF,
                 },
                 {
-                    title: entity.name,
-                    href: ENTITY_HREF(entity.id),
+                    title: item === undefined ? itemId : item.name,
+                    href: ENTITY_HREF(itemId),
                 },
-            ],
-        });
-    }, []);
-
-    return <>
-        <title>{title}</title>
-        <meta property="og:title" content={title}/>
-        <meta property="description" content={description}/>
-        {entity.name}
-    </>
+            ]
+        }}
+    />
 }

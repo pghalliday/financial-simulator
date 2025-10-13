@@ -4,11 +4,11 @@ import {NavbarLink} from "~/components/NavbarLink";
 import {useHeaderData} from "~/components/HeaderDataProvider";
 import {
     COMPARE_SCENARIOS_HREF,
-    COMPARE_SCENARIOS_NAME,
+    COMPARE_SCENARIOS_PAGE_DESCRIPTION,
     ENTITIES_HREF,
-    ENTITIES_NAME,
+    ENTITIES_PAGE_DESCRIPTION,
     SCENARIOS_HREF,
-    SCENARIOS_NAME
+    SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
 
 export function NavLayout({children}: { children: React.ReactNode }) {
@@ -24,7 +24,7 @@ export function NavLayout({children}: { children: React.ReactNode }) {
     return (
         <AppShell
             padding="md"
-            header={{height: 60}}
+            header={{height: 80}}
             navbar={{
                 width: 250,
                 breakpoint: 'xs',
@@ -60,17 +60,17 @@ export function NavLayout({children}: { children: React.ReactNode }) {
             <AppShell.Navbar>
                 <NavbarLink
                     href={COMPARE_SCENARIOS_HREF}
-                    label={COMPARE_SCENARIOS_NAME}
+                    label={COMPARE_SCENARIOS_PAGE_DESCRIPTION}
                     onClick={close}
                 />
                 <NavbarLink
                     href={SCENARIOS_HREF}
-                    label={SCENARIOS_NAME}
+                    label={SCENARIOS_PAGE_DESCRIPTION}
                     onClick={close}
                 />
                 <NavbarLink
                     href={ENTITIES_HREF}
-                    label={ENTITIES_NAME}
+                    label={ENTITIES_PAGE_DESCRIPTION}
                     onClick={close}
                 />
             </AppShell.Navbar>

@@ -1,11 +1,11 @@
 import {CollectionPage} from "~/components/CollectionPage";
 import {
     COMPARE_SCENARIOS_HREF,
-    COMPARE_SCENARIOS_NAME,
+    COMPARE_SCENARIOS_PAGE_DESCRIPTION,
+    PAGE_TITLE,
     SCENARIO_HREF,
     SCENARIOS_HREF,
-    SCENARIOS_NAME,
-    TITLE
+    SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
 import {
     deleteItemScenariosItemIdDelete,
@@ -14,14 +14,14 @@ import {
     type ScenarioPost
 } from "~/client";
 
-const COLLECTION_TITLE = TITLE(SCENARIOS_NAME);
+const COLLECTION_TITLE = PAGE_TITLE(SCENARIOS_PAGE_DESCRIPTION);
 const BREADCRUMBS = [
     {
-        title: COMPARE_SCENARIOS_NAME,
+        title: COMPARE_SCENARIOS_PAGE_DESCRIPTION,
         href: COMPARE_SCENARIOS_HREF,
     },
     {
-        title: SCENARIOS_NAME,
+        title: SCENARIOS_PAGE_DESCRIPTION,
         href: SCENARIOS_HREF,
     },
 ];
@@ -29,7 +29,7 @@ const BREADCRUMBS = [
 export default function Entities() {
     return <CollectionPage
         collectionTitle={COLLECTION_TITLE}
-        collectionDescription={SCENARIOS_NAME}
+        collectionDescription={SCENARIOS_PAGE_DESCRIPTION}
         itemHref={SCENARIO_HREF}
         breadcrumbs={BREADCRUMBS}
         getItems={getItemsScenariosGet}

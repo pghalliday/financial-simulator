@@ -9,13 +9,8 @@ export interface HeaderData {
 }
 
 const DEFAULT_HEADER_DATA: HeaderData = {
-    title: "Financial Simulator - Compare scenarios",
-    breadcrumbs: [
-        {
-            title: "Compare scenarios",
-            href: "/"
-        },
-    ],
+    title: "Financial Simulator",
+    breadcrumbs: [],
 };
 
 

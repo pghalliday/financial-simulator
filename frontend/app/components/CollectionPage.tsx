@@ -5,24 +5,7 @@ import {ConfirmDeleteModal} from "~/components/ConfirmDeleteModal";
 import {useCallback, useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Box, LoadingOverlay} from "@mantine/core";
-
-interface APIRequestData {
-    request: Request
-    response: Response
-}
-
-interface APISuccessResult<T> {
-    data: T
-    error: undefined
-}
-
-interface APIErrorResult {
-    data: undefined
-    error: unknown
-}
-
-type APIItems = (APISuccessResult<Item[]> & APIRequestData) | (APIErrorResult & APIRequestData)
-type APIItem = (APISuccessResult<Item> & APIRequestData) | (APIErrorResult & APIRequestData)
+import type {APIItem, APIItems} from "~/lib/api";
 
 interface ListPageProps {
     collectionTitle: string
@@ -74,7 +57,7 @@ export function CollectionPage({
         setHeaderData({
             title: collectionTitle,
             breadcrumbs: breadcrumbs,
-        });
+        })
         startLoading()
         getItems().then(({data, error, response}) => {
             if (data != undefined) {

@@ -1,58 +1,45 @@
-import {useEffect} from "react";
 import type {Route} from "./+types/scenario";
-import {useHeaderData} from "~/components/HeaderDataProvider";
 import {
     COMPARE_SCENARIOS_HREF,
-    COMPARE_SCENARIOS_NAME,
+    COMPARE_SCENARIOS_PAGE_DESCRIPTION,
+    PAGE_TITLE,
     SCENARIO_HREF,
-    SCENARIO_NAME,
+    SCENARIO_PAGE_DESCRIPTION,
     SCENARIOS_HREF,
-    SCENARIOS_NAME,
-    TITLE
+    SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
 import {getItemScenariosItemIdGet} from "~/client";
-import {ApiError} from "~/ApiError";
+import {ItemPage} from "~/components/ItemPage";
 
-export async function clientLoader({params}: Route.ClientLoaderArgs) {
-    const {data, error, response} = await getItemScenariosItemIdGet({
-        path: {item_id: params.scenarioId},
-    });
-    if (data !== undefined) {
-        return data
-    }
-    throw new ApiError(response.status, response.statusText, error)
-}
-
-export default function Scenario({loaderData: scenario}: Route.ComponentProps) {
-    const [_, setHeaderData] = useHeaderData();
-
-    const description = SCENARIO_NAME(scenario.name)
-    const title = TITLE(description)
-
-    useEffect(() => {
-        setHeaderData({
-            title: title,
-            breadcrumbs: [
+export default function Scenario({params}: Route.ComponentProps) {
+    return <ItemPage
+        itemId={params.scenarioId}
+        getItem={itemId => getItemScenariosItemIdGet({
+            path: {
+                item_id: itemId,
+            },
+        })}
+        getTitle={(itemId, item) => {
+            return PAGE_TITLE(SCENARIO_PAGE_DESCRIPTION(item === undefined ? itemId : item.name))
+        }}
+        getDescription={(itemId, item) => {
+            return SCENARIO_PAGE_DESCRIPTION(item === undefined ? itemId : item.name)
+        }}
+        getBreadcrumbs={(itemId, item) => {
+            return [
                 {
-                    title: COMPARE_SCENARIOS_NAME,
+                    title: COMPARE_SCENARIOS_PAGE_DESCRIPTION,
                     href: COMPARE_SCENARIOS_HREF,
                 },
                 {
-                    title: SCENARIOS_NAME,
+                    title: SCENARIOS_PAGE_DESCRIPTION,
                     href: SCENARIOS_HREF,
                 },
                 {
-                    title: scenario.name,
-                    href: SCENARIO_HREF(scenario.id),
+                    title: item === undefined ? itemId : item.name,
+                    href: SCENARIO_HREF(itemId),
                 },
-            ],
-        });
-    }, []);
-
-    return <>
-        <title>{title}</title>
-        <meta property="og:title" content={title}/>
-        <meta property="description" content={description}/>
-        {scenario.name}
-    </>
+            ]
+        }}
+    />
 }

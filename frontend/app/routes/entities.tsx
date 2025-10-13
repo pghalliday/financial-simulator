@@ -1,12 +1,12 @@
 import {CollectionPage} from "~/components/CollectionPage";
 import {
     COMPARE_SCENARIOS_HREF,
-    COMPARE_SCENARIOS_NAME,
+    COMPARE_SCENARIOS_PAGE_DESCRIPTION,
     ENTITIES_HREF,
-    ENTITIES_NAME,
+    ENTITIES_PAGE_DESCRIPTION,
     ENTITY_HREF,
     ENTITY_TYPES,
-    TITLE
+    PAGE_TITLE
 } from "~/strings";
 import {
     type CorporationEntityPost,
@@ -16,14 +16,14 @@ import {
     postItemEntitiesPost
 } from "~/client";
 
-const COLLECTION_TITLE = TITLE(ENTITIES_NAME);
+const COLLECTION_TITLE = PAGE_TITLE(ENTITIES_PAGE_DESCRIPTION);
 const BREADCRUMBS = [
     {
-        title: COMPARE_SCENARIOS_NAME,
+        title: COMPARE_SCENARIOS_PAGE_DESCRIPTION,
         href: COMPARE_SCENARIOS_HREF,
     },
     {
-        title: ENTITIES_NAME,
+        title: ENTITIES_PAGE_DESCRIPTION,
         href: ENTITIES_HREF,
     },
 ];
@@ -31,7 +31,7 @@ const BREADCRUMBS = [
 export default function Entities() {
     return <CollectionPage
         collectionTitle={COLLECTION_TITLE}
-        collectionDescription={ENTITIES_NAME}
+        collectionDescription={ENTITIES_PAGE_DESCRIPTION}
         itemHref={ENTITY_HREF}
         breadcrumbs={BREADCRUMBS}
         itemTypes={ENTITY_TYPES}
