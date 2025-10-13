@@ -12,6 +12,7 @@
   "dependencies": {
     "@mantine/core": "^8.3.3",
     "@mantine/hooks": "^8.3.3",
+    "@mantine/notifications": "^8.3.4",
     "@react-router/node": "^7.9.2",
     "@react-router/serve": "^7.9.2",
     "@tabler/icons-react": "^3.35.0",

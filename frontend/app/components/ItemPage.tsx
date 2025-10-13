@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Box, LoadingOverlay} from "@mantine/core";
 import type {APIItem} from "~/lib/api";
+import {notifyError} from "~/lib/errors";
 
 interface ItemPageProps {
     itemId: string
@@ -40,7 +41,7 @@ export function ItemPage({
             if (data != undefined) {
                 setItem(data)
             } else {
-                console.error(`${response.status}: ${response.statusText}: ${error}`)
+                notifyError('Get item error', response, error)
             }
         }).finally(stopLoading)
     }, []);

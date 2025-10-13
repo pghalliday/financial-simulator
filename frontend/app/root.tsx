@@ -7,9 +7,12 @@ import type {Route} from "./+types/root";
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
+
 import {NavLayout} from "~/components/NavLayout";
 import {HeaderDataProvider} from "~/components/HeaderDataProvider";
 import {ApiError} from "~/ApiError";
+import { Notifications } from "@mantine/notifications";
 
 export function Layout({children}: { children: React.ReactNode }) {
     return (
@@ -24,6 +27,7 @@ export function Layout({children}: { children: React.ReactNode }) {
         </head>
         <body>
         <MantineProvider>
+            <Notifications/>
             <HeaderDataProvider>
                 <NavLayout>{children}</NavLayout>
             </HeaderDataProvider>

@@ -6,6 +6,7 @@ import {useCallback, useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Box, LoadingOverlay} from "@mantine/core";
 import type {APIItem, APIItems} from "~/lib/api";
+import {notifyError} from "~/lib/errors";
 
 interface ListPageProps {
     collectionTitle: string
@@ -63,7 +64,7 @@ export function CollectionPage({
             if (data != undefined) {
                 setItems(data)
             } else {
-                console.error(`${response.status}: ${response.statusText}: ${error}`)
+                notifyError('Get items error', response, error)
             }
         }).finally(stopLoading)
     }, []);
@@ -75,7 +76,7 @@ export function CollectionPage({
                 setItems(items.concat([data]))
                 closeAddItem()
             } else {
-                console.error(`${response.status}: ${response.statusText}: ${error}`)
+                notifyError('Add item error', response, error)
             }
         }).finally(stopAddItemWorking)
     }, [items]);
@@ -87,7 +88,7 @@ export function CollectionPage({
                 setItems(items.filter(entity => entity.id !== data.id))
                 closeConfirmDelete()
             } else {
-                console.error(`${response.status}: ${response.statusText}: ${error}`)
+                notifyError('Delete item error', response, error)
             }
         }).finally(stopConfirmDeleteWorking)
     }, [items]);
