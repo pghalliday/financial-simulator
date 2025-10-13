@@ -19,13 +19,13 @@ export default function Entity({params}: Route.ComponentProps) {
                 item_id: itemId,
             },
         })}
-        getTitle={(itemId, item) => {
-            return PAGE_TITLE(ENTITY_PAGE_DESCRIPTION(item === undefined ? itemId : item.name))
+        getTitle={(itemId, itemName) => {
+            return PAGE_TITLE(ENTITY_PAGE_DESCRIPTION(itemName === null ? itemId : itemName))
         }}
-        getDescription={(itemId, item) => {
-            return ENTITY_PAGE_DESCRIPTION(item === undefined ? itemId : item.name)
+        getDescription={(itemId, itemName) => {
+            return ENTITY_PAGE_DESCRIPTION(itemName === null ? itemId : itemName)
         }}
-        getBreadcrumbs={(itemId, item) => {
+        getBreadcrumbs={(itemId, itemName) => {
             return [
                 {
                     title: COMPARE_SCENARIOS_PAGE_DESCRIPTION,
@@ -36,7 +36,7 @@ export default function Entity({params}: Route.ComponentProps) {
                     href: ENTITIES_HREF,
                 },
                 {
-                    title: item === undefined ? itemId : item.name,
+                    title: itemName === null ? itemId : itemName,
                     href: ENTITY_HREF(itemId),
                 },
             ]

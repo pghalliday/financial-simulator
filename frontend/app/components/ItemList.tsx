@@ -1,5 +1,6 @@
 import {ActionIcon, Anchor, Group, Table} from "@mantine/core";
 import {IconCirclePlus, IconTrash} from "@tabler/icons-react";
+import {createSearchParams, Link} from "react-router"
 
 export interface Item {
     id: string
@@ -37,7 +38,9 @@ export function ItemList({items, itemTypes, href, onAdd, onDelete}: {
     const rows = items.map(item => (
         <Table.Tr key={item.id}>
             <Table.Td>
-                <Anchor href={href(item.id)}>{item.name}</Anchor>
+                <Anchor component={Link} to={`${href(item.id)}?${createSearchParams({name: item.name})}`}>
+                    {item.name}
+                </Anchor>
             </Table.Td>
             <TypeD item={item}/>
             <Table.Td>{item.description}</Table.Td>

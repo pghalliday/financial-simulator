@@ -1,4 +1,4 @@
-import { notifications } from "@mantine/notifications";
+import {notifications} from "@mantine/notifications";
 
 export function notifyError(title: string, response: Response, error: unknown) {
     notifications.show({

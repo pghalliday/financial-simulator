@@ -1,4 +1,4 @@
-import {Button, Group, LoadingOverlay, Modal, Select, Space, TextInput} from "@mantine/core";
+import {Button, Group, LoadingOverlay, Modal, Select, Space, TextInput, Title} from "@mantine/core";
 import {useEffect, useState} from "react";
 
 export interface ToAddData {
@@ -55,7 +55,7 @@ export function AddItemModal(
     return <Modal
         opened={opened}
         onClose={onCancel}
-        title={`Add ${collectionLabel}`}
+        title={<Title order={4}>{`Add ${collectionLabel}`}</Title>}
     >
         <LoadingOverlay
             visible={working}

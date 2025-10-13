@@ -1,4 +1,4 @@
-import {Button, Group, LoadingOverlay, Modal, Space, Text} from "@mantine/core";
+import {Button, Group, LoadingOverlay, Modal, Space, Text, Title} from "@mantine/core";
 
 export function ConfirmDeleteModal(
     {
@@ -20,7 +20,7 @@ export function ConfirmDeleteModal(
     return <Modal
         opened={opened}
         onClose={onCancel}
-        title={`Confirm delete ${collectionLabel}`}
+        title={<Title order={4}>{`Confirm delete ${collectionLabel}`}</Title>}
     >
         <LoadingOverlay
             visible={working}

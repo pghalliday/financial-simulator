@@ -10,16 +10,24 @@ import {
     SCENARIOS_HREF,
     SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
+import {type ReactElement, useEffect, useState} from 'react';
 
 export function NavLayout({children}: { children: React.ReactNode }) {
     const [opened, {toggle, close}] = useDisclosure();
     const [headerData] = useHeaderData();
+    const [title, setTitle] = useState<string>("Financial Simulator")
+    const [breadcrumbs, setBreadcrumbs] = useState<ReactElement[]>([])
 
-    const breadcrumbs = headerData.breadcrumbs.map(breadcrumb => (
-        <Anchor href={breadcrumb.href}>
-            {breadcrumb.title}
-        </Anchor>
-    ))
+    useEffect(() => {
+        if (headerData !== undefined) {
+            setTitle(headerData.title)
+            setBreadcrumbs(headerData.breadcrumbs.map(breadcrumb => (
+                <Anchor href={breadcrumb.href}>
+                    {breadcrumb.title}
+                </Anchor>
+            )))
+        }
+    }, [headerData]);
 
     return (
         <AppShell
@@ -47,8 +55,8 @@ export function NavLayout({children}: { children: React.ReactNode }) {
                         size="sm"
                     />
                     <Stack gap={2}>
-                        <Title size="lg">
-                            {headerData.title}
+                        <Title order={4}>
+                            {title}
                         </Title>
                         <Breadcrumbs separator="→" separatorMargin="md" mt="xs">
                             {breadcrumbs}

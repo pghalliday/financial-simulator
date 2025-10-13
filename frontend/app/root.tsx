@@ -12,7 +12,7 @@ import '@mantine/notifications/styles.css';
 import {NavLayout} from "~/components/NavLayout";
 import {HeaderDataProvider} from "~/components/HeaderDataProvider";
 import {ApiError} from "~/ApiError";
-import { Notifications } from "@mantine/notifications";
+import {Notifications} from "@mantine/notifications";
 
 export function Layout({children}: { children: React.ReactNode }) {
     return (

@@ -8,19 +8,13 @@ export interface HeaderData {
     }[]
 }
 
-const DEFAULT_HEADER_DATA: HeaderData = {
-    title: "Financial Simulator",
-    breadcrumbs: [],
-};
-
-
 const HeaderDataStateContext = createContext<[
-    HeaderData,
-    Dispatch<SetStateAction<HeaderData>>
+        HeaderData | undefined,
+    Dispatch<SetStateAction<HeaderData | undefined>>
 ] | undefined>(undefined);
 
 export function HeaderDataProvider({children}: PropsWithChildren<{}>) {
-    const headerDataState = useState<HeaderData>(DEFAULT_HEADER_DATA);
+    const headerDataState = useState<HeaderData>();
     return <HeaderDataStateContext.Provider value={headerDataState}>
         {children}
     </HeaderDataStateContext.Provider>
