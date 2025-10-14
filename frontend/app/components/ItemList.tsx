@@ -48,7 +48,10 @@ function Th({children, reversed, sorted, onSort}: ThProps) {
 function filterData(data: RowData[], search: string) {
     const query = search.toLowerCase().trim();
     return data.filter((item) =>
-        keys(data[0]).some((key) => item[key]!.toLowerCase().includes(query))
+        keys(data[0]).some((key) => {
+            return ["name", "description"]
+                .includes(key) ? item[key]!.toLowerCase().includes(query) : false
+        })
     );
 }
 
@@ -152,7 +155,7 @@ export function ItemList({data, itemTypes, href, onAdd, onDelete}: {
 
     return <Table.ScrollContainer minWidth={600}>
         <TextInput
-            placeholder="Search by any field"
+            placeholder="Search by name or description"
             mb="md"
             leftSection={<IconSearch size={16} stroke={1.5}/>}
             value={search}
