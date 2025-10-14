@@ -3,9 +3,8 @@ import {type RowData} from "~/components/controls/item_list/ItemList";
 import {useCallback, useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Box, Button, Group, LoadingOverlay, Space, Stack, TextInput, Title} from "@mantine/core";
-import type {APIItem} from "~/lib/api_results";
-import {notifyError} from "~/lib/errors";
 import {useSearchParams} from "react-router";
+import {type APIResult, callApi} from "~/lib/api_wrapper";
 
 interface PutData {
     type?: string
@@ -20,8 +19,8 @@ interface ItemPageProps {
     getTitle: (itemId: string, itemName: string | null) => string
     getDescription: (itemId: string, itemName: string | null) => string
     getBreadcrumbs: (itemId: string, itemName: string | null) => { title: string, href: string }[]
-    getItem: (itemId: string) => Promise<APIItem>
-    putItem: (itemId: string, data: PutData) => Promise<APIItem>
+    getItem: <T extends RowData>(itemId: string) => Promise<APIResult<T>>
+    putItem: <T extends RowData>(itemId: string, data: PutData) => Promise<APIResult<T>>
 }
 
 export function ItemPage({
@@ -53,17 +52,13 @@ export function ItemPage({
             title: getTitle(itemId, name),
             breadcrumbs: getBreadcrumbs(itemId, name),
         })
-    }, []);
-
-    useEffect(() => {
-        startLoading()
-        getItem(itemId).then(({data, error, response}) => {
-            if (data != undefined) {
-                setItem(data)
-            } else {
-                notifyError('Get item error', response, error)
-            }
-        }).finally(stopLoading)
+        callApi({
+            api: () => getItem(itemId),
+            errorTitle: "Get item error",
+            onSuccess: setItem,
+            startLoading,
+            stopLoading,
+        });
     }, []);
 
     useEffect(() => {
@@ -110,18 +105,17 @@ export function ItemPage({
 
     const save = useCallback(() => {
         if (item) {
-            startLoading()
-            putItem(itemId, {
-                type: typeIndicatorValue,
-                name: nameInputValue,
-                description: descriptionInputValue,
-            }).then(({data, error, response}) => {
-                if (data != undefined) {
-                    setItem(data)
-                } else {
-                    notifyError('Save item error', response, error)
-                }
-            }).finally(stopLoading)
+            callApi({
+                api: () => putItem(itemId, {
+                    type: typeIndicatorValue,
+                    name: nameInputValue,
+                    description: descriptionInputValue,
+                }),
+                errorTitle: "Save item error",
+                onSuccess: setItem,
+                startLoading,
+                stopLoading,
+            });
         }
     }, [item, nameInputValue, descriptionInputValue, typeIndicatorValue])
 

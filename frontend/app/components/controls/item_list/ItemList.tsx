@@ -106,13 +106,21 @@ function sortData(
     );
 }
 
-export function ItemList({data, itemTypes, href, onAdd, onDelete}: {
+export interface ItemListProps {
     data: RowData[],
     itemTypes?: Record<string, string>,
     href: (id: string) => string,
     onAdd: () => void,
     onDelete: (toDeleteData: ToDeleteData) => void,
-}) {
+}
+
+export function ItemList({
+                             data,
+                             itemTypes,
+                             href,
+                             onAdd,
+                             onDelete
+                         }: ItemListProps) {
     const [search, setSearch] = useState(DEFAULT_SEARCH);
     const [sortBy, setSortBy] = useState<SortBy[]>(DEFAULT_SORT_BY);
     const [sortedData, setSortedData] = useState<RowData[]>([]);

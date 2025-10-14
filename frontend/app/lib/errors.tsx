@@ -4,8 +4,10 @@ import type {ReactNode} from "react";
 import type {HttpChangeTypeError, HttpDatabaseIntegrityError, HttpNotFoundError, HttpValidationError,} from "~/client";
 
 const SCROLL_AREA_HEIGHT = 100;
+const SCROLL_AREA_2_LINE_HEIGHT = 50;
 const STACK_GAP = "xs"
 const TEXT_SIZE = "xs"
+const FAILED_TO_FETCH_ERROR = "TypeError: Failed to fetch"
 
 function isNotFoundError(response: Response, error: unknown): error is HttpNotFoundError {
     // @ts-ignore
@@ -64,6 +66,23 @@ export function notifyError(title: string, response: Response, error: unknown) {
                 <Text size={TEXT_SIZE}>statement: {message_parts[1]}</Text>
                 <Text size={TEXT_SIZE}>parameters: {message_parts[2]}</Text>
                 <Text size={TEXT_SIZE}>background: {message_parts[3]}</Text>
+            </Stack>
+        </ScrollArea>
+    }
+    notifications.show({
+        color: 'red',
+        title,
+        message,
+    })
+}
+
+export function notifyAnyError(title: string, error: any) {
+    let message = error.toString();
+    if (message === FAILED_TO_FETCH_ERROR) {
+        message = <ScrollArea h={SCROLL_AREA_2_LINE_HEIGHT}>
+            <Stack gap={STACK_GAP}>
+                <Text size={TEXT_SIZE}>{message}</Text>
+                <Text size={TEXT_SIZE}>Is the API server running?</Text>
             </Stack>
         </ScrollArea>
     }

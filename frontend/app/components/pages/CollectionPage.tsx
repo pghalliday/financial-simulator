@@ -5,8 +5,7 @@ import {ConfirmDeleteModal} from "~/components/modals/ConfirmDeleteModal";
 import {useCallback, useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Box, LoadingOverlay} from "@mantine/core";
-import type {APIItem, APIItems} from "~/lib/api_results";
-import {notifyError} from "~/lib/errors";
+import {type APIResult, callApi} from "~/lib/api_wrapper";
 
 interface ListPageProps {
     collectionTitle: string
@@ -15,9 +14,9 @@ interface ListPageProps {
     itemHref: (itemId: string) => string
     breadcrumbs: { title: string, href: string }[]
     itemTypes?: Record<string, string>
-    getItems: () => Promise<APIItems>
-    postItem: (toAddData: ToAddData) => Promise<APIItem>
-    deleteItem: (itemId: string) => Promise<APIItem>
+    getItems: <T extends RowData>() => Promise<APIResult<T[]>>
+    postItem: <T extends RowData>(toAddData: ToAddData) => Promise<APIResult<T>>
+    deleteItem: <T extends RowData>(itemId: string) => Promise<APIResult<T>>
 }
 
 export function CollectionPage({
@@ -61,38 +60,39 @@ export function CollectionPage({
             title: collectionTitle,
             breadcrumbs: breadcrumbs,
         })
-        startLoading()
-        getItems().then(({data, error, response}) => {
-            if (data != undefined) {
-                setItems(data)
-            } else {
-                notifyError('Get items error', response, error)
-            }
-        }).finally(stopLoading)
+        callApi({
+            api: () => getItems(),
+            errorTitle: "Get items error",
+            onSuccess: setItems,
+            startLoading,
+            stopLoading,
+        });
     }, []);
 
     const addItem = useCallback((toAddData: ToAddData) => {
-        startAddItemWorking()
-        postItem(toAddData).then(({data, error, response}) => {
-            if (data != undefined) {
+        callApi({
+            api: () => postItem(toAddData),
+            errorTitle: "Add item error",
+            onSuccess: (data) => {
                 setItems(items.concat([data]))
                 closeAddItem()
-            } else {
-                notifyError('Add item error', response, error)
-            }
-        }).finally(stopAddItemWorking)
+            },
+            startLoading: startAddItemWorking,
+            stopLoading: stopAddItemWorking,
+        });
     }, [items]);
 
     const removeItem = useCallback((itemId: string) => {
-        startConfirmDeleteWorking()
-        deleteItem(itemId).then(({data, error, response}) => {
-            if (data != undefined) {
+        callApi({
+            api: () => deleteItem(itemId),
+            errorTitle: "Delete item error",
+            onSuccess: (data) => {
                 setItems(items.filter(item => item.id !== data.id))
                 closeConfirmDelete()
-            } else {
-                notifyError('Delete item error', response, error)
-            }
-        }).finally(stopConfirmDeleteWorking)
+            },
+            startLoading: startConfirmDeleteWorking,
+            stopLoading: stopConfirmDeleteWorking,
+        });
     }, [items]);
 
     return <Box pos="relative">
