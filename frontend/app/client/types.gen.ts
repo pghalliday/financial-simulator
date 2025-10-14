@@ -9,6 +9,10 @@ export type ClientOptions = {
  */
 export type ChangeTypeError = {
     /**
+     * Type
+     */
+    type?: 'change-type';
+    /**
      * Current Type
      */
     current_type: string;
@@ -77,6 +81,20 @@ export type CorporationEntityPost = {
 };
 
 /**
+ * DatabaseIntegrityError
+ */
+export type DatabaseIntegrityError = {
+    /**
+     * Type
+     */
+    type?: 'database-integrity';
+    /**
+     * Message
+     */
+    message: string;
+};
+
+/**
  * HTTPChangeTypeError
  */
 export type HttpChangeTypeError = {
@@ -84,13 +102,10 @@ export type HttpChangeTypeError = {
 };
 
 /**
- * HTTPIntegrityError
+ * HTTPDatabaseIntegrityError
  */
-export type HttpIntegrityError = {
-    /**
-     * Detail
-     */
-    detail: string;
+export type HttpDatabaseIntegrityError = {
+    detail: DatabaseIntegrityError;
 };
 
 /**
@@ -172,6 +187,10 @@ export type IndividualEntityPost = {
  * NotFoundError
  */
 export type NotFoundError = {
+    /**
+     * Type
+     */
+    type?: 'not-found';
     /**
      * Id
      */
@@ -270,7 +289,7 @@ export type PostItemScenariosPostErrors = {
     /**
      * Database integrity error
      */
-    409: HttpIntegrityError;
+    409: HttpDatabaseIntegrityError;
     /**
      * Validation Error
      */
@@ -376,7 +395,7 @@ export type PatchItemScenariosItemIdPatchErrors = {
     /**
      * Database integrity error
      */
-    409: HttpIntegrityError;
+    409: HttpDatabaseIntegrityError;
     /**
      * Validation Error
      */
@@ -410,7 +429,7 @@ export type PutItemScenariosItemIdPutErrors = {
     /**
      * Database integrity error
      */
-    409: HttpIntegrityError;
+    409: HttpDatabaseIntegrityError;
     /**
      * Validation Error
      */
@@ -459,7 +478,7 @@ export type PostItemEntitiesPostErrors = {
     /**
      * Database integrity error
      */
-    409: HttpIntegrityError;
+    409: HttpDatabaseIntegrityError;
     /**
      * Validation Error
      */
@@ -572,7 +591,7 @@ export type PatchItemEntitiesItemIdPatchErrors = {
      * Response 409 Patch Item Entities  Item Id  Patch
      * Database error
      */
-    409: HttpIntegrityError | HttpChangeTypeError;
+    409: HttpDatabaseIntegrityError | HttpChangeTypeError;
     /**
      * Validation Error
      */
@@ -611,7 +630,7 @@ export type PutItemEntitiesItemIdPutErrors = {
      * Response 409 Put Item Entities  Item Id  Put
      * Database error
      */
-    409: HttpIntegrityError | HttpChangeTypeError;
+    409: HttpDatabaseIntegrityError | HttpChangeTypeError;
     /**
      * Validation Error
      */

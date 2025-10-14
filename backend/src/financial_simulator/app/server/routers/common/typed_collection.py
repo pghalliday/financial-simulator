@@ -21,7 +21,7 @@ from financial_simulator.app.database.schema import Base
 from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
     HTTPNotFoundError,
-    HTTPIntegrityError,
+    HTTPDatabaseIntegrityError,
     NotFoundError,
     HTTPChangeTypeError, ChangeTypeError,
 )
@@ -81,7 +81,7 @@ def create_router(
         response_model=get_model,
         responses={
             409: {
-                "model": HTTPIntegrityError,
+                "model": HTTPDatabaseIntegrityError,
                 "description": "Database integrity error",
             },
         },
@@ -99,7 +99,7 @@ def create_router(
         response_model=get_model,
         responses={
             409: {
-                "model": Union[HTTPIntegrityError, HTTPChangeTypeError],
+                "model": Union[HTTPDatabaseIntegrityError, HTTPChangeTypeError],
                 "description": "Database error",
             },
         },
@@ -127,7 +127,7 @@ def create_router(
         responses={
             404: {"model": HTTPNotFoundError, "description": "Not found"},
             409: {
-                "model": Union[HTTPIntegrityError, HTTPChangeTypeError],
+                "model": Union[HTTPDatabaseIntegrityError, HTTPChangeTypeError],
                 "description": "Database error",
             },
         },

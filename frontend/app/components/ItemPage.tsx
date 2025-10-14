@@ -3,7 +3,7 @@ import {type Item} from "~/components/ItemList";
 import {useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Box, LoadingOverlay} from "@mantine/core";
-import type {APIItem} from "~/lib/api";
+import type {APIItem} from "~/lib/api_results";
 import {notifyError} from "~/lib/errors";
 import {useSearchParams} from "react-router";
 

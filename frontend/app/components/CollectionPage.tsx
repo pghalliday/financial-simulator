@@ -5,7 +5,7 @@ import {ConfirmDeleteModal} from "~/components/ConfirmDeleteModal";
 import {useCallback, useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Box, LoadingOverlay} from "@mantine/core";
-import type {APIItem, APIItems} from "~/lib/api";
+import type {APIItem, APIItems} from "~/lib/api_results";
 import {notifyError} from "~/lib/errors";
 
 interface ListPageProps {

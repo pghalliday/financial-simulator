@@ -2,10 +2,12 @@ import logging
 import os
 
 from fastapi import FastAPI, Request, HTTPException
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.exc import IntegrityError
 
+from .errors import DatabaseIntegrityError
 from .routers import scenarios, entities
 from .server import LOG_LEVEL_ENV_VAR
 
@@ -29,7 +31,7 @@ app.add_middleware(
 
 @app.exception_handler(IntegrityError)
 async def db_integrity_error_exception_handler(request: Request, exc: IntegrityError) -> JSONResponse:
-    raise HTTPException(status_code=409, detail=str(exc))
+    raise HTTPException(status_code=409, detail=jsonable_encoder(DatabaseIntegrityError(message=str(exc))))
 
 
 app.include_router(scenarios.router)
