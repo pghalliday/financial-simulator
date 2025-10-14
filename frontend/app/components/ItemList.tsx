@@ -1,8 +1,10 @@
-import {ActionIcon, Anchor, Center, Group, Table, Text, TextInput, UnstyledButton} from "@mantine/core";
+import {ActionIcon, Anchor, Box, Center, Group, Table, Text, TextInput, UnstyledButton} from "@mantine/core";
 import {IconChevronDown, IconChevronUp, IconCirclePlus, IconSearch, IconSelector, IconTrash} from "@tabler/icons-react";
 import {createSearchParams, Link} from "react-router"
 import classes from './css/TableSort.module.css';
-import {type ReactElement, useEffect, useState} from "react";
+import {type ReactElement, useEffect, useLayoutEffect, useRef, useState} from "react";
+
+const VISIBLE_HEIGHT_OFFSET = 30
 
 const DEFAULT_REVERSED = false
 const DEFAULT_SEARCH = ""
@@ -115,6 +117,22 @@ export function ItemList({data, itemTypes, href, onAdd, onDelete}: {
     const [sortBy, setSortBy] = useState<SortBy[]>(DEFAULT_SORT_BY);
     const [sortedData, setSortedData] = useState<RowData[]>([]);
     const [rows, setRows] = useState<ReactElement[]>([])
+    const ref = useRef<HTMLDivElement>(null);
+    const [tableMaxHeight, setTableMaxHeight] = useState<number>(0);
+
+    useLayoutEffect(() => {
+        function measure() {
+            const {innerHeight} = window;
+            const {top} = ref.current!.getBoundingClientRect();
+            setTableMaxHeight(innerHeight - top - VISIBLE_HEIGHT_OFFSET)
+        }
+
+        measure()
+        window.addEventListener("resize", measure);
+        return () => {
+            window.removeEventListener("resize", measure);
+        };
+    }, [ref]);
 
     useEffect(() => {
         setSortedData(sortData(data, {sortBy, search}));
@@ -187,7 +205,7 @@ export function ItemList({data, itemTypes, href, onAdd, onDelete}: {
         return <Table.Td>{itemTypes[row.type!]}</Table.Td>
     }
 
-    return <Table.ScrollContainer minWidth={600}>
+    return <Box>
         <TextInput
             placeholder="Search by name or description"
             mb="md"
@@ -195,50 +213,54 @@ export function ItemList({data, itemTypes, href, onAdd, onDelete}: {
             value={search}
             onChange={handleSearchChange}
         />
-        <Table horizontalSpacing="md" verticalSpacing="xs" miw={700} stickyHeader>
-            <Table.Tbody>
-                <Table.Tr>
-                    <Th
-                        sorted={sortBy[0].field === 'name'}
-                        reversed={sortBy[0].reversed}
-                        onSort={() => setSorting('name')}
-                    >
-                        Name
-                    </Th>
-                    <TypeH/>
-                    <Th
-                        sorted={sortBy[0].field === 'description'}
-                        reversed={sortBy[0].reversed}
-                        onSort={() => setSorting('description')}
-                    >
-                        Description
-                    </Th>
-                    <Table.Th>
-                        <Group justify="center">
-                            <ActionIcon
-                                variant="transparent"
-                                size="sm"
-                                onClick={onAdd}
+        <Box ref={ref}>
+            <Table.ScrollContainer minWidth={600} maxHeight={tableMaxHeight}>
+                <Table horizontalSpacing="md" verticalSpacing="xs" miw={700} stickyHeader>
+                    <Table.Thead>
+                        <Table.Tr>
+                            <Th
+                                sorted={sortBy[0].field === 'name'}
+                                reversed={sortBy[0].reversed}
+                                onSort={() => setSorting('name')}
                             >
-                                <IconCirclePlus/>
-                            </ActionIcon>
-                        </Group>
-                    </Table.Th>
-                </Table.Tr>
-            </Table.Tbody>
-            <Table.Tbody>
-                {rows.length > 0 ? (
-                    rows
-                ) : (
-                    <Table.Tr>
-                        <Table.Td colSpan={itemTypes ? 4 : 3}>
-                            <Text fw={500} ta="center">
-                                Nothing found
-                            </Text>
-                        </Table.Td>
-                    </Table.Tr>
-                )}
-            </Table.Tbody>
-        </Table>
-    </Table.ScrollContainer>
+                                Name
+                            </Th>
+                            <TypeH/>
+                            <Th
+                                sorted={sortBy[0].field === 'description'}
+                                reversed={sortBy[0].reversed}
+                                onSort={() => setSorting('description')}
+                            >
+                                Description
+                            </Th>
+                            <Table.Th>
+                                <Group justify="center">
+                                    <ActionIcon
+                                        variant="transparent"
+                                        size="sm"
+                                        onClick={onAdd}
+                                    >
+                                        <IconCirclePlus/>
+                                    </ActionIcon>
+                                </Group>
+                            </Table.Th>
+                        </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
+                        {rows.length > 0 ? (
+                            rows
+                        ) : (
+                            <Table.Tr>
+                                <Table.Td colSpan={itemTypes ? 4 : 3}>
+                                    <Text fw={500} ta="center">
+                                        Nothing found
+                                    </Text>
+                                </Table.Td>
+                            </Table.Tr>
+                        )}
+                    </Table.Tbody>
+                </Table>
+            </Table.ScrollContainer>
+        </Box>
+    </Box>
 }
