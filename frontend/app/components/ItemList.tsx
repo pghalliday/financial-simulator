@@ -1,10 +1,9 @@
-import {ActionIcon, Anchor, Center, Group, keys, Table, Text, TextInput, UnstyledButton} from "@mantine/core";
+import {ActionIcon, Anchor, Center, Group, Table, Text, TextInput, UnstyledButton} from "@mantine/core";
 import {IconChevronDown, IconChevronUp, IconCirclePlus, IconSearch, IconSelector, IconTrash} from "@tabler/icons-react";
 import {createSearchParams, Link} from "react-router"
 import classes from './css/TableSort.module.css';
 import {type ReactElement, useEffect, useState} from "react";
 
-const DEFAULT_SORT_BY = "name"
 const DEFAULT_REVERSED = false
 const DEFAULT_SEARCH = ""
 
@@ -14,6 +13,24 @@ export interface RowData {
     description: string
     type?: string
 }
+
+const SEARCH_FIELDS: (keyof RowData)[] = ["name", "description"]
+
+interface SortBy {
+    field: keyof RowData,
+    reversed: boolean,
+}
+
+const DEFAULT_SORT_BY: SortBy[] = [{
+    field: "name",
+    reversed: DEFAULT_REVERSED,
+}, {
+    field: "description",
+    reversed: DEFAULT_REVERSED,
+}, {
+    field: "type",
+    reversed: DEFAULT_REVERSED,
+}]
 
 export interface ToDeleteData {
     id: string
@@ -48,16 +65,32 @@ function Th({children, reversed, sorted, onSort}: ThProps) {
 function filterData(data: RowData[], search: string) {
     const query = search.toLowerCase().trim();
     return data.filter((item) =>
-        keys(data[0]).some((key) => {
-            return ["name", "description"]
-                .includes(key) ? item[key]!.toLowerCase().includes(query) : false
-        })
-    );
+        SEARCH_FIELDS.some((key) =>
+            item[key]!.toLowerCase().includes(query)
+        ));
+}
+
+function compareField(a: RowData, b: RowData, sortBy: SortBy): number {
+    if (sortBy.reversed) {
+        return b[sortBy.field]!.localeCompare(a[sortBy.field]!);
+    }
+    return a[sortBy.field]!.localeCompare(b[sortBy.field]!);
+}
+
+function compare(a: RowData, b: RowData, sortBy: SortBy[]): number {
+    let result = 0
+    for (const s of sortBy) {
+        result = compareField(a, b, s)
+        if (result !== 0) {
+            return result
+        }
+    }
+    return result
 }
 
 function sortData(
     data: RowData[],
-    payload: { sortBy: keyof RowData | null; reversed: boolean; search: string }
+    payload: { sortBy: SortBy[]; search: string }
 ) {
     const {sortBy} = payload;
 
@@ -66,13 +99,7 @@ function sortData(
     }
 
     return filterData(
-        [...data].sort((a, b) => {
-            if (payload.reversed) {
-                return b[sortBy]!.localeCompare(a[sortBy]!);
-            }
-
-            return a[sortBy]!.localeCompare(b[sortBy]!);
-        }),
+        [...data].sort((a, b) => compare(a, b, sortBy)),
         payload.search
     );
 }
@@ -85,14 +112,13 @@ export function ItemList({data, itemTypes, href, onAdd, onDelete}: {
     onDelete: (toDeleteData: ToDeleteData) => void,
 }) {
     const [search, setSearch] = useState(DEFAULT_SEARCH);
-    const [sortBy, setSortBy] = useState<keyof RowData>(DEFAULT_SORT_BY);
-    const [reversed, setReversed] = useState(DEFAULT_REVERSED);
+    const [sortBy, setSortBy] = useState<SortBy[]>(DEFAULT_SORT_BY);
     const [sortedData, setSortedData] = useState<RowData[]>([]);
     const [rows, setRows] = useState<ReactElement[]>([])
 
     useEffect(() => {
-        setSortedData(sortData(data, {sortBy, reversed, search}));
-    }, [data, sortBy, reversed, search]);
+        setSortedData(sortData(data, {sortBy, search}));
+    }, [data, sortBy, search]);
 
     useEffect(() => {
         setRows(sortedData.map((row) => (
@@ -123,9 +149,17 @@ export function ItemList({data, itemTypes, href, onAdd, onDelete}: {
     }, [sortedData]);
 
     const setSorting = (field: keyof RowData) => {
-        const newReversed = field === sortBy ? !reversed : false;
-        setReversed(newReversed);
-        setSortBy(field);
+        if (field === sortBy[0].field) {
+            setSortBy([{
+                field,
+                reversed: !sortBy[0].reversed,
+            }, ...sortBy.slice(1)]);
+        } else {
+            setSortBy([{
+                field,
+                reversed: DEFAULT_REVERSED,
+            }, ...sortBy.filter(s => s.field !== field)])
+        }
     };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,8 +172,8 @@ export function ItemList({data, itemTypes, href, onAdd, onDelete}: {
             return null
         }
         return <Th
-            sorted={sortBy === 'type'}
-            reversed={reversed}
+            sorted={sortBy[0].field === 'type'}
+            reversed={sortBy[0].reversed}
             onSort={() => setSorting('type')}
         >
             Type
@@ -165,16 +199,16 @@ export function ItemList({data, itemTypes, href, onAdd, onDelete}: {
             <Table.Tbody>
                 <Table.Tr>
                     <Th
-                        sorted={sortBy === 'name'}
-                        reversed={reversed}
+                        sorted={sortBy[0].field === 'name'}
+                        reversed={sortBy[0].reversed}
                         onSort={() => setSorting('name')}
                     >
                         Name
                     </Th>
                     <TypeH/>
                     <Th
-                        sorted={sortBy === 'description'}
-                        reversed={reversed}
+                        sorted={sortBy[0].field === 'description'}
+                        reversed={sortBy[0].reversed}
                         onSort={() => setSorting('description')}
                     >
                         Description
