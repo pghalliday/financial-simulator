@@ -1,5 +1,5 @@
 import {useHeaderData} from "~/components/HeaderDataProvider";
-import {type Item} from "~/components/ItemList";
+import {type RowData} from "~/components/ItemList";
 import {useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Box, LoadingOverlay} from "@mantine/core";
@@ -26,7 +26,7 @@ export function ItemPage({
     const name = searchParams.get("name");
     const [_, setHeaderData] = useHeaderData();
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const [item, setItem] = useState<Item>()
+    const [item, setItem] = useState<RowData>()
     const [title, setTitle] = useState(getTitle(itemId, name))
     const [description, setDescription] = useState(getDescription(itemId, name))
     const [itemName, setItemName] = useState<string>()

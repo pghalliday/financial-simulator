@@ -1,5 +1,5 @@
 import {useHeaderData} from "~/components/HeaderDataProvider";
-import {type Item, ItemList, type ToDeleteData} from "~/components/ItemList";
+import {ItemList, type RowData, type ToDeleteData} from "~/components/ItemList";
 import {AddItemModal, type ToAddData} from "~/components/AddItemModal";
 import {ConfirmDeleteModal} from "~/components/ConfirmDeleteModal";
 import {useCallback, useEffect, useState} from "react";
@@ -30,7 +30,7 @@ export function CollectionPage({
                                    deleteItem,
                                }: ListPageProps) {
     const [_, setHeaderData] = useHeaderData();
-    const [items, setItems] = useState<Item[]>([])
+    const [items, setItems] = useState<RowData[]>([])
     const [addItemOpened, {open: openAddItem, close: closeAddItem}] = useDisclosure()
     const [confirmDeleteOpened, {open: openConfirmDelete, close: closeConfirmDelete}] = useDisclosure()
     const [toDeleteData, setToDeleteData] = useState<ToDeleteData>({
@@ -122,7 +122,7 @@ export function CollectionPage({
             itemName={toDeleteData.name}
         />
         <ItemList
-            items={items}
+            data={items}
             itemTypes={itemTypes}
             href={itemHref}
             onAdd={openAddItem}

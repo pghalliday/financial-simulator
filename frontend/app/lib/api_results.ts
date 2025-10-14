@@ -1,4 +1,4 @@
-import type {Item} from "~/components/ItemList";
+import type {RowData} from "~/components/ItemList";
 
 export interface APIRequestData {
     request: Request
@@ -15,6 +15,6 @@ export interface APIErrorResult {
     error: unknown
 }
 
-export type APIItems = (APISuccessResult<Item[]> & APIRequestData) | (APIErrorResult & APIRequestData)
-export type APIItem = (APISuccessResult<Item> & APIRequestData) | (APIErrorResult & APIRequestData)
+export type APIItems = (APISuccessResult<RowData[]> & APIRequestData) | (APIErrorResult & APIRequestData)
+export type APIItem = (APISuccessResult<RowData> & APIRequestData) | (APIErrorResult & APIRequestData)
 
