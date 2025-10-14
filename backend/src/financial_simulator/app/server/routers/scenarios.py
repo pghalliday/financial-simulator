@@ -34,6 +34,7 @@ router = collection.create_router(
     prefix="/scenarios",
     tags=["scenarios"],
     table_model=Scenario,
+    order_by=Scenario.name,
     get_model=ScenarioGet,
     post_model=ScenarioPost,
     patch_model=ScenarioPatch,

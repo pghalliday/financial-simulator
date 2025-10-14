@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, InstrumentedAttribute
 
 from financial_simulator.app.database.schema import Base
 from financial_simulator.app.server.dependencies import get_db_session
@@ -30,6 +30,7 @@ def create_router(
     prefix: str,
     tags: list[str | Enum] | None,
     table_model: Type[TABLE],
+    order_by: InstrumentedAttribute[str],
     get_model: Type[GET],
     post_model: Type[POST],
     patch_model: Type[PATCH],
@@ -45,7 +46,7 @@ def create_router(
         response_model=Sequence[get_model],
     )
     async def get_items(session: DBSessionDependency) -> Sequence[GET]:
-        items = session.scalars(select(table_model))
+        items = session.scalars(select(table_model).order_by(order_by))
         return [map_item(item) for item in items]
 
     @router.get(

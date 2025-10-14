@@ -69,6 +69,7 @@ router = typed_collection.create_router(
     prefix="/entities",
     tags=["entities"],
     base_table_model=Entity,
+    order_by=Entity.name,
     table_models={
         "individual_entity": IndividualEntity,
         "corporation_entity": CorporationEntity,

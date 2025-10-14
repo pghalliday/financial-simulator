@@ -26,7 +26,7 @@ export function StickyItemMultiSelect({
     const change = useCallback((selected: string[]) => {
         setSelectedItems(selected)
         if (onChange) {
-            onChange(selectedItems)
+            onChange(selected)
         }
     }, [onChange]);
 

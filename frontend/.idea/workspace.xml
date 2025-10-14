@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93565140-8846-4472-bdaf-36985489ef20" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/components/controls/StickyItemMultiSelect.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/lib/api_wrapper.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/lib/hooks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/collection.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/collection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/typed_collection.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/typed_collection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/entities.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/entities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/scenarios.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/scenarios.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/controls/item_list/ItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/controls/item_list/ItemList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/pages/CollectionPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/pages/CollectionPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/pages/ItemPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/pages/ItemPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/lib/api_results.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/lib/errors.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/lib/errors.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/compare_scenarios.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/controls/StickyItemMultiSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/controls/StickyItemMultiSelect.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +80,7 @@
       <option name="presentableId" value="Default" />
       <updated>1760022135007</updated>
       <workItem from="1760022136773" duration="114599000" />
-      <workItem from="1760452982431" duration="6875000" />
+      <workItem from="1760452982431" duration="8941000" />
     </task>
     <servers />
   </component>
