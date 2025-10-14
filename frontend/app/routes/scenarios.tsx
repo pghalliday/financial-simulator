@@ -1,4 +1,4 @@
-import {CollectionPage} from "~/components/CollectionPage";
+import {CollectionPage} from "~/components/pages/CollectionPage";
 import {
     COMPARE_SCENARIOS_HREF,
     COMPARE_SCENARIOS_PAGE_DESCRIPTION,

@@ -1,7 +1,7 @@
 import {Anchor, AppShell, Breadcrumbs, Burger, Group, Stack, Title} from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
-import {NavbarLink} from "~/components/NavbarLink";
-import {useHeaderData} from "~/components/HeaderDataProvider";
+import {NavbarLink} from "~/components/layout/NavbarLink";
+import {useHeaderData} from "~/components/providers/HeaderDataProvider";
 import {
     COMPARE_SCENARIOS_HREF,
     COMPARE_SCENARIOS_PAGE_DESCRIPTION,

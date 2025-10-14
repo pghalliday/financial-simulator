@@ -1,7 +1,7 @@
 import {ActionIcon, Anchor, Box, Center, Group, Table, Text, TextInput, UnstyledButton} from "@mantine/core";
 import {IconChevronDown, IconChevronUp, IconCirclePlus, IconSearch, IconSelector, IconTrash} from "@tabler/icons-react";
 import {createSearchParams, Link} from "react-router"
-import classes from './css/TableSort.module.css';
+import classes from './ItemList.module.css';
 import {type ReactElement, useEffect, useLayoutEffect, useRef, useState} from "react";
 
 const VISIBLE_HEIGHT_OFFSET = 30

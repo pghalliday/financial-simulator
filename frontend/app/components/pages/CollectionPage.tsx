@@ -1,7 +1,7 @@
-import {useHeaderData} from "~/components/HeaderDataProvider";
-import {ItemList, type RowData, type ToDeleteData} from "~/components/ItemList";
-import {AddItemModal, type ToAddData} from "~/components/AddItemModal";
-import {ConfirmDeleteModal} from "~/components/ConfirmDeleteModal";
+import {useHeaderData} from "~/components/providers/HeaderDataProvider";
+import {ItemList, type RowData, type ToDeleteData} from "~/components/controls/item_list/ItemList";
+import {AddItemModal, type ToAddData} from "~/components/modals/AddItemModal";
+import {ConfirmDeleteModal} from "~/components/modals/ConfirmDeleteModal";
 import {useCallback, useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Box, LoadingOverlay} from "@mantine/core";

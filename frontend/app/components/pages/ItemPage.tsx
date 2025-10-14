@@ -1,5 +1,5 @@
-import {useHeaderData} from "~/components/HeaderDataProvider";
-import {type RowData} from "~/components/ItemList";
+import {useHeaderData} from "~/components/providers/HeaderDataProvider";
+import {type RowData} from "~/components/controls/item_list/ItemList";
 import {useCallback, useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Box, Button, Group, LoadingOverlay, Space, Stack, TextInput, Title} from "@mantine/core";

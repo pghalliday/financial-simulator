@@ -10,7 +10,7 @@ import {
     SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
 import {getItemScenariosItemIdGet, putItemScenariosItemIdPut, type ScenarioPost} from "~/client";
-import {ItemPage} from "~/components/ItemPage";
+import {ItemPage} from "~/components/pages/ItemPage";
 
 export default function Scenario({params}: Route.ComponentProps) {
     return <ItemPage

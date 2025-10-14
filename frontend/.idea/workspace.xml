@@ -5,9 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93565140-8846-4472-bdaf-36985489ef20" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/openapi-ts-error-1760399936215.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/AddItemModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/modals/AddItemModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/CollectionPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/pages/CollectionPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ConfirmDeleteModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/modals/ConfirmDeleteModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/HeaderDataProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/providers/HeaderDataProvider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ItemList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/controls/ItemList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ItemPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/pages/ItemPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/NavLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/layout/NavLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/NavbarLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/layout/NavbarLink.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/lib/api_results.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/lib/api_results.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/root.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/entities.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/entities.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/entity.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/entity.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/scenario.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/scenario.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/scenarios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/scenarios.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,8 +67,11 @@
       <recent name="$PROJECT_DIR$/app/components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/components/css" />
-      <recent name="$PROJECT_DIR$/app/components" />
+      <recent name="$PROJECT_DIR$/app/components/controls" />
+      <recent name="$PROJECT_DIR$/app/components/layout" />
+      <recent name="$PROJECT_DIR$/app/components/providers" />
+      <recent name="$PROJECT_DIR$/app/components/modals" />
+      <recent name="$PROJECT_DIR$/app/components/pages" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -73,7 +88,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760022135007</updated>
-      <workItem from="1760022136773" duration="108950000" />
+      <workItem from="1760022136773" duration="109448000" />
     </task>
     <servers />
   </component>

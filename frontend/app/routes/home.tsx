@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import type {Route} from "./+types/home";
-import {useHeaderData} from "~/components/HeaderDataProvider";
+import {useHeaderData} from "~/components/providers/HeaderDataProvider";
 import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_PAGE_DESCRIPTION, PAGE_TITLE} from "~/strings";
 
 export async function clientLoader({params}: Route.LoaderArgs) {

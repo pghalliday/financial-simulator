@@ -16,7 +16,7 @@ import {
     type IndividualEntityPost,
     putItemEntitiesItemIdPut
 } from "~/client";
-import {ItemPage} from "~/components/ItemPage";
+import {ItemPage} from "~/components/pages/ItemPage";
 
 export default function Entity({params}: Route.ComponentProps) {
     return <ItemPage

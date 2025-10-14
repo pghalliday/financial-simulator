@@ -1,4 +1,4 @@
-import type {RowData} from "~/components/ItemList";
+import type {RowData} from "~/components/controls/item_list/ItemList";
 
 export interface APIRequestData {
     request: Request

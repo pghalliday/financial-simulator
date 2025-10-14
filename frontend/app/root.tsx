@@ -9,8 +9,8 @@ import type {Route} from "./+types/root";
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
-import {NavLayout} from "~/components/NavLayout";
-import {HeaderDataProvider} from "~/components/HeaderDataProvider";
+import {NavLayout} from "~/components/layout/NavLayout";
+import {HeaderDataProvider} from "~/components/providers/HeaderDataProvider";
 import {ApiError} from "~/ApiError";
 import {Notifications} from "@mantine/notifications";
 
