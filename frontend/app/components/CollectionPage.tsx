@@ -11,6 +11,7 @@ import {notifyError} from "~/lib/errors";
 interface ListPageProps {
     collectionTitle: string
     collectionDescription: string
+    collectionLabel: string
     itemHref: (itemId: string) => string
     breadcrumbs: { title: string, href: string }[]
     itemTypes?: Record<string, string>
@@ -22,6 +23,7 @@ interface ListPageProps {
 export function CollectionPage({
                                    collectionTitle,
                                    collectionDescription,
+                                   collectionLabel,
                                    itemHref,
                                    breadcrumbs,
                                    itemTypes,
@@ -69,7 +71,7 @@ export function CollectionPage({
         }).finally(stopLoading)
     }, []);
 
-    const addEntity = useCallback((toAddData: ToAddData) => {
+    const addItem = useCallback((toAddData: ToAddData) => {
         startAddItemWorking()
         postItem(toAddData).then(({data, error, response}) => {
             if (data != undefined) {
@@ -81,11 +83,11 @@ export function CollectionPage({
         }).finally(stopAddItemWorking)
     }, [items]);
 
-    const deleteEntity = useCallback((entityId: string) => {
+    const removeItem = useCallback((itemId: string) => {
         startConfirmDeleteWorking()
-        deleteItem(entityId).then(({data, error, response}) => {
+        deleteItem(itemId).then(({data, error, response}) => {
             if (data != undefined) {
-                setItems(items.filter(entity => entity.id !== data.id))
+                setItems(items.filter(item => item.id !== data.id))
                 closeConfirmDelete()
             } else {
                 notifyError('Delete item error', response, error)
@@ -107,8 +109,8 @@ export function CollectionPage({
             working={addItemWorking}
             initialData={initialToAddData}
             onCancel={closeAddItem}
-            onSubmit={addEntity}
-            collectionLabel="entity"
+            onSubmit={addItem}
+            collectionLabel={collectionLabel}
             typeSelectData={typeSelectData}
         />
         <ConfirmDeleteModal
@@ -116,9 +118,9 @@ export function CollectionPage({
             working={confirmDeleteWorking}
             onCancel={closeConfirmDelete}
             onConfirm={() => {
-                deleteEntity(toDeleteData.id);
+                removeItem(toDeleteData.id);
             }}
-            collectionLabel="entity"
+            collectionLabel={collectionLabel}
             itemName={toDeleteData.name}
         />
         <ItemList

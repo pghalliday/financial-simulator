@@ -6,18 +6,27 @@ import {
     SCENARIO_HREF,
     SCENARIO_PAGE_DESCRIPTION,
     SCENARIOS_HREF,
+    SCENARIOS_LABEL,
     SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
-import {getItemScenariosItemIdGet} from "~/client";
+import {getItemScenariosItemIdGet, putItemScenariosItemIdPut, type ScenarioPost} from "~/client";
 import {ItemPage} from "~/components/ItemPage";
 
 export default function Scenario({params}: Route.ComponentProps) {
     return <ItemPage
         itemId={params.scenarioId}
+        collectionLabel={SCENARIOS_LABEL}
         getItem={itemId => getItemScenariosItemIdGet({
             path: {
                 item_id: itemId,
             },
+        })}
+        putItem={(itemId, data) => putItemScenariosItemIdPut({
+            path: {
+                item_id: itemId,
+            },
+            // TODO: can we properly type data?
+            body: data as ScenarioPost,
         })}
         getTitle={(itemId, itemName) => {
             return PAGE_TITLE(SCENARIO_PAGE_DESCRIPTION(itemName === null ? itemId : itemName))

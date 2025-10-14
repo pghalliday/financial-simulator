@@ -1,27 +1,40 @@
 import {useHeaderData} from "~/components/HeaderDataProvider";
 import {type RowData} from "~/components/ItemList";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
-import {Box, LoadingOverlay} from "@mantine/core";
+import {Box, Button, Group, LoadingOverlay, Space, Stack, TextInput, Title} from "@mantine/core";
 import type {APIItem} from "~/lib/api_results";
 import {notifyError} from "~/lib/errors";
 import {useSearchParams} from "react-router";
 
+interface PutData {
+    type?: string
+    name: string
+    description: string
+}
+
 interface ItemPageProps {
     itemId: string
+    collectionLabel: string,
+    itemTypes?: Record<string, string>
     getTitle: (itemId: string, itemName: string | null) => string
     getDescription: (itemId: string, itemName: string | null) => string
     getBreadcrumbs: (itemId: string, itemName: string | null) => { title: string, href: string }[]
     getItem: (itemId: string) => Promise<APIItem>
+    putItem: (itemId: string, data: PutData) => Promise<APIItem>
 }
 
 export function ItemPage({
                              itemId,
+                             collectionLabel,
+                             itemTypes,
                              getTitle,
                              getDescription,
                              getBreadcrumbs,
                              getItem,
+                             putItem,
                          }: ItemPageProps) {
+    const capitalizedLabel = collectionLabel.replace(/^./, collectionLabel[0].toUpperCase())
     const [searchParams] = useSearchParams();
     const name = searchParams.get("name");
     const [_, setHeaderData] = useHeaderData();
@@ -29,7 +42,11 @@ export function ItemPage({
     const [item, setItem] = useState<RowData>()
     const [title, setTitle] = useState(getTitle(itemId, name))
     const [description, setDescription] = useState(getDescription(itemId, name))
-    const [itemName, setItemName] = useState<string>()
+    const [nameInputValue, setNameInputValue] = useState<string>("")
+    const [descriptionInputValue, setDescriptionInputValue] = useState<string>("")
+    const [typeIndicatorValue, setTypeIndicatorValue] = useState<string>()
+    const [revertDisabled, setRevertDisabled] = useState(true)
+    const [saveDisabled, setSaveDisabled] = useState(true)
 
     useEffect(() => {
         setHeaderData({
@@ -54,15 +71,66 @@ export function ItemPage({
             const title = getTitle(itemId, item.name)
             const description = getDescription(itemId, item.name)
             const breadcrumbs = getBreadcrumbs(itemId, item.name)
-            setItemName(item.name)
             setTitle(title)
             setDescription(description)
             setHeaderData({
                 title,
                 breadcrumbs,
             });
+            setNameInputValue(item.name)
+            setDescriptionInputValue(item.description)
+            if (itemTypes) {
+                setTypeIndicatorValue(item.type)
+            }
         }
     }, [item]);
+
+    useEffect(() => {
+        if (item) {
+            if (nameInputValue === item.name && descriptionInputValue === item.description) {
+                setRevertDisabled(true);
+                setSaveDisabled(true);
+            } else {
+                setRevertDisabled(false);
+                if (nameInputValue.trim() === "") {
+                    setSaveDisabled(true);
+                } else {
+                    setSaveDisabled(false);
+                }
+            }
+        }
+    }, [item, nameInputValue, descriptionInputValue])
+
+    const revert = useCallback(() => {
+        if (item) {
+            setNameInputValue(item.name)
+            setDescriptionInputValue(item.description)
+        }
+    }, [item])
+
+    const save = useCallback(() => {
+        if (item) {
+            startLoading()
+            putItem(itemId, {
+                type: typeIndicatorValue,
+                name: nameInputValue,
+                description: descriptionInputValue,
+            }).then(({data, error, response}) => {
+                if (data != undefined) {
+                    setItem(data)
+                } else {
+                    notifyError('Save item error', response, error)
+                }
+            }).finally(stopLoading)
+        }
+    }, [item, nameInputValue, descriptionInputValue, typeIndicatorValue])
+
+    function TypeIndicator() {
+        if (typeIndicatorValue && itemTypes) {
+            return <Title order={4}>{itemTypes[typeIndicatorValue]}</Title>
+        }
+        return null
+    }
 
     return <Box pos="relative">
         <title>{title}</title>
@@ -73,6 +141,30 @@ export function ItemPage({
             zIndex={1000}
             overlayProps={{blur: 2}}
         />
-        {itemName}
+        <Stack>
+            <TypeIndicator/>
+            <TextInput
+                label="Name"
+                placeholder="Name"
+                description={`${capitalizedLabel} name`}
+                value={nameInputValue}
+                size="sm"
+                required={true}
+                onChange={(event) => setNameInputValue(event.currentTarget.value)}
+            />
+            <TextInput
+                label="Description"
+                placeholder="Description"
+                description={`${capitalizedLabel} description`}
+                value={descriptionInputValue}
+                size="sm"
+                onChange={(event) => setDescriptionInputValue(event.currentTarget.value)}
+            />
+            <Space h={20}/>
+            <Group justify="flex-end">
+                <Button onClick={revert} disabled={revertDisabled}>Revert</Button>
+                <Button onClick={save} disabled={saveDisabled}>Save</Button>
+            </Group>
+        </Stack>
     </Box>
 }

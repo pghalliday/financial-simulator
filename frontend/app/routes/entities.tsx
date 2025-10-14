@@ -3,6 +3,7 @@ import {
     COMPARE_SCENARIOS_HREF,
     COMPARE_SCENARIOS_PAGE_DESCRIPTION,
     ENTITIES_HREF,
+    ENTITIES_LABEL,
     ENTITIES_PAGE_DESCRIPTION,
     ENTITY_HREF,
     ENTITY_TYPES,
@@ -32,6 +33,7 @@ export default function Entities() {
     return <CollectionPage
         collectionTitle={COLLECTION_TITLE}
         collectionDescription={ENTITIES_PAGE_DESCRIPTION}
+        collectionLabel={ENTITIES_LABEL}
         itemHref={ENTITY_HREF}
         breadcrumbs={BREADCRUMBS}
         itemTypes={ENTITY_TYPES}

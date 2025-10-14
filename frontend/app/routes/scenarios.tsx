@@ -5,6 +5,7 @@ import {
     PAGE_TITLE,
     SCENARIO_HREF,
     SCENARIOS_HREF,
+    SCENARIOS_LABEL,
     SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
 import {
@@ -30,6 +31,7 @@ export default function Entities() {
     return <CollectionPage
         collectionTitle={COLLECTION_TITLE}
         collectionDescription={SCENARIOS_PAGE_DESCRIPTION}
+        collectionLabel={SCENARIOS_LABEL}
         itemHref={SCENARIO_HREF}
         breadcrumbs={BREADCRUMBS}
         getItems={getItemsScenariosGet}
