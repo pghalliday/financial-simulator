@@ -14,7 +14,7 @@ from financial_simulator.lib.factories.bank_accounts import (
 from financial_simulator.lib.providers import NeverProvider
 
 
-def init_dummy_days() -> Sequence[Tuple[date, Sequence[Entity]]]:
+def init_dummy_days() -> FinancialSimulator:
     initial_date = date(2019, 12, 31)
 
     jack = Individual(
@@ -110,7 +110,10 @@ def init_dummy_days() -> Sequence[Tuple[date, Sequence[Entity]]]:
         salaries=(),
     )
 
-    fs = FinancialSimulator(
+    return FinancialSimulator(
         current_date=initial_date, current_entities=(jack, jill, widgets_ltd)
     )
+
+def get_dummy_days() -> Sequence[Tuple[date, Sequence[Entity]]]:
+    fs = init_dummy_days()
     return list(islice(fs, 5000))

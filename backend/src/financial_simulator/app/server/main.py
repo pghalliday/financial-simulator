@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.exc import IntegrityError
 
 from .errors import DatabaseIntegrityError
-from .routers import scenarios, entities
+from .routers import scenarios, entities, dummy_days
 from .server import LOG_LEVEL_ENV_VAR
 
 log_level = os.environ.get(LOG_LEVEL_ENV_VAR)
@@ -36,3 +36,4 @@ async def db_integrity_error_exception_handler(request: Request, exc: IntegrityE
 
 app.include_router(scenarios.router)
 app.include_router(entities.router)
+app.include_router(dummy_days.router)

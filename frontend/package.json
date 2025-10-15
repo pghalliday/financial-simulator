@@ -16,9 +16,12 @@
     "@react-router/node": "^7.9.2",
     "@react-router/serve": "^7.9.2",
     "@tabler/icons-react": "^3.35.0",
+    "eventsource-client": "^1.2.0",
     "isbot": "^5.1.31",
+    "plotly.js": "^3.1.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-plotly.js": "^2.6.0",
     "react-router": "^7.9.2"
   },
   "devDependencies": {

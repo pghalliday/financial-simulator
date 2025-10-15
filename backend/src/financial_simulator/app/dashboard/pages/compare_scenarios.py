@@ -10,7 +10,7 @@ from financial_simulator.app.dashboard.constants import (
     COMPARE_SCENARIOS_NAME,
     COMPARE_SCENARIOS_SCENARIO_SELECTOR_ID,
 )
-from financial_simulator.app.dummy_days import init_dummy_days
+from financial_simulator.app.dummy_days import get_dummy_days
 from financial_simulator.lib.util.data import plot_account_balances
 
 logger = logging.getLogger(__name__)
@@ -38,7 +38,7 @@ dash.register_page(
     Input("savings-account-balances", "figure"),
 )
 def initialize_charts(_0, _1):
-    days = init_dummy_days()
+    days = get_dummy_days()
     current_account_balances_figure = plot_account_balances(
         days=days,
         account_path=("assets", "bank_accounts", "current"),

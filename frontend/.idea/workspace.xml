@@ -5,12 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93565140-8846-4472-bdaf-36985489ef20" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/collection.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/collection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/typed_collection.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/typed_collection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/entities.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/entities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/scenarios.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/scenarios.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/dummy_days.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/dashboard/pages/compare_scenarios.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/dashboard/pages/compare_scenarios.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/dummy_days/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/dummy_days/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/dummy_days/init_dummy_days.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/dummy_days/get_dummy_days.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/uv.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/uv.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/controls/StickyItemMultiSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/controls/StickyItemMultiSelect.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/client.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/client/client.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/client.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/client/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/client/types.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/types.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/client/utils.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/utils.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/auth.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/auth.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/bodySerializer.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/bodySerializer.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/params.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/params.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/pathSerializer.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/pathSerializer.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/queryKeySerializer.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/queryKeySerializer.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/serverSentEvents.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/serverSentEvents.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/types.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/types.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/core/utils.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/utils.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/sdk.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/sdk.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/client/types.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/types.gen.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/compare_scenarios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/compare_scenarios.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/openapi-ts.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/openapi-ts.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +102,7 @@
       <option name="presentableId" value="Default" />
       <updated>1760022135007</updated>
       <workItem from="1760022136773" duration="114599000" />
-      <workItem from="1760452982431" duration="8941000" />
+      <workItem from="1760452982431" duration="24462000" />
     </task>
     <servers />
   </component>

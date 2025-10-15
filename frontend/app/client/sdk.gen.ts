@@ -9,6 +9,9 @@ import type {
     DeleteItemScenariosItemIdDeleteData,
     DeleteItemScenariosItemIdDeleteErrors,
     DeleteItemScenariosItemIdDeleteResponses,
+    GetDummyDaysGetData,
+    GetDummyDaysGetErrors,
+    GetDummyDaysGetResponses,
     GetItemEntitiesItemIdGetData,
     GetItemEntitiesItemIdGetErrors,
     GetItemEntitiesItemIdGetResponses,
@@ -196,5 +199,15 @@ export const putItemEntitiesItemIdPut = <ThrowOnError extends boolean = false>(o
             'Content-Type': 'application/json',
             ...options.headers
         }
+    });
+};
+
+/**
+ * Get
+ */
+export const getDummyDaysGet = <ThrowOnError extends boolean = false>(options?: Options<GetDummyDaysGetData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetDummyDaysGetResponses, GetDummyDaysGetErrors, ThrowOnError>({
+        url: '/dummy-days/',
+        ...options
     });
 };

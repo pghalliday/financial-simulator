@@ -12,7 +12,8 @@ def start_server(config: Config):
     os.environ.setdefault(LOG_LEVEL_ENV_VAR, str(config.logging.level))
     uvicorn.run(
         f"{__package__}.main:app",
-        port=5000,
+        host="0.0.0.0",
+        port=5174,
         reload=True,
         reload_dirs=['src/financial_simulator'],
     )
