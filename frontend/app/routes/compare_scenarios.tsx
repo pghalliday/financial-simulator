@@ -126,7 +126,7 @@ export default function CompareScenarios({params}: Route.ComponentProps) {
                     },
                     {type: 'bar', x: [1, 2, 3], y: [2, 5, 3]},
                 ]}
-                layout={ {width: 320, height: 240, title: {text: 'A Fancy Plot'}} }
+                layout={{width: 320, height: 240, title: {text: 'A Fancy Plot'}}}
             />
         </Stack>
     </Box>

@@ -19,8 +19,8 @@ interface ItemPageProps {
     getTitle: (itemId: string, itemName: string | null) => string
     getDescription: (itemId: string, itemName: string | null) => string
     getBreadcrumbs: (itemId: string, itemName: string | null) => { title: string, href: string }[]
-    getItem: <T extends RowData>(itemId: string) => Promise<APIResult<T>>
-    putItem: <T extends RowData>(itemId: string, data: PutData) => Promise<APIResult<T>>
+    getItem: (itemId: string) => Promise<APIResult<RowData>>
+    putItem: (itemId: string, data: PutData) => Promise<APIResult<RowData>>
 }
 
 export function ItemPage({

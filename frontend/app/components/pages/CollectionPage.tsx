@@ -14,9 +14,9 @@ interface ListPageProps {
     itemHref: (itemId: string) => string
     breadcrumbs: { title: string, href: string }[]
     itemTypes?: Record<string, string>
-    getItems: <T extends RowData>() => Promise<APIResult<T[]>>
-    postItem: <T extends RowData>(toAddData: ToAddData) => Promise<APIResult<T>>
-    deleteItem: <T extends RowData>(itemId: string) => Promise<APIResult<T>>
+    getItems: () => Promise<APIResult<RowData[]>>
+    postItem: (toAddData: ToAddData) => Promise<APIResult<RowData>>
+    deleteItem: (itemId: string) => Promise<APIResult<RowData>>
 }
 
 export function CollectionPage({
