@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from "react";
 import type {Route} from "./+types/compare_scenarios";
 import {useHeaderData} from "~/components/providers/HeaderDataProvider";
 import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_PAGE_DESCRIPTION, PAGE_TITLE} from "~/strings";
-import {Box, Button, Group, LoadingOverlay, Stack, TextInput} from "@mantine/core";
+import {Box, Button, Group, LoadingOverlay, NumberInput, Stack} from "@mantine/core";
 import {getItemsScenariosGet, type ScenarioGet} from "~/client";
 import {useDisclosure} from "@mantine/hooks";
 import {StickyItemMultiSelect} from "~/components/controls/StickyItemMultiSelect";
@@ -14,8 +14,8 @@ export default function CompareScenarios({params}: Route.ComponentProps) {
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
     const [scenarios, setScenarios] = useState<ScenarioGet[]>()
     const [selectedScenarios, setSelectedScenarios] = useState<string[]>([])
-    const [dummyDaysStart, setDummyDaysStart] = useState<number>(0)
-    const [dummyDaysEnd, setDummyDaysEnd] = useState<number>(10)
+    const [dummyDaysStart, setDummyDaysStart] = useState<string | number>(0)
+    const [dummyDaysEnd, setDummyDaysEnd] = useState<string | number>(10)
 
     const description = COMPARE_SCENARIOS_PAGE_DESCRIPTION;
     const title = PAGE_TITLE(description)
@@ -90,18 +90,29 @@ export default function CompareScenarios({params}: Route.ComponentProps) {
                 items={scenarios}
                 onChange={setSelectedScenarios}
             />
-            <Group>
-                <TextInput
+            <Group align="">
+                <NumberInput
                     label="Start day"
                     value={dummyDaysStart}
-                    onChange={(event) => setDummyDaysStart(parseInt(event.currentTarget.value))}
+                    onChange={setDummyDaysStart}
+                    min={0}
+                    allowDecimal={false}
+                    clampBehavior="strict"
                 />
-                <TextInput
+                <NumberInput
                     label="End day"
                     value={dummyDaysEnd}
-                    onChange={(event) => setDummyDaysEnd(parseInt(event.currentTarget.value))}
+                    onChange={setDummyDaysEnd}
+                    min={0}
+                    allowDecimal={false}
+                    clampBehavior="strict"
+                    inputContainer={(children) => (
+                        <Group align="flex-start">
+                            {children}
+                            <Button onClick={getDummyDays}>Get dummy days!</Button>
+                        </Group>
+                    )}
                 />
-                <Button onClick={getDummyDays}>Get dummy days!</Button>
             </Group>
         </Stack>
     </Box>
