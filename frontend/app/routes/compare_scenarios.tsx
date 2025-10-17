@@ -9,6 +9,7 @@ import {callApi} from "~/lib/api_wrapper";
 import {createEventSource} from "eventsource-client";
 import throttle from "lodash.throttle"
 import Plot from "react-plotly.js";
+import {useStickyState} from "~/lib/hooks";
 
 function get_balance(account: AccountDayGet, sub_account_path: string[]): number {
     if (sub_account_path.length === 0) {
@@ -30,9 +31,9 @@ export default function CompareScenarios() {
     const [dummyDaysProgress, setDummyDaysProgress] = useState(0)
     const [scenarios, setScenarios] = useState<ScenarioGet[]>()
     const [selectedScenarios, setSelectedScenarios] = useState<string[]>([])
-    const [dummyDaysStart, setDummyDaysStart] = useState<string | number>(0)
-    const [dummyDaysEnd, setDummyDaysEnd] = useState<string | number>(10)
-    const [days, setDays] = useState<DayGet[]>([])
+    const [dummyDaysStart, setDummyDaysStart] = useStickyState<string | number>(0, "compare-scenarios--start")
+    const [dummyDaysEnd, setDummyDaysEnd] = useStickyState<string | number>(10, "compare-scenarios--end")
+    const [days, setDays] = useStickyState<DayGet[]>([], "compare-scenarios--days")
 
     const description = COMPARE_SCENARIOS_PAGE_DESCRIPTION;
     const title = PAGE_TITLE(description)

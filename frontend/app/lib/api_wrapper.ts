@@ -1,4 +1,4 @@
-import {notifyAnyError, notifyError} from "~/lib/errors";
+import {notifyApiError, notifyApiErrorResponse} from "~/lib/errors";
 
 export interface APIRequestData {
     request: Request
@@ -37,9 +37,9 @@ export function callApi<T>({
         if (data != undefined) {
             onSuccess(data)
         } else {
-            notifyError(errorTitle, response, error)
+            notifyApiErrorResponse(errorTitle, response, error)
         }
     }).catch(error => {
-        notifyAnyError(errorTitle, error)
+        notifyApiError(errorTitle, error)
     }).finally(stopLoading)
 }

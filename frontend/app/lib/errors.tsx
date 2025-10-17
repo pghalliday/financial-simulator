@@ -4,6 +4,7 @@ import type {ReactNode} from "react";
 import type {HttpChangeTypeError, HttpDatabaseIntegrityError, HttpNotFoundError, HttpValidationError,} from "~/client";
 
 const SCROLL_AREA_HEIGHT = 100;
+const SCROLL_AREA_1_LINE_HEIGHT = 30;
 const SCROLL_AREA_2_LINE_HEIGHT = 50;
 const STACK_GAP = "xs"
 const TEXT_SIZE = "xs"
@@ -29,7 +30,7 @@ function isValidationError(response: Response, error: unknown): error is HttpVal
     return response.status === 422 && Array.isArray(error.detail)
 }
 
-export function notifyError(title: string, response: Response, error: unknown) {
+export function notifyApiErrorResponse(title: string, response: Response, error: unknown) {
     let message: ReactNode = `${response.status}: ${response.statusText}: ${JSON.stringify(error, null, 2)}`;
     if (isValidationError(response, error)) {
         message = <ScrollArea h={SCROLL_AREA_HEIGHT}>
@@ -76,13 +77,29 @@ export function notifyError(title: string, response: Response, error: unknown) {
     })
 }
 
-export function notifyAnyError(title: string, error: any) {
+export function notifyApiError(title: string, error: any) {
     let message = error.toString();
     if (message === FAILED_TO_FETCH_ERROR) {
         message = <ScrollArea h={SCROLL_AREA_2_LINE_HEIGHT}>
             <Stack gap={STACK_GAP}>
                 <Text size={TEXT_SIZE}>{message}</Text>
                 <Text size={TEXT_SIZE}>Is the API server running?</Text>
+            </Stack>
+        </ScrollArea>
+    }
+    notifications.show({
+        color: 'red',
+        title,
+        message,
+    })
+}
+
+export function notifyError(title: string, error: any) {
+    let message = error.toString();
+    if (message === FAILED_TO_FETCH_ERROR) {
+        message = <ScrollArea h={SCROLL_AREA_1_LINE_HEIGHT}>
+            <Stack gap={STACK_GAP}>
+                <Text size={TEXT_SIZE}>{message}</Text>
             </Stack>
         </ScrollArea>
     }

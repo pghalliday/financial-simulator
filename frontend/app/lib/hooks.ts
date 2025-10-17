@@ -1,8 +1,15 @@
 import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
+import {notifyError} from "~/lib/errors";
 
-export function useStickyState<T>(defaultValue: T, key: string): [T, Dispatch<SetStateAction<T>>] {
+export enum StickyStateType {
+    LOCAL,
+    SESSION,
+}
+
+export function useStickyState<T>(defaultValue: T, key: string, type: StickyStateType = StickyStateType.LOCAL): [T, Dispatch<SetStateAction<T>>] {
+    const storage = type === StickyStateType.LOCAL ? window.localStorage : window.sessionStorage
     const [value, setValue] = useState<T>(() => {
-        const stickyValue = window.localStorage.getItem(key);
+        const stickyValue = storage.getItem(key);
 
         return stickyValue !== null
             ? JSON.parse(stickyValue)
@@ -10,7 +17,11 @@ export function useStickyState<T>(defaultValue: T, key: string): [T, Dispatch<Se
     });
 
     useEffect(() => {
-        window.localStorage.setItem(key, JSON.stringify(value));
+        try {
+            storage.setItem(key, JSON.stringify(value));
+        } catch (e) {
+            notifyError("Storage Error", e)
+        }
     }, [key, value]);
 
     return [value, setValue];
