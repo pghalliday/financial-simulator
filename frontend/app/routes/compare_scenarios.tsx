@@ -7,6 +7,7 @@ import {useDisclosure} from "@mantine/hooks";
 import {StickyItemMultiSelect} from "~/components/controls/StickyItemMultiSelect";
 import {callApi} from "~/lib/api_wrapper";
 import {createEventSource} from "eventsource-client";
+import throttle from "lodash.throttle"
 import Plot from "react-plotly.js";
 
 function get_balance(account: AccountDayGet, sub_account_path: string[]): number {
@@ -25,8 +26,8 @@ function get_balance(account: AccountDayGet, sub_account_path: string[]): number
 export default function CompareScenarios() {
     const [_, setHeaderData] = useHeaderData();
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const [loadingDummyData, {open: startLoadingDummyDays, close: stopLoadingDummyDays}] = useDisclosure()
-    const [dummyDataProgress, setDummyDaysProgress] = useState(0)
+    const [loadingDummyDays, {open: startLoadingDummyDays, close: stopLoadingDummyDays}] = useDisclosure()
+    const [dummyDaysProgress, setDummyDaysProgress] = useState(0)
     const [scenarios, setScenarios] = useState<ScenarioGet[]>()
     const [selectedScenarios, setSelectedScenarios] = useState<string[]>([])
     const [dummyDaysStart, setDummyDaysStart] = useState<string | number>(0)
@@ -59,46 +60,50 @@ export default function CompareScenarios() {
         console.log(selectedScenarios)
     }, [selectedScenarios]);
 
-    const getDummyDays = useCallback(async () => {
+    const getDummyDays = useCallback(() => {
         if (typeof dummyDaysStart === "number" && typeof dummyDaysEnd === "number") {
-            // setDummyDaysProgress(0)
-            // startLoadingDummyDays()
+            const updateProgress = throttle((progress) => setDummyDaysProgress(progress), 200, {
+                leading: true,
+                trailing: true,
+            })
+            setDummyDaysProgress(0)
+            startLoadingDummyDays()
             const newDays: DayGet[] = [];
             const es = createEventSource({
                 url: `http://localhost:5174/dummy-days/?start=${dummyDaysStart}&end=${dummyDaysEnd}`,
-                onDisconnect: (() => {
+                onDisconnect: () => {
+                    // Don't retry if disconnected
+                    console.info("Disconnected")
+                    stopLoadingDummyDays()
                     es.close()
-                })
-            })
-            for await (const {data, event, id} of es) {
-                switch (event) {
-                    case "end": {
-                        console.info("Complete")
-                        // stopLoadingDummyDays()
-                        setDays(newDays)
-                        es.close()
-                        break
-                    }
-                    case "error": {
-                        console.error(`Error: ${data}`)
-                        // stopLoadingDummyDays()
-                        es.close()
-                        break
-                    }
-                    case "day": {
-                        console.info(`Data: ${id}: ${data}`)
-                        newDays.push(JSON.parse(data))
-                        const index = parseInt(id!)
-                        const progress = (index - dummyDaysStart + 1) / (dummyDaysEnd - dummyDaysStart) * 100
-                        console.log(progress)
-                        // setDummyDaysProgress(progress)
-                        break
-                    }
-                    default: {
-                        console.warn(`Unknown event: ${event}: ${id}: ${data}`)
+                },
+                onMessage: message => {
+                    switch (message.event) {
+                        case "end": {
+                            stopLoadingDummyDays()
+                            setDays(newDays)
+                            es.close()
+                            break
+                        }
+                        case "error": {
+                            console.error(`Error: ${message.data}`)
+                            stopLoadingDummyDays()
+                            es.close()
+                            break
+                        }
+                        case "day": {
+                            newDays.push(JSON.parse(message.data))
+                            const index = parseInt(message.id!)
+                            const progress = (index - dummyDaysStart + 1) / (dummyDaysEnd - dummyDaysStart) * 100
+                            updateProgress(progress)
+                            break
+                        }
+                        default: {
+                            console.warn(`Unknown event: ${message.event}: ${message.id}: ${message.data}`)
+                        }
                     }
                 }
-            }
+            })
         }
     }, [dummyDaysStart, dummyDaysEnd])
 
@@ -123,10 +128,11 @@ export default function CompareScenarios() {
             overlayProps={{blur: 2}}
         />
         <LoadingOverlay
-            visible={loadingDummyData}
+            visible={loadingDummyDays}
             zIndex={1000}
             overlayProps={{blur: 2}}
-            loaderProps={{children: <Progress value={dummyDataProgress}/>}}
+            loaderProps={{children: <Progress value={dummyDaysProgress} w={300}/>}}
+            // loaderProps={{children: dummyDaysProgress}}
         />
         <Stack>
             <StickyItemMultiSelect

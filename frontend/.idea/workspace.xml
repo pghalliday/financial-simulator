@@ -5,26 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93565140-8846-4472-bdaf-36985489ef20" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/dummy_days.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/dummy_days.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/client.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/client/client.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/client.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/client/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/client/types.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/types.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/client/utils.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/utils.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/auth.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/auth.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/bodySerializer.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/bodySerializer.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/params.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/params.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/pathSerializer.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/pathSerializer.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/queryKeySerializer.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/queryKeySerializer.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/serverSentEvents.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/serverSentEvents.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/types.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/types.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/utils.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/utils.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/sdk.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/sdk.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/types.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/types.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/layout/NavLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/layout/NavLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/root.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/compare_scenarios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/compare_scenarios.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +78,8 @@
       <option name="presentableId" value="Default" />
       <updated>1760022135007</updated>
       <workItem from="1760022136773" duration="114599000" />
-      <workItem from="1760452982431" duration="39510000" />
+      <workItem from="1760452982431" duration="41476000" />
+      <workItem from="1760700374138" duration="2306000" />
     </task>
     <servers />
   </component>
