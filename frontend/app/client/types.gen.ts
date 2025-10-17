@@ -5,6 +5,28 @@ export type ClientOptions = {
 };
 
 /**
+ * AccountDayGet
+ */
+export type AccountDayGet = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Sub Accounts
+     */
+    sub_accounts: Array<AccountDayGet>;
+    /**
+     * Balance
+     */
+    balance: string;
+    /**
+     * Total Balance
+     */
+    total_balance: string;
+};
+
+/**
  * ChangeTypeError
  */
 export type ChangeTypeError = {
@@ -92,6 +114,31 @@ export type DatabaseIntegrityError = {
      * Message
      */
     message: string;
+};
+
+/**
+ * DayGet
+ */
+export type DayGet = {
+    /**
+     * Date
+     */
+    date: string;
+    /**
+     * Entities
+     */
+    entities: Array<EntityDayGet>;
+};
+
+/**
+ * EntityDayGet
+ */
+export type EntityDayGet = {
+    /**
+     * Name
+     */
+    name: string;
+    ledger: AccountDayGet;
 };
 
 /**
@@ -678,5 +725,7 @@ export type GetDummyDaysGetResponses = {
     /**
      * Successful Response
      */
-    200: unknown;
+    200: DayGet;
 };
+
+export type GetDummyDaysGetResponse = GetDummyDaysGetResponses[keyof GetDummyDaysGetResponses];

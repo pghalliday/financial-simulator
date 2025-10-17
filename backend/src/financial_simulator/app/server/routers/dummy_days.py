@@ -78,6 +78,9 @@ def generate_events(start: int, end: int):
         raise
 
 
-@router.get("/")
+@router.get(
+    "/",
+    response_model=DayGet,
+)
 async def get(start: int = 0, end: int = 0) -> EventSourceResponse:
     return EventSourceResponse(generate_events(start, end))

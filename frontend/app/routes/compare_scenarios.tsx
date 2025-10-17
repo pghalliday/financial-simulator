@@ -1,22 +1,37 @@
 import {useCallback, useEffect, useState} from "react";
-import type {Route} from "./+types/compare_scenarios";
 import {useHeaderData} from "~/components/providers/HeaderDataProvider";
 import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_PAGE_DESCRIPTION, PAGE_TITLE} from "~/strings";
-import {Box, Button, Group, LoadingOverlay, NumberInput, Stack} from "@mantine/core";
-import {getItemsScenariosGet, type ScenarioGet} from "~/client";
+import {Box, Button, Group, LoadingOverlay, NumberInput, Progress, Stack} from "@mantine/core";
+import {type AccountDayGet, type DayGet, getItemsScenariosGet, type ScenarioGet} from "~/client";
 import {useDisclosure} from "@mantine/hooks";
 import {StickyItemMultiSelect} from "~/components/controls/StickyItemMultiSelect";
 import {callApi} from "~/lib/api_wrapper";
 import {createEventSource} from "eventsource-client";
 import Plot from "react-plotly.js";
 
-export default function CompareScenarios({params}: Route.ComponentProps) {
+function get_balance(account: AccountDayGet, sub_account_path: string[]): number {
+    if (sub_account_path.length === 0) {
+        return parseFloat(account.total_balance)
+    }
+    const next = sub_account_path.shift()
+    for (const sub_account of account.sub_accounts) {
+        if (sub_account.name === next) {
+            return get_balance(sub_account, sub_account_path)
+        }
+    }
+    return 0.0
+}
+
+export default function CompareScenarios() {
     const [_, setHeaderData] = useHeaderData();
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
+    const [loadingDummyData, {open: startLoadingDummyDays, close: stopLoadingDummyDays}] = useDisclosure()
+    const [dummyDataProgress, setDummyDaysProgress] = useState(0)
     const [scenarios, setScenarios] = useState<ScenarioGet[]>()
     const [selectedScenarios, setSelectedScenarios] = useState<string[]>([])
     const [dummyDaysStart, setDummyDaysStart] = useState<string | number>(0)
     const [dummyDaysEnd, setDummyDaysEnd] = useState<string | number>(10)
+    const [days, setDays] = useState<DayGet[]>([])
 
     const description = COMPARE_SCENARIOS_PAGE_DESCRIPTION;
     const title = PAGE_TITLE(description)
@@ -45,34 +60,58 @@ export default function CompareScenarios({params}: Route.ComponentProps) {
     }, [selectedScenarios]);
 
     const getDummyDays = useCallback(async () => {
-        const es = createEventSource({
-            url: `http://localhost:5174/dummy-days/?start=${dummyDaysStart}&end=${dummyDaysEnd}`,
-            onDisconnect: (() => {
-                es.close()
+        if (typeof dummyDaysStart === "number" && typeof dummyDaysEnd === "number") {
+            // setDummyDaysProgress(0)
+            // startLoadingDummyDays()
+            const newDays: DayGet[] = [];
+            const es = createEventSource({
+                url: `http://localhost:5174/dummy-days/?start=${dummyDaysStart}&end=${dummyDaysEnd}`,
+                onDisconnect: (() => {
+                    es.close()
+                })
             })
-        })
-        for await (const {data, event, id} of es) {
-            switch (event) {
-                case "end": {
-                    console.info("Complete")
-                    es.close()
-                    break
-                }
-                case "error": {
-                    es.close()
-                    console.error(`Error: ${data}`)
-                    break
-                }
-                case "day": {
-                    console.info(`Data: ${id}: ${data}`)
-                    break
-                }
-                default: {
-                    console.warn(`Unknown event: ${event}: ${id}: ${data}`)
+            for await (const {data, event, id} of es) {
+                switch (event) {
+                    case "end": {
+                        console.info("Complete")
+                        // stopLoadingDummyDays()
+                        setDays(newDays)
+                        es.close()
+                        break
+                    }
+                    case "error": {
+                        console.error(`Error: ${data}`)
+                        // stopLoadingDummyDays()
+                        es.close()
+                        break
+                    }
+                    case "day": {
+                        console.info(`Data: ${id}: ${data}`)
+                        newDays.push(JSON.parse(data))
+                        const index = parseInt(id!)
+                        const progress = (index - dummyDaysStart + 1) / (dummyDaysEnd - dummyDaysStart) * 100
+                        console.log(progress)
+                        // setDummyDaysProgress(progress)
+                        break
+                    }
+                    default: {
+                        console.warn(`Unknown event: ${event}: ${id}: ${data}`)
+                    }
                 }
             }
         }
     }, [dummyDaysStart, dummyDaysEnd])
+
+    const chart_dates: Date[] = []
+    const chart_entities: Record<string, number[]> = {}
+    for (const day of days) {
+        chart_dates.push(new Date(day.date))
+        for (const entity of day.entities) {
+            const current_account_balances = chart_entities[entity.name] || []
+            current_account_balances.push(-get_balance(entity.ledger, ["assets", "bank_accounts", "current"]))
+            chart_entities[entity.name] = current_account_balances
+        }
+    }
 
     return <Box pos="relative">
         <title>{title}</title>
@@ -82,6 +121,12 @@ export default function CompareScenarios({params}: Route.ComponentProps) {
             visible={loading}
             zIndex={1000}
             overlayProps={{blur: 2}}
+        />
+        <LoadingOverlay
+            visible={loadingDummyData}
+            zIndex={1000}
+            overlayProps={{blur: 2}}
+            loaderProps={{children: <Progress value={dummyDataProgress}/>}}
         />
         <Stack>
             <StickyItemMultiSelect
@@ -116,17 +161,13 @@ export default function CompareScenarios({params}: Route.ComponentProps) {
                 />
             </Group>
             <Plot
-                data={[
-                    {
-                        x: [1, 2, 3],
-                        y: [2, 6, 3],
-                        type: 'scatter',
-                        mode: 'lines+markers',
-                        marker: {color: 'red'},
-                    },
-                    {type: 'bar', x: [1, 2, 3], y: [2, 5, 3]},
-                ]}
-                layout={{width: 320, height: 240, title: {text: 'A Fancy Plot'}}}
+                data={Object.keys(chart_entities).map(entity_name => ({
+                    x: chart_dates,
+                    y: chart_entities[entity_name],
+                    type: "scatter",
+                    name: entity_name,
+                }))}
+                layout={{width: 800, height: 600, title: {text: 'Current Account Balances'}}}
             />
         </Stack>
     </Box>
