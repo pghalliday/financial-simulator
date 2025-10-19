@@ -1,12 +1,9 @@
 from ..base import (
-    Base,
-    HasId,
-    HasName,
-    HasType,
+    BaseWithType,
 )
 
 
-class Schedule(Base, HasId, HasName, HasType):
+class Schedule(BaseWithType):
     __tablename__ = "schedule"
 
     __mapper_args__ = {

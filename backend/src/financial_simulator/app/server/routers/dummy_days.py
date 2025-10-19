@@ -7,7 +7,6 @@ from datetime import date
 
 from fastapi import APIRouter
 from pydantic import BaseModel
-from sse_starlette import EventSourceResponse
 
 from financial_simulator.app.dummy_days import init_dummy_days
 from financial_simulator.lib.accounting import Account
@@ -78,9 +77,9 @@ def generate_events(start: int, end: int):
         raise
 
 
-@router.get(
-    "/",
-    response_model=DayGet,
-)
-async def get(start: int = 0, end: int = 0) -> EventSourceResponse:
-    return EventSourceResponse(generate_events(start, end))
+# @router.get(
+#     "/",
+#     response_model=DayGet,
+# )
+# async def get(start: int = 0, end: int = 0) -> EventSourceResponse:
+#     return EventSourceResponse(generate_events(start, end))

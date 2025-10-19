@@ -1,5 +1,5 @@
 from .bank_account import BankAccount
-from .base import Base, HasId, HasName, HasType
+from .base import Base, BaseWithId, BaseWithNameAndDescription, BaseWithType
 from .entity import CorporationEntity, Entity, IndividualEntity, CorporationEntityBankAccount, IndividualEntityBankAccount
 from .ledger_account import LedgerAccount, LedgerAccountComponent
 from .provider import Provider
@@ -10,9 +10,9 @@ from .value import DecimalValue, RateValue, Value
 
 __all__ = [
     "Base",
-    "HasId",
-    "HasName",
-    "HasType",
+    "BaseWithId",
+    "BaseWithNameAndDescription",
+    "BaseWithType",
     "Scenario",
     "Entity",
     "ScenarioEntity",

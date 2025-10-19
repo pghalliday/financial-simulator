@@ -16,14 +16,17 @@ class Base(DeclarativeBase):
     metadata = MetaData(naming_convention=constraint_naming_conventions)
 
 
-class HasId:
+class BaseWithId(Base):
+    __abstract__ = True
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
 
 
-class HasName:
+class BaseWithNameAndDescription(BaseWithId):
+    __abstract__ = True
     name: Mapped[str] = mapped_column(unique=True)
     description: Mapped[str] = mapped_column()
 
 
-class HasType:
+class BaseWithType(BaseWithNameAndDescription):
+    __abstract__ = True
     type: Mapped[str] = mapped_column()

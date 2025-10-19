@@ -1,12 +1,9 @@
 from ..base import (
-    Base,
-    HasId,
-    HasName,
-    HasType,
+    BaseWithType,
 )
 
 
-class Rate(Base, HasId, HasName, HasType):
+class Rate(BaseWithType):
     __tablename__ = "rate"
 
     __mapper_args__ = {

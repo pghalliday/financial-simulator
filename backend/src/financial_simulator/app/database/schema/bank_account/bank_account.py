@@ -4,7 +4,7 @@ from uuid import UUID
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from ..base import Base, HasId, HasName
+from ..base import BaseWithNameAndDescription
 from ..ledger_account import LedgerAccount
 from ..provider import Provider
 from ..schedule import Schedule
@@ -16,7 +16,7 @@ else:
     CorporationEntity = "CorporationEntity"
 
 
-class BankAccount(Base, HasId, HasName):
+class BankAccount(BaseWithNameAndDescription):
     __tablename__ = "bank_account"
 
     asset_account_id: Mapped[UUID] = mapped_column(

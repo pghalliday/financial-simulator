@@ -12,6 +12,14 @@ class ChangeTypeError(BaseModel):
     current_type: str
     new_type: str
 
+class RelationInvalidError(BaseModel):
+    type: Literal["relation-invalid"] = "relation-invalid"
+    id: UUID
+
+class RelatedItemNotFoundError(BaseModel):
+    type: Literal["related-item-not-found"] = "related-item-not-found"
+    id: UUID
+
 class DatabaseIntegrityError(BaseModel):
     type: Literal["database-integrity"] = "database-integrity"
     message: str
@@ -24,3 +32,9 @@ class HTTPDatabaseIntegrityError(BaseModel):
 
 class HTTPChangeTypeError(BaseModel):
     detail: ChangeTypeError
+
+class HTTPRelationInvalidError(BaseModel):
+    detail: RelationInvalidError
+
+class HTTPRelatedItemNotFoundError(BaseModel):
+    detail: RelatedItemNotFoundError

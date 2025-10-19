@@ -3,11 +3,11 @@ from typing import List
 from sqlalchemy.ext.orderinglist import ordering_list
 from sqlalchemy.orm import Mapped, relationship
 
-from ..base import Base, HasId, HasName
+from ..base import BaseWithNameAndDescription
 from .ledger_account_component import LedgerAccountComponent
 
 
-class LedgerAccount(Base, HasId, HasName):
+class LedgerAccount(BaseWithNameAndDescription):
     __tablename__ = "ledger_account"
 
     components: Mapped[List[LedgerAccountComponent]] = relationship(

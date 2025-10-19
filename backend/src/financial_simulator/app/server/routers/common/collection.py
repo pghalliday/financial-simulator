@@ -1,5 +1,4 @@
 import logging
-from enum import Enum
 from typing import Sequence, TypeVar, Callable, Type, Annotated
 from uuid import UUID
 
@@ -9,7 +8,7 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session, InstrumentedAttribute
 
-from financial_simulator.app.database.schema import Base
+from financial_simulator.app.database.schema import BaseWithNameAndDescription
 from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
     HTTPNotFoundError,
@@ -21,14 +20,14 @@ DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
 logger = logging.getLogger(__name__)
 
-TABLE = TypeVar("TABLE", bound=Base)
+TABLE = TypeVar("TABLE", bound=BaseWithNameAndDescription)
 GET = TypeVar("GET", bound=BaseModel)
 POST = TypeVar("POST", bound=BaseModel)
 PATCH = TypeVar("PATCH", bound=BaseModel)
 
-def create_router(
-    prefix: str,
-    tags: list[str | Enum] | None,
+
+def add_endpoints(
+    router: APIRouter,
     table_model: Type[TABLE],
     order_by: InstrumentedAttribute[str],
     get_model: Type[GET],
@@ -36,11 +35,6 @@ def create_router(
     patch_model: Type[PATCH],
     map_item: Callable[[TABLE], GET],
 ):
-    router = APIRouter(
-        prefix=prefix,
-        tags=tags,
-    )
-
     @router.get(
         "/",
         response_model=Sequence[get_model],
@@ -66,6 +60,7 @@ def create_router(
 
     @router.post(
         "/",
+        status_code=201,
         response_model=get_model,
         responses={
             409: {
@@ -143,5 +138,3 @@ def create_router(
         session.delete(item)
         session.commit()
         return map_item(item)
-
-    return router

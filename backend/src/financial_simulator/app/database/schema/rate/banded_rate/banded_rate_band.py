@@ -5,9 +5,9 @@ from uuid import UUID
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
-from ...base import Base, HasId
+from ...base import BaseWithId
 
-class BandedRateBand(Base, HasId):
+class BandedRateBand(BaseWithId):
     __tablename__ = "banded_rate_band"
 
     banded_rate_id: Mapped[UUID] = mapped_column(ForeignKey("banded_rate.id"))

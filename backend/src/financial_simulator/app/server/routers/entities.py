@@ -2,14 +2,17 @@ import logging
 from typing import Optional, Union, Literal
 from uuid import UUID
 
+from fastapi import APIRouter
+from pydantic import BaseModel
 
 from financial_simulator.app.database.schema import (
     IndividualEntity,
     CorporationEntity,
     Entity,
+    Scenario,
 )
 
-from .common import typed_collection
+from .common import typed_collection, relation
 
 logger = logging.getLogger(__name__)
 
@@ -65,9 +68,13 @@ def map_corporation_entity(entity: CorporationEntity) -> CorporationEntityGet:
         type="corporation_entity",
     )
 
-router = typed_collection.create_router(
+router = APIRouter(
     prefix="/entities",
     tags=["entities"],
+)
+
+typed_collection.add_endpoints(
+    router=router,
     base_table_model=Entity,
     order_by=Entity.name,
     table_models={
@@ -81,4 +88,29 @@ router = typed_collection.create_router(
         "individual_entity": map_individual_entity,
         "corporation_entity": map_corporation_entity,
     },
+)
+
+class EntityScenarioGet(BaseModel):
+    id: UUID
+    name: str
+    description: str
+
+class EntityScenarioPost(BaseModel):
+    id: UUID
+
+def map_entity_scenario(scenario: Scenario) -> EntityScenarioGet:
+    return EntityScenarioGet(
+        id=scenario.id,
+        name=scenario.name,
+        description=scenario.description,
+    )
+
+relation.add_endpoints(
+    router=router,
+    relation_name="scenarios",
+    table_model=Entity,
+    related_table_model=Scenario,
+    get_model=EntityScenarioGet,
+    post_model=EntityScenarioPost,
+    map_related_item=map_entity_scenario,
 )

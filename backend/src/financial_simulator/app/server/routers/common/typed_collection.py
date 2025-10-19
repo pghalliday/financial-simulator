@@ -1,5 +1,4 @@
 import logging
-from enum import Enum
 from typing import (
     Sequence,
     TypeVar,
@@ -17,7 +16,7 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session, InstrumentedAttribute
 
-from financial_simulator.app.database.schema import Base
+from financial_simulator.app.database.schema import BaseWithType
 from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
     HTTPNotFoundError,
@@ -33,15 +32,15 @@ logger = logging.getLogger(__name__)
 class TypedBaseModel(BaseModel):
     type: str
 
-TABLE = TypeVar("TABLE", bound=Base)
+BASE_TABLE = TypeVar("BASE_TABLE", bound=BaseWithType)
+TABLE = TypeVar("TABLE", bound=BaseWithType)
 GET = TypeVar("GET", bound=TypedBaseModel)
 POST = TypeVar("POST", bound=TypedBaseModel)
 PATCH = TypeVar("PATCH", bound=TypedBaseModel)
 
-def create_router(
-    prefix: str,
-    tags: list[str | Enum] | None,
-    base_table_model: Type[Base],
+def add_endpoints(
+    router: APIRouter,
+    base_table_model: Type[BASE_TABLE],
     order_by: InstrumentedAttribute[str],
     table_models: Mapping[str, Type[TABLE]],
     get_model: Type[GET],
@@ -49,11 +48,6 @@ def create_router(
     patch_model: Type[PATCH],
     item_mappers: Mapping[str, Callable[[TABLE], GET]],
 ):
-    router = APIRouter(
-        prefix=prefix,
-        tags=tags,
-    )
-
     @router.get(
         "/",
         response_model=Sequence[get_model],
@@ -79,6 +73,7 @@ def create_router(
 
     @router.post(
         "/",
+        status_code=201,
         response_model=get_model,
         responses={
             409: {
@@ -172,5 +167,3 @@ def create_router(
         session.delete(item)
         session.commit()
         return item_mappers[item.type](item)
-
-    return router

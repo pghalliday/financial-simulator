@@ -1,12 +1,9 @@
 from ..base import (
-    Base,
-    HasId,
-    HasName,
-    HasType,
+    BaseWithType,
 )
 
 
-class Provider(Base, HasId, HasName, HasType):
+class Provider(BaseWithType):
     __tablename__ = "provider"
 
     __mapper_args__ = {
