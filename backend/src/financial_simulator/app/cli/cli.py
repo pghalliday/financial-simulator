@@ -3,7 +3,6 @@ from argparse import ArgumentParser
 
 from financial_simulator.app.config import Config
 
-from .dashboard import add_dashboard_command
 from .decrypt import add_decrypt_command
 from .encrypt import add_encrypt_command
 from .init import add_init_command
@@ -25,7 +24,6 @@ def cli():
     add_encrypt_command(sub_parsers)
     add_decrypt_command(sub_parsers)
     add_server_command(sub_parsers)
-    add_dashboard_command(sub_parsers)
     args = parser.parse_args()
     if args.func is None:
         parser.print_help()
