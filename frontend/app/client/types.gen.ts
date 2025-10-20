@@ -95,6 +95,114 @@ export type DatabaseIntegrityError = {
 };
 
 /**
+ * DummyDayAccount
+ */
+export type DummyDayAccount = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Sub Accounts
+     */
+    sub_accounts: Array<DummyDayAccount>;
+    /**
+     * Balance
+     */
+    balance: number | string;
+    /**
+     * Total Balance
+     */
+    total_balance: number | string;
+};
+
+/**
+ * DummyDayDay
+ */
+export type DummyDayDay = {
+    /**
+     * Date
+     */
+    date: string;
+    /**
+     * Entities
+     */
+    entities: Array<DummyDayEntity>;
+};
+
+/**
+ * DummyDayDayEvent
+ */
+export type DummyDayDayEvent = {
+    /**
+     * Type
+     */
+    type?: 'day';
+    /**
+     * Idx
+     */
+    idx: number;
+    day: DummyDayDay;
+};
+
+/**
+ * DummyDayEndEvent
+ */
+export type DummyDayEndEvent = {
+    /**
+     * Type
+     */
+    type?: 'end';
+};
+
+/**
+ * DummyDayEntity
+ */
+export type DummyDayEntity = {
+    /**
+     * Name
+     */
+    name: string;
+    ledger: DummyDayAccount;
+};
+
+/**
+ * DummyDayError
+ */
+export type DummyDayError = {
+    /**
+     * Status Code
+     */
+    status_code: number;
+    /**
+     * Message
+     */
+    message: string;
+};
+
+/**
+ * DummyDayErrorEvent
+ */
+export type DummyDayErrorEvent = {
+    /**
+     * Type
+     */
+    type?: 'error';
+    error: DummyDayError;
+};
+
+/**
+ * DummyDayEvent
+ */
+export type DummyDayEvent = ({
+    type: 'day';
+} & DummyDayDayEvent) | ({
+    type: 'end';
+} & DummyDayEndEvent) | ({
+    type: 'error';
+} & DummyDayErrorEvent);
+
+/**
  * EntityScenarioGet
  */
 export type EntityScenarioGet = {
@@ -1060,3 +1168,37 @@ export type GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetResponses = {
 };
 
 export type GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetResponse = GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetResponses[keyof GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetResponses];
+
+export type GetDummyDaysGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Start
+         */
+        start?: number;
+        /**
+         * End
+         */
+        end?: number;
+    };
+    url: '/dummy-days/';
+};
+
+export type GetDummyDaysGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetDummyDaysGetError = GetDummyDaysGetErrors[keyof GetDummyDaysGetErrors];
+
+export type GetDummyDaysGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: DummyDayEvent;
+};
+
+export type GetDummyDaysGetResponse = GetDummyDaysGetResponses[keyof GetDummyDaysGetResponses];

@@ -16,7 +16,7 @@ logging.basicConfig(level=log_level)
 
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+app = FastAPI(separate_input_output_schemas=False)
 
 origins = [
     "http://localhost:5173",

@@ -15,6 +15,9 @@ import type {
     DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteData,
     DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteErrors,
     DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteResponses,
+    GetDummyDaysGetData,
+    GetDummyDaysGetErrors,
+    GetDummyDaysGetResponses,
     GetItemEntitiesItemIdGetData,
     GetItemEntitiesItemIdGetErrors,
     GetItemEntitiesItemIdGetResponses,
@@ -307,6 +310,16 @@ export const deleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDelete = <Thro
 export const getRelatedItemEntitiesItemIdScenariosRelatedItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetResponses, GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetErrors, ThrowOnError>({
         url: '/entities/{item_id}/scenarios/{related_item_id}',
+        ...options
+    });
+};
+
+/**
+ * Get
+ */
+export const getDummyDaysGet = <ThrowOnError extends boolean = false>(options?: Options<GetDummyDaysGetData, ThrowOnError>) => {
+    return (options?.client ?? client).sse.get<GetDummyDaysGetResponses, GetDummyDaysGetErrors, ThrowOnError>({
+        url: '/dummy-days/',
         ...options
     });
 };

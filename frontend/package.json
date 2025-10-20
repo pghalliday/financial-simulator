@@ -16,7 +16,6 @@
     "@react-router/node": "^7.9.2",
     "@react-router/serve": "^7.9.2",
     "@tabler/icons-react": "^3.35.0",
-    "eventsource-client": "^1.2.0",
     "isbot": "^5.1.31",
     "lodash.throttle": "^4.1.1",
     "plotly.js": "^3.1.1",

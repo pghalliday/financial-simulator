@@ -2,18 +2,27 @@ import {useCallback, useEffect, useState} from "react";
 import {useHeaderData} from "~/components/providers/HeaderDataProvider";
 import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_PAGE_DESCRIPTION, PAGE_TITLE} from "~/strings";
 import {Box, Button, Group, LoadingOverlay, NumberInput, Progress, Stack} from "@mantine/core";
-import {type AccountDayGet, type DayGet, getItemsScenariosGet, type ScenarioGet} from "~/client";
+import {
+    type DummyDayAccount,
+    type DummyDayDay,
+    getDummyDaysGet,
+    getItemsScenariosGet,
+    type ScenarioGet
+} from "~/client";
 import {useDisclosure} from "@mantine/hooks";
 import {StickyItemMultiSelect} from "~/components/controls/StickyItemMultiSelect";
 import {callApi} from "~/lib/api_wrapper";
-import {createEventSource} from "eventsource-client";
 import throttle from "lodash.throttle"
 import Plot from "react-plotly.js";
 import {useStickyState} from "~/lib/hooks";
 
-function get_balance(account: AccountDayGet, sub_account_path: string[]): number {
+function get_balance(account: DummyDayAccount, sub_account_path: string[]): number {
     if (sub_account_path.length === 0) {
-        return parseFloat(account.total_balance)
+        const total = account.total_balance
+        if (typeof total === "string") {
+            return parseFloat(total)
+        }
+        return total
     }
     const next = sub_account_path.shift()
     for (const sub_account of account.sub_accounts) {
@@ -33,7 +42,7 @@ export default function CompareScenarios() {
     const [selectedScenarios, setSelectedScenarios] = useState<string[]>([])
     const [dummyDaysStart, setDummyDaysStart] = useStickyState<string | number>(0, "compare-scenarios--start")
     const [dummyDaysEnd, setDummyDaysEnd] = useStickyState<string | number>(10, "compare-scenarios--end")
-    const [days, setDays] = useStickyState<DayGet[]>([], "compare-scenarios--days")
+    const [days, setDays] = useStickyState<DummyDayDay[]>([], "compare-scenarios--days")
 
     const description = COMPARE_SCENARIOS_PAGE_DESCRIPTION;
     const title = PAGE_TITLE(description)
@@ -69,38 +78,31 @@ export default function CompareScenarios() {
             })
             setDummyDaysProgress(0)
             startLoadingDummyDays()
-            const newDays: DayGet[] = [];
-            const es = createEventSource({
-                url: `http://localhost:5174/dummy-days/?start=${dummyDaysStart}&end=${dummyDaysEnd}`,
-                onDisconnect: () => {
-                    // Don't retry if disconnected
-                    console.info("Disconnected")
-                    stopLoadingDummyDays()
-                    es.close()
+            const newDays: DummyDayDay[] = [];
+            getDummyDaysGet({
+                query: {
+                    start: dummyDaysStart,
+                    end: dummyDaysEnd,
                 },
-                onMessage: message => {
-                    switch (message.event) {
+            }).then(async ({stream}) => {
+                for await (const event of stream) {
+                    switch (event.type) {
                         case "end": {
                             stopLoadingDummyDays()
                             setDays(newDays)
-                            es.close()
                             break
                         }
                         case "error": {
-                            console.error(`Error: ${message.data}`)
+                            console.error(`Error: ${event.error.status_code}: ${event.error.message}`)
                             stopLoadingDummyDays()
-                            es.close()
                             break
                         }
                         case "day": {
-                            newDays.push(JSON.parse(message.data))
-                            const index = parseInt(message.id!)
-                            const progress = (index - dummyDaysStart + 1) / (dummyDaysEnd - dummyDaysStart) * 100
+                            newDays.push(event.day)
+                            const idx = event.idx
+                            const progress = (idx - dummyDaysStart + 1) / (dummyDaysEnd - dummyDaysStart) * 100
                             updateProgress(progress)
                             break
-                        }
-                        default: {
-                            console.warn(`Unknown event: ${message.event}: ${message.id}: ${message.data}`)
                         }
                     }
                 }
@@ -133,7 +135,6 @@ export default function CompareScenarios() {
             zIndex={1000}
             overlayProps={{blur: 2}}
             loaderProps={{children: <Progress value={dummyDaysProgress} w={300}/>}}
-            // loaderProps={{children: dummyDaysProgress}}
         />
         <Stack>
             <StickyItemMultiSelect
