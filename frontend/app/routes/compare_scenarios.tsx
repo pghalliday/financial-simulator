@@ -12,7 +12,6 @@ import {
 import {useDisclosure} from "@mantine/hooks";
 import {StickyItemMultiSelect} from "~/components/controls/StickyItemMultiSelect";
 import {callApi} from "~/lib/api_wrapper";
-import throttle from "lodash.throttle"
 import Plot from "react-plotly.js";
 import {useStickyState} from "~/lib/hooks";
 
@@ -72,10 +71,6 @@ export default function CompareScenarios() {
 
     const getDummyDays = useCallback(() => {
         if (typeof dummyDaysStart === "number" && typeof dummyDaysEnd === "number") {
-            const updateProgress = throttle((progress) => setDummyDaysProgress(progress), 200, {
-                leading: true,
-                trailing: true,
-            })
             setDummyDaysProgress(0)
             startLoadingDummyDays()
             const newDays: DummyDayDay[] = [];
@@ -101,7 +96,7 @@ export default function CompareScenarios() {
                             newDays.push(event.day)
                             const idx = event.idx
                             const progress = (idx - dummyDaysStart + 1) / (dummyDaysEnd - dummyDaysStart) * 100
-                            updateProgress(progress)
+                            setDummyDaysProgress(progress)
                             break
                         }
                     }
