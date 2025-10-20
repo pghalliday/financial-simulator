@@ -5,6 +5,7 @@ import {useDisclosure} from "@mantine/hooks";
 import {Box, Button, Group, LoadingOverlay, Space, Stack, TextInput, Title} from "@mantine/core";
 import {useSearchParams} from "react-router";
 import {type APIResult, callApi} from "~/lib/api_wrapper";
+import {RelationSelector, type RelationSelectorProps} from "~/components/controls/RelationSelector";
 
 interface PutData {
     type?: string
@@ -21,6 +22,7 @@ interface ItemPageProps {
     getBreadcrumbs: (itemId: string, itemName: string | null) => { title: string, href: string }[]
     getItem: (itemId: string) => Promise<APIResult<RowData>>
     putItem: (itemId: string, data: PutData) => Promise<APIResult<RowData>>
+    relations: RelationSelectorProps[]
 }
 
 export function ItemPage({
@@ -32,6 +34,7 @@ export function ItemPage({
                              getBreadcrumbs,
                              getItem,
                              putItem,
+                             relations,
                          }: ItemPageProps) {
     const capitalizedLabel = collectionLabel.replace(/^./, collectionLabel[0].toUpperCase())
     const [searchParams] = useSearchParams();
@@ -126,6 +129,11 @@ export function ItemPage({
         return null
     }
 
+    const relationSelectors = relations.map(relation => <RelationSelector
+        key={relation.name}
+        {...relation}
+    />)
+
     return <Box pos="relative">
         <title>{title}</title>
         <meta property="og:title" content={title}/>
@@ -159,6 +167,7 @@ export function ItemPage({
                 <Button onClick={revert} disabled={revertDisabled}>Revert</Button>
                 <Button onClick={save} disabled={saveDisabled}>Save</Button>
             </Group>
+            {relationSelectors}
         </Stack>
     </Box>
 }

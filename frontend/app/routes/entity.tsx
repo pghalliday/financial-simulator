@@ -12,8 +12,12 @@ import {
 } from "~/strings";
 import {
     type CorporationEntityPost,
+    deleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDelete,
     getItemEntitiesItemIdGet,
+    getItemsScenariosGet,
+    getRelatedItemsEntitiesItemIdScenariosGet,
     type IndividualEntityPost,
+    postRelatedItemEntitiesItemIdScenariosPost,
     putItemEntitiesItemIdPut
 } from "~/client";
 import {ItemPage} from "~/components/pages/ItemPage";
@@ -57,5 +61,30 @@ export default function Entity({params}: Route.ComponentProps) {
                 },
             ]
         }}
+        relations={[{
+            itemId: params.entityId,
+            name: "scenarios",
+            label: "scenarios",
+            getOptions: getItemsScenariosGet,
+            getSelected: (itemId) => getRelatedItemsEntitiesItemIdScenariosGet({
+                path: {
+                    item_id: itemId,
+                },
+            }),
+            select: (itemId, relatedItemId) => postRelatedItemEntitiesItemIdScenariosPost({
+                path: {
+                    item_id: itemId,
+                },
+                body: {
+                    id: relatedItemId,
+                },
+            }),
+            deselect: (itemId, relatedItemId) => deleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDelete({
+                path: {
+                    item_id: itemId,
+                    related_item_id: relatedItemId,
+                },
+            }),
+        }]}
     />
 }

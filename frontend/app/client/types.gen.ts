@@ -276,6 +276,10 @@ export type ScenarioEntityGet = {
      */
     id: string;
     /**
+     * Type
+     */
+    type: 'individual_entity' | 'corporation_entity';
+    /**
      * Name
      */
     name: string;

@@ -1,5 +1,5 @@
 import logging
-from typing import Optional
+from typing import Optional, Literal
 from uuid import UUID
 
 from fastapi import APIRouter
@@ -48,6 +48,7 @@ collection.add_endpoints(
 
 class ScenarioEntityGet(BaseModel):
     id: UUID
+    type: Literal["individual_entity", "corporation_entity"]
     name: str
     description: str
 
@@ -57,6 +58,7 @@ class ScenarioEntityPost(BaseModel):
 def map_scenario_entity(entity: Entity) -> ScenarioEntityGet:
     return ScenarioEntityGet(
         id=entity.id,
+        type=entity.type,
         name=entity.name,
         description=entity.description,
     )

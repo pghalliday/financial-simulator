@@ -9,7 +9,15 @@ import {
     SCENARIOS_LABEL,
     SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
-import {getItemScenariosItemIdGet, putItemScenariosItemIdPut, type ScenarioPost} from "~/client";
+import {
+    deleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDelete,
+    getItemScenariosItemIdGet,
+    getItemsEntitiesGet,
+    getRelatedItemsScenariosItemIdEntitiesGet,
+    postRelatedItemScenariosItemIdEntitiesPost,
+    putItemScenariosItemIdPut,
+    type ScenarioPost
+} from "~/client";
 import {ItemPage} from "~/components/pages/ItemPage";
 
 export default function Scenario({params}: Route.ComponentProps) {
@@ -50,5 +58,30 @@ export default function Scenario({params}: Route.ComponentProps) {
                 },
             ]
         }}
+        relations={[{
+            itemId: params.scenarioId,
+            name: "entities",
+            label: "entities",
+            getOptions: getItemsEntitiesGet,
+            getSelected: (itemId) => getRelatedItemsScenariosItemIdEntitiesGet({
+                path: {
+                    item_id: itemId,
+                },
+            }),
+            select: (itemId, relatedItemId) => postRelatedItemScenariosItemIdEntitiesPost({
+                path: {
+                    item_id: itemId,
+                },
+                body: {
+                    id: relatedItemId,
+                },
+            }),
+            deselect: (itemId, relatedItemId) => deleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDelete({
+                path: {
+                    item_id: itemId,
+                    related_item_id: relatedItemId,
+                },
+            }),
+        }]}
     />
 }

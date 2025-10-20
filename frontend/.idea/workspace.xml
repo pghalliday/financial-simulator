@@ -5,26 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93565140-8846-4472-bdaf-36985489ef20" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/collection.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/collection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/relation.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/relation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/typed_collection.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/common/typed_collection.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/controls/RelationSelector.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/scenarios.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/financial_simulator/app/server/routers/scenarios.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/client.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/client/client.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/client.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/client/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/client/types.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/types.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/client/utils.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/client/utils.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/auth.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/auth.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/bodySerializer.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/bodySerializer.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/params.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/params.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/pathSerializer.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/pathSerializer.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/queryKeySerializer.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/queryKeySerializer.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/serverSentEvents.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/serverSentEvents.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/types.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/types.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/core/utils.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/core/utils.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/client/sdk.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/sdk.gen.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/client/types.gen.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/client/types.gen.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/pages/CollectionPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/pages/CollectionPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/pages/ItemPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/pages/ItemPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/entity.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/entity.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/scenario.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/scenario.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -95,7 +82,7 @@
       <updated>1760022135007</updated>
       <workItem from="1760022136773" duration="114599000" />
       <workItem from="1760452982431" duration="41476000" />
-      <workItem from="1760700374138" duration="10315000" />
+      <workItem from="1760700374138" duration="21563000" />
     </task>
     <servers />
   </component>
