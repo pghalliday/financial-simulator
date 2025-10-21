@@ -8,6 +8,7 @@ from financial_simulator.app.database.schema import Scenario, Entity
 from pydantic import BaseModel
 
 from .common import collection, relation
+from ..util import SimpleModelMapper
 
 logger = logging.getLogger(__name__)
 
@@ -24,26 +25,26 @@ class ScenarioGet(BaseModel):
     name: str
     description: str
 
-def map_scenario(scenario: Scenario) -> ScenarioGet:
-    return ScenarioGet(
-        id=scenario.id,
-        name=scenario.name,
-        description=scenario.description,
-    )
-
 router = APIRouter(
     prefix="/scenarios",
     tags=["scenarios"],
 )
 
-collection.add_endpoints(
-    router=router,
+model_mapper = SimpleModelMapper(
     table_model=Scenario,
-    order_by=Scenario.name,
     get_model=ScenarioGet,
     post_model=ScenarioPost,
     patch_model=ScenarioPatch,
-    map_item_get=map_scenario,
+    fields=[
+        "name",
+        "description",
+    ]
+)
+
+collection.add_endpoints(
+    router=router,
+    order_by=Scenario.name,
+    model_mapper=model_mapper,
 )
 
 class ScenarioEntityGet(BaseModel):

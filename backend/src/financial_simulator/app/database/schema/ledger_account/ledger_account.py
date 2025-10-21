@@ -1,28 +1,39 @@
+from __future__ import annotations
 from typing import List, TYPE_CHECKING
+from uuid import UUID
 
-from sqlalchemy.ext.orderinglist import ordering_list
-from sqlalchemy.orm import Mapped, relationship
+from sqlalchemy import ForeignKey, UniqueConstraint
+from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from ..base import BaseWithNameAndDescription
 
 if TYPE_CHECKING:
     from ..bank_account import BankAccount
-    from .ledger_account_component import LedgerAccountComponent
 else:
     BankAccount = "BankAccount"
-    LedgerAccountComponent = "LedgerAccountComponent"
 
 
 
 class LedgerAccount(BaseWithNameAndDescription):
     __tablename__ = "ledger_account"
 
-    components: Mapped[List[LedgerAccountComponent]] = relationship(
-        order_by="LedgerAccountComponent.position",
-        collection_class=ordering_list("position"),
-        cascade="all, delete-orphan",
+    parent_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("ledger_account.id")
+    )
+    account_name: Mapped[str]
+
+    __table_args__ = (
+        UniqueConstraint("parent_id", "account_name"),
     )
 
+    parent: Mapped[LedgerAccount | None] = relationship(
+        back_populates="sub_accounts",
+        remote_side="LedgerAccount.id",
+    )
+    sub_accounts: Mapped[List[LedgerAccount]] = relationship(
+        back_populates="parent",
+        cascade="all, delete-orphan",
+    )
     bank_account_asset_accounts: Mapped[List[BankAccount]] = relationship(
         foreign_keys="BankAccount.asset_account_id",
         back_populates="asset_account",

@@ -3,67 +3,101 @@
 import type {Client, Options as Options2, TDataShape} from './client';
 import {client} from './client.gen';
 import type {
-    DeleteItemEntitiesItemIdDeleteData,
-    DeleteItemEntitiesItemIdDeleteErrors,
-    DeleteItemEntitiesItemIdDeleteResponses,
-    DeleteItemScenariosItemIdDeleteData,
-    DeleteItemScenariosItemIdDeleteErrors,
-    DeleteItemScenariosItemIdDeleteResponses,
-    DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteData,
-    DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteErrors,
-    DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteResponses,
-    DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteData,
-    DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteErrors,
-    DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteResponses,
+    DeleteItemRouteBankAccountsItemIdDeleteData,
+    DeleteItemRouteBankAccountsItemIdDeleteErrors,
+    DeleteItemRouteBankAccountsItemIdDeleteResponses,
+    DeleteItemRouteEntitiesItemIdDeleteData,
+    DeleteItemRouteEntitiesItemIdDeleteErrors,
+    DeleteItemRouteEntitiesItemIdDeleteResponses,
+    DeleteItemRouteLedgerAccountsItemIdDeleteData,
+    DeleteItemRouteLedgerAccountsItemIdDeleteErrors,
+    DeleteItemRouteLedgerAccountsItemIdDeleteResponses,
+    DeleteItemRouteScenariosItemIdDeleteData,
+    DeleteItemRouteScenariosItemIdDeleteErrors,
+    DeleteItemRouteScenariosItemIdDeleteResponses,
+    DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteData,
+    DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteErrors,
+    DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteResponses,
+    DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteData,
+    DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteErrors,
+    DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteResponses,
     GetDummyDaysGetData,
     GetDummyDaysGetErrors,
     GetDummyDaysGetResponses,
-    GetItemEntitiesItemIdGetData,
-    GetItemEntitiesItemIdGetErrors,
-    GetItemEntitiesItemIdGetResponses,
-    GetItemScenariosItemIdGetData,
-    GetItemScenariosItemIdGetErrors,
-    GetItemScenariosItemIdGetResponses,
-    GetItemsEntitiesGetData,
-    GetItemsEntitiesGetResponses,
-    GetItemsScenariosGetData,
-    GetItemsScenariosGetResponses,
-    GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetData,
-    GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetErrors,
-    GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetResponses,
-    GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetData,
-    GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetErrors,
-    GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetResponses,
-    GetRelatedItemsEntitiesItemIdScenariosGetData,
-    GetRelatedItemsEntitiesItemIdScenariosGetErrors,
-    GetRelatedItemsEntitiesItemIdScenariosGetResponses,
-    GetRelatedItemsScenariosItemIdEntitiesGetData,
-    GetRelatedItemsScenariosItemIdEntitiesGetErrors,
-    GetRelatedItemsScenariosItemIdEntitiesGetResponses,
-    PatchItemEntitiesItemIdPatchData,
-    PatchItemEntitiesItemIdPatchErrors,
-    PatchItemEntitiesItemIdPatchResponses,
-    PatchItemScenariosItemIdPatchData,
-    PatchItemScenariosItemIdPatchErrors,
-    PatchItemScenariosItemIdPatchResponses,
-    PostItemEntitiesPostData,
-    PostItemEntitiesPostErrors,
-    PostItemEntitiesPostResponses,
-    PostItemScenariosPostData,
-    PostItemScenariosPostErrors,
-    PostItemScenariosPostResponses,
-    PostRelatedItemEntitiesItemIdScenariosPostData,
-    PostRelatedItemEntitiesItemIdScenariosPostErrors,
-    PostRelatedItemEntitiesItemIdScenariosPostResponses,
-    PostRelatedItemScenariosItemIdEntitiesPostData,
-    PostRelatedItemScenariosItemIdEntitiesPostErrors,
-    PostRelatedItemScenariosItemIdEntitiesPostResponses,
-    PutItemEntitiesItemIdPutData,
-    PutItemEntitiesItemIdPutErrors,
-    PutItemEntitiesItemIdPutResponses,
-    PutItemScenariosItemIdPutData,
-    PutItemScenariosItemIdPutErrors,
-    PutItemScenariosItemIdPutResponses
+    GetItemRouteBankAccountsItemIdGetData,
+    GetItemRouteBankAccountsItemIdGetErrors,
+    GetItemRouteBankAccountsItemIdGetResponses,
+    GetItemRouteEntitiesItemIdGetData,
+    GetItemRouteEntitiesItemIdGetErrors,
+    GetItemRouteEntitiesItemIdGetResponses,
+    GetItemRouteLedgerAccountsItemIdGetData,
+    GetItemRouteLedgerAccountsItemIdGetErrors,
+    GetItemRouteLedgerAccountsItemIdGetResponses,
+    GetItemRouteScenariosItemIdGetData,
+    GetItemRouteScenariosItemIdGetErrors,
+    GetItemRouteScenariosItemIdGetResponses,
+    GetItemsRouteBankAccountsGetData,
+    GetItemsRouteBankAccountsGetResponses,
+    GetItemsRouteEntitiesGetData,
+    GetItemsRouteEntitiesGetResponses,
+    GetItemsRouteLedgerAccountsGetData,
+    GetItemsRouteLedgerAccountsGetResponses,
+    GetItemsRouteScenariosGetData,
+    GetItemsRouteScenariosGetResponses,
+    GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetData,
+    GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetErrors,
+    GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetResponses,
+    GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetData,
+    GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetErrors,
+    GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetResponses,
+    GetRelatedItemsRouteEntitiesItemIdScenariosGetData,
+    GetRelatedItemsRouteEntitiesItemIdScenariosGetErrors,
+    GetRelatedItemsRouteEntitiesItemIdScenariosGetResponses,
+    GetRelatedItemsRouteScenariosItemIdEntitiesGetData,
+    GetRelatedItemsRouteScenariosItemIdEntitiesGetErrors,
+    GetRelatedItemsRouteScenariosItemIdEntitiesGetResponses,
+    PatchItemRouteBankAccountsItemIdPatchData,
+    PatchItemRouteBankAccountsItemIdPatchErrors,
+    PatchItemRouteBankAccountsItemIdPatchResponses,
+    PatchItemRouteEntitiesItemIdPatchData,
+    PatchItemRouteEntitiesItemIdPatchErrors,
+    PatchItemRouteEntitiesItemIdPatchResponses,
+    PatchItemRouteLedgerAccountsItemIdPatchData,
+    PatchItemRouteLedgerAccountsItemIdPatchErrors,
+    PatchItemRouteLedgerAccountsItemIdPatchResponses,
+    PatchItemRouteScenariosItemIdPatchData,
+    PatchItemRouteScenariosItemIdPatchErrors,
+    PatchItemRouteScenariosItemIdPatchResponses,
+    PostItemRouteBankAccountsPostData,
+    PostItemRouteBankAccountsPostErrors,
+    PostItemRouteBankAccountsPostResponses,
+    PostItemRouteEntitiesPostData,
+    PostItemRouteEntitiesPostErrors,
+    PostItemRouteEntitiesPostResponses,
+    PostItemRouteLedgerAccountsPostData,
+    PostItemRouteLedgerAccountsPostErrors,
+    PostItemRouteLedgerAccountsPostResponses,
+    PostItemRouteScenariosPostData,
+    PostItemRouteScenariosPostErrors,
+    PostItemRouteScenariosPostResponses,
+    PostRelatedItemRouteEntitiesItemIdScenariosPostData,
+    PostRelatedItemRouteEntitiesItemIdScenariosPostErrors,
+    PostRelatedItemRouteEntitiesItemIdScenariosPostResponses,
+    PostRelatedItemRouteScenariosItemIdEntitiesPostData,
+    PostRelatedItemRouteScenariosItemIdEntitiesPostErrors,
+    PostRelatedItemRouteScenariosItemIdEntitiesPostResponses,
+    PutItemRouteBankAccountsItemIdPutData,
+    PutItemRouteBankAccountsItemIdPutErrors,
+    PutItemRouteBankAccountsItemIdPutResponses,
+    PutItemRouteEntitiesItemIdPutData,
+    PutItemRouteEntitiesItemIdPutErrors,
+    PutItemRouteEntitiesItemIdPutResponses,
+    PutItemRouteLedgerAccountsItemIdPutData,
+    PutItemRouteLedgerAccountsItemIdPutErrors,
+    PutItemRouteLedgerAccountsItemIdPutResponses,
+    PutItemRouteScenariosItemIdPutData,
+    PutItemRouteScenariosItemIdPutErrors,
+    PutItemRouteScenariosItemIdPutResponses
 } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> =
@@ -83,20 +117,20 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
- * Get Items
+ * Get Items Route
  */
-export const getItemsScenariosGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsScenariosGetData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetItemsScenariosGetResponses, unknown, ThrowOnError>({
+export const getItemsRouteScenariosGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsRouteScenariosGetData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetItemsRouteScenariosGetResponses, unknown, ThrowOnError>({
         url: '/scenarios/',
         ...options
     });
 };
 
 /**
- * Post Item
+ * Post Item Route
  */
-export const postItemScenariosPost = <ThrowOnError extends boolean = false>(options: Options<PostItemScenariosPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<PostItemScenariosPostResponses, PostItemScenariosPostErrors, ThrowOnError>({
+export const postItemRouteScenariosPost = <ThrowOnError extends boolean = false>(options: Options<PostItemRouteScenariosPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<PostItemRouteScenariosPostResponses, PostItemRouteScenariosPostErrors, ThrowOnError>({
         url: '/scenarios/',
         ...options,
         headers: {
@@ -107,30 +141,30 @@ export const postItemScenariosPost = <ThrowOnError extends boolean = false>(opti
 };
 
 /**
- * Delete Item
+ * Delete Item Route
  */
-export const deleteItemScenariosItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteItemScenariosItemIdDeleteData, ThrowOnError>) => {
-    return (options.client ?? client).delete<DeleteItemScenariosItemIdDeleteResponses, DeleteItemScenariosItemIdDeleteErrors, ThrowOnError>({
+export const deleteItemRouteScenariosItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteItemRouteScenariosItemIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteItemRouteScenariosItemIdDeleteResponses, DeleteItemRouteScenariosItemIdDeleteErrors, ThrowOnError>({
         url: '/scenarios/{item_id}',
         ...options
     });
 };
 
 /**
- * Get Item
+ * Get Item Route
  */
-export const getItemScenariosItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetItemScenariosItemIdGetData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetItemScenariosItemIdGetResponses, GetItemScenariosItemIdGetErrors, ThrowOnError>({
+export const getItemRouteScenariosItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetItemRouteScenariosItemIdGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetItemRouteScenariosItemIdGetResponses, GetItemRouteScenariosItemIdGetErrors, ThrowOnError>({
         url: '/scenarios/{item_id}',
         ...options
     });
 };
 
 /**
- * Patch Item
+ * Patch Item Route
  */
-export const patchItemScenariosItemIdPatch = <ThrowOnError extends boolean = false>(options: Options<PatchItemScenariosItemIdPatchData, ThrowOnError>) => {
-    return (options.client ?? client).patch<PatchItemScenariosItemIdPatchResponses, PatchItemScenariosItemIdPatchErrors, ThrowOnError>({
+export const patchItemRouteScenariosItemIdPatch = <ThrowOnError extends boolean = false>(options: Options<PatchItemRouteScenariosItemIdPatchData, ThrowOnError>) => {
+    return (options.client ?? client).patch<PatchItemRouteScenariosItemIdPatchResponses, PatchItemRouteScenariosItemIdPatchErrors, ThrowOnError>({
         url: '/scenarios/{item_id}',
         ...options,
         headers: {
@@ -141,10 +175,10 @@ export const patchItemScenariosItemIdPatch = <ThrowOnError extends boolean = fal
 };
 
 /**
- * Put Item
+ * Put Item Route
  */
-export const putItemScenariosItemIdPut = <ThrowOnError extends boolean = false>(options: Options<PutItemScenariosItemIdPutData, ThrowOnError>) => {
-    return (options.client ?? client).put<PutItemScenariosItemIdPutResponses, PutItemScenariosItemIdPutErrors, ThrowOnError>({
+export const putItemRouteScenariosItemIdPut = <ThrowOnError extends boolean = false>(options: Options<PutItemRouteScenariosItemIdPutData, ThrowOnError>) => {
+    return (options.client ?? client).put<PutItemRouteScenariosItemIdPutResponses, PutItemRouteScenariosItemIdPutErrors, ThrowOnError>({
         url: '/scenarios/{item_id}',
         ...options,
         headers: {
@@ -155,20 +189,20 @@ export const putItemScenariosItemIdPut = <ThrowOnError extends boolean = false>(
 };
 
 /**
- * Get Related Items
+ * Get Related Items Route
  */
-export const getRelatedItemsScenariosItemIdEntitiesGet = <ThrowOnError extends boolean = false>(options: Options<GetRelatedItemsScenariosItemIdEntitiesGetData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetRelatedItemsScenariosItemIdEntitiesGetResponses, GetRelatedItemsScenariosItemIdEntitiesGetErrors, ThrowOnError>({
+export const getRelatedItemsRouteScenariosItemIdEntitiesGet = <ThrowOnError extends boolean = false>(options: Options<GetRelatedItemsRouteScenariosItemIdEntitiesGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetRelatedItemsRouteScenariosItemIdEntitiesGetResponses, GetRelatedItemsRouteScenariosItemIdEntitiesGetErrors, ThrowOnError>({
         url: '/scenarios/{item_id}/entities/',
         ...options
     });
 };
 
 /**
- * Post Related Item
+ * Post Related Item Route
  */
-export const postRelatedItemScenariosItemIdEntitiesPost = <ThrowOnError extends boolean = false>(options: Options<PostRelatedItemScenariosItemIdEntitiesPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<PostRelatedItemScenariosItemIdEntitiesPostResponses, PostRelatedItemScenariosItemIdEntitiesPostErrors, ThrowOnError>({
+export const postRelatedItemRouteScenariosItemIdEntitiesPost = <ThrowOnError extends boolean = false>(options: Options<PostRelatedItemRouteScenariosItemIdEntitiesPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<PostRelatedItemRouteScenariosItemIdEntitiesPostResponses, PostRelatedItemRouteScenariosItemIdEntitiesPostErrors, ThrowOnError>({
         url: '/scenarios/{item_id}/entities/',
         ...options,
         headers: {
@@ -179,40 +213,40 @@ export const postRelatedItemScenariosItemIdEntitiesPost = <ThrowOnError extends 
 };
 
 /**
- * Delete Related Item
+ * Delete Related Item Route
  */
-export const deleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteData, ThrowOnError>) => {
-    return (options.client ?? client).delete<DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteResponses, DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteErrors, ThrowOnError>({
+export const deleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteResponses, DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteErrors, ThrowOnError>({
         url: '/scenarios/{item_id}/entities/{related_item_id}',
         ...options
     });
 };
 
 /**
- * Get Related Item
+ * Get Related Item Route
  */
-export const getRelatedItemScenariosItemIdEntitiesRelatedItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetResponses, GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetErrors, ThrowOnError>({
+export const getRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetResponses, GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetErrors, ThrowOnError>({
         url: '/scenarios/{item_id}/entities/{related_item_id}',
         ...options
     });
 };
 
 /**
- * Get Items
+ * Get Items Route
  */
-export const getItemsEntitiesGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsEntitiesGetData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetItemsEntitiesGetResponses, unknown, ThrowOnError>({
+export const getItemsRouteEntitiesGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsRouteEntitiesGetData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetItemsRouteEntitiesGetResponses, unknown, ThrowOnError>({
         url: '/entities/',
         ...options
     });
 };
 
 /**
- * Post Item
+ * Post Item Route
  */
-export const postItemEntitiesPost = <ThrowOnError extends boolean = false>(options: Options<PostItemEntitiesPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<PostItemEntitiesPostResponses, PostItemEntitiesPostErrors, ThrowOnError>({
+export const postItemRouteEntitiesPost = <ThrowOnError extends boolean = false>(options: Options<PostItemRouteEntitiesPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<PostItemRouteEntitiesPostResponses, PostItemRouteEntitiesPostErrors, ThrowOnError>({
         url: '/entities/',
         ...options,
         headers: {
@@ -223,30 +257,30 @@ export const postItemEntitiesPost = <ThrowOnError extends boolean = false>(optio
 };
 
 /**
- * Delete Item
+ * Delete Item Route
  */
-export const deleteItemEntitiesItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteItemEntitiesItemIdDeleteData, ThrowOnError>) => {
-    return (options.client ?? client).delete<DeleteItemEntitiesItemIdDeleteResponses, DeleteItemEntitiesItemIdDeleteErrors, ThrowOnError>({
+export const deleteItemRouteEntitiesItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteItemRouteEntitiesItemIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteItemRouteEntitiesItemIdDeleteResponses, DeleteItemRouteEntitiesItemIdDeleteErrors, ThrowOnError>({
         url: '/entities/{item_id}',
         ...options
     });
 };
 
 /**
- * Get Item
+ * Get Item Route
  */
-export const getItemEntitiesItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetItemEntitiesItemIdGetData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetItemEntitiesItemIdGetResponses, GetItemEntitiesItemIdGetErrors, ThrowOnError>({
+export const getItemRouteEntitiesItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetItemRouteEntitiesItemIdGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetItemRouteEntitiesItemIdGetResponses, GetItemRouteEntitiesItemIdGetErrors, ThrowOnError>({
         url: '/entities/{item_id}',
         ...options
     });
 };
 
 /**
- * Patch Item
+ * Patch Item Route
  */
-export const patchItemEntitiesItemIdPatch = <ThrowOnError extends boolean = false>(options: Options<PatchItemEntitiesItemIdPatchData, ThrowOnError>) => {
-    return (options.client ?? client).patch<PatchItemEntitiesItemIdPatchResponses, PatchItemEntitiesItemIdPatchErrors, ThrowOnError>({
+export const patchItemRouteEntitiesItemIdPatch = <ThrowOnError extends boolean = false>(options: Options<PatchItemRouteEntitiesItemIdPatchData, ThrowOnError>) => {
+    return (options.client ?? client).patch<PatchItemRouteEntitiesItemIdPatchResponses, PatchItemRouteEntitiesItemIdPatchErrors, ThrowOnError>({
         url: '/entities/{item_id}',
         ...options,
         headers: {
@@ -257,10 +291,10 @@ export const patchItemEntitiesItemIdPatch = <ThrowOnError extends boolean = fals
 };
 
 /**
- * Put Item
+ * Put Item Route
  */
-export const putItemEntitiesItemIdPut = <ThrowOnError extends boolean = false>(options: Options<PutItemEntitiesItemIdPutData, ThrowOnError>) => {
-    return (options.client ?? client).put<PutItemEntitiesItemIdPutResponses, PutItemEntitiesItemIdPutErrors, ThrowOnError>({
+export const putItemRouteEntitiesItemIdPut = <ThrowOnError extends boolean = false>(options: Options<PutItemRouteEntitiesItemIdPutData, ThrowOnError>) => {
+    return (options.client ?? client).put<PutItemRouteEntitiesItemIdPutResponses, PutItemRouteEntitiesItemIdPutErrors, ThrowOnError>({
         url: '/entities/{item_id}',
         ...options,
         headers: {
@@ -271,20 +305,20 @@ export const putItemEntitiesItemIdPut = <ThrowOnError extends boolean = false>(o
 };
 
 /**
- * Get Related Items
+ * Get Related Items Route
  */
-export const getRelatedItemsEntitiesItemIdScenariosGet = <ThrowOnError extends boolean = false>(options: Options<GetRelatedItemsEntitiesItemIdScenariosGetData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetRelatedItemsEntitiesItemIdScenariosGetResponses, GetRelatedItemsEntitiesItemIdScenariosGetErrors, ThrowOnError>({
+export const getRelatedItemsRouteEntitiesItemIdScenariosGet = <ThrowOnError extends boolean = false>(options: Options<GetRelatedItemsRouteEntitiesItemIdScenariosGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetRelatedItemsRouteEntitiesItemIdScenariosGetResponses, GetRelatedItemsRouteEntitiesItemIdScenariosGetErrors, ThrowOnError>({
         url: '/entities/{item_id}/scenarios/',
         ...options
     });
 };
 
 /**
- * Post Related Item
+ * Post Related Item Route
  */
-export const postRelatedItemEntitiesItemIdScenariosPost = <ThrowOnError extends boolean = false>(options: Options<PostRelatedItemEntitiesItemIdScenariosPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<PostRelatedItemEntitiesItemIdScenariosPostResponses, PostRelatedItemEntitiesItemIdScenariosPostErrors, ThrowOnError>({
+export const postRelatedItemRouteEntitiesItemIdScenariosPost = <ThrowOnError extends boolean = false>(options: Options<PostRelatedItemRouteEntitiesItemIdScenariosPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<PostRelatedItemRouteEntitiesItemIdScenariosPostResponses, PostRelatedItemRouteEntitiesItemIdScenariosPostErrors, ThrowOnError>({
         url: '/entities/{item_id}/scenarios/',
         ...options,
         headers: {
@@ -295,22 +329,166 @@ export const postRelatedItemEntitiesItemIdScenariosPost = <ThrowOnError extends 
 };
 
 /**
- * Delete Related Item
+ * Delete Related Item Route
  */
-export const deleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteData, ThrowOnError>) => {
-    return (options.client ?? client).delete<DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteResponses, DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteErrors, ThrowOnError>({
+export const deleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteResponses, DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteErrors, ThrowOnError>({
         url: '/entities/{item_id}/scenarios/{related_item_id}',
         ...options
     });
 };
 
 /**
- * Get Related Item
+ * Get Related Item Route
  */
-export const getRelatedItemEntitiesItemIdScenariosRelatedItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetResponses, GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetErrors, ThrowOnError>({
+export const getRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetResponses, GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetErrors, ThrowOnError>({
         url: '/entities/{item_id}/scenarios/{related_item_id}',
         ...options
+    });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteBankAccountsGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsRouteBankAccountsGetData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetItemsRouteBankAccountsGetResponses, unknown, ThrowOnError>({
+        url: '/bank-accounts/',
+        ...options
+    });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteBankAccountsPost = <ThrowOnError extends boolean = false>(options: Options<PostItemRouteBankAccountsPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<PostItemRouteBankAccountsPostResponses, PostItemRouteBankAccountsPostErrors, ThrowOnError>({
+        url: '/bank-accounts/',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteBankAccountsItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteItemRouteBankAccountsItemIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteItemRouteBankAccountsItemIdDeleteResponses, DeleteItemRouteBankAccountsItemIdDeleteErrors, ThrowOnError>({
+        url: '/bank-accounts/{item_id}',
+        ...options
+    });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteBankAccountsItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetItemRouteBankAccountsItemIdGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetItemRouteBankAccountsItemIdGetResponses, GetItemRouteBankAccountsItemIdGetErrors, ThrowOnError>({
+        url: '/bank-accounts/{item_id}',
+        ...options
+    });
+};
+
+/**
+ * Patch Item Route
+ */
+export const patchItemRouteBankAccountsItemIdPatch = <ThrowOnError extends boolean = false>(options: Options<PatchItemRouteBankAccountsItemIdPatchData, ThrowOnError>) => {
+    return (options.client ?? client).patch<PatchItemRouteBankAccountsItemIdPatchResponses, PatchItemRouteBankAccountsItemIdPatchErrors, ThrowOnError>({
+        url: '/bank-accounts/{item_id}',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteBankAccountsItemIdPut = <ThrowOnError extends boolean = false>(options: Options<PutItemRouteBankAccountsItemIdPutData, ThrowOnError>) => {
+    return (options.client ?? client).put<PutItemRouteBankAccountsItemIdPutResponses, PutItemRouteBankAccountsItemIdPutErrors, ThrowOnError>({
+        url: '/bank-accounts/{item_id}',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteLedgerAccountsGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsRouteLedgerAccountsGetData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetItemsRouteLedgerAccountsGetResponses, unknown, ThrowOnError>({
+        url: '/ledger-accounts/',
+        ...options
+    });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteLedgerAccountsPost = <ThrowOnError extends boolean = false>(options: Options<PostItemRouteLedgerAccountsPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<PostItemRouteLedgerAccountsPostResponses, PostItemRouteLedgerAccountsPostErrors, ThrowOnError>({
+        url: '/ledger-accounts/',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteLedgerAccountsItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteItemRouteLedgerAccountsItemIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteItemRouteLedgerAccountsItemIdDeleteResponses, DeleteItemRouteLedgerAccountsItemIdDeleteErrors, ThrowOnError>({
+        url: '/ledger-accounts/{item_id}',
+        ...options
+    });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteLedgerAccountsItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetItemRouteLedgerAccountsItemIdGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetItemRouteLedgerAccountsItemIdGetResponses, GetItemRouteLedgerAccountsItemIdGetErrors, ThrowOnError>({
+        url: '/ledger-accounts/{item_id}',
+        ...options
+    });
+};
+
+/**
+ * Patch Item Route
+ */
+export const patchItemRouteLedgerAccountsItemIdPatch = <ThrowOnError extends boolean = false>(options: Options<PatchItemRouteLedgerAccountsItemIdPatchData, ThrowOnError>) => {
+    return (options.client ?? client).patch<PatchItemRouteLedgerAccountsItemIdPatchResponses, PatchItemRouteLedgerAccountsItemIdPatchErrors, ThrowOnError>({
+        url: '/ledger-accounts/{item_id}',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteLedgerAccountsItemIdPut = <ThrowOnError extends boolean = false>(options: Options<PutItemRouteLedgerAccountsItemIdPutData, ThrowOnError>) => {
+    return (options.client ?? client).put<PutItemRouteLedgerAccountsItemIdPutResponses, PutItemRouteLedgerAccountsItemIdPutErrors, ThrowOnError>({
+        url: '/ledger-accounts/{item_id}',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
     });
 };
 

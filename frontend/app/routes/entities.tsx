@@ -11,10 +11,10 @@ import {
 } from "~/strings";
 import {
     type CorporationEntityPost,
-    deleteItemEntitiesItemIdDelete,
-    getItemsEntitiesGet,
+    deleteItemRouteEntitiesItemIdDelete,
+    getItemsRouteEntitiesGet,
     type IndividualEntityPost,
-    postItemEntitiesPost
+    postItemRouteEntitiesPost
 } from "~/client";
 
 const COLLECTION_TITLE = PAGE_TITLE(ENTITIES_PAGE_DESCRIPTION);
@@ -37,12 +37,12 @@ export default function Entities() {
         itemHref={ENTITY_HREF}
         breadcrumbs={BREADCRUMBS}
         itemTypes={ENTITY_TYPES}
-        getItems={getItemsEntitiesGet}
-        postItem={(toAddData) => postItemEntitiesPost({
+        getItems={getItemsRouteEntitiesGet}
+        postItem={(toAddData) => postItemRouteEntitiesPost({
             // TODO: can we properly type toAddData?
             body: toAddData as (IndividualEntityPost | CorporationEntityPost),
         })}
-        deleteItem={(itemId) => deleteItemEntitiesItemIdDelete({
+        deleteItem={(itemId) => deleteItemRouteEntitiesItemIdDelete({
             path: {
                 item_id: itemId,
             }

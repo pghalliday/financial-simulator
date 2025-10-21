@@ -8,15 +8,17 @@ from decimal import Decimal, getcontext, FloatOperation
 from functools import reduce
 
 from doc.src.financial_simulator.lib.rates import
-    State,
-    StateUpdater,
-    ANNUAL_UPDATER_PROVIDER,
-    QUARTERLY_UPDATER_PROVIDER,
-    DAILY_UPDATER_PROVIDER
+
+State,
+StateUpdater,
+ANNUAL_UPDATER_PROVIDER,
+QUARTERLY_UPDATER_PROVIDER,
+DAILY_UPDATER_PROVIDER
 from financial_simulator.lib.rates import
-    ContinuousRate,
-    PeriodicRate,
-    create_banded_rate
+
+ContinuousRate,
+PeriodicRate,
+create_banded_rate
 from financial_simulator.lib.util.date import days_in_year
 
 decimal_context = getcontext()

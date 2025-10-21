@@ -1,9 +1,8 @@
 import logging
-from typing import Sequence, TypeVar, Callable, Type, Annotated, Optional
+from typing import Sequence, TypeVar, Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.encoders import jsonable_encoder
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session, InstrumentedAttribute
@@ -13,8 +12,9 @@ from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
     HTTPNotFoundError,
     HTTPDatabaseIntegrityError,
-    NotFoundError,
+    HTTPRelationInvalidError,
 )
+from financial_simulator.app.server.util import get_item, ModelMapper
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
@@ -28,59 +28,41 @@ PATCH = TypeVar("PATCH", bound=BaseModel)
 
 def add_endpoints(
     router: APIRouter,
-    table_model: Type[TABLE],
     order_by: InstrumentedAttribute[str],
-    get_model: Type[GET],
-    post_model: Type[POST],
-    patch_model: Type[PATCH],
-    map_item_get: Callable[[TABLE], GET],
-    map_item_post: Optional[Callable[[POST, Optional[UUID]], TABLE]] = None,
-    patch_item: Optional[Callable[[TABLE, PATCH], None]] = None,
+    model_mapper: ModelMapper,
 ):
-    def __map_item_post(item_post: POST, item_id: Optional[UUID] = None) -> TABLE:
-        if map_item_post is not None:
-            return map_item_post(item_post, item_id)
-        if item_id is not None:
-            item = table_model(id=item_id, **item_post.model_dump())
-            return item
-        return table_model(**item_post.model_dump())
-
-    def __patch_item(item: TABLE, item_patch: PATCH) -> None:
-        if patch_item is not None:
-            patch_item(item, item_patch)
-        else:
-            updated_data = item_patch.model_dump(exclude_unset=True)
-            for key, value in updated_data.items():
-                setattr(item, key, value)
+    if model_mapper.has_invalid_relation_error():
+        invalid_relation_error = {
+            400: {"model": HTTPRelationInvalidError, "description": "Relation invalid"},
+        }
+    else:
+        invalid_relation_error = {}
 
     @router.get(
         "/",
-        response_model=Sequence[get_model],
+        response_model=Sequence[model_mapper.get_model],
     )
     async def get_items_route(session: DBSessionDependency) -> Sequence[GET]:
-        items = session.scalars(select(table_model).order_by(order_by))
-        return [map_item_get(item) for item in items]
+        items = session.scalars(select(model_mapper.table_model).order_by(order_by))
+        return [model_mapper.map_get(item) for item in items]
 
     @router.get(
         "/{item_id}",
-        response_model=get_model,
+        response_model=model_mapper.get_model,
         responses={
             404: {"model": HTTPNotFoundError, "description": "Not found"},
         },
     )
     async def get_item_route(item_id: UUID, session: DBSessionDependency) -> GET:
-        item = session.get(table_model, item_id)
-        if not item:
-            raise HTTPException(
-                status_code=404, detail=jsonable_encoder(NotFoundError(id=item_id))
-            )
-        return map_item_get(item)
+        logger.info(f"Getting item {item_id}")
+        return model_mapper.map_get(get_item(session, model_mapper.table_model, item_id))
 
     @router.post(
         "/",
         status_code=201,
-        response_model=get_model,
+        response_model=model_mapper.get_model,
         responses={
+            **invalid_relation_error,
             409: {
                 "model": HTTPDatabaseIntegrityError,
                 "description": "Database integrity error",
@@ -88,17 +70,18 @@ def add_endpoints(
         },
     )
     async def post_item_route(
-        item_post: post_model, session: DBSessionDependency
+        item_post: model_mapper.post_model, session: DBSessionDependency
     ) -> GET:
-        item = __map_item_post(item_post)
+        item = model_mapper.map_post(session, item_post)
         session.add(item)
         session.commit()
-        return map_item_get(item)
+        return model_mapper.map_get(item)
 
     @router.put(
         "/{item_id}",
-        response_model=get_model,
+        response_model=model_mapper.get_model,
         responses={
+            **invalid_relation_error,
             409: {
                 "model": HTTPDatabaseIntegrityError,
                 "description": "Database integrity error",
@@ -106,17 +89,18 @@ def add_endpoints(
         },
     )
     async def put_item_route(
-        item_id: UUID, item_post: post_model, session: DBSessionDependency
+        item_id: UUID, item_post: model_mapper.post_model, session: DBSessionDependency
     ) -> GET:
-        item = __map_item_post(item_post, item_id)
+        item = model_mapper.map_post(session, item_post, item_id)
         merged = session.merge(item)
         session.commit()
-        return map_item_get(merged)
+        return model_mapper.map_get(merged)
 
     @router.patch(
         "/{item_id}",
-        response_model=get_model,
+        response_model=model_mapper.get_model,
         responses={
+            **invalid_relation_error,
             404: {"model": HTTPNotFoundError, "description": "Not found"},
             409: {
                 "model": HTTPDatabaseIntegrityError,
@@ -125,20 +109,16 @@ def add_endpoints(
         },
     )
     async def patch_item_route(
-            item_id: UUID, item_patch: patch_model, session: DBSessionDependency
+            item_id: UUID, item_patch: model_mapper.patch_model, session: DBSessionDependency
     ) -> GET:
-        item = session.get(table_model, item_id)
-        if not item:
-            raise HTTPException(
-                status_code=404, detail=jsonable_encoder(NotFoundError(id=item_id))
-            )
-        __patch_item(item, item_patch)
+        item = get_item(session, model_mapper.table_model, item_id)
+        model_mapper.map_patch(session, item, item_patch)
         session.commit()
-        return map_item_get(item)
+        return model_mapper.map_get(item)
 
     @router.delete(
         "/{item_id}",
-        response_model=get_model,
+        response_model=model_mapper.get_model,
         responses={
             404: {"model": HTTPNotFoundError, "description": "Not found"},
         }
@@ -146,11 +126,7 @@ def add_endpoints(
     async def delete_item_route(
             item_id: UUID, session: DBSessionDependency
     ) -> GET:
-        item = session.get(table_model, item_id)
-        if not item:
-            raise HTTPException(
-                status_code=404, detail=jsonable_encoder(NotFoundError(id=item_id))
-            )
+        item = get_item(session, model_mapper.table_model, item_id)
         session.delete(item)
         session.commit()
-        return map_item_get(item)
+        return model_mapper.map_get(item)

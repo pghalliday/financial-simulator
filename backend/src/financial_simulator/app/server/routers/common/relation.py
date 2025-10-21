@@ -2,8 +2,7 @@ import logging
 from typing import Sequence, TypeVar, Callable, Type, Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.encoders import jsonable_encoder
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -12,10 +11,13 @@ from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
     HTTPNotFoundError,
     HTTPDatabaseIntegrityError,
-    NotFoundError,
     HTTPRelationInvalidError,
-    RelationInvalidError,
-    RelatedItemNotFoundError, HTTPRelatedItemNotFoundError,
+    HTTPRelatedItemNotFoundError,
+)
+from financial_simulator.app.server.util import (
+    get_related_item,
+    get_item,
+    find_related_item,
 )
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
@@ -45,12 +47,10 @@ def add_endpoints(
         }
     )
     async def get_related_items_route(item_id: UUID, session: DBSessionDependency) -> Sequence[GET]:
-        item = session.get(table_model, item_id)
-        if not item:
-            raise HTTPException(
-                status_code=404, detail=jsonable_encoder(NotFoundError(id=item_id))
-            )
-        return [map_related_item(related_item) for related_item in getattr(item, relation_name)]
+        return [map_related_item(related_item) for related_item in getattr(
+            get_item(session, table_model, item_id),
+            relation_name
+        )]
 
     @router.post(
         f"/{{item_id}}/{relation_name}/",
@@ -66,16 +66,10 @@ def add_endpoints(
         },
     )
     async def post_related_item_route(item_id: UUID, item_post: post_model, session: DBSessionDependency) -> GET:
-        item = session.get(table_model, item_id)
-        if not item:
-            raise HTTPException(
-                status_code=404, detail=jsonable_encoder(NotFoundError(id=item_id))
-            )
-        related_item = session.get(related_table_model, item_post.id)
-        if not related_item:
-            raise HTTPException(
-                status_code=400, detail=jsonable_encoder(RelationInvalidError(id=item_post.id))
-            )
+        item = get_item(session, table_model, item_id)
+        related_item = get_related_item(
+            session, related_table_model, relation_name, item_post.id
+        )
         getattr(item, relation_name).append(related_item)
         session.commit()
         return map_related_item(related_item)
@@ -88,17 +82,13 @@ def add_endpoints(
         },
     )
     async def get_related_item_route(item_id: UUID, related_item_id: UUID, session: DBSessionDependency) -> GET:
-        item = session.get(table_model, item_id)
-        if not item:
-            raise HTTPException(
-                status_code=404, detail=jsonable_encoder(NotFoundError(id=item_id))
-            )
-        related_item = session.get(related_table_model, related_item_id)
-        if not related_item:
-            raise HTTPException(
-                status_code=404, detail=jsonable_encoder(RelatedItemNotFoundError(id=related_item_id))
-            )
-        return map_related_item(related_item)
+        return map_related_item(find_related_item(
+            table_model,
+            related_table_model,
+            relation_name,
+            get_item(session, table_model, item_id),
+            related_item_id,
+        ))
 
     @router.delete(
         f"/{{item_id}}/{relation_name}/{{related_item_id}}",
@@ -108,25 +98,14 @@ def add_endpoints(
         },
     )
     async def delete_related_item_route(item_id: UUID, related_item_id: UUID, session: DBSessionDependency) -> GET:
-        item = session.get(table_model, item_id)
-        if not item:
-            raise HTTPException(
-                status_code=404, detail=jsonable_encoder(NotFoundError(id=item_id))
-            )
-        related_item = next(
-            (
-                related_item
-                for related_item
-                in getattr(item, relation_name)
-                if related_item.id == related_item_id
-            ),
-            None,
+        item = get_item(session, table_model, item_id)
+        related_item = find_related_item(
+            table_model,
+            related_table_model,
+            relation_name,
+            item,
+            related_item_id,
         )
-        if not related_item:
-            raise HTTPException(
-                status_code=404,
-                detail=jsonable_encoder(RelatedItemNotFoundError(id=related_item_id)),
-            )
         getattr(item, relation_name).remove(related_item)
         session.commit()
         return map_related_item(related_item)

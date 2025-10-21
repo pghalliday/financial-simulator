@@ -5,6 +5,160 @@ export type ClientOptions = {
 };
 
 /**
+ * BankAccountGet
+ */
+export type BankAccountGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Asset Account Id
+     */
+    asset_account_id: string;
+    /**
+     * Interest Income Account Id
+     */
+    interest_income_account_id: string;
+    /**
+     * Interest Receivable Account Id
+     */
+    interest_receivable_account_id: string;
+    /**
+     * Fee Expenses Account Id
+     */
+    fee_expenses_account_id: string;
+    /**
+     * Fees Payable Account Id
+     */
+    fees_payable_account_id: string;
+    /**
+     * Fees Provider Id
+     */
+    fees_provider_id: string | null;
+    /**
+     * Fee Payment Schedule Id
+     */
+    fee_payment_schedule_id: string | null;
+    /**
+     * Rate Provider Id
+     */
+    rate_provider_id: string | null;
+    /**
+     * Interest Payment Schedule Id
+     */
+    interest_payment_schedule_id: string | null;
+};
+
+/**
+ * BankAccountPatch
+ */
+export type BankAccountPatch = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Asset Account Id
+     */
+    asset_account_id?: string | null;
+    /**
+     * Interest Income Account Id
+     */
+    interest_income_account_id?: string | null;
+    /**
+     * Interest Receivable Account Id
+     */
+    interest_receivable_account_id?: string | null;
+    /**
+     * Fee Expenses Account Id
+     */
+    fee_expenses_account_id?: string | null;
+    /**
+     * Fees Payable Account Id
+     */
+    fees_payable_account_id?: string | null;
+    /**
+     * Fees Provider Id
+     */
+    fees_provider_id?: string | null;
+    /**
+     * Fee Payment Schedule Id
+     */
+    fee_payment_schedule_id?: string | null;
+    /**
+     * Rate Provider Id
+     */
+    rate_provider_id?: string | null;
+    /**
+     * Interest Payment Schedule Id
+     */
+    interest_payment_schedule_id?: string | null;
+};
+
+/**
+ * BankAccountPost
+ */
+export type BankAccountPost = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Asset Account Id
+     */
+    asset_account_id: string;
+    /**
+     * Interest Income Account Id
+     */
+    interest_income_account_id: string;
+    /**
+     * Interest Receivable Account Id
+     */
+    interest_receivable_account_id: string;
+    /**
+     * Fee Expenses Account Id
+     */
+    fee_expenses_account_id: string;
+    /**
+     * Fees Payable Account Id
+     */
+    fees_payable_account_id: string;
+    /**
+     * Fees Provider Id
+     */
+    fees_provider_id?: string | null;
+    /**
+     * Fee Payment Schedule Id
+     */
+    fee_payment_schedule_id?: string | null;
+    /**
+     * Rate Provider Id
+     */
+    rate_provider_id?: string | null;
+    /**
+     * Interest Payment Schedule Id
+     */
+    interest_payment_schedule_id?: string | null;
+};
+
+/**
  * ChangeTypeError
  */
 export type ChangeTypeError = {
@@ -334,6 +488,76 @@ export type IndividualEntityPost = {
 };
 
 /**
+ * LedgerAccountGet
+ */
+export type LedgerAccountGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Account Name
+     */
+    account_name: string;
+    /**
+     * Parent Id
+     */
+    parent_id?: string | null;
+};
+
+/**
+ * LedgerAccountPatch
+ */
+export type LedgerAccountPatch = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Account Name
+     */
+    account_name?: string | null;
+    /**
+     * Parent Id
+     */
+    parent_id?: string | null;
+};
+
+/**
+ * LedgerAccountPost
+ */
+export type LedgerAccountPost = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Account Name
+     */
+    account_name: string;
+    /**
+     * Parent Id
+     */
+    parent_id?: string | null;
+};
+
+/**
  * NotFoundError
  */
 export type NotFoundError = {
@@ -356,6 +580,10 @@ export type RelatedItemNotFoundError = {
      */
     type?: 'related-item-not-found';
     /**
+     * Relation Name
+     */
+    relation_name: string;
+    /**
      * Id
      */
     id: string;
@@ -369,6 +597,10 @@ export type RelationInvalidError = {
      * Type
      */
     type?: 'relation-invalid';
+    /**
+     * Relation Name
+     */
+    relation_name: string;
     /**
      * Id
      */
@@ -471,31 +703,31 @@ export type ValidationError = {
     type: string;
 };
 
-export type GetItemsScenariosGetData = {
+export type GetItemsRouteScenariosGetData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/scenarios/';
 };
 
-export type GetItemsScenariosGetResponses = {
+export type GetItemsRouteScenariosGetResponses = {
     /**
-     * Response Get Items Scenarios  Get
+     * Response Get Items Route Scenarios  Get
      * Successful Response
      */
     200: Array<ScenarioGet>;
 };
 
-export type GetItemsScenariosGetResponse = GetItemsScenariosGetResponses[keyof GetItemsScenariosGetResponses];
+export type GetItemsRouteScenariosGetResponse = GetItemsRouteScenariosGetResponses[keyof GetItemsRouteScenariosGetResponses];
 
-export type PostItemScenariosPostData = {
+export type PostItemRouteScenariosPostData = {
     body: ScenarioPost;
     path?: never;
     query?: never;
     url: '/scenarios/';
 };
 
-export type PostItemScenariosPostErrors = {
+export type PostItemRouteScenariosPostErrors = {
     /**
      * Database integrity error
      */
@@ -506,18 +738,18 @@ export type PostItemScenariosPostErrors = {
     422: HttpValidationError;
 };
 
-export type PostItemScenariosPostError = PostItemScenariosPostErrors[keyof PostItemScenariosPostErrors];
+export type PostItemRouteScenariosPostError = PostItemRouteScenariosPostErrors[keyof PostItemRouteScenariosPostErrors];
 
-export type PostItemScenariosPostResponses = {
+export type PostItemRouteScenariosPostResponses = {
     /**
      * Successful Response
      */
     201: ScenarioGet;
 };
 
-export type PostItemScenariosPostResponse = PostItemScenariosPostResponses[keyof PostItemScenariosPostResponses];
+export type PostItemRouteScenariosPostResponse = PostItemRouteScenariosPostResponses[keyof PostItemRouteScenariosPostResponses];
 
-export type DeleteItemScenariosItemIdDeleteData = {
+export type DeleteItemRouteScenariosItemIdDeleteData = {
     body?: never;
     path: {
         /**
@@ -529,7 +761,7 @@ export type DeleteItemScenariosItemIdDeleteData = {
     url: '/scenarios/{item_id}';
 };
 
-export type DeleteItemScenariosItemIdDeleteErrors = {
+export type DeleteItemRouteScenariosItemIdDeleteErrors = {
     /**
      * Not found
      */
@@ -540,18 +772,18 @@ export type DeleteItemScenariosItemIdDeleteErrors = {
     422: HttpValidationError;
 };
 
-export type DeleteItemScenariosItemIdDeleteError = DeleteItemScenariosItemIdDeleteErrors[keyof DeleteItemScenariosItemIdDeleteErrors];
+export type DeleteItemRouteScenariosItemIdDeleteError = DeleteItemRouteScenariosItemIdDeleteErrors[keyof DeleteItemRouteScenariosItemIdDeleteErrors];
 
-export type DeleteItemScenariosItemIdDeleteResponses = {
+export type DeleteItemRouteScenariosItemIdDeleteResponses = {
     /**
      * Successful Response
      */
     200: ScenarioGet;
 };
 
-export type DeleteItemScenariosItemIdDeleteResponse = DeleteItemScenariosItemIdDeleteResponses[keyof DeleteItemScenariosItemIdDeleteResponses];
+export type DeleteItemRouteScenariosItemIdDeleteResponse = DeleteItemRouteScenariosItemIdDeleteResponses[keyof DeleteItemRouteScenariosItemIdDeleteResponses];
 
-export type GetItemScenariosItemIdGetData = {
+export type GetItemRouteScenariosItemIdGetData = {
     body?: never;
     path: {
         /**
@@ -563,7 +795,7 @@ export type GetItemScenariosItemIdGetData = {
     url: '/scenarios/{item_id}';
 };
 
-export type GetItemScenariosItemIdGetErrors = {
+export type GetItemRouteScenariosItemIdGetErrors = {
     /**
      * Not found
      */
@@ -574,18 +806,18 @@ export type GetItemScenariosItemIdGetErrors = {
     422: HttpValidationError;
 };
 
-export type GetItemScenariosItemIdGetError = GetItemScenariosItemIdGetErrors[keyof GetItemScenariosItemIdGetErrors];
+export type GetItemRouteScenariosItemIdGetError = GetItemRouteScenariosItemIdGetErrors[keyof GetItemRouteScenariosItemIdGetErrors];
 
-export type GetItemScenariosItemIdGetResponses = {
+export type GetItemRouteScenariosItemIdGetResponses = {
     /**
      * Successful Response
      */
     200: ScenarioGet;
 };
 
-export type GetItemScenariosItemIdGetResponse = GetItemScenariosItemIdGetResponses[keyof GetItemScenariosItemIdGetResponses];
+export type GetItemRouteScenariosItemIdGetResponse = GetItemRouteScenariosItemIdGetResponses[keyof GetItemRouteScenariosItemIdGetResponses];
 
-export type PatchItemScenariosItemIdPatchData = {
+export type PatchItemRouteScenariosItemIdPatchData = {
     body: ScenarioPatch;
     path: {
         /**
@@ -597,7 +829,7 @@ export type PatchItemScenariosItemIdPatchData = {
     url: '/scenarios/{item_id}';
 };
 
-export type PatchItemScenariosItemIdPatchErrors = {
+export type PatchItemRouteScenariosItemIdPatchErrors = {
     /**
      * Not found
      */
@@ -612,18 +844,18 @@ export type PatchItemScenariosItemIdPatchErrors = {
     422: HttpValidationError;
 };
 
-export type PatchItemScenariosItemIdPatchError = PatchItemScenariosItemIdPatchErrors[keyof PatchItemScenariosItemIdPatchErrors];
+export type PatchItemRouteScenariosItemIdPatchError = PatchItemRouteScenariosItemIdPatchErrors[keyof PatchItemRouteScenariosItemIdPatchErrors];
 
-export type PatchItemScenariosItemIdPatchResponses = {
+export type PatchItemRouteScenariosItemIdPatchResponses = {
     /**
      * Successful Response
      */
     200: ScenarioGet;
 };
 
-export type PatchItemScenariosItemIdPatchResponse = PatchItemScenariosItemIdPatchResponses[keyof PatchItemScenariosItemIdPatchResponses];
+export type PatchItemRouteScenariosItemIdPatchResponse = PatchItemRouteScenariosItemIdPatchResponses[keyof PatchItemRouteScenariosItemIdPatchResponses];
 
-export type PutItemScenariosItemIdPutData = {
+export type PutItemRouteScenariosItemIdPutData = {
     body: ScenarioPost;
     path: {
         /**
@@ -635,7 +867,7 @@ export type PutItemScenariosItemIdPutData = {
     url: '/scenarios/{item_id}';
 };
 
-export type PutItemScenariosItemIdPutErrors = {
+export type PutItemRouteScenariosItemIdPutErrors = {
     /**
      * Database integrity error
      */
@@ -646,18 +878,18 @@ export type PutItemScenariosItemIdPutErrors = {
     422: HttpValidationError;
 };
 
-export type PutItemScenariosItemIdPutError = PutItemScenariosItemIdPutErrors[keyof PutItemScenariosItemIdPutErrors];
+export type PutItemRouteScenariosItemIdPutError = PutItemRouteScenariosItemIdPutErrors[keyof PutItemRouteScenariosItemIdPutErrors];
 
-export type PutItemScenariosItemIdPutResponses = {
+export type PutItemRouteScenariosItemIdPutResponses = {
     /**
      * Successful Response
      */
     200: ScenarioGet;
 };
 
-export type PutItemScenariosItemIdPutResponse = PutItemScenariosItemIdPutResponses[keyof PutItemScenariosItemIdPutResponses];
+export type PutItemRouteScenariosItemIdPutResponse = PutItemRouteScenariosItemIdPutResponses[keyof PutItemRouteScenariosItemIdPutResponses];
 
-export type GetRelatedItemsScenariosItemIdEntitiesGetData = {
+export type GetRelatedItemsRouteScenariosItemIdEntitiesGetData = {
     body?: never;
     path: {
         /**
@@ -669,7 +901,7 @@ export type GetRelatedItemsScenariosItemIdEntitiesGetData = {
     url: '/scenarios/{item_id}/entities/';
 };
 
-export type GetRelatedItemsScenariosItemIdEntitiesGetErrors = {
+export type GetRelatedItemsRouteScenariosItemIdEntitiesGetErrors = {
     /**
      * Not found
      */
@@ -680,19 +912,19 @@ export type GetRelatedItemsScenariosItemIdEntitiesGetErrors = {
     422: HttpValidationError;
 };
 
-export type GetRelatedItemsScenariosItemIdEntitiesGetError = GetRelatedItemsScenariosItemIdEntitiesGetErrors[keyof GetRelatedItemsScenariosItemIdEntitiesGetErrors];
+export type GetRelatedItemsRouteScenariosItemIdEntitiesGetError = GetRelatedItemsRouteScenariosItemIdEntitiesGetErrors[keyof GetRelatedItemsRouteScenariosItemIdEntitiesGetErrors];
 
-export type GetRelatedItemsScenariosItemIdEntitiesGetResponses = {
+export type GetRelatedItemsRouteScenariosItemIdEntitiesGetResponses = {
     /**
-     * Response Get Related Items Scenarios  Item Id  Entities  Get
+     * Response Get Related Items Route Scenarios  Item Id  Entities  Get
      * Successful Response
      */
     200: Array<ScenarioEntityGet>;
 };
 
-export type GetRelatedItemsScenariosItemIdEntitiesGetResponse = GetRelatedItemsScenariosItemIdEntitiesGetResponses[keyof GetRelatedItemsScenariosItemIdEntitiesGetResponses];
+export type GetRelatedItemsRouteScenariosItemIdEntitiesGetResponse = GetRelatedItemsRouteScenariosItemIdEntitiesGetResponses[keyof GetRelatedItemsRouteScenariosItemIdEntitiesGetResponses];
 
-export type PostRelatedItemScenariosItemIdEntitiesPostData = {
+export type PostRelatedItemRouteScenariosItemIdEntitiesPostData = {
     body: ScenarioEntityPost;
     path: {
         /**
@@ -704,7 +936,7 @@ export type PostRelatedItemScenariosItemIdEntitiesPostData = {
     url: '/scenarios/{item_id}/entities/';
 };
 
-export type PostRelatedItemScenariosItemIdEntitiesPostErrors = {
+export type PostRelatedItemRouteScenariosItemIdEntitiesPostErrors = {
     /**
      * Relation invalid
      */
@@ -723,18 +955,18 @@ export type PostRelatedItemScenariosItemIdEntitiesPostErrors = {
     422: HttpValidationError;
 };
 
-export type PostRelatedItemScenariosItemIdEntitiesPostError = PostRelatedItemScenariosItemIdEntitiesPostErrors[keyof PostRelatedItemScenariosItemIdEntitiesPostErrors];
+export type PostRelatedItemRouteScenariosItemIdEntitiesPostError = PostRelatedItemRouteScenariosItemIdEntitiesPostErrors[keyof PostRelatedItemRouteScenariosItemIdEntitiesPostErrors];
 
-export type PostRelatedItemScenariosItemIdEntitiesPostResponses = {
+export type PostRelatedItemRouteScenariosItemIdEntitiesPostResponses = {
     /**
      * Successful Response
      */
     201: ScenarioEntityGet;
 };
 
-export type PostRelatedItemScenariosItemIdEntitiesPostResponse = PostRelatedItemScenariosItemIdEntitiesPostResponses[keyof PostRelatedItemScenariosItemIdEntitiesPostResponses];
+export type PostRelatedItemRouteScenariosItemIdEntitiesPostResponse = PostRelatedItemRouteScenariosItemIdEntitiesPostResponses[keyof PostRelatedItemRouteScenariosItemIdEntitiesPostResponses];
 
-export type DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteData = {
+export type DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteData = {
     body?: never;
     path: {
         /**
@@ -750,9 +982,9 @@ export type DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteData = {
     url: '/scenarios/{item_id}/entities/{related_item_id}';
 };
 
-export type DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteErrors = {
+export type DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteErrors = {
     /**
-     * Response 404 Delete Related Item Scenarios  Item Id  Entities  Related Item Id  Delete
+     * Response 404 Delete Related Item Route Scenarios  Item Id  Entities  Related Item Id  Delete
      * Not found
      */
     404: HttpNotFoundError | HttpRelatedItemNotFoundError;
@@ -762,18 +994,18 @@ export type DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteErrors = 
     422: HttpValidationError;
 };
 
-export type DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteError = DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteErrors[keyof DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteErrors];
+export type DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteError = DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteErrors[keyof DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteErrors];
 
-export type DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteResponses = {
+export type DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteResponses = {
     /**
      * Successful Response
      */
     200: ScenarioEntityGet;
 };
 
-export type DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteResponse = DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteResponses[keyof DeleteRelatedItemScenariosItemIdEntitiesRelatedItemIdDeleteResponses];
+export type DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteResponse = DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteResponses[keyof DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteResponses];
 
-export type GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetData = {
+export type GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetData = {
     body?: never;
     path: {
         /**
@@ -789,9 +1021,9 @@ export type GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetData = {
     url: '/scenarios/{item_id}/entities/{related_item_id}';
 };
 
-export type GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetErrors = {
+export type GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetErrors = {
     /**
-     * Response 404 Get Related Item Scenarios  Item Id  Entities  Related Item Id  Get
+     * Response 404 Get Related Item Route Scenarios  Item Id  Entities  Related Item Id  Get
      * Not found
      */
     404: HttpNotFoundError | HttpRelatedItemNotFoundError;
@@ -801,35 +1033,35 @@ export type GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetErrors = {
     422: HttpValidationError;
 };
 
-export type GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetError = GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetErrors[keyof GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetErrors];
+export type GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetError = GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetErrors[keyof GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetErrors];
 
-export type GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetResponses = {
+export type GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetResponses = {
     /**
      * Successful Response
      */
     200: ScenarioEntityGet;
 };
 
-export type GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetResponse = GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetResponses[keyof GetRelatedItemScenariosItemIdEntitiesRelatedItemIdGetResponses];
+export type GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetResponse = GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetResponses[keyof GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetResponses];
 
-export type GetItemsEntitiesGetData = {
+export type GetItemsRouteEntitiesGetData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/entities/';
 };
 
-export type GetItemsEntitiesGetResponses = {
+export type GetItemsRouteEntitiesGetResponses = {
     /**
-     * Response Get Items Entities  Get
+     * Response Get Items Route Entities  Get
      * Successful Response
      */
     200: Array<IndividualEntityGet | CorporationEntityGet>;
 };
 
-export type GetItemsEntitiesGetResponse = GetItemsEntitiesGetResponses[keyof GetItemsEntitiesGetResponses];
+export type GetItemsRouteEntitiesGetResponse = GetItemsRouteEntitiesGetResponses[keyof GetItemsRouteEntitiesGetResponses];
 
-export type PostItemEntitiesPostData = {
+export type PostItemRouteEntitiesPostData = {
     /**
      * Item Post
      */
@@ -839,7 +1071,7 @@ export type PostItemEntitiesPostData = {
     url: '/entities/';
 };
 
-export type PostItemEntitiesPostErrors = {
+export type PostItemRouteEntitiesPostErrors = {
     /**
      * Database integrity error
      */
@@ -850,19 +1082,19 @@ export type PostItemEntitiesPostErrors = {
     422: HttpValidationError;
 };
 
-export type PostItemEntitiesPostError = PostItemEntitiesPostErrors[keyof PostItemEntitiesPostErrors];
+export type PostItemRouteEntitiesPostError = PostItemRouteEntitiesPostErrors[keyof PostItemRouteEntitiesPostErrors];
 
-export type PostItemEntitiesPostResponses = {
+export type PostItemRouteEntitiesPostResponses = {
     /**
-     * Response Post Item Entities  Post
+     * Response Post Item Route Entities  Post
      * Successful Response
      */
     201: IndividualEntityGet | CorporationEntityGet;
 };
 
-export type PostItemEntitiesPostResponse = PostItemEntitiesPostResponses[keyof PostItemEntitiesPostResponses];
+export type PostItemRouteEntitiesPostResponse = PostItemRouteEntitiesPostResponses[keyof PostItemRouteEntitiesPostResponses];
 
-export type DeleteItemEntitiesItemIdDeleteData = {
+export type DeleteItemRouteEntitiesItemIdDeleteData = {
     body?: never;
     path: {
         /**
@@ -874,7 +1106,7 @@ export type DeleteItemEntitiesItemIdDeleteData = {
     url: '/entities/{item_id}';
 };
 
-export type DeleteItemEntitiesItemIdDeleteErrors = {
+export type DeleteItemRouteEntitiesItemIdDeleteErrors = {
     /**
      * Not found
      */
@@ -885,19 +1117,19 @@ export type DeleteItemEntitiesItemIdDeleteErrors = {
     422: HttpValidationError;
 };
 
-export type DeleteItemEntitiesItemIdDeleteError = DeleteItemEntitiesItemIdDeleteErrors[keyof DeleteItemEntitiesItemIdDeleteErrors];
+export type DeleteItemRouteEntitiesItemIdDeleteError = DeleteItemRouteEntitiesItemIdDeleteErrors[keyof DeleteItemRouteEntitiesItemIdDeleteErrors];
 
-export type DeleteItemEntitiesItemIdDeleteResponses = {
+export type DeleteItemRouteEntitiesItemIdDeleteResponses = {
     /**
-     * Response Delete Item Entities  Item Id  Delete
+     * Response Delete Item Route Entities  Item Id  Delete
      * Successful Response
      */
     200: IndividualEntityGet | CorporationEntityGet;
 };
 
-export type DeleteItemEntitiesItemIdDeleteResponse = DeleteItemEntitiesItemIdDeleteResponses[keyof DeleteItemEntitiesItemIdDeleteResponses];
+export type DeleteItemRouteEntitiesItemIdDeleteResponse = DeleteItemRouteEntitiesItemIdDeleteResponses[keyof DeleteItemRouteEntitiesItemIdDeleteResponses];
 
-export type GetItemEntitiesItemIdGetData = {
+export type GetItemRouteEntitiesItemIdGetData = {
     body?: never;
     path: {
         /**
@@ -909,7 +1141,7 @@ export type GetItemEntitiesItemIdGetData = {
     url: '/entities/{item_id}';
 };
 
-export type GetItemEntitiesItemIdGetErrors = {
+export type GetItemRouteEntitiesItemIdGetErrors = {
     /**
      * Not found
      */
@@ -920,19 +1152,19 @@ export type GetItemEntitiesItemIdGetErrors = {
     422: HttpValidationError;
 };
 
-export type GetItemEntitiesItemIdGetError = GetItemEntitiesItemIdGetErrors[keyof GetItemEntitiesItemIdGetErrors];
+export type GetItemRouteEntitiesItemIdGetError = GetItemRouteEntitiesItemIdGetErrors[keyof GetItemRouteEntitiesItemIdGetErrors];
 
-export type GetItemEntitiesItemIdGetResponses = {
+export type GetItemRouteEntitiesItemIdGetResponses = {
     /**
-     * Response Get Item Entities  Item Id  Get
+     * Response Get Item Route Entities  Item Id  Get
      * Successful Response
      */
     200: IndividualEntityGet | CorporationEntityGet;
 };
 
-export type GetItemEntitiesItemIdGetResponse = GetItemEntitiesItemIdGetResponses[keyof GetItemEntitiesItemIdGetResponses];
+export type GetItemRouteEntitiesItemIdGetResponse = GetItemRouteEntitiesItemIdGetResponses[keyof GetItemRouteEntitiesItemIdGetResponses];
 
-export type PatchItemEntitiesItemIdPatchData = {
+export type PatchItemRouteEntitiesItemIdPatchData = {
     /**
      * Item Patch
      */
@@ -947,13 +1179,13 @@ export type PatchItemEntitiesItemIdPatchData = {
     url: '/entities/{item_id}';
 };
 
-export type PatchItemEntitiesItemIdPatchErrors = {
+export type PatchItemRouteEntitiesItemIdPatchErrors = {
     /**
      * Not found
      */
     404: HttpNotFoundError;
     /**
-     * Response 409 Patch Item Entities  Item Id  Patch
+     * Response 409 Patch Item Route Entities  Item Id  Patch
      * Database error
      */
     409: HttpDatabaseIntegrityError | HttpChangeTypeError;
@@ -963,19 +1195,19 @@ export type PatchItemEntitiesItemIdPatchErrors = {
     422: HttpValidationError;
 };
 
-export type PatchItemEntitiesItemIdPatchError = PatchItemEntitiesItemIdPatchErrors[keyof PatchItemEntitiesItemIdPatchErrors];
+export type PatchItemRouteEntitiesItemIdPatchError = PatchItemRouteEntitiesItemIdPatchErrors[keyof PatchItemRouteEntitiesItemIdPatchErrors];
 
-export type PatchItemEntitiesItemIdPatchResponses = {
+export type PatchItemRouteEntitiesItemIdPatchResponses = {
     /**
-     * Response Patch Item Entities  Item Id  Patch
+     * Response Patch Item Route Entities  Item Id  Patch
      * Successful Response
      */
     200: IndividualEntityGet | CorporationEntityGet;
 };
 
-export type PatchItemEntitiesItemIdPatchResponse = PatchItemEntitiesItemIdPatchResponses[keyof PatchItemEntitiesItemIdPatchResponses];
+export type PatchItemRouteEntitiesItemIdPatchResponse = PatchItemRouteEntitiesItemIdPatchResponses[keyof PatchItemRouteEntitiesItemIdPatchResponses];
 
-export type PutItemEntitiesItemIdPutData = {
+export type PutItemRouteEntitiesItemIdPutData = {
     /**
      * Item Post
      */
@@ -990,9 +1222,9 @@ export type PutItemEntitiesItemIdPutData = {
     url: '/entities/{item_id}';
 };
 
-export type PutItemEntitiesItemIdPutErrors = {
+export type PutItemRouteEntitiesItemIdPutErrors = {
     /**
-     * Response 409 Put Item Entities  Item Id  Put
+     * Response 409 Put Item Route Entities  Item Id  Put
      * Database error
      */
     409: HttpDatabaseIntegrityError | HttpChangeTypeError;
@@ -1002,19 +1234,19 @@ export type PutItemEntitiesItemIdPutErrors = {
     422: HttpValidationError;
 };
 
-export type PutItemEntitiesItemIdPutError = PutItemEntitiesItemIdPutErrors[keyof PutItemEntitiesItemIdPutErrors];
+export type PutItemRouteEntitiesItemIdPutError = PutItemRouteEntitiesItemIdPutErrors[keyof PutItemRouteEntitiesItemIdPutErrors];
 
-export type PutItemEntitiesItemIdPutResponses = {
+export type PutItemRouteEntitiesItemIdPutResponses = {
     /**
-     * Response Put Item Entities  Item Id  Put
+     * Response Put Item Route Entities  Item Id  Put
      * Successful Response
      */
     200: IndividualEntityGet | CorporationEntityGet;
 };
 
-export type PutItemEntitiesItemIdPutResponse = PutItemEntitiesItemIdPutResponses[keyof PutItemEntitiesItemIdPutResponses];
+export type PutItemRouteEntitiesItemIdPutResponse = PutItemRouteEntitiesItemIdPutResponses[keyof PutItemRouteEntitiesItemIdPutResponses];
 
-export type GetRelatedItemsEntitiesItemIdScenariosGetData = {
+export type GetRelatedItemsRouteEntitiesItemIdScenariosGetData = {
     body?: never;
     path: {
         /**
@@ -1026,7 +1258,7 @@ export type GetRelatedItemsEntitiesItemIdScenariosGetData = {
     url: '/entities/{item_id}/scenarios/';
 };
 
-export type GetRelatedItemsEntitiesItemIdScenariosGetErrors = {
+export type GetRelatedItemsRouteEntitiesItemIdScenariosGetErrors = {
     /**
      * Not found
      */
@@ -1037,19 +1269,19 @@ export type GetRelatedItemsEntitiesItemIdScenariosGetErrors = {
     422: HttpValidationError;
 };
 
-export type GetRelatedItemsEntitiesItemIdScenariosGetError = GetRelatedItemsEntitiesItemIdScenariosGetErrors[keyof GetRelatedItemsEntitiesItemIdScenariosGetErrors];
+export type GetRelatedItemsRouteEntitiesItemIdScenariosGetError = GetRelatedItemsRouteEntitiesItemIdScenariosGetErrors[keyof GetRelatedItemsRouteEntitiesItemIdScenariosGetErrors];
 
-export type GetRelatedItemsEntitiesItemIdScenariosGetResponses = {
+export type GetRelatedItemsRouteEntitiesItemIdScenariosGetResponses = {
     /**
-     * Response Get Related Items Entities  Item Id  Scenarios  Get
+     * Response Get Related Items Route Entities  Item Id  Scenarios  Get
      * Successful Response
      */
     200: Array<EntityScenarioGet>;
 };
 
-export type GetRelatedItemsEntitiesItemIdScenariosGetResponse = GetRelatedItemsEntitiesItemIdScenariosGetResponses[keyof GetRelatedItemsEntitiesItemIdScenariosGetResponses];
+export type GetRelatedItemsRouteEntitiesItemIdScenariosGetResponse = GetRelatedItemsRouteEntitiesItemIdScenariosGetResponses[keyof GetRelatedItemsRouteEntitiesItemIdScenariosGetResponses];
 
-export type PostRelatedItemEntitiesItemIdScenariosPostData = {
+export type PostRelatedItemRouteEntitiesItemIdScenariosPostData = {
     body: EntityScenarioPost;
     path: {
         /**
@@ -1061,7 +1293,7 @@ export type PostRelatedItemEntitiesItemIdScenariosPostData = {
     url: '/entities/{item_id}/scenarios/';
 };
 
-export type PostRelatedItemEntitiesItemIdScenariosPostErrors = {
+export type PostRelatedItemRouteEntitiesItemIdScenariosPostErrors = {
     /**
      * Relation invalid
      */
@@ -1080,18 +1312,18 @@ export type PostRelatedItemEntitiesItemIdScenariosPostErrors = {
     422: HttpValidationError;
 };
 
-export type PostRelatedItemEntitiesItemIdScenariosPostError = PostRelatedItemEntitiesItemIdScenariosPostErrors[keyof PostRelatedItemEntitiesItemIdScenariosPostErrors];
+export type PostRelatedItemRouteEntitiesItemIdScenariosPostError = PostRelatedItemRouteEntitiesItemIdScenariosPostErrors[keyof PostRelatedItemRouteEntitiesItemIdScenariosPostErrors];
 
-export type PostRelatedItemEntitiesItemIdScenariosPostResponses = {
+export type PostRelatedItemRouteEntitiesItemIdScenariosPostResponses = {
     /**
      * Successful Response
      */
     201: EntityScenarioGet;
 };
 
-export type PostRelatedItemEntitiesItemIdScenariosPostResponse = PostRelatedItemEntitiesItemIdScenariosPostResponses[keyof PostRelatedItemEntitiesItemIdScenariosPostResponses];
+export type PostRelatedItemRouteEntitiesItemIdScenariosPostResponse = PostRelatedItemRouteEntitiesItemIdScenariosPostResponses[keyof PostRelatedItemRouteEntitiesItemIdScenariosPostResponses];
 
-export type DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteData = {
+export type DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteData = {
     body?: never;
     path: {
         /**
@@ -1107,9 +1339,9 @@ export type DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteData = {
     url: '/entities/{item_id}/scenarios/{related_item_id}';
 };
 
-export type DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteErrors = {
+export type DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteErrors = {
     /**
-     * Response 404 Delete Related Item Entities  Item Id  Scenarios  Related Item Id  Delete
+     * Response 404 Delete Related Item Route Entities  Item Id  Scenarios  Related Item Id  Delete
      * Not found
      */
     404: HttpNotFoundError | HttpRelatedItemNotFoundError;
@@ -1119,18 +1351,18 @@ export type DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteErrors = 
     422: HttpValidationError;
 };
 
-export type DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteError = DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteErrors[keyof DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteErrors];
+export type DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteError = DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteErrors[keyof DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteErrors];
 
-export type DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteResponses = {
+export type DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteResponses = {
     /**
      * Successful Response
      */
     200: EntityScenarioGet;
 };
 
-export type DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteResponse = DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteResponses[keyof DeleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDeleteResponses];
+export type DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteResponse = DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteResponses[keyof DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteResponses];
 
-export type GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetData = {
+export type GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetData = {
     body?: never;
     path: {
         /**
@@ -1146,9 +1378,9 @@ export type GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetData = {
     url: '/entities/{item_id}/scenarios/{related_item_id}';
 };
 
-export type GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetErrors = {
+export type GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetErrors = {
     /**
-     * Response 404 Get Related Item Entities  Item Id  Scenarios  Related Item Id  Get
+     * Response 404 Get Related Item Route Entities  Item Id  Scenarios  Related Item Id  Get
      * Not found
      */
     404: HttpNotFoundError | HttpRelatedItemNotFoundError;
@@ -1158,16 +1390,412 @@ export type GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetErrors = {
     422: HttpValidationError;
 };
 
-export type GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetError = GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetErrors[keyof GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetErrors];
+export type GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetError = GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetErrors[keyof GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetErrors];
 
-export type GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetResponses = {
+export type GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetResponses = {
     /**
      * Successful Response
      */
     200: EntityScenarioGet;
 };
 
-export type GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetResponse = GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetResponses[keyof GetRelatedItemEntitiesItemIdScenariosRelatedItemIdGetResponses];
+export type GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetResponse = GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetResponses[keyof GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetResponses];
+
+export type GetItemsRouteBankAccountsGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/bank-accounts/';
+};
+
+export type GetItemsRouteBankAccountsGetResponses = {
+    /**
+     * Response Get Items Route Bank Accounts  Get
+     * Successful Response
+     */
+    200: Array<BankAccountGet>;
+};
+
+export type GetItemsRouteBankAccountsGetResponse = GetItemsRouteBankAccountsGetResponses[keyof GetItemsRouteBankAccountsGetResponses];
+
+export type PostItemRouteBankAccountsPostData = {
+    body: BankAccountPost;
+    path?: never;
+    query?: never;
+    url: '/bank-accounts/';
+};
+
+export type PostItemRouteBankAccountsPostErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Database integrity error
+     */
+    409: HttpDatabaseIntegrityError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PostItemRouteBankAccountsPostError = PostItemRouteBankAccountsPostErrors[keyof PostItemRouteBankAccountsPostErrors];
+
+export type PostItemRouteBankAccountsPostResponses = {
+    /**
+     * Successful Response
+     */
+    201: BankAccountGet;
+};
+
+export type PostItemRouteBankAccountsPostResponse = PostItemRouteBankAccountsPostResponses[keyof PostItemRouteBankAccountsPostResponses];
+
+export type DeleteItemRouteBankAccountsItemIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/bank-accounts/{item_id}';
+};
+
+export type DeleteItemRouteBankAccountsItemIdDeleteErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteItemRouteBankAccountsItemIdDeleteError = DeleteItemRouteBankAccountsItemIdDeleteErrors[keyof DeleteItemRouteBankAccountsItemIdDeleteErrors];
+
+export type DeleteItemRouteBankAccountsItemIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    200: BankAccountGet;
+};
+
+export type DeleteItemRouteBankAccountsItemIdDeleteResponse = DeleteItemRouteBankAccountsItemIdDeleteResponses[keyof DeleteItemRouteBankAccountsItemIdDeleteResponses];
+
+export type GetItemRouteBankAccountsItemIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/bank-accounts/{item_id}';
+};
+
+export type GetItemRouteBankAccountsItemIdGetErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetItemRouteBankAccountsItemIdGetError = GetItemRouteBankAccountsItemIdGetErrors[keyof GetItemRouteBankAccountsItemIdGetErrors];
+
+export type GetItemRouteBankAccountsItemIdGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: BankAccountGet;
+};
+
+export type GetItemRouteBankAccountsItemIdGetResponse = GetItemRouteBankAccountsItemIdGetResponses[keyof GetItemRouteBankAccountsItemIdGetResponses];
+
+export type PatchItemRouteBankAccountsItemIdPatchData = {
+    body: BankAccountPatch;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/bank-accounts/{item_id}';
+};
+
+export type PatchItemRouteBankAccountsItemIdPatchErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Database integrity error
+     */
+    409: HttpDatabaseIntegrityError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PatchItemRouteBankAccountsItemIdPatchError = PatchItemRouteBankAccountsItemIdPatchErrors[keyof PatchItemRouteBankAccountsItemIdPatchErrors];
+
+export type PatchItemRouteBankAccountsItemIdPatchResponses = {
+    /**
+     * Successful Response
+     */
+    200: BankAccountGet;
+};
+
+export type PatchItemRouteBankAccountsItemIdPatchResponse = PatchItemRouteBankAccountsItemIdPatchResponses[keyof PatchItemRouteBankAccountsItemIdPatchResponses];
+
+export type PutItemRouteBankAccountsItemIdPutData = {
+    body: BankAccountPost;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/bank-accounts/{item_id}';
+};
+
+export type PutItemRouteBankAccountsItemIdPutErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Database integrity error
+     */
+    409: HttpDatabaseIntegrityError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PutItemRouteBankAccountsItemIdPutError = PutItemRouteBankAccountsItemIdPutErrors[keyof PutItemRouteBankAccountsItemIdPutErrors];
+
+export type PutItemRouteBankAccountsItemIdPutResponses = {
+    /**
+     * Successful Response
+     */
+    200: BankAccountGet;
+};
+
+export type PutItemRouteBankAccountsItemIdPutResponse = PutItemRouteBankAccountsItemIdPutResponses[keyof PutItemRouteBankAccountsItemIdPutResponses];
+
+export type GetItemsRouteLedgerAccountsGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/ledger-accounts/';
+};
+
+export type GetItemsRouteLedgerAccountsGetResponses = {
+    /**
+     * Response Get Items Route Ledger Accounts  Get
+     * Successful Response
+     */
+    200: Array<LedgerAccountGet>;
+};
+
+export type GetItemsRouteLedgerAccountsGetResponse = GetItemsRouteLedgerAccountsGetResponses[keyof GetItemsRouteLedgerAccountsGetResponses];
+
+export type PostItemRouteLedgerAccountsPostData = {
+    body: LedgerAccountPost;
+    path?: never;
+    query?: never;
+    url: '/ledger-accounts/';
+};
+
+export type PostItemRouteLedgerAccountsPostErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Database integrity error
+     */
+    409: HttpDatabaseIntegrityError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PostItemRouteLedgerAccountsPostError = PostItemRouteLedgerAccountsPostErrors[keyof PostItemRouteLedgerAccountsPostErrors];
+
+export type PostItemRouteLedgerAccountsPostResponses = {
+    /**
+     * Successful Response
+     */
+    201: LedgerAccountGet;
+};
+
+export type PostItemRouteLedgerAccountsPostResponse = PostItemRouteLedgerAccountsPostResponses[keyof PostItemRouteLedgerAccountsPostResponses];
+
+export type DeleteItemRouteLedgerAccountsItemIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/ledger-accounts/{item_id}';
+};
+
+export type DeleteItemRouteLedgerAccountsItemIdDeleteErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteItemRouteLedgerAccountsItemIdDeleteError = DeleteItemRouteLedgerAccountsItemIdDeleteErrors[keyof DeleteItemRouteLedgerAccountsItemIdDeleteErrors];
+
+export type DeleteItemRouteLedgerAccountsItemIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    200: LedgerAccountGet;
+};
+
+export type DeleteItemRouteLedgerAccountsItemIdDeleteResponse = DeleteItemRouteLedgerAccountsItemIdDeleteResponses[keyof DeleteItemRouteLedgerAccountsItemIdDeleteResponses];
+
+export type GetItemRouteLedgerAccountsItemIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/ledger-accounts/{item_id}';
+};
+
+export type GetItemRouteLedgerAccountsItemIdGetErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetItemRouteLedgerAccountsItemIdGetError = GetItemRouteLedgerAccountsItemIdGetErrors[keyof GetItemRouteLedgerAccountsItemIdGetErrors];
+
+export type GetItemRouteLedgerAccountsItemIdGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: LedgerAccountGet;
+};
+
+export type GetItemRouteLedgerAccountsItemIdGetResponse = GetItemRouteLedgerAccountsItemIdGetResponses[keyof GetItemRouteLedgerAccountsItemIdGetResponses];
+
+export type PatchItemRouteLedgerAccountsItemIdPatchData = {
+    body: LedgerAccountPatch;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/ledger-accounts/{item_id}';
+};
+
+export type PatchItemRouteLedgerAccountsItemIdPatchErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Database integrity error
+     */
+    409: HttpDatabaseIntegrityError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PatchItemRouteLedgerAccountsItemIdPatchError = PatchItemRouteLedgerAccountsItemIdPatchErrors[keyof PatchItemRouteLedgerAccountsItemIdPatchErrors];
+
+export type PatchItemRouteLedgerAccountsItemIdPatchResponses = {
+    /**
+     * Successful Response
+     */
+    200: LedgerAccountGet;
+};
+
+export type PatchItemRouteLedgerAccountsItemIdPatchResponse = PatchItemRouteLedgerAccountsItemIdPatchResponses[keyof PatchItemRouteLedgerAccountsItemIdPatchResponses];
+
+export type PutItemRouteLedgerAccountsItemIdPutData = {
+    body: LedgerAccountPost;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/ledger-accounts/{item_id}';
+};
+
+export type PutItemRouteLedgerAccountsItemIdPutErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Database integrity error
+     */
+    409: HttpDatabaseIntegrityError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PutItemRouteLedgerAccountsItemIdPutError = PutItemRouteLedgerAccountsItemIdPutErrors[keyof PutItemRouteLedgerAccountsItemIdPutErrors];
+
+export type PutItemRouteLedgerAccountsItemIdPutResponses = {
+    /**
+     * Successful Response
+     */
+    200: LedgerAccountGet;
+};
+
+export type PutItemRouteLedgerAccountsItemIdPutResponse = PutItemRouteLedgerAccountsItemIdPutResponses[keyof PutItemRouteLedgerAccountsItemIdPutResponses];
 
 export type GetDummyDaysGetData = {
     body?: never;

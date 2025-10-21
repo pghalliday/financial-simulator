@@ -6,7 +6,7 @@ import {
     type DummyDayAccount,
     type DummyDayDay,
     getDummyDaysGet,
-    getItemsScenariosGet,
+    getItemsRouteScenariosGet,
     type ScenarioGet
 } from "~/client";
 import {useDisclosure} from "@mantine/hooks";
@@ -57,7 +57,7 @@ export default function CompareScenarios() {
             ],
         });
         callApi({
-            api: () => getItemsScenariosGet(),
+            api: () => getItemsRouteScenariosGet(),
             errorTitle: "Get scenarios error",
             onSuccess: setScenarios,
             startLoading,

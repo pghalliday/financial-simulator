@@ -10,20 +10,20 @@ from calendar import TUESDAY, SATURDAY, JANUARY, FEBRUARY, APRIL, JULY, OCTOBER
 from datetime import date, timedelta
 
 from doc.src.financial_simulator.lib.schedules import print_scheduled
-from financial_simulator.lib.schedules import \
-    NeverSchedule, \
-    DailySchedule, \
-    DaySchedule, \
-    FromSchedule, \
-    UntilSchedule, \
-    RangeSchedule, \
-    WeeklySchedule, \
-    MonthlySchedule, \
-    YearlySchedule, \
-    FunctionSchedule, \
-    AnySchedule, \
+from financial_simulator.lib.schedules import
+    NeverSchedule,
+    DailySchedule,
+    DaySchedule,
+    FromSchedule,
+    UntilSchedule,
+    RangeSchedule,
+    WeeklySchedule,
+    MonthlySchedule,
+    YearlySchedule,
+    FunctionSchedule,
+    AnySchedule,
     AllSchedule
-from financial_simulator.lib.util.format import \
+from financial_simulator.lib.util.format import
     format_day
 
 START_DATE = date.today()

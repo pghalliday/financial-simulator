@@ -14,10 +14,12 @@ class ChangeTypeError(BaseModel):
 
 class RelationInvalidError(BaseModel):
     type: Literal["relation-invalid"] = "relation-invalid"
+    relation_name: str
     id: UUID
 
 class RelatedItemNotFoundError(BaseModel):
     type: Literal["related-item-not-found"] = "related-item-not-found"
+    relation_name: str
     id: UUID
 
 class DatabaseIntegrityError(BaseModel):

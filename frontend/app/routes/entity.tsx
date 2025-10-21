@@ -12,13 +12,13 @@ import {
 } from "~/strings";
 import {
     type CorporationEntityPost,
-    deleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDelete,
-    getItemEntitiesItemIdGet,
-    getItemsScenariosGet,
-    getRelatedItemsEntitiesItemIdScenariosGet,
+    deleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDelete,
+    getItemRouteEntitiesItemIdGet,
+    getItemsRouteScenariosGet,
+    getRelatedItemsRouteEntitiesItemIdScenariosGet,
     type IndividualEntityPost,
-    postRelatedItemEntitiesItemIdScenariosPost,
-    putItemEntitiesItemIdPut
+    postRelatedItemRouteEntitiesItemIdScenariosPost,
+    putItemRouteEntitiesItemIdPut
 } from "~/client";
 import {ItemPage} from "~/components/pages/ItemPage";
 
@@ -27,12 +27,12 @@ export default function Entity({params}: Route.ComponentProps) {
         itemId={params.entityId}
         collectionLabel={ENTITIES_LABEL}
         itemTypes={ENTITY_TYPES}
-        getItem={itemId => getItemEntitiesItemIdGet({
+        getItem={itemId => getItemRouteEntitiesItemIdGet({
             path: {
                 item_id: itemId,
             },
         })}
-        putItem={(itemId, data) => putItemEntitiesItemIdPut({
+        putItem={(itemId, data) => putItemRouteEntitiesItemIdPut({
             path: {
                 item_id: itemId,
             },
@@ -65,13 +65,13 @@ export default function Entity({params}: Route.ComponentProps) {
             itemId: params.entityId,
             name: "scenarios",
             label: "scenarios",
-            getOptions: getItemsScenariosGet,
-            getSelected: (itemId) => getRelatedItemsEntitiesItemIdScenariosGet({
+            getOptions: getItemsRouteScenariosGet,
+            getSelected: (itemId) => getRelatedItemsRouteEntitiesItemIdScenariosGet({
                 path: {
                     item_id: itemId,
                 },
             }),
-            select: (itemId, relatedItemId) => postRelatedItemEntitiesItemIdScenariosPost({
+            select: (itemId, relatedItemId) => postRelatedItemRouteEntitiesItemIdScenariosPost({
                 path: {
                     item_id: itemId,
                 },
@@ -79,7 +79,7 @@ export default function Entity({params}: Route.ComponentProps) {
                     id: relatedItemId,
                 },
             }),
-            deselect: (itemId, relatedItemId) => deleteRelatedItemEntitiesItemIdScenariosRelatedItemIdDelete({
+            deselect: (itemId, relatedItemId) => deleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDelete({
                 path: {
                     item_id: itemId,
                     related_item_id: relatedItemId,

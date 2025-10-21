@@ -1,7 +1,7 @@
 from .bank_account import BankAccount
 from .base import Base, BaseWithId, BaseWithNameAndDescription, BaseWithType
 from .entity import CorporationEntity, Entity, IndividualEntity, CorporationEntityBankAccount, IndividualEntityBankAccount
-from .ledger_account import LedgerAccount, LedgerAccountComponent
+from .ledger_account import LedgerAccount
 from .provider import Provider
 from .rate import BandedRate, ContinuousRate, PeriodicRate, Rate, BandedRateBand
 from .scenario import Scenario, ScenarioEntity
@@ -22,7 +22,6 @@ __all__ = [
     "IndividualEntityBankAccount",
     "BankAccount",
     "LedgerAccount",
-    "LedgerAccountComponent",
     "Provider",
     "Schedule",
     "Value",

@@ -9,9 +9,9 @@ import {
     SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
 import {
-    deleteItemScenariosItemIdDelete,
-    getItemsScenariosGet,
-    postItemScenariosPost,
+    deleteItemRouteScenariosItemIdDelete,
+    getItemsRouteScenariosGet,
+    postItemRouteScenariosPost,
     type ScenarioPost
 } from "~/client";
 
@@ -34,12 +34,12 @@ export default function Entities() {
         collectionLabel={SCENARIOS_LABEL}
         itemHref={SCENARIO_HREF}
         breadcrumbs={BREADCRUMBS}
-        getItems={getItemsScenariosGet}
-        postItem={(toAddData) => postItemScenariosPost({
+        getItems={getItemsRouteScenariosGet}
+        postItem={(toAddData) => postItemRouteScenariosPost({
             // TODO: can we properly type toAddData?
             body: toAddData as ScenarioPost,
         })}
-        deleteItem={(itemId) => deleteItemScenariosItemIdDelete({
+        deleteItem={(itemId) => deleteItemRouteScenariosItemIdDelete({
             path: {
                 item_id: itemId,
             }
