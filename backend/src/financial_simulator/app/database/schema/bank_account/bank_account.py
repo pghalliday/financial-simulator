@@ -34,10 +34,10 @@ class BankAccount(BaseWithNameAndDescription):
     fees_payable_account_id: Mapped[UUID] = mapped_column(
         ForeignKey("ledger_account.id")
     )
-    fees_provider_id: Mapped[UUID] = mapped_column(ForeignKey("provider.id"))
-    fee_payment_schedule_id: Mapped[UUID] = mapped_column(ForeignKey("schedule.id"))
-    rate_provider_id: Mapped[UUID] = mapped_column(ForeignKey("provider.id"))
-    interest_payment_schedule_id: Mapped[UUID] = mapped_column(
+    fees_provider_id: Mapped[UUID | None] = mapped_column(ForeignKey("provider.id"))
+    fee_payment_schedule_id: Mapped[UUID | None] = mapped_column(ForeignKey("schedule.id"))
+    rate_provider_id: Mapped[UUID | None] = mapped_column(ForeignKey("provider.id"))
+    interest_payment_schedule_id: Mapped[UUID | None] = mapped_column(
         ForeignKey("schedule.id")
     )
 
@@ -56,16 +56,16 @@ class BankAccount(BaseWithNameAndDescription):
     fees_payable_account: Mapped[LedgerAccount] = relationship(
         foreign_keys="BankAccount.fees_payable_account_id",
     )
-    fees_provider: Mapped[Provider] = relationship(
+    fees_provider: Mapped[Provider | None] = relationship(
         foreign_keys="BankAccount.fees_provider_id"
     )
-    fee_payment_schedule: Mapped[Schedule] = relationship(
+    fee_payment_schedule: Mapped[Schedule | None] = relationship(
         foreign_keys="BankAccount.fee_payment_schedule_id"
     )
-    rate_provider: Mapped[Provider] = relationship(
+    rate_provider: Mapped[Provider | None] = relationship(
         foreign_keys="BankAccount.rate_provider_id"
     )
-    interest_payment_schedule: Mapped[Schedule] = relationship(
+    interest_payment_schedule: Mapped[Schedule | None] = relationship(
         foreign_keys="BankAccount.interest_payment_schedule_id"
     )
 
