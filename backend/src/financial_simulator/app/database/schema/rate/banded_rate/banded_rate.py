@@ -13,6 +13,8 @@ class BandedRate(Rate):
 
     id: Mapped[UUID] = mapped_column(ForeignKey("rate.id"), primary_key=True)
 
-    bands: Mapped[List[BandedRateBand]] = relationship()
+    bands: Mapped[List[BandedRateBand]] = relationship(
+        cascade="all, delete-orphan",
+    )
 
     __mapper_args__ = {"polymorphic_identity": "banded_rate"}

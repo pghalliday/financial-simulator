@@ -84,7 +84,7 @@ typed_collection.add_endpoints(
     get_model=Union[IndividualEntityGet, CorporationEntityGet],
     post_model=Union[IndividualEntityPost, CorporationEntityPost],
     patch_model=Union[IndividualEntityPatch, CorporationEntityPatch],
-    item_mappers={
+    item_get_mappers={
         "individual_entity": map_individual_entity,
         "corporation_entity": map_corporation_entity,
     },

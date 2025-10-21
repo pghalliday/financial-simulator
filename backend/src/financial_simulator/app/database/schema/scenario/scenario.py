@@ -14,5 +14,7 @@ class Scenario(BaseWithNameAndDescription):
     __tablename__ = "scenario"
 
     entities: Mapped[List[Entity]] = relationship(
-        secondary="scenario_entity", back_populates="scenarios", order_by="Entity.name"
+        secondary="scenario_entity",
+        back_populates="scenarios",
+        order_by="Entity.name",
     )

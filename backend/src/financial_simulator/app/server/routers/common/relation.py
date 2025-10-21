@@ -44,7 +44,7 @@ def add_endpoints(
             404: {"model": HTTPNotFoundError, "description": "Not found"},
         }
     )
-    async def get_related_items(item_id: UUID, session: DBSessionDependency) -> Sequence[GET]:
+    async def get_related_items_route(item_id: UUID, session: DBSessionDependency) -> Sequence[GET]:
         item = session.get(table_model, item_id)
         if not item:
             raise HTTPException(
@@ -65,7 +65,7 @@ def add_endpoints(
             },
         },
     )
-    async def post_related_item(item_id: UUID, item_post: post_model, session: DBSessionDependency) -> GET:
+    async def post_related_item_route(item_id: UUID, item_post: post_model, session: DBSessionDependency) -> GET:
         item = session.get(table_model, item_id)
         if not item:
             raise HTTPException(
@@ -87,7 +87,7 @@ def add_endpoints(
             404: {"model": HTTPNotFoundError | HTTPRelatedItemNotFoundError, "description": "Not found"},
         },
     )
-    async def get_related_item(item_id: UUID, related_item_id: UUID, session: DBSessionDependency) -> GET:
+    async def get_related_item_route(item_id: UUID, related_item_id: UUID, session: DBSessionDependency) -> GET:
         item = session.get(table_model, item_id)
         if not item:
             raise HTTPException(
@@ -107,7 +107,7 @@ def add_endpoints(
             404: {"model": HTTPNotFoundError | HTTPRelatedItemNotFoundError, "description": "Not found"},
         },
     )
-    async def delete_related_item(item_id: UUID, related_item_id: UUID, session: DBSessionDependency) -> GET:
+    async def delete_related_item_route(item_id: UUID, related_item_id: UUID, session: DBSessionDependency) -> GET:
         item = session.get(table_model, item_id)
         if not item:
             raise HTTPException(

@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(
     prefix="/dummy-days",
-    tags=["dummy_days"],
+    tags=["dummy-days"],
 )
 
 class SseEvent(BaseModel):

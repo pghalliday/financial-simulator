@@ -46,15 +46,15 @@ def add_endpoints(
     get_model: Type[GET],
     post_model: Type[POST],
     patch_model: Type[PATCH],
-    item_mappers: Mapping[str, Callable[[TABLE], GET]],
+    item_get_mappers: Mapping[str, Callable[[TABLE], GET]],
 ):
     @router.get(
         "/",
         response_model=Sequence[get_model],
     )
-    async def get_items(session: DBSessionDependency) -> Sequence[GET]:
+    async def get_items_route(session: DBSessionDependency) -> Sequence[GET]:
         items = session.scalars(select(base_table_model).order_by(order_by))
-        return [item_mappers[item.type](item) for item in items]
+        return [item_get_mappers[item.type](item) for item in items]
 
     @router.get(
         "/{item_id}",
@@ -63,13 +63,13 @@ def add_endpoints(
             404: {"model": HTTPNotFoundError, "description": "Not found"},
         },
     )
-    async def get_item(item_id: UUID, session: DBSessionDependency) -> GET:
+    async def get_item_route(item_id: UUID, session: DBSessionDependency) -> GET:
         item = session.get(base_table_model, item_id)
         if not item:
             raise HTTPException(
                 status_code=404, detail=jsonable_encoder(NotFoundError(id=item_id))
             )
-        return item_mappers[item.type](item)
+        return item_get_mappers[item.type](item)
 
     @router.post(
         "/",
@@ -82,13 +82,13 @@ def add_endpoints(
             },
         },
     )
-    async def post_item(
+    async def post_item_route(
         item_post: post_model, session: DBSessionDependency
     ) -> GET:
         item = table_models[item_post.type](**item_post.model_dump())
         session.add(item)
         session.commit()
-        return item_mappers[item_post.type](item)
+        return item_get_mappers[item_post.type](item)
 
     @router.put(
         "/{item_id}",
@@ -100,7 +100,7 @@ def add_endpoints(
             },
         },
     )
-    async def put_item(
+    async def put_item_route(
         item_id: UUID, item_post: post_model, session: DBSessionDependency
     ) -> GET:
         item = session.get(base_table_model, item_id)
@@ -115,7 +115,7 @@ def add_endpoints(
         item = table_models[item_post.type](id=item_id, **item_post.model_dump())
         merged = session.merge(item)
         session.commit()
-        return item_mappers[item_post.type](merged)
+        return item_get_mappers[item_post.type](merged)
 
     @router.patch(
         "/{item_id}",
@@ -128,7 +128,7 @@ def add_endpoints(
             },
         },
     )
-    async def patch_item(
+    async def patch_item_route(
             item_id: UUID, item_patch: patch_model, session: DBSessionDependency
     ) -> GET:
         item = session.get(base_table_model, item_id)
@@ -147,7 +147,7 @@ def add_endpoints(
         for key, value in updated_data.items():
             setattr(item, key, value)
         session.commit()
-        return item_mappers[item_patch.type](item)
+        return item_get_mappers[item_patch.type](item)
 
     @router.delete(
         "/{item_id}",
@@ -156,7 +156,7 @@ def add_endpoints(
             404: {"model": HTTPNotFoundError, "description": "Not found"},
         }
     )
-    async def delete_item(
+    async def delete_item_route(
             item_id: UUID, session: DBSessionDependency
     ) -> GET:
         item = session.get(base_table_model, item_id)
@@ -166,4 +166,4 @@ def add_endpoints(
             )
         session.delete(item)
         session.commit()
-        return item_mappers[item.type](item)
+        return item_get_mappers[item.type](item)

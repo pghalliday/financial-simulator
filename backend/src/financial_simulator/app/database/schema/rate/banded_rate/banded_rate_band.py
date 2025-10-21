@@ -1,11 +1,17 @@
 from decimal import Decimal
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 from uuid import UUID
 
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ...base import BaseWithId
+
+if TYPE_CHECKING:
+    from ..rate import Rate
+else:
+    Rate = "Rate"
+
 
 class BandedRateBand(BaseWithId):
     __tablename__ = "banded_rate_band"
@@ -14,3 +20,5 @@ class BandedRateBand(BaseWithId):
     lower_bound: Mapped[Decimal] = mapped_column()
     size: Mapped[Optional[Decimal]] = mapped_column()
     rate_id: Mapped[UUID] = mapped_column(ForeignKey("rate.id"))
+
+    rate: Mapped[Rate] = relationship()

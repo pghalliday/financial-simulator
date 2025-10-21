@@ -43,7 +43,7 @@ collection.add_endpoints(
     get_model=ScenarioGet,
     post_model=ScenarioPost,
     patch_model=ScenarioPatch,
-    map_item=map_scenario,
+    map_item_get=map_scenario,
 )
 
 class ScenarioEntityGet(BaseModel):

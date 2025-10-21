@@ -5,15 +5,16 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..base import BaseWithNameAndDescription
-from ..ledger_account import LedgerAccount
 from ..provider import Provider
 from ..schedule import Schedule
 
 if TYPE_CHECKING:
     from ..entity import CorporationEntity, IndividualEntity
+    from ..ledger_account import LedgerAccount
 else:
     IndividualEntity = "IndividualEntity"
     CorporationEntity = "CorporationEntity"
+    LedgerAccount = "LedgerAccount"
 
 
 class BankAccount(BaseWithNameAndDescription):
@@ -42,18 +43,23 @@ class BankAccount(BaseWithNameAndDescription):
     )
 
     asset_account: Mapped[LedgerAccount] = relationship(
+        back_populates="bank_account_asset_accounts",
         foreign_keys="BankAccount.asset_account_id",
     )
     interest_income_account: Mapped[LedgerAccount] = relationship(
+        back_populates="bank_account_interest_income_accounts",
         foreign_keys="BankAccount.interest_income_account_id",
     )
     interest_receivable_account: Mapped[LedgerAccount] = relationship(
+        back_populates="bank_account_interest_receivable_accounts",
         foreign_keys="BankAccount.interest_receivable_account_id",
     )
     fee_expenses_account: Mapped[LedgerAccount] = relationship(
+        back_populates="bank_account_fee_expenses_accounts",
         foreign_keys="BankAccount.fee_expenses_account_id",
     )
     fees_payable_account: Mapped[LedgerAccount] = relationship(
+        back_populates="bank_account_fees_payable_accounts",
         foreign_keys="BankAccount.fees_payable_account_id",
     )
     fees_provider: Mapped[Provider | None] = relationship(
