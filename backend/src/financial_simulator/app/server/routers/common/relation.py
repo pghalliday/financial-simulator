@@ -32,7 +32,8 @@ POST = TypeVar("POST", bound=BaseModel)
 
 def add_endpoints(
     router: APIRouter,
-    relation_name: str,
+    relation_route: str,
+    relation_field: str,
     table_model: Type[TABLE],
     related_table_model: Type[RELATED_TABLE],
     get_model: Type[GET],
@@ -40,7 +41,7 @@ def add_endpoints(
     map_related_item: Callable[[RELATED_TABLE], GET],
 ):
     @router.get(
-        f"/{{item_id}}/{relation_name}/",
+        f"/{{item_id}}/{relation_route}/",
         response_model=Sequence[get_model],
         responses={
             404: {"model": HTTPNotFoundError, "description": "Not found"},
@@ -49,11 +50,11 @@ def add_endpoints(
     async def get_related_items_route(item_id: UUID, session: DBSessionDependency) -> Sequence[GET]:
         return [map_related_item(related_item) for related_item in getattr(
             get_item(session, table_model, item_id),
-            relation_name
+            relation_field
         )]
 
     @router.post(
-        f"/{{item_id}}/{relation_name}/",
+        f"/{{item_id}}/{relation_route}/",
         status_code=201,
         response_model=get_model,
         responses={
@@ -68,14 +69,14 @@ def add_endpoints(
     async def post_related_item_route(item_id: UUID, item_post: post_model, session: DBSessionDependency) -> GET:
         item = get_item(session, table_model, item_id)
         related_item = get_related_item(
-            session, related_table_model, relation_name, item_post.id
+            session, related_table_model, relation_field, item_post.id
         )
-        getattr(item, relation_name).append(related_item)
+        getattr(item, relation_field).append(related_item)
         session.commit()
         return map_related_item(related_item)
 
     @router.get(
-        f"/{{item_id}}/{relation_name}/{{related_item_id}}",
+        f"/{{item_id}}/{relation_route}/{{related_item_id}}",
         response_model=get_model,
         responses={
             404: {"model": HTTPNotFoundError | HTTPRelatedItemNotFoundError, "description": "Not found"},
@@ -85,13 +86,13 @@ def add_endpoints(
         return map_related_item(find_related_item(
             table_model,
             related_table_model,
-            relation_name,
+            relation_field,
             get_item(session, table_model, item_id),
             related_item_id,
         ))
 
     @router.delete(
-        f"/{{item_id}}/{relation_name}/{{related_item_id}}",
+        f"/{{item_id}}/{relation_route}/{{related_item_id}}",
         response_model=get_model,
         responses={
             404: {"model": HTTPNotFoundError | HTTPRelatedItemNotFoundError, "description": "Not found"},
@@ -102,10 +103,10 @@ def add_endpoints(
         related_item = find_related_item(
             table_model,
             related_table_model,
-            relation_name,
+            relation_field,
             item,
             related_item_id,
         )
-        getattr(item, relation_name).remove(related_item)
+        getattr(item, relation_field).remove(related_item)
         session.commit()
         return map_related_item(related_item)

@@ -3,6 +3,8 @@ import {useDisclosure} from '@mantine/hooks';
 import {NavbarLink} from "~/components/layout/NavbarLink";
 import {useHeaderData} from "~/components/providers/HeaderDataProvider";
 import {
+    BANK_ACCOUNTS_HREF,
+    BANK_ACCOUNTS_PAGE_DESCRIPTION,
     COMPARE_SCENARIOS_HREF,
     COMPARE_SCENARIOS_PAGE_DESCRIPTION,
     ENTITIES_HREF,
@@ -79,6 +81,11 @@ export function NavLayout({children}: { children: React.ReactNode }) {
                 <NavbarLink
                     href={ENTITIES_HREF}
                     label={ENTITIES_PAGE_DESCRIPTION}
+                    onClick={close}
+                />
+                <NavbarLink
+                    href={BANK_ACCOUNTS_HREF}
+                    label={BANK_ACCOUNTS_PAGE_DESCRIPTION}
                     onClick={close}
                 />
             </AppShell.Navbar>

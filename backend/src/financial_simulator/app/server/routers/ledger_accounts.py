@@ -7,7 +7,7 @@ from fastapi import APIRouter
 from financial_simulator.app.database.schema import LedgerAccount
 from pydantic import BaseModel
 
-from .common import collection
+from .common import collection, relation
 from ..util import RelatedModelMapper, FieldRelation
 
 logger = logging.getLogger(__name__)
@@ -53,8 +53,39 @@ model_mapper = RelatedModelMapper(
     },
 )
 
+where = LedgerAccount.parent_id == None
+
 collection.add_endpoints(
     router=router,
-    order_by=LedgerAccount.name,
     model_mapper=model_mapper,
+    order_by=LedgerAccount.name,
+    where=LedgerAccount.parent_id == None,
+)
+
+class LedgerAccountSubAccountGet(BaseModel):
+    id: UUID
+    name: str
+    description: str
+    account_name: str
+
+class LedgerAccountSubAccountPost(BaseModel):
+    id: UUID
+
+def map_ledger_account_sub_account(ledger_account: LedgerAccount) -> LedgerAccountSubAccountGet:
+    return LedgerAccountSubAccountGet(
+        id=ledger_account.id,
+        name=ledger_account.name,
+        description=ledger_account.description,
+        account_name=ledger_account.account_name,
+    )
+
+relation.add_endpoints(
+    router=router,
+    relation_route="sub-accounts",
+    relation_field="sub_accounts",
+    table_model=LedgerAccount,
+    related_table_model=LedgerAccount,
+    get_model=LedgerAccountSubAccountGet,
+    post_model=LedgerAccountSubAccountPost,
+    map_related_item=map_ledger_account_sub_account,
 )

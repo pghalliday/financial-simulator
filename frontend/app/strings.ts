@@ -8,6 +8,9 @@ export const SCENARIOS_LABEL = 'scenario';
 export const ENTITIES_PAGE_DESCRIPTION = 'Entities';
 export const ENTITIES_HREF = '/entities';
 export const ENTITIES_LABEL = 'entity';
+export const BANK_ACCOUNTS_PAGE_DESCRIPTION = 'Bank accounts';
+export const BANK_ACCOUNTS_HREF = '/bank-accounts'
+export const BANK_ACCOUNTS_LABEL = 'bank account'
 export const SCENARIO_PAGE_DESCRIPTION = (scenarioName: string) => `Scenario - ${scenarioName}`;
 export const SCENARIO_HREF = (scenarioId: string) => `${SCENARIOS_HREF}/${scenarioId}`;
 export const ENTITY_PAGE_DESCRIPTION = (entityName: string) => `Entity - ${entityName}`;
@@ -16,3 +19,5 @@ export const ENTITY_TYPES = {
     "individual_entity": "Individual",
     "corporation_entity": "Corporation",
 }
+export const BANK_ACCOUNT_PAGE_DESCRIPTION = (bankAccountName: string) => `Bank account - ${bankAccountName}`;
+export const BANK_ACCOUNT_HREF = (bankAccountId: string) => `${BANK_ACCOUNTS_HREF}/${bankAccountId}`;

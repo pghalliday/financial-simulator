@@ -6,6 +6,7 @@ import {Box, Button, Group, LoadingOverlay, Space, Stack, TextInput, Title} from
 import {useSearchParams} from "react-router";
 import {type APIResult, callApi} from "~/lib/api_wrapper";
 import {RelationSelector, type RelationSelectorProps} from "~/components/controls/RelationSelector";
+import {TreeSelector} from "~/components/controls/TreeSelector";
 
 interface PutData {
     type?: string
@@ -161,6 +162,11 @@ export function ItemPage({
                 value={descriptionInputValue}
                 size="sm"
                 onChange={(event) => setDescriptionInputValue(event.currentTarget.value)}
+            />
+            <TreeSelector
+                label="Ledger account"
+                description={`Select a ledger account for the new ${collectionLabel}`}
+                placeholder={`${capitalizedLabel} ledger account path`}
             />
             <Space h={20}/>
             <Group justify="flex-end">

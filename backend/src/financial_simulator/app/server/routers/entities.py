@@ -107,7 +107,8 @@ def map_entity_scenario(scenario: Scenario) -> EntityScenarioGet:
 
 relation.add_endpoints(
     router=router,
-    relation_name="scenarios",
+    relation_route="scenarios",
+    relation_field="scenarios",
     table_model=Entity,
     related_table_model=Scenario,
     get_model=EntityScenarioGet,

@@ -43,8 +43,8 @@ model_mapper = SimpleModelMapper(
 
 collection.add_endpoints(
     router=router,
-    order_by=Scenario.name,
     model_mapper=model_mapper,
+    order_by=Scenario.name,
 )
 
 class ScenarioEntityGet(BaseModel):
@@ -66,7 +66,8 @@ def map_scenario_entity(entity: Entity) -> ScenarioEntityGet:
 
 relation.add_endpoints(
     router=router,
-    relation_name="entities",
+    relation_route="entities",
+    relation_field="entities",
     table_model=Scenario,
     related_table_model=Entity,
     get_model=ScenarioEntityGet,

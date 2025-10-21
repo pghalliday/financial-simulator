@@ -1,10 +1,10 @@
 import logging
-from typing import Sequence, TypeVar, Annotated
+from typing import Sequence, TypeVar, Annotated, Optional
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-from sqlalchemy import select
+from sqlalchemy import select, ColumnElement
 from sqlalchemy.orm import Session, InstrumentedAttribute
 
 from financial_simulator.app.database.schema import BaseWithNameAndDescription
@@ -28,8 +28,9 @@ PATCH = TypeVar("PATCH", bound=BaseModel)
 
 def add_endpoints(
     router: APIRouter,
-    order_by: InstrumentedAttribute[str],
     model_mapper: ModelMapper,
+    order_by: Optional[InstrumentedAttribute[str]] = None,
+    where: Optional[ColumnElement[bool]] = None,
 ):
     if model_mapper.has_invalid_relation_error():
         invalid_relation_error = {
@@ -43,7 +44,12 @@ def add_endpoints(
         response_model=Sequence[model_mapper.get_model],
     )
     async def get_items_route(session: DBSessionDependency) -> Sequence[GET]:
-        items = session.scalars(select(model_mapper.table_model).order_by(order_by))
+        query = select(model_mapper.table_model)
+        if where is not None:
+            query = query.where(where)
+        if order_by is not None:
+            query = query.order_by(order_by)
+        items = session.scalars(query)
         return [model_mapper.map_get(item) for item in items]
 
     @router.get(
