@@ -1,8 +1,10 @@
 import {ActionIcon, Anchor, Box, Center, Group, Table, Text, TextInput, UnstyledButton} from "@mantine/core";
 import {IconChevronDown, IconChevronUp, IconCirclePlus, IconSearch, IconSelector, IconTrash} from "@tabler/icons-react";
-import {createSearchParams, Link} from "react-router"
+import {Link} from "react-router"
 import classes from './ItemList.module.css';
 import {type ReactElement, useEffect, useLayoutEffect, useRef, useState} from "react";
+
+import type {NamedItem} from "~/lib/types";
 
 const VISIBLE_HEIGHT_OFFSET = 30
 
@@ -109,7 +111,7 @@ function sortData(
 export interface ItemListProps {
     data: RowData[],
     itemTypes?: Record<string, string>,
-    href: (id: string) => string,
+    href: (item: NamedItem) => string,
     onAdd: () => void,
     onDelete: (toDeleteData: ToDeleteData) => void,
 }
@@ -150,7 +152,7 @@ export function ItemList({
         setRows(sortedData.map((row) => (
             <Table.Tr key={row.id}>
                 <Table.Td>
-                    <Anchor component={Link} to={`${href(row.id)}?${createSearchParams({name: row.name})}`}>
+                    <Anchor component={Link} to={href(row)}>
                         {row.name}
                     </Anchor>
                 </Table.Td>

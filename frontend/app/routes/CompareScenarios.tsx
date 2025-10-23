@@ -11,9 +11,10 @@ import {
 } from "~/client";
 import {useDisclosure} from "@mantine/hooks";
 import {StickyItemMultiSelect} from "~/components/controls/StickyItemMultiSelect";
-import {callApi} from "~/lib/api_wrapper";
+import {callApi} from "~/lib/callApi";
 import Plot from "react-plotly.js";
-import {useStickyState} from "~/lib/hooks";
+
+import {useStickyState} from "~/lib/hooks/useStickyState";
 
 function get_balance(account: DummyDayAccount, sub_account_path: string[]): number {
     if (sub_account_path.length === 0) {

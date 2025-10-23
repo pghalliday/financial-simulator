@@ -1,72 +1,107 @@
-import type {APIResult} from "~/lib/api_wrapper";
-import type {RowData} from "~/components/controls/item_list/ItemList";
 import {MultiSelect} from "@mantine/core";
 import {useCallback, useEffect, useState} from "react";
+import type {
+    DeleteRelatedItemApi,
+    GetItemsApi,
+    GetRelatedItemsApi,
+    IdItem,
+    NamedItem,
+    PostRelatedItemApi
+} from "~/lib/types";
+import {callApi} from "~/lib/callApi";
+import {
+    DELETE_RELATED_ITEM_ERROR_TITLE,
+    GET_RELATED_ITEMS_ERROR_TITLE,
+    GET_RELATED_OPTIONS_ERROR_TITLE,
+    POST_RELATED_ITEM_ERROR_TITLE
+} from "~/strings";
 
-export interface RelationSelectorProps {
+export interface RelationSelectorProps<Get extends NamedItem> {
     itemId: string
-    name: string
     label: string
-    getOptions: () => Promise<APIResult<RowData[]>>
-    getSelected: (itemId: string) => Promise<APIResult<RowData[]>>
-    select: (itemId: string, relatedItemId: string) => Promise<APIResult<RowData>>
-    deselect: (itemId: string, relatedItemId: string) => Promise<APIResult<RowData>>
+    getRelatedOptions: GetItemsApi<Get>
+    getRelatedItems: GetRelatedItemsApi<Get>
+    postRelatedItem: PostRelatedItemApi<IdItem, Get>
+    deleteRelatedItem: DeleteRelatedItemApi<Get>
+    startLoading: () => void,
+    stopLoading: () => void,
 }
 
-export function RelationSelector({
-                                     itemId,
-                                     name,
-                                     label,
-                                     getOptions,
-                                     getSelected,
-                                     select,
-                                     deselect
-                                 }: RelationSelectorProps) {
+export function RelationSelector<Get extends NamedItem>({
+                                                            itemId,
+                                                            label,
+                                                            getRelatedOptions,
+                                                            getRelatedItems,
+                                                            postRelatedItem,
+                                                            deleteRelatedItem,
+                                                            startLoading,
+                                                            stopLoading,
+                                                        }: RelationSelectorProps<Get>) {
     const capitalizedLabel = label.replace(/^./, label[0].toUpperCase())
     const [selectedItems, setSelectedItems] = useState<string[]>([])
     const [selectItemsData, setSelectItemsData] = useState<{ value: string, label: string }[]>([])
     const placeholder = `Select ${label}`
 
     useEffect(() => {
-        getOptions().then(({data, error, response}) => {
-            if (data !== undefined) {
-                setSelectItemsData(data.map(item => ({
-                    value: item.id,
-                    label: item.name,
-                })))
-            }
-            // TODO: errors
-        })
+        callApi({
+            api: getRelatedOptions,
+            errorTitle: GET_RELATED_OPTIONS_ERROR_TITLE,
+            onSuccess: (items) => setSelectItemsData(items.map(item => ({
+                value: item.id,
+                label: item.name,
+            }))),
+            startLoading,
+            stopLoading,
+        });
     }, []);
 
     useEffect(() => {
-        getSelected(itemId).then(({data, error, response}) => {
-            if (data !== undefined) {
-                setSelectedItems(data.map(item => item.id))
-            }
-            // TODO: errors
-        })
+        callApi({
+            api: () => getRelatedItems({
+                path: {
+                    item_id: itemId,
+                },
+            }),
+            errorTitle: GET_RELATED_ITEMS_ERROR_TITLE,
+            onSuccess: (items) => setSelectedItems(items.map(item => item.id)),
+            startLoading,
+            stopLoading,
+        });
     }, [itemId, selectItemsData]);
 
     const change = useCallback((values: string[]) => {
         for (const value of values) {
             if (!selectedItems.includes(value)) {
-                select(itemId, value).then(({data, error, response}) => {
-                    if (data !== undefined) {
-                        setSelectedItems(selectedItems.concat(value))
-                    }
-                    // TODO: errors
-                })
+                callApi({
+                    api: () => postRelatedItem({
+                        path: {
+                            item_id: itemId,
+                        },
+                        body: {
+                            id: value,
+                        },
+                    }),
+                    errorTitle: POST_RELATED_ITEM_ERROR_TITLE,
+                    onSuccess: () => setSelectedItems(selectedItems.concat(value)),
+                    startLoading,
+                    stopLoading,
+                });
             }
         }
         for (const value of selectedItems) {
             if (!values.includes(value)) {
-                deselect(itemId, value).then(({data, error, response}) => {
-                    if (data !== undefined) {
-                        setSelectedItems(selectedItems.filter(item => item !== value))
-                    }
-                    // TODO: errors
-                })
+                callApi({
+                    api: () => deleteRelatedItem({
+                        path: {
+                            item_id: itemId,
+                            related_item_id: value,
+                        },
+                    }),
+                    errorTitle: DELETE_RELATED_ITEM_ERROR_TITLE,
+                    onSuccess: () => setSelectedItems(selectedItems.filter(item => item !== value)),
+                    startLoading,
+                    stopLoading,
+                });
             }
         }
     }, [itemId, selectedItems])

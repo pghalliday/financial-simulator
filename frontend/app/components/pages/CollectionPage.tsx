@@ -5,13 +5,15 @@ import {ConfirmDeleteModal} from "~/components/modals/ConfirmDeleteModal";
 import {useCallback, useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {Box, LoadingOverlay} from "@mantine/core";
-import {type APIResult, callApi} from "~/lib/api_wrapper";
+import {type APIResult, callApi} from "~/lib/callApi";
+
+import type {NamedItem} from "~/lib/types";
 
 interface ListPageProps {
     collectionTitle: string
     collectionDescription: string
     collectionLabel: string
-    itemHref: (itemId: string) => string
+    itemHref: (item: NamedItem) => string
     breadcrumbs: { title: string, href: string }[]
     itemTypes?: Record<string, string>
     getItems: () => Promise<APIResult<RowData[]>>

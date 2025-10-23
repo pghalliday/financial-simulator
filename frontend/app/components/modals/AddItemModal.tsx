@@ -1,6 +1,5 @@
 import {Button, Group, LoadingOverlay, Modal, Select, Space, TextInput, Title} from "@mantine/core";
 import {useEffect, useState} from "react";
-import {TreeSelector} from "~/components/controls/TreeSelector";
 
 export interface ToAddData {
     name: string
@@ -81,11 +80,6 @@ export function AddItemModal(
             size="sm"
             value={descriptionValue}
             onChange={event => setDescriptionValue(event.currentTarget.value)}
-        />
-        <TreeSelector
-            label="Ledger account"
-            description={`Select a ledger account for the new ${collectionLabel}`}
-            placeholder={`${capitalizedLabel} ledger account path`}
         />
         <Space h={20}/>
         <Group justify="flex-end">

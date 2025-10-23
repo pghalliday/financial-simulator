@@ -9,10 +9,10 @@ import {
     PAGE_TITLE
 } from "~/strings";
 import {
+    type BankAccountPost,
     deleteItemRouteBankAccountsItemIdDelete,
     getItemsRouteBankAccountsGet,
     postItemRouteBankAccountsPost,
-    type ScenarioPost
 } from "~/client";
 
 const COLLECTION_TITLE = PAGE_TITLE(BANK_ACCOUNTS_PAGE_DESCRIPTION);
@@ -37,7 +37,7 @@ export default function Entities() {
         getItems={getItemsRouteBankAccountsGet}
         postItem={(toAddData) => postItemRouteBankAccountsPost({
             // TODO: can we properly type toAddData?
-            body: toAddData as ScenarioPost,
+            body: toAddData as BankAccountPost,
         })}
         deleteItem={(itemId) => deleteItemRouteBankAccountsItemIdDelete({
             path: {

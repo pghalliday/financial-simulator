@@ -1,6 +1,7 @@
 import {MultiSelect} from "@mantine/core";
 import {useCallback, useEffect, useState} from "react";
-import {useStickyState} from "~/lib/hooks";
+
+import {useStickyState} from "~/lib/hooks/useStickyState";
 
 export interface StickyMultiSelectProps {
     localStorageKey: string
