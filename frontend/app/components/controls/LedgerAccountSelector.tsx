@@ -1,15 +1,24 @@
 import {useState} from 'react';
 import {CheckIcon, Combobox, Group, Pill, PillsInput, useCombobox} from '@mantine/core';
+import type {ConstrainedItemPostFieldGetter, ConstrainedItemPostFieldSetter} from "~/lib/hooks/useItemPost";
 
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
-export interface TreeSelectorProps {
+export interface LedgerAccountSelectorProps<Type extends {}, Key extends keyof Type> {
+    field: Key
+    getField: ConstrainedItemPostFieldGetter<Type, Key, string>
+    setField: ConstrainedItemPostFieldSetter<Type, Key, string>
     label: string
     description: string
     placeholder: string
+    required?: boolean
 }
 
-export function TreeSelector({label, description, placeholder}: TreeSelectorProps) {
+export function LedgerAccountSelector<Type extends {}, Key extends keyof Type>({
+                                                                                   label,
+                                                                                   description,
+                                                                                   placeholder
+                                                                               }: LedgerAccountSelectorProps<Type, Key>) {
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
         onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),

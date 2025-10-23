@@ -2,35 +2,47 @@ import {ActionIcon, Anchor, Box, Center, Group, Table, Text, TextInput, Unstyled
 import {IconChevronDown, IconChevronUp, IconCirclePlus, IconSearch, IconSelector, IconTrash} from "@tabler/icons-react";
 import {Link} from "react-router"
 import classes from './ItemList.module.css';
-import {type ReactElement, type ReactNode, useEffect, useLayoutEffect, useRef, useState} from "react";
+import {type ReactElement, useEffect, useLayoutEffect, useRef, useState} from "react";
 
-import {getFieldOfType, type IdItem, type KeysOfType} from "~/lib/types";
+import type {NamedItem} from "~/lib/types";
 
 const VISIBLE_HEIGHT_OFFSET = 30
 
 const DEFAULT_REVERSED = false
 const DEFAULT_SEARCH = ""
 
-export type SearchKeys<Type> = KeysOfType<Type, string>
-type ColumnTypes = string | number | boolean
-type ColumnKeys<Type> = KeysOfType<Type, ColumnTypes>
-
-interface _Column<Type, Key extends ColumnKeys<Type>> {
-    field: Key,
-    heading: string,
-    hasLink: boolean,
-    compare: (a: Type[Key], b: Type[Key]) => number,
+export interface RowData {
+    id: string
+    name: string
+    description: string
+    type?: string
 }
 
-export type Column<Type> = _Column<Type, ColumnKeys<Type>>
+const SEARCH_FIELDS: (keyof RowData)[] = ["name", "description"]
 
-export interface SortBy<Type> {
-    column: Column<Type>
+interface SortBy {
+    field: keyof RowData,
     reversed: boolean,
 }
 
+const DEFAULT_SORT_BY: SortBy[] = [{
+    field: "name",
+    reversed: DEFAULT_REVERSED,
+}, {
+    field: "description",
+    reversed: DEFAULT_REVERSED,
+}, {
+    field: "type",
+    reversed: DEFAULT_REVERSED,
+}]
+
+export interface ToDeleteData {
+    id: string
+    name: string
+}
+
 interface ThProps {
-    children: ReactNode;
+    children: React.ReactNode;
     reversed: boolean;
     sorted: boolean;
     onSort: () => void;
@@ -54,25 +66,22 @@ function Th({children, reversed, sorted, onSort}: ThProps) {
     );
 }
 
-function filterData<Type>(data: Type[], search: string, searchFields: SearchKeys<Type>[]) {
+function filterData(data: RowData[], search: string) {
     const query = search.toLowerCase().trim();
     return data.filter((item) =>
-        searchFields.some((key) =>
-            getFieldOfType(item, key).toLowerCase().includes(query)
+        SEARCH_FIELDS.some((key) =>
+            item[key]!.toLowerCase().includes(query)
         ));
 }
 
-function compareField<Type>(a: Type, b: Type, sortBy: SortBy<Type>): number {
-    const column = sortBy.column
-    const compare = column.compare
-    const field = column.field
+function compareField(a: RowData, b: RowData, sortBy: SortBy): number {
     if (sortBy.reversed) {
-        return compare(b[field], a[field])
+        return b[sortBy.field]!.localeCompare(a[sortBy.field]!);
     }
-    return compare(a[field], b[field])
+    return a[sortBy.field]!.localeCompare(b[sortBy.field]!);
 }
 
-function compare<Type>(a: Type, b: Type, sortBy: SortBy<Type>[]): number {
+function compare(a: RowData, b: RowData, sortBy: SortBy[]): number {
     let result = 0
     for (const s of sortBy) {
         result = compareField(a, b, s)
@@ -83,41 +92,40 @@ function compare<Type>(a: Type, b: Type, sortBy: SortBy<Type>[]): number {
     return result
 }
 
-function sortData<Type>(
-    data: Type[],
-    sortBy: SortBy<Type>[],
-    search: string,
-    searchFields: SearchKeys<Type>[],
+function sortData(
+    data: RowData[],
+    payload: { sortBy: SortBy[]; search: string }
 ) {
+    const {sortBy} = payload;
+
+    if (!sortBy) {
+        return filterData(data, payload.search);
+    }
+
     return filterData(
         [...data].sort((a, b) => compare(a, b, sortBy)),
-        search,
-        searchFields,
+        payload.search
     );
 }
 
-export interface ItemListProps<Type extends IdItem> {
-    columns: Column<Type>[],
-    data: Type[],
-    href: (item: Type) => string,
+export interface ItemListProps {
+    data: RowData[],
+    itemTypes?: Record<string, string>,
+    href: (item: NamedItem) => string,
     onAdd: () => void,
-    onDelete: (item: Type) => void,
-    searchFields: SearchKeys<Type>[]
-    defaultSortBy: SortBy<Type>[]
+    onDelete: (toDeleteData: ToDeleteData) => void,
 }
 
-export function ItemList<Type extends IdItem>({
-                                                  columns,
-                                                  data,
-                                                  href,
-                                                  onAdd,
-                                                  onDelete,
-                                                  searchFields,
-                                                  defaultSortBy,
-                                              }: ItemListProps<Type>) {
+export function ItemList({
+                             data,
+                             itemTypes,
+                             href,
+                             onAdd,
+                             onDelete
+                         }: ItemListProps) {
     const [search, setSearch] = useState(DEFAULT_SEARCH);
-    const [sortBy, setSortBy] = useState<SortBy<Type>[]>(defaultSortBy);
-    const [sortedData, setSortedData] = useState<Type[]>([]);
+    const [sortBy, setSortBy] = useState<SortBy[]>(DEFAULT_SORT_BY);
+    const [sortedData, setSortedData] = useState<RowData[]>([]);
     const [rows, setRows] = useState<ReactElement[]>([])
     const ref = useRef<HTMLDivElement>(null);
     const [tableMaxHeight, setTableMaxHeight] = useState<number>(0);
@@ -137,49 +145,48 @@ export function ItemList<Type extends IdItem>({
     }, [ref]);
 
     useEffect(() => {
-        setSortedData(sortData(data, sortBy, search, searchFields));
+        setSortedData(sortData(data, {sortBy, search}));
     }, [data, sortBy, search]);
 
     useEffect(() => {
-        setRows(sortedData.map((item) => {
-            const cells = columns.map(column => {
-                const content = column.hasLink ? (
-                    <Anchor component={Link} to={href(item)}>
-                        {getFieldOfType(item, column.field)}
+        setRows(sortedData.map((row) => (
+            <Table.Tr key={row.id}>
+                <Table.Td>
+                    <Anchor component={Link} to={href(row)}>
+                        {row.name}
                     </Anchor>
-                ) : getFieldOfType(item, column.field)
-                return <Table.Td key={column.heading}>
-                    {content}
                 </Table.Td>
-            })
-            return <Table.Tr key={item.id}>
-                {cells}
+                <TypeD row={row}/>
+                <Table.Td>{row.description}</Table.Td>
                 <Table.Td>
                     <Group justify="center">
                         <ActionIcon
                             variant="transparent"
                             size="sm"
-                            onClick={() => onDelete(item)}
+                            onClick={() => onDelete({
+                                id: row.id,
+                                name: row.name
+                            })}
                         >
                             <IconTrash/>
                         </ActionIcon>
                     </Group>
                 </Table.Td>
             </Table.Tr>
-        }));
+        )));
     }, [sortedData]);
 
-    const setSorting = (column: Column<Type>) => {
-        if (column.field === sortBy[0].column.field) {
+    const setSorting = (field: keyof RowData) => {
+        if (field === sortBy[0].field) {
             setSortBy([{
-                column,
+                field,
                 reversed: !sortBy[0].reversed,
             }, ...sortBy.slice(1)]);
         } else {
             setSortBy([{
-                column,
+                field,
                 reversed: DEFAULT_REVERSED,
-            }, ...sortBy.filter(s => s.column.field !== column.field)])
+            }, ...sortBy.filter(s => s.field !== field)])
         }
     };
 
@@ -188,16 +195,25 @@ export function ItemList<Type extends IdItem>({
         setSearch(value);
     };
 
-    const headings = columns.map(column => (
-        <Th
-            key={column.heading}
-            sorted={sortBy[0].column.field === column.field}
+    function TypeH() {
+        if (itemTypes === undefined) {
+            return null
+        }
+        return <Th
+            sorted={sortBy[0].field === 'type'}
             reversed={sortBy[0].reversed}
-            onSort={() => setSorting(column)}
+            onSort={() => setSorting('type')}
         >
-            {column.heading}
+            Type
         </Th>
-    ))
+    }
+
+    function TypeD({row}: { row: RowData }) {
+        if (itemTypes === undefined) {
+            return null
+        }
+        return <Table.Td>{itemTypes[row.type!]}</Table.Td>
+    }
 
     return <Box>
         <TextInput
@@ -212,7 +228,21 @@ export function ItemList<Type extends IdItem>({
                 <Table horizontalSpacing="md" verticalSpacing="xs" miw={700} stickyHeader>
                     <Table.Thead>
                         <Table.Tr>
-                            {headings}
+                            <Th
+                                sorted={sortBy[0].field === 'name'}
+                                reversed={sortBy[0].reversed}
+                                onSort={() => setSorting('name')}
+                            >
+                                Name
+                            </Th>
+                            <TypeH/>
+                            <Th
+                                sorted={sortBy[0].field === 'description'}
+                                reversed={sortBy[0].reversed}
+                                onSort={() => setSorting('description')}
+                            >
+                                Description
+                            </Th>
                             <Table.Th>
                                 <Group justify="center">
                                     <ActionIcon
@@ -231,7 +261,7 @@ export function ItemList<Type extends IdItem>({
                             rows
                         ) : (
                             <Table.Tr>
-                                <Table.Td colSpan={columns.length + 1}>
+                                <Table.Td colSpan={itemTypes ? 4 : 3}>
                                     <Text fw={500} ta="center">
                                         Nothing found
                                     </Text>

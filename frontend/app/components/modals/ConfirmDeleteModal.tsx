@@ -14,7 +14,7 @@ export function ConfirmDeleteModal(
         onConfirm: () => void,
         onCancel: () => void,
         collectionLabel: string,
-        itemName: string,
+        itemName?: string,
     }
 ) {
     return <Modal

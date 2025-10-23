@@ -1,15 +1,13 @@
-import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_PAGE_DESCRIPTION, PAGE_TITLE, PUT_ITEM_ERROR_TITLE} from "~/strings";
-import {callApi} from "~/lib/callApi";
+import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_PAGE_DESCRIPTION, PAGE_TITLE} from "~/strings";
 import {type ItemPostFieldGetter, type ItemPostFieldSetter, useItemPost} from "~/lib/hooks/useItemPost";
 import {useInitialItem} from "~/lib/hooks/useInitialItem";
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useItem} from "~/lib/hooks/useItem";
-import _ from "lodash";
-import type {GetItemApi, NamedItem, PutApi} from "~/lib/types";
+import type {GetItemApi, NamedItem, PutItemApi} from "~/lib/types";
 
 export function useItemPage<ItemPost extends {}, ItemGet extends ItemPost & NamedItem>(
     getItemApi: GetItemApi<ItemGet>,
-    putItemApi: PutApi<ItemPost, ItemGet>,
+    putItemApi: PutItemApi<ItemPost, ItemGet>,
     itemId: string,
     collectionPageDescription: string,
     collectionHref: string,
@@ -19,12 +17,12 @@ export function useItemPage<ItemPost extends {}, ItemGet extends ItemPost & Name
     stopLoading: () => void,
     setRevertDisabled: (disabled: boolean) => void,
     setSaveDisabled: (disabled: boolean) => void,
-    validateItemPost: (itemPost: ItemPost) => boolean,
+    onValidate: (itemPost: Partial<ItemPost>) => ItemPost | undefined,
 ): {
-    setItemPostField: ItemPostFieldSetter<ItemPost>,
-    getItemPostField: ItemPostFieldGetter<ItemPost>,
+    getField: ItemPostFieldGetter<ItemPost>,
+    setField: ItemPostFieldSetter<ItemPost>,
     revert: () => void,
-    save: () => void,
+    submit: () => void,
     pageTitle: string,
     pageDescription: string,
     pageBreadcrumbs: { title: string, href: string }[],
@@ -56,62 +54,38 @@ export function useItemPage<ItemPost extends {}, ItemGet extends ItemPost & Name
     const [pageDescription, setPageDescription] = useState(itemPageDescription(initialItem))
     const [pageBreadcrumbs, setPageBreadcrumbs] = useState(createBreadcrumbs(initialItem))
 
-    const [itemGet, setItemGet] = useItem(
+    const {item, putItem} = useItem(
         getItemApi,
+        putItemApi,
         itemId,
         startLoading,
         stopLoading,
     )
 
-    const {itemPost, setItemPost, getItemPostField, setItemPostField} = useItemPost<ItemPost>()
+    const {setItemPost, getField, setField, valid, modified, revert, submit} = useItemPost<ItemPost>(
+        onValidate,
+        putItem,
+    )
 
     useEffect(() => {
-        if (itemGet !== undefined) {
-            setPageTitle(createTitle(itemGet))
-            setPageDescription(itemPageDescription(itemGet))
-            setPageBreadcrumbs(createBreadcrumbs(itemGet))
-            setItemPost({...itemGet})
+        if (item !== undefined) {
+            setPageTitle(createTitle(item))
+            setPageDescription(itemPageDescription(item))
+            setPageBreadcrumbs(createBreadcrumbs(item))
+            setItemPost({...item})
         }
-    }, [itemGet]);
+    }, [item]);
 
     useEffect(() => {
-        if (itemPost !== undefined) {
-            setRevertDisabled(_.isEqual(itemPost, itemGet))
-            setSaveDisabled((_.isEqual(itemPost, itemGet)) || !validateItemPost(itemPost))
-        } else {
-            setRevertDisabled(true)
-            setSaveDisabled(true)
-        }
-    }, [itemPost]);
-
-    const revert = useCallback(() => {
-        if (itemGet != undefined) {
-            setItemPost({...itemGet})
-        }
-    }, [itemGet])
-
-    const save = useCallback(() => {
-        if (itemPost != undefined) {
-            callApi({
-                api: () => putItemApi({
-                    path: {
-                        item_id: itemId,
-                    },
-                    body: itemPost
-                }),
-                errorTitle: PUT_ITEM_ERROR_TITLE,
-                onSuccess: setItemGet,
-                startLoading,
-                stopLoading,
-            });
-        }
-    }, [itemPost])
+        setRevertDisabled(!modified)
+        setSaveDisabled(!modified || !valid)
+    }, [valid, modified]);
 
     return {
-        getItemPostField,
-        setItemPostField,
+        getField,
+        setField,
         revert,
-        save,
+        submit,
         pageTitle,
         pageDescription,
         pageBreadcrumbs,

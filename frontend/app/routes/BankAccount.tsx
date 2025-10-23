@@ -5,7 +5,6 @@ import {
     BANK_ACCOUNTS_HREF,
     BANK_ACCOUNTS_PAGE_DESCRIPTION
 } from "~/strings";
-import {ItemPage} from "~/components/pages/ItemPage/ItemPage";
 import {ItemPageForm} from "~/components/pages/ItemPage/ItemPageForm";
 import {useState} from "react";
 import {
@@ -15,8 +14,11 @@ import {
     putItemRouteBankAccountsItemIdPut
 } from "~/client";
 import {useDisclosure} from "@mantine/hooks";
-import {ItemTextInput} from "~/components/controls/ItemTextInput";
 import {useItemPage} from "~/lib/hooks/useItemPage";
+import {Page} from "~/components/pages/Page";
+import {validateBankAccountPost} from "~/lib/validators";
+import {BankAccountPostForm} from "~/components/forms/BankAccountPostForm";
+
 
 export default function BankAccount({params}: Route.ComponentProps) {
     const {itemId} = params
@@ -25,10 +27,10 @@ export default function BankAccount({params}: Route.ComponentProps) {
     const [saveDisabled, setSaveDisabled] = useState(true)
 
     const {
-        getItemPostField,
-        setItemPostField,
+        getField,
+        setField,
         revert,
-        save,
+        submit,
         pageTitle,
         pageDescription,
         pageBreadcrumbs,
@@ -44,10 +46,10 @@ export default function BankAccount({params}: Route.ComponentProps) {
         stopLoading,
         setRevertDisabled,
         setSaveDisabled,
-        (itemPost) => itemPost.name !== ""
+        validateBankAccountPost,
     )
 
-    return <ItemPage
+    return <Page
         title={pageTitle}
         description={pageDescription}
         breadcrumbs={pageBreadcrumbs}
@@ -56,26 +58,10 @@ export default function BankAccount({params}: Route.ComponentProps) {
         <ItemPageForm
             onRevert={revert}
             revertDisabled={revertDisabled}
-            onSave={save}
+            onSave={submit}
             saveDisabled={saveDisabled}
         >
-            <ItemTextInput<BankAccountPost, "name">
-                field="name"
-                getField={getItemPostField}
-                setField={setItemPostField}
-                label="Name"
-                description={"Bank account name"}
-                placeholder="Name"
-                required
-            />
-            <ItemTextInput<BankAccountPost, "description">
-                field="description"
-                getField={getItemPostField}
-                setField={setItemPostField}
-                label="Description"
-                description={"Bank account description"}
-                placeholder="Description"
-            />
+            <BankAccountPostForm getField={getField} setField={setField}/>
         </ItemPageForm>
-    </ItemPage>
+    </Page>
 }

@@ -1,7 +1,6 @@
 import {useCallback, useEffect, useState} from "react";
-import {useHeaderData} from "~/components/providers/HeaderDataProvider";
 import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_PAGE_DESCRIPTION, PAGE_TITLE} from "~/strings";
-import {Box, Button, Group, LoadingOverlay, NumberInput, Progress, Stack} from "@mantine/core";
+import {Button, Group, LoadingOverlay, NumberInput, Progress, Stack} from "@mantine/core";
 import {
     type DummyDayAccount,
     type DummyDayDay,
@@ -15,6 +14,7 @@ import {callApi} from "~/lib/callApi";
 import Plot from "react-plotly.js";
 
 import {useStickyState} from "~/lib/hooks/useStickyState";
+import {Page} from "~/components/pages/Page";
 
 function get_balance(account: DummyDayAccount, sub_account_path: string[]): number {
     if (sub_account_path.length === 0) {
@@ -34,7 +34,6 @@ function get_balance(account: DummyDayAccount, sub_account_path: string[]): numb
 }
 
 export default function CompareScenarios() {
-    const [_, setHeaderData] = useHeaderData();
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
     const [loadingDummyDays, {open: startLoadingDummyDays, close: stopLoadingDummyDays}] = useDisclosure()
     const [dummyDaysProgress, setDummyDaysProgress] = useState(0)
@@ -44,25 +43,22 @@ export default function CompareScenarios() {
     const [dummyDaysEnd, setDummyDaysEnd] = useStickyState<string | number>(10, "compare-scenarios--end")
     const [days, setDays] = useStickyState<DummyDayDay[]>([], "compare-scenarios--days")
 
-    const description = COMPARE_SCENARIOS_PAGE_DESCRIPTION;
-    const title = PAGE_TITLE(description)
+    const pageDescription = COMPARE_SCENARIOS_PAGE_DESCRIPTION;
+    const pageTitle = PAGE_TITLE(pageDescription)
+    const pageBreadcrumbs = [
+        {
+            title: pageDescription,
+            href: COMPARE_SCENARIOS_HREF,
+        },
+    ]
 
     useEffect(() => {
-        setHeaderData({
-            title: title,
-            breadcrumbs: [
-                {
-                    title: description,
-                    href: COMPARE_SCENARIOS_HREF,
-                },
-            ],
-        });
         callApi({
             api: () => getItemsRouteScenariosGet(),
             errorTitle: "Get scenarios error",
             onSuccess: setScenarios,
-            startLoading,
-            stopLoading,
+            begin: startLoading,
+            end: stopLoading,
         });
     }, []);
 
@@ -117,15 +113,12 @@ export default function CompareScenarios() {
         }
     }
 
-    return <Box pos="relative">
-        <title>{title}</title>
-        <meta property="og:title" content={title}/>
-        <meta property="description" content={description}/>
-        <LoadingOverlay
-            visible={loading}
-            zIndex={1000}
-            overlayProps={{blur: 2}}
-        />
+    return <Page
+        title={pageTitle}
+        description={pageDescription}
+        breadcrumbs={pageBreadcrumbs}
+        loading={loading}
+    >
         <LoadingOverlay
             visible={loadingDummyDays}
             zIndex={1000}
@@ -174,5 +167,5 @@ export default function CompareScenarios() {
                 layout={{width: 800, height: 600, title: {text: 'Current Account Balances'}}}
             />
         </Stack>
-    </Box>
+    </Page>
 }

@@ -33,6 +33,9 @@ export const ENTITY_TYPES = {
 export const BANK_ACCOUNT_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Bank Account")
 export const BANK_ACCOUNT_HREF = createItemHrefFunction(BANK_ACCOUNTS_HREF)
 
+export const GET_ITEMS_ERROR_TITLE = "Get Items Error"
+export const POST_ITEM_ERROR_TITLE = "Post Item Error"
+export const DELETE_ITEM_ERROR_TITLE = "Delete Item Error"
 export const GET_ITEM_ERROR_TITLE = "Get Item Error"
 export const PUT_ITEM_ERROR_TITLE = "Put Item Error"
 export const GET_RELATED_OPTIONS_ERROR_TITLE = "Get related options error";

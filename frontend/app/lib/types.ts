@@ -1,5 +1,11 @@
 import type {APIResult} from "~/lib/callApi";
 
+export type KeysOfType<Type, ValueType> = keyof { [P in keyof Type as Type[P] extends ValueType ? P : never]: Type[P] }
+
+export function getFieldOfType<Type, ValueType>(obj: Type, key: KeysOfType<Type, ValueType>): ValueType {
+    return obj[key] as ValueType
+}
+
 export interface IdItem {
     id: string
 }
@@ -20,7 +26,7 @@ export type PostItemApi<Post, Get> = (options: {
     body: Post,
 }) => Promise<APIResult<Get>>
 
-export type PutApi<Post, Get> = (options: {
+export type PutItemApi<Post, Get> = (options: {
     path: {
         item_id: string,
     },

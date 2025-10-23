@@ -7,7 +7,7 @@ export interface ToAddData {
     type: string | null
 }
 
-export function AddItemModal(
+export function AddItemModalOld(
     {
         opened,
         working,

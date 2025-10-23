@@ -1,4 +1,4 @@
-import {CollectionPage} from "~/components/pages/CollectionPage";
+import {CollectionPageOld} from "~/components/pages/CollectionPageOld";
 import {
     COMPARE_SCENARIOS_HREF,
     COMPARE_SCENARIOS_PAGE_DESCRIPTION,
@@ -30,7 +30,7 @@ const BREADCRUMBS = [
 ];
 
 export default function Entities() {
-    return <CollectionPage
+    return <CollectionPageOld
         collectionTitle={COLLECTION_TITLE}
         collectionDescription={ENTITIES_PAGE_DESCRIPTION}
         collectionLabel={ENTITIES_LABEL}

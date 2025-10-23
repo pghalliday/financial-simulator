@@ -1,6 +1,6 @@
 import {useHeaderData} from "~/components/providers/HeaderDataProvider";
-import {ItemList, type RowData, type ToDeleteData} from "~/components/controls/item_list/ItemList";
-import {AddItemModal, type ToAddData} from "~/components/modals/AddItemModal";
+import {ItemList, type RowData, type ToDeleteData} from "~/components/controls/item_list_old/ItemList";
+import {AddItemModalOld, type ToAddData} from "~/components/modals/AddItemModalOld";
 import {ConfirmDeleteModal} from "~/components/modals/ConfirmDeleteModal";
 import {useCallback, useEffect, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
@@ -21,17 +21,17 @@ interface ListPageProps {
     deleteItem: (itemId: string) => Promise<APIResult<RowData>>
 }
 
-export function CollectionPage({
-                                   collectionTitle,
-                                   collectionDescription,
-                                   collectionLabel,
-                                   itemHref,
-                                   breadcrumbs,
-                                   itemTypes,
-                                   getItems,
-                                   postItem,
-                                   deleteItem,
-                               }: ListPageProps) {
+export function CollectionPageOld({
+                                      collectionTitle,
+                                      collectionDescription,
+                                      collectionLabel,
+                                      itemHref,
+                                      breadcrumbs,
+                                      itemTypes,
+                                      getItems,
+                                      postItem,
+                                      deleteItem,
+                                  }: ListPageProps) {
     const [_, setHeaderData] = useHeaderData();
     const [items, setItems] = useState<RowData[]>([])
     const [addItemOpened, {open: openAddItem, close: closeAddItem}] = useDisclosure()
@@ -66,8 +66,8 @@ export function CollectionPage({
             api: () => getItems(),
             errorTitle: "Get items error",
             onSuccess: setItems,
-            startLoading,
-            stopLoading,
+            begin: startLoading,
+            end: stopLoading,
         });
     }, []);
 
@@ -79,8 +79,8 @@ export function CollectionPage({
                 setItems(items.concat([data]))
                 closeAddItem()
             },
-            startLoading: startAddItemWorking,
-            stopLoading: stopAddItemWorking,
+            begin: startAddItemWorking,
+            end: stopAddItemWorking,
         });
     }, [items]);
 
@@ -92,8 +92,8 @@ export function CollectionPage({
                 setItems(items.filter(item => item.id !== data.id))
                 closeConfirmDelete()
             },
-            startLoading: startConfirmDeleteWorking,
-            stopLoading: stopConfirmDeleteWorking,
+            begin: startConfirmDeleteWorking,
+            end: stopConfirmDeleteWorking,
         });
     }, [items]);
 
@@ -106,7 +106,7 @@ export function CollectionPage({
             zIndex={1000}
             overlayProps={{blur: 2}}
         />
-        <AddItemModal
+        <AddItemModalOld
             opened={addItemOpened}
             working={addItemWorking}
             initialData={initialToAddData}

@@ -13,6 +13,7 @@ import {
     SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
 import {type ReactElement, useEffect, useState} from 'react';
+import {Link} from "react-router";
 
 export function NavLayout({children}: { children: React.ReactNode }) {
     const [opened, {toggle, close}] = useDisclosure();
@@ -24,7 +25,7 @@ export function NavLayout({children}: { children: React.ReactNode }) {
         if (headerData !== undefined) {
             setTitle(headerData.title)
             setBreadcrumbs(headerData.breadcrumbs.map(breadcrumb => (
-                <Anchor href={breadcrumb.href}>
+                <Anchor component={Link} to={breadcrumb.href}>
                     {breadcrumb.title}
                 </Anchor>
             )))

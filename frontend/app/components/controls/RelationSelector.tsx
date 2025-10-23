@@ -50,8 +50,8 @@ export function RelationSelector<Get extends NamedItem>({
                 value: item.id,
                 label: item.name,
             }))),
-            startLoading,
-            stopLoading,
+            begin: startLoading,
+            end: stopLoading,
         });
     }, []);
 
@@ -64,8 +64,8 @@ export function RelationSelector<Get extends NamedItem>({
             }),
             errorTitle: GET_RELATED_ITEMS_ERROR_TITLE,
             onSuccess: (items) => setSelectedItems(items.map(item => item.id)),
-            startLoading,
-            stopLoading,
+            begin: startLoading,
+            end: stopLoading,
         });
     }, [itemId, selectItemsData]);
 
@@ -83,8 +83,8 @@ export function RelationSelector<Get extends NamedItem>({
                     }),
                     errorTitle: POST_RELATED_ITEM_ERROR_TITLE,
                     onSuccess: () => setSelectedItems(selectedItems.concat(value)),
-                    startLoading,
-                    stopLoading,
+                    begin: startLoading,
+                    end: stopLoading,
                 });
             }
         }
@@ -99,8 +99,8 @@ export function RelationSelector<Get extends NamedItem>({
                     }),
                     errorTitle: DELETE_RELATED_ITEM_ERROR_TITLE,
                     onSuccess: () => setSelectedItems(selectedItems.filter(item => item !== value)),
-                    startLoading,
-                    stopLoading,
+                    begin: startLoading,
+                    end: stopLoading,
                 });
             }
         }

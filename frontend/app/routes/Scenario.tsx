@@ -1,6 +1,5 @@
 import type {Route} from "./+types/Scenario";
 import {SCENARIO_HREF, SCENARIO_PAGE_DESCRIPTION, SCENARIOS_HREF, SCENARIOS_PAGE_DESCRIPTION} from "~/strings";
-import {ItemPage} from "~/components/pages/ItemPage/ItemPage";
 import {ItemPageForm} from "~/components/pages/ItemPage/ItemPageForm";
 import {useState} from "react";
 import {
@@ -18,6 +17,8 @@ import {ItemTextInput} from "~/components/controls/ItemTextInput";
 import {useItemPage} from "~/lib/hooks/useItemPage";
 import {ItemPageRelations} from "~/components/pages/ItemPage/ItemPageRelations";
 import {RelationSelector} from "~/components/controls/RelationSelector";
+import {Page} from "~/components/pages/Page";
+import {validateScenarioPost} from "~/lib/validators";
 
 export default function BankAccount({params}: Route.ComponentProps) {
     const {itemId} = params
@@ -26,10 +27,10 @@ export default function BankAccount({params}: Route.ComponentProps) {
     const [saveDisabled, setSaveDisabled] = useState(true)
 
     const {
-        getItemPostField,
-        setItemPostField,
+        getField,
+        setField,
         revert,
-        save,
+        submit,
         pageTitle,
         pageDescription,
         pageBreadcrumbs,
@@ -45,10 +46,10 @@ export default function BankAccount({params}: Route.ComponentProps) {
         stopLoading,
         setRevertDisabled,
         setSaveDisabled,
-        (itemPost) => itemPost.name !== ""
+        validateScenarioPost,
     )
 
-    return <ItemPage
+    return <Page
         title={pageTitle}
         description={pageDescription}
         breadcrumbs={pageBreadcrumbs}
@@ -57,24 +58,24 @@ export default function BankAccount({params}: Route.ComponentProps) {
         <ItemPageForm
             onRevert={revert}
             revertDisabled={revertDisabled}
-            onSave={save}
+            onSave={submit}
             saveDisabled={saveDisabled}
         >
             <ItemTextInput<ScenarioPost, "name">
                 field="name"
-                getField={getItemPostField}
-                setField={setItemPostField}
+                getField={getField}
+                setField={setField}
                 label="Name"
-                description={"Bank account name"}
+                description={"Scenario name"}
                 placeholder="Name"
                 required
             />
             <ItemTextInput<ScenarioPost, "description">
                 field="description"
-                getField={getItemPostField}
-                setField={setItemPostField}
+                getField={getField}
+                setField={setField}
                 label="Description"
-                description={"Bank account description"}
+                description={"Scenario description"}
                 placeholder="Description"
             />
         </ItemPageForm>
@@ -90,5 +91,5 @@ export default function BankAccount({params}: Route.ComponentProps) {
                 stopLoading={stopLoading}
             />
         </ItemPageRelations>
-    </ItemPage>
+    </Page>
 }

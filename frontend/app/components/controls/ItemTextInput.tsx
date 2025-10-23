@@ -1,5 +1,6 @@
-import {Skeleton, TextInput} from "@mantine/core";
+import {TextInput} from "@mantine/core";
 import {type ConstrainedItemPostFieldGetter, type ConstrainedItemPostFieldSetter,} from "~/lib/hooks/useItemPost";
+import {useEffect, useState} from "react";
 
 interface ItemTextInputProps<Type extends {}, Key extends keyof Type> {
     field: Key
@@ -20,14 +21,23 @@ export function ItemTextInput<Type extends {}, Key extends keyof Type>({
                                                                            placeholder,
                                                                            required = false,
                                                                        }: ItemTextInputProps<Type, Key>) {
-    const value = getField(field)
-    return value !== undefined ? <TextInput
+    const [value, setValue] = useState<string>("")
+
+    useEffect(() => {
+        setValue(getField(field) || "")
+    }, [getField]);
+
+    useEffect(() => {
+        setField(field, value)
+    }, [value]);
+
+    return <TextInput
         label={label}
         description={description}
         placeholder={placeholder}
         required={required}
         value={value}
-        onChange={(event) => setField(field, event.currentTarget.value)}
+        onChange={event => setValue(event.currentTarget.value)}
         size="sm"
-    /> : <Skeleton/>
+    />
 }

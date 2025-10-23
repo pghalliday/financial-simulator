@@ -1,15 +1,17 @@
 import {callApi} from "~/lib/callApi";
-import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
-import {GET_ITEM_ERROR_TITLE} from "~/strings";
-import type {GetItemApi} from "~/lib/types";
+import {useEffect, useState} from "react";
+import {GET_ITEM_ERROR_TITLE, PUT_ITEM_ERROR_TITLE} from "~/strings";
+import type {GetItemApi, PutItemApi} from "~/lib/types";
 
-export function useItem<Type>(
-    getItemApi: GetItemApi<Type>,
+export function useItem<Post, Get>(
+    getItemApi: GetItemApi<Get>,
+    putItemApi: PutItemApi<Post, Get>,
     itemId: string,
     startLoading: () => void,
     stopLoading: () => void,
-): [Type | undefined, Dispatch<SetStateAction<Type | undefined>>] {
-    const [item, setItem] = useState<Type>()
+): { item: Get | undefined, putItem: (postItem: Post) => void } {
+    const [item, setItem] = useState<Get>()
+
     useEffect(() => {
         callApi({
             api: () => getItemApi({
@@ -19,9 +21,25 @@ export function useItem<Type>(
             }),
             errorTitle: GET_ITEM_ERROR_TITLE,
             onSuccess: setItem,
-            startLoading,
-            stopLoading,
+            begin: startLoading,
+            end: stopLoading,
         });
     }, []);
-    return [item, setItem]
+
+    function putItem(post: Post) {
+        callApi({
+            api: () => putItemApi({
+                path: {
+                    item_id: itemId,
+                },
+                body: post,
+            }),
+            errorTitle: PUT_ITEM_ERROR_TITLE,
+            onSuccess: setItem,
+            begin: startLoading,
+            end: stopLoading,
+        });
+    }
+
+    return {item, putItem}
 }

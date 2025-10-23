@@ -1,6 +1,5 @@
 import type {Route} from "./+types/Entity";
 import {ENTITIES_HREF, ENTITIES_PAGE_DESCRIPTION, ENTITY_HREF, ENTITY_PAGE_DESCRIPTION, ENTITY_TYPES} from "~/strings";
-import {ItemPage} from "~/components/pages/ItemPage/ItemPage";
 import {ItemPageForm} from "~/components/pages/ItemPage/ItemPageForm";
 import {useState} from "react";
 import {
@@ -22,6 +21,8 @@ import {ItemPageRelations} from "~/components/pages/ItemPage/ItemPageRelations";
 import {RelationSelector} from "~/components/controls/RelationSelector";
 import {Title} from "@mantine/core";
 import {useTypeIndicator} from "~/lib/hooks/useTypeIndicator";
+import {Page} from "~/components/pages/Page";
+import {validateEntityPost} from "~/lib/validators";
 
 export default function Entity({params}: Route.ComponentProps) {
     const {itemId} = params
@@ -30,10 +31,10 @@ export default function Entity({params}: Route.ComponentProps) {
     const [saveDisabled, setSaveDisabled] = useState(true)
 
     const {
-        getItemPostField,
-        setItemPostField,
+        getField,
+        setField,
         revert,
-        save,
+        submit,
         pageTitle,
         pageDescription,
         pageBreadcrumbs,
@@ -49,12 +50,12 @@ export default function Entity({params}: Route.ComponentProps) {
         stopLoading,
         setRevertDisabled,
         setSaveDisabled,
-        (itemPost) => itemPost.name !== ""
+        validateEntityPost,
     )
 
-    const typeIndicator = useTypeIndicator(ENTITY_TYPES, getItemPostField)
+    const typeIndicator = useTypeIndicator(ENTITY_TYPES, getField)
 
-    return <ItemPage
+    return <Page
         title={pageTitle}
         description={pageDescription}
         breadcrumbs={pageBreadcrumbs}
@@ -63,25 +64,25 @@ export default function Entity({params}: Route.ComponentProps) {
         <ItemPageForm
             onRevert={revert}
             revertDisabled={revertDisabled}
-            onSave={save}
+            onSave={submit}
             saveDisabled={saveDisabled}
         >
             <Title order={4}>{typeIndicator}</Title>
             <ItemTextInput<IndividualEntityPost | CorporationEntityPost, "name">
                 field="name"
-                getField={getItemPostField}
-                setField={setItemPostField}
+                getField={getField}
+                setField={setField}
                 label="Name"
-                description={"Bank account name"}
+                description={"Entity name"}
                 placeholder="Name"
                 required
             />
             <ItemTextInput<IndividualEntityPost | CorporationEntityPost, "description">
                 field="description"
-                getField={getItemPostField}
-                setField={setItemPostField}
+                getField={getField}
+                setField={setField}
                 label="Description"
-                description={"Bank account description"}
+                description={"Entity description"}
                 placeholder="Description"
             />
         </ItemPageForm>
@@ -97,5 +98,5 @@ export default function Entity({params}: Route.ComponentProps) {
                 stopLoading={stopLoading}
             />
         </ItemPageRelations>
-    </ItemPage>
+    </Page>
 }
