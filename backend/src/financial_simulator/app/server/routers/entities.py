@@ -13,6 +13,7 @@ from financial_simulator.app.database.schema import (
 )
 
 from .common import typed_collection, relation
+from ..util import SimpleModelMapper
 
 logger = logging.getLogger(__name__)
 
@@ -52,21 +53,29 @@ class CorporationEntityGet(EntityGet):
     type: CorporationEntityType
 
 
-def map_individual_entity(entity: IndividualEntity) -> IndividualEntityGet:
-    return IndividualEntityGet(
-        id=entity.id,
-        name=entity.name,
-        description=entity.description,
-        type="individual_entity",
-    )
+individual_model_mapper = SimpleModelMapper(
+    table_model=IndividualEntity,
+    get_model=IndividualEntityGet,
+    post_model=IndividualEntityPost,
+    patch_model=IndividualEntityPatch,
+    fields=[
+        "type",
+        "name",
+        "description",
+    ]
+)
 
-def map_corporation_entity(entity: CorporationEntity) -> CorporationEntityGet:
-    return CorporationEntityGet(
-        id=entity.id,
-        name=entity.name,
-        description=entity.description,
-        type="corporation_entity",
-    )
+corporation_model_mapper = SimpleModelMapper(
+    table_model=CorporationEntity,
+    get_model=CorporationEntityGet,
+    post_model=CorporationEntityPost,
+    patch_model=CorporationEntityPatch,
+    fields=[
+        "type",
+        "name",
+        "description",
+    ]
+)
 
 router = APIRouter(
     prefix="/entities",
@@ -77,16 +86,12 @@ typed_collection.add_endpoints(
     router=router,
     base_table_model=Entity,
     order_by=Entity.name,
-    table_models={
-        "individual_entity": IndividualEntity,
-        "corporation_entity": CorporationEntity,
-    },
     get_model=Union[IndividualEntityGet, CorporationEntityGet],
     post_model=Union[IndividualEntityPost, CorporationEntityPost],
     patch_model=Union[IndividualEntityPatch, CorporationEntityPatch],
-    item_get_mappers={
-        "individual_entity": map_individual_entity,
-        "corporation_entity": map_corporation_entity,
+    model_mappers={
+        "individual_entity": individual_model_mapper,
+        "corporation_entity": corporation_model_mapper,
     },
 )
 
@@ -94,6 +99,10 @@ class EntityScenarioGet(BaseModel):
     id: UUID
     name: str
     description: str
+
+class EntityScenarioPatch(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
 
 class EntityScenarioPost(BaseModel):
     id: UUID
@@ -105,13 +114,21 @@ def map_entity_scenario(scenario: Scenario) -> EntityScenarioGet:
         description=scenario.description,
     )
 
+related_model_mapper = SimpleModelMapper(
+    table_model=Scenario,
+    get_model=EntityScenarioGet,
+    post_model=EntityScenarioPost,
+    patch_model=EntityScenarioPatch,
+    fields=[
+        "name",
+        "description",
+    ]
+)
+
 relation.add_endpoints(
     router=router,
     relation_route="scenarios",
     relation_field="scenarios",
     table_model=Entity,
-    related_table_model=Scenario,
-    get_model=EntityScenarioGet,
-    post_model=EntityScenarioPost,
-    map_related_item=map_entity_scenario,
+    model_mapper=related_model_mapper,
 )

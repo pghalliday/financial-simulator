@@ -2,18 +2,17 @@ import logging
 from typing import (
     Sequence,
     TypeVar,
-    Callable,
     Type,
     Annotated,
     Mapping,
-    Union,
+    Union, Optional,
 )
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
-from sqlalchemy import select
+from sqlalchemy import select, ColumnElement
 from sqlalchemy.orm import Session, InstrumentedAttribute
 
 from financial_simulator.app.database.schema import BaseWithType
@@ -21,9 +20,9 @@ from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
     HTTPNotFoundError,
     HTTPDatabaseIntegrityError,
-    NotFoundError,
     HTTPChangeTypeError, ChangeTypeError,
 )
+from financial_simulator.app.server.util import ModelMapper, get_item
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
@@ -33,7 +32,6 @@ class TypedBaseModel(BaseModel):
     type: str
 
 BASE_TABLE = TypeVar("BASE_TABLE", bound=BaseWithType)
-TABLE = TypeVar("TABLE", bound=BaseWithType)
 GET = TypeVar("GET", bound=TypedBaseModel)
 POST = TypeVar("POST", bound=TypedBaseModel)
 PATCH = TypeVar("PATCH", bound=TypedBaseModel)
@@ -41,20 +39,25 @@ PATCH = TypeVar("PATCH", bound=TypedBaseModel)
 def add_endpoints(
     router: APIRouter,
     base_table_model: Type[BASE_TABLE],
-    order_by: InstrumentedAttribute[str],
-    table_models: Mapping[str, Type[TABLE]],
-    get_model: Type[GET],
-    post_model: Type[POST],
-    patch_model: Type[PATCH],
-    item_get_mappers: Mapping[str, Callable[[TABLE], GET]],
+    model_mappers: Mapping[str, ModelMapper],
+    get_model: type[GET],
+    post_model: type[POST],
+    patch_model: type[PATCH],
+    order_by: Optional[InstrumentedAttribute[str]] = None,
+    where: Optional[ColumnElement[bool]] = None,
 ):
     @router.get(
         "/",
         response_model=Sequence[get_model],
     )
-    async def get_items_route(session: DBSessionDependency) -> Sequence[GET]:
-        items = session.scalars(select(base_table_model).order_by(order_by))
-        return [item_get_mappers[item.type](item) for item in items]
+    async def get_items_route(session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> Sequence[GET]:
+        query = select(base_table_model)
+        if where is not None:
+            query = query.where(where)
+        if order_by is not None:
+            query = query.order_by(order_by)
+        items = session.scalars(query)
+        return [model_mappers[item.type].map_get(item, depth, max_parents) for item in items]
 
     @router.get(
         "/{item_id}",
@@ -63,13 +66,9 @@ def add_endpoints(
             404: {"model": HTTPNotFoundError, "description": "Not found"},
         },
     )
-    async def get_item_route(item_id: UUID, session: DBSessionDependency) -> GET:
-        item = session.get(base_table_model, item_id)
-        if not item:
-            raise HTTPException(
-                status_code=404, detail=jsonable_encoder(NotFoundError(id=item_id))
-            )
-        return item_get_mappers[item.type](item)
+    async def get_item_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> GET:
+        item = get_item(session, base_table_model, item_id)
+        return model_mappers[item.type].map_get(item, depth, max_parents)
 
     @router.post(
         "/",
@@ -85,10 +84,10 @@ def add_endpoints(
     async def post_item_route(
         item_post: post_model, session: DBSessionDependency
     ) -> GET:
-        item = table_models[item_post.type](**item_post.model_dump())
+        item = model_mappers[item_post.type].map_post(session, item_post)
         session.add(item)
         session.commit()
-        return item_get_mappers[item_post.type](item)
+        return model_mappers[item_post.type].map_get(item)
 
     @router.put(
         "/{item_id}",
@@ -112,10 +111,10 @@ def add_endpoints(
                         new_type=item_post.type,
                     ))
                 )
-        item = table_models[item_post.type](id=item_id, **item_post.model_dump())
+        item = model_mappers[item_post.type].map_post(session, item_post, item_id)
         merged = session.merge(item)
         session.commit()
-        return item_get_mappers[item_post.type](merged)
+        return model_mappers[item_post.type].map_get(merged)
 
     @router.patch(
         "/{item_id}",
@@ -131,11 +130,7 @@ def add_endpoints(
     async def patch_item_route(
             item_id: UUID, item_patch: patch_model, session: DBSessionDependency
     ) -> GET:
-        item = session.get(base_table_model, item_id)
-        if not item:
-            raise HTTPException(
-                status_code=404, detail=jsonable_encoder(NotFoundError(id=item_id))
-            )
+        item = get_item(session, base_table_model, item_id)
         if item.type != item_patch.type:
             raise HTTPException(
                 status_code=409, detail=jsonable_encoder(ChangeTypeError(
@@ -143,11 +138,9 @@ def add_endpoints(
                     new_type=item_patch.type,
                 ))
             )
-        updated_data = item_patch.model_dump(exclude_unset=True)
-        for key, value in updated_data.items():
-            setattr(item, key, value)
+        model_mappers[item_patch.type].map_patch(session, item, item_patch)
         session.commit()
-        return item_get_mappers[item_patch.type](item)
+        return model_mappers[item_patch.type].map_get(item)
 
     @router.delete(
         "/{item_id}",
@@ -159,11 +152,7 @@ def add_endpoints(
     async def delete_item_route(
             item_id: UUID, session: DBSessionDependency
     ) -> GET:
-        item = session.get(base_table_model, item_id)
-        if not item:
-            raise HTTPException(
-                status_code=404, detail=jsonable_encoder(NotFoundError(id=item_id))
-            )
+        item = get_item(session, base_table_model, item_id)
         session.delete(item)
         session.commit()
-        return item_get_mappers[item.type](item)
+        return model_mappers[item.type].map_get(item)

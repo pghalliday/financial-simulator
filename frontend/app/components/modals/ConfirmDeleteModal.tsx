@@ -6,28 +6,28 @@ export function ConfirmDeleteModal(
         working,
         onConfirm,
         onCancel,
-        collectionLabel,
-        itemName,
+        title,
+        prompt,
     }: {
         opened: boolean,
         working: boolean,
         onConfirm: () => void,
         onCancel: () => void,
-        collectionLabel: string,
-        itemName?: string,
+        title: string,
+        prompt: string,
     }
 ) {
     return <Modal
         opened={opened}
         onClose={onCancel}
-        title={<Title order={4}>{`Confirm delete ${collectionLabel}`}</Title>}
+        title={<Title order={4}>{title}</Title>}
     >
         <LoadingOverlay
             visible={working}
             zIndex={1000}
             overlayProps={{blur: 2}}
         />
-        <Text>{`Are you sure you want to delete ${collectionLabel}: "${itemName}"?`}</Text>
+        <Text>{prompt}</Text>
         <Space h={20}/>
         <Group justify="flex-end">
             <Button

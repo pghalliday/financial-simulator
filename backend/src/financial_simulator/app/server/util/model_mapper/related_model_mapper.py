@@ -24,19 +24,39 @@ class FieldRelation(BaseModel, Generic[RELATED_TABLE]):
 
 
 class RelatedModelMapper(ModelMapper[TABLE, GET, POST, PATCH]):
-    ordinary_fields: Sequence[str]
-    related_fields: Mapping[str, FieldRelation]
-    optional_related_fields: Mapping[str, FieldRelation]
+    ordinary_fields: Sequence[str] = []
+    related_fields: Mapping[str, FieldRelation] = {}
+    optional_related_fields: Mapping[str, FieldRelation] = {}
+    tree_children_fields: Sequence[str] = []
+    tree_parent_fields: Sequence[str] = []
 
     def has_invalid_relation_error(self) -> bool:
         return len(self.related_fields.keys()) > 0 or len(self.optional_related_fields.keys()) > 0
 
-    def map_get(self, item: TABLE) -> GET:
+    def map_get(self, item: TABLE, depth: int = 0, max_parents: int = 0) -> GET:
         params = {
             "id": item.id,
             **{field: getattr(item, field) for field in self.ordinary_fields},
             **{field: getattr(item, field) for field in self.related_fields.keys()},
-            **{field: getattr(item, field) for field in self.optional_related_fields.keys()},
+            **{
+                field: getattr(item, field)
+                for field in self.optional_related_fields.keys()
+            },
+            **{
+                field: [
+                    self.map_get(sub_item, depth - 1, 0)
+                    for sub_item in getattr(item, field)
+                ]
+                if (depth > 0 or depth < 0)
+                else []
+                for field in self.tree_children_fields
+            },
+            **{
+                field: self.map_get(getattr(item, field), 0, max_parents - 1)
+                if ((max_parents > 0 or max_parents < 0) and getattr(item, field))
+                else None
+                for field in self.tree_parent_fields
+            },
         }
         return self.get_model(
             **params,

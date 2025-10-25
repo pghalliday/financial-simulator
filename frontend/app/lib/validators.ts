@@ -1,4 +1,10 @@
-import type {BankAccountPost, CorporationEntityPost, IndividualEntityPost, ScenarioPost} from "~/client";
+import type {
+    BankAccountPost,
+    CorporationEntityPost,
+    IndividualEntityPost,
+    LedgerAccountPost,
+    ScenarioPost
+} from "~/client";
 
 export function isValidScenarioPost(post: Partial<ScenarioPost>): post is ScenarioPost {
     return (
@@ -64,4 +70,18 @@ export function isValidBankAccountPost(post: Partial<BankAccountPost>): post is 
 
 export function validateBankAccountPost(post: Partial<BankAccountPost>): BankAccountPost | undefined {
     return isValidBankAccountPost(post) ? post : undefined
+}
+
+export function isValidLedgerAccountPost(post: Partial<LedgerAccountPost>): post is LedgerAccountPost {
+    return (
+        post.name !== undefined &&
+        post.account_name !== undefined &&
+        post.description !== undefined &&
+        post.name !== "" &&
+        post.account_name !== ""
+    )
+}
+
+export function validateLedgerAccountPost(post: Partial<LedgerAccountPost>): LedgerAccountPost | undefined {
+    return isValidLedgerAccountPost(post) ? post : undefined
 }

@@ -5,6 +5,7 @@ import classes from './ItemList.module.css';
 import {type ReactElement, type ReactNode, useEffect, useLayoutEffect, useRef, useState} from "react";
 
 import {getFieldOfType, type IdItem, type KeysOfType} from "~/lib/types";
+import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
 
 const VISIBLE_HEIGHT_OFFSET = 30
 
@@ -20,6 +21,7 @@ interface _Column<Type, Key extends ColumnKeys<Type>> {
     heading: string,
     hasLink: boolean,
     compare: (a: Type[Key], b: Type[Key]) => number,
+    render?: (value: Type[Key]) => string,
 }
 
 export type Column<Type> = _Column<Type, ColumnKeys<Type>>
@@ -98,8 +100,9 @@ function sortData<Type>(
 
 export interface ItemListProps<Type extends IdItem> {
     columns: Column<Type>[],
-    data: Type[],
-    href: (item: Type) => string,
+    items: Type[],
+    getItemPageParams: (item: Type) => ItemPageParams,
+    href: (item: ItemPageParams) => string,
     onAdd: () => void,
     onDelete: (item: Type) => void,
     searchFields: SearchKeys<Type>[]
@@ -108,7 +111,8 @@ export interface ItemListProps<Type extends IdItem> {
 
 export function ItemList<Type extends IdItem>({
                                                   columns,
-                                                  data,
+                                                  items,
+                                                  getItemPageParams,
                                                   href,
                                                   onAdd,
                                                   onDelete,
@@ -137,17 +141,19 @@ export function ItemList<Type extends IdItem>({
     }, [ref]);
 
     useEffect(() => {
-        setSortedData(sortData(data, sortBy, search, searchFields));
-    }, [data, sortBy, search]);
+        setSortedData(sortData(items, sortBy, search, searchFields));
+    }, [items, sortBy, search]);
 
     useEffect(() => {
         setRows(sortedData.map((item) => {
             const cells = columns.map(column => {
+                const value = getFieldOfType(item, column.field)
+                const rendered = column.render !== undefined ? column.render(value) : value
                 const content = column.hasLink ? (
-                    <Anchor component={Link} to={href(item)}>
-                        {getFieldOfType(item, column.field)}
+                    <Anchor component={Link} to={href(getItemPageParams(item))}>
+                        {rendered}
                     </Anchor>
-                ) : getFieldOfType(item, column.field)
+                ) : rendered
                 return <Table.Td key={column.heading}>
                     {content}
                 </Table.Td>

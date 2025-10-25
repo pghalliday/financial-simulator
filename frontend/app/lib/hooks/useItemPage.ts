@@ -1,24 +1,27 @@
-import {COMPARE_SCENARIOS_HREF, COMPARE_SCENARIOS_PAGE_DESCRIPTION, PAGE_TITLE} from "~/strings";
 import {type ItemPostFieldGetter, type ItemPostFieldSetter, useItemPost} from "~/lib/hooks/useItemPost";
-import {useInitialItem} from "~/lib/hooks/useInitialItem";
+import {type ItemPageParams, useItemPageParams} from "~/lib/hooks/useItemPageParams";
 import {useEffect, useState} from "react";
-import {useItem} from "~/lib/hooks/useItem";
-import type {GetItemApi, NamedItem, PutItemApi} from "~/lib/types";
+import type {Breadcrumb, GetItemApi, IdItem, PutItemApi} from "~/lib/types";
+import {useGetItem} from "~/lib/hooks/useGetItem";
+import {usePutItem} from "~/lib/hooks/usePutItem";
 
-export function useItemPage<ItemPost extends {}, ItemGet extends ItemPost & NamedItem>(
+export function useItemPage<ItemPost extends {}, ItemGet extends ItemPost & IdItem>(
+    itemId: string,
+    itemPageTitle: (itemPageParams: ItemPageParams) => string,
+    itemPageDescription: (itemPageParams: ItemPageParams) => string,
+    itemBreadcrumbs: (itemPageParams: ItemPageParams) => Breadcrumb[],
+    getItemPageParams: (item: ItemGet) => ItemPageParams,
     getItemApi: GetItemApi<ItemGet>,
     putItemApi: PutItemApi<ItemPost, ItemGet>,
-    itemId: string,
-    collectionPageDescription: string,
-    collectionHref: string,
-    itemPageDescription: (item: NamedItem) => string,
-    itemHref: (item: NamedItem) => string,
     startLoading: () => void,
     stopLoading: () => void,
     setRevertDisabled: (disabled: boolean) => void,
     setSaveDisabled: (disabled: boolean) => void,
     onValidate: (itemPost: Partial<ItemPost>) => ItemPost | undefined,
+    depth: number = 0,
+    maxParents: number = 0,
 ): {
+    item: ItemGet | undefined,
     getField: ItemPostFieldGetter<ItemPost>,
     setField: ItemPostFieldSetter<ItemPost>,
     revert: () => void,
@@ -27,37 +30,25 @@ export function useItemPage<ItemPost extends {}, ItemGet extends ItemPost & Name
     pageDescription: string,
     pageBreadcrumbs: { title: string, href: string }[],
 } {
-    const initialItem = useInitialItem(itemId)
+    const itemPageParams = useItemPageParams(itemId)
 
-    function createTitle(item: NamedItem): string {
-        return PAGE_TITLE(itemPageDescription(item))
-    }
+    const [pageTitle, setPageTitle] = useState(itemPageTitle(itemPageParams))
+    const [pageDescription, setPageDescription] = useState(itemPageDescription(itemPageParams))
+    const [pageBreadcrumbs, setPageBreadcrumbs] = useState(itemBreadcrumbs(itemPageParams))
 
-    function createBreadcrumbs(item: NamedItem): { title: string, href: string }[] {
-        return [
-            {
-                title: COMPARE_SCENARIOS_PAGE_DESCRIPTION,
-                href: COMPARE_SCENARIOS_HREF,
-            },
-            {
-                title: collectionPageDescription,
-                href: collectionHref,
-            },
-            {
-                title: item.name,
-                href: itemHref(item),
-            },
-        ]
-    }
-
-    const [pageTitle, setPageTitle] = useState(createTitle(initialItem))
-    const [pageDescription, setPageDescription] = useState(itemPageDescription(initialItem))
-    const [pageBreadcrumbs, setPageBreadcrumbs] = useState(createBreadcrumbs(initialItem))
-
-    const {item, putItem} = useItem(
-        getItemApi,
-        putItemApi,
+    const {item, setItem} = useGetItem(
         itemId,
+        getItemApi,
+        startLoading,
+        stopLoading,
+        depth,
+        maxParents,
+    )
+
+    const putItem = usePutItem(
+        item,
+        setItem,
+        putItemApi,
         startLoading,
         stopLoading,
     )
@@ -69,9 +60,9 @@ export function useItemPage<ItemPost extends {}, ItemGet extends ItemPost & Name
 
     useEffect(() => {
         if (item !== undefined) {
-            setPageTitle(createTitle(item))
-            setPageDescription(itemPageDescription(item))
-            setPageBreadcrumbs(createBreadcrumbs(item))
+            setPageTitle(itemPageTitle(getItemPageParams(item)))
+            setPageDescription(itemPageDescription(getItemPageParams(item)))
+            setPageBreadcrumbs(itemBreadcrumbs(getItemPageParams(item)))
             setItemPost({...item})
         }
     }, [item]);
@@ -82,6 +73,7 @@ export function useItemPage<ItemPost extends {}, ItemGet extends ItemPost & Name
     }, [valid, modified]);
 
     return {
+        item,
         getField,
         setField,
         revert,

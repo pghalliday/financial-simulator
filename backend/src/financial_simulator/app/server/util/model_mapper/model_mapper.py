@@ -26,7 +26,7 @@ class ModelMapper(BaseModel, ABC, Generic[TABLE, GET, POST, PATCH]):
         raise NotImplementedError()
 
     @abstractmethod
-    def map_get(self, item: TABLE) -> GET:
+    def map_get(self, item: TABLE, depth: int = 0, max_parents: int = 0) -> GET:
         raise NotImplementedError()
 
     @abstractmethod

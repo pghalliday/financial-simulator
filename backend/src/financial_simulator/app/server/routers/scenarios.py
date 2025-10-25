@@ -56,21 +56,27 @@ class ScenarioEntityGet(BaseModel):
 class ScenarioEntityPost(BaseModel):
     id: UUID
 
-def map_scenario_entity(entity: Entity) -> ScenarioEntityGet:
-    return ScenarioEntityGet(
-        id=entity.id,
-        type=entity.type,
-        name=entity.name,
-        description=entity.description,
-    )
+class ScenarioEntityPatch(BaseModel):
+    type: Optional[Literal["individual_entity", "corporation_entity"]] = None
+    name: Optional[str] = None
+    description: Optional[str] = None
+
+related_model_mapper = SimpleModelMapper(
+    table_model=Entity,
+    get_model=ScenarioEntityGet,
+    post_model=ScenarioEntityPost,
+    patch_model=ScenarioEntityPatch,
+    fields=[
+        "type",
+        "name",
+        "description",
+    ]
+)
 
 relation.add_endpoints(
     router=router,
     relation_route="entities",
     relation_field="entities",
     table_model=Scenario,
-    related_table_model=Entity,
-    get_model=ScenarioEntityGet,
-    post_model=ScenarioEntityPost,
-    map_related_item=map_scenario_entity,
+    model_mapper=related_model_mapper,
 )

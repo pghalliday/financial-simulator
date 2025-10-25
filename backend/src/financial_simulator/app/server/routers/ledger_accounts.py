@@ -1,5 +1,6 @@
+from __future__ import annotations
 import logging
-from typing import Optional
+from typing import Optional, List
 from uuid import UUID
 
 from fastapi import APIRouter
@@ -29,7 +30,9 @@ class LedgerAccountGet(BaseModel):
     name: str
     description: str
     account_name: str
-    parent_id: Optional[UUID] = None
+    parent_id: Optional[UUID]
+    sub_accounts: List[LedgerAccountGet]
+    parent: Optional[LedgerAccountGet]
 
 router = APIRouter(
     prefix="/ledger-accounts",
@@ -46,11 +49,15 @@ model_mapper = RelatedModelMapper(
         "description",
         "account_name",
     ],
-    related_fields={
-    },
     optional_related_fields={
         "parent_id": FieldRelation(field="parent", model=LedgerAccount),
     },
+    tree_children_fields=[
+        "sub_accounts"
+    ],
+    tree_parent_fields=[
+        "parent"
+    ],
 )
 
 where = LedgerAccount.parent_id == None
@@ -68,6 +75,11 @@ class LedgerAccountSubAccountGet(BaseModel):
     description: str
     account_name: str
 
+class LedgerAccountSubAccountPatch(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    account_name: Optional[str] = None
+
 class LedgerAccountSubAccountPost(BaseModel):
     id: UUID
 
@@ -79,13 +91,31 @@ def map_ledger_account_sub_account(ledger_account: LedgerAccount) -> LedgerAccou
         account_name=ledger_account.account_name,
     )
 
+related_model_mapper = RelatedModelMapper(
+    table_model=LedgerAccount,
+    get_model=LedgerAccountSubAccountGet,
+    post_model=LedgerAccountSubAccountPost,
+    patch_model=LedgerAccountSubAccountPatch,
+    ordinary_fields=[
+        "name",
+        "description",
+        "account_name",
+    ],
+    optional_related_fields={
+        "parent_id": FieldRelation(field="parent", model=LedgerAccount),
+    },
+    tree_children_fields=[
+        "sub_accounts"
+    ],
+    tree_parent_fields=[
+        "parent"
+    ],
+)
+
 relation.add_endpoints(
     router=router,
     relation_route="sub-accounts",
     relation_field="sub_accounts",
     table_model=LedgerAccount,
-    related_table_model=LedgerAccount,
-    get_model=LedgerAccountSubAccountGet,
-    post_model=LedgerAccountSubAccountPost,
-    map_related_item=map_ledger_account_sub_account,
+    model_mapper=related_model_mapper,
 )

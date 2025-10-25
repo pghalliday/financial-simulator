@@ -1,5 +1,5 @@
 import type {Route} from "./+types/Scenario";
-import {SCENARIO_HREF, SCENARIO_PAGE_DESCRIPTION, SCENARIOS_HREF, SCENARIOS_PAGE_DESCRIPTION} from "~/strings";
+import {SCENARIO_BREADCRUMBS, SCENARIO_PAGE_DESCRIPTION, SCENARIO_PAGE_TITLE} from "~/strings";
 import {ItemPageForm} from "~/components/pages/ItemPage/ItemPageForm";
 import {useState} from "react";
 import {
@@ -13,12 +13,20 @@ import {
     type ScenarioPost
 } from "~/client";
 import {useDisclosure} from "@mantine/hooks";
-import {ItemTextInput} from "~/components/controls/ItemTextInput";
 import {useItemPage} from "~/lib/hooks/useItemPage";
 import {ItemPageRelations} from "~/components/pages/ItemPage/ItemPageRelations";
 import {RelationSelector} from "~/components/controls/RelationSelector";
 import {Page} from "~/components/pages/Page";
 import {validateScenarioPost} from "~/lib/validators";
+import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
+import {ScenarioPostForm} from "~/components/forms/ScenarioPostForm";
+
+export function getScenarioPageParams(item: ScenarioGet): ItemPageParams {
+    return {
+        id: item.id,
+        name: item.name,
+    }
+}
 
 export default function BankAccount({params}: Route.ComponentProps) {
     const {itemId} = params
@@ -35,13 +43,13 @@ export default function BankAccount({params}: Route.ComponentProps) {
         pageDescription,
         pageBreadcrumbs,
     } = useItemPage<ScenarioPost, ScenarioGet>(
+        itemId,
+        SCENARIO_PAGE_TITLE,
+        SCENARIO_PAGE_DESCRIPTION,
+        SCENARIO_BREADCRUMBS,
+        getScenarioPageParams,
         getItemRouteScenariosItemIdGet,
         putItemRouteScenariosItemIdPut,
-        itemId,
-        SCENARIOS_PAGE_DESCRIPTION,
-        SCENARIOS_HREF,
-        SCENARIO_PAGE_DESCRIPTION,
-        SCENARIO_HREF,
         startLoading,
         stopLoading,
         setRevertDisabled,
@@ -61,23 +69,7 @@ export default function BankAccount({params}: Route.ComponentProps) {
             onSave={submit}
             saveDisabled={saveDisabled}
         >
-            <ItemTextInput<ScenarioPost, "name">
-                field="name"
-                getField={getField}
-                setField={setField}
-                label="Name"
-                description={"Scenario name"}
-                placeholder="Name"
-                required
-            />
-            <ItemTextInput<ScenarioPost, "description">
-                field="description"
-                getField={getField}
-                setField={setField}
-                label="Description"
-                description={"Scenario description"}
-                placeholder="Description"
-            />
+            <ScenarioPostForm getField={getField} setField={setField}/>
         </ItemPageForm>
         <ItemPageRelations>
             <RelationSelector

@@ -1,10 +1,5 @@
 import type {Route} from "./+types/BankAccount";
-import {
-    BANK_ACCOUNT_HREF,
-    BANK_ACCOUNT_PAGE_DESCRIPTION,
-    BANK_ACCOUNTS_HREF,
-    BANK_ACCOUNTS_PAGE_DESCRIPTION
-} from "~/strings";
+import {BANK_ACCOUNT_BREADCRUMBS, BANK_ACCOUNT_PAGE_DESCRIPTION, BANK_ACCOUNT_PAGE_TITLE} from "~/strings";
 import {ItemPageForm} from "~/components/pages/ItemPage/ItemPageForm";
 import {useState} from "react";
 import {
@@ -18,7 +13,15 @@ import {useItemPage} from "~/lib/hooks/useItemPage";
 import {Page} from "~/components/pages/Page";
 import {validateBankAccountPost} from "~/lib/validators";
 import {BankAccountPostForm} from "~/components/forms/BankAccountPostForm";
+import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
 
+
+export function getBankAccountPageParams(item: BankAccountGet): ItemPageParams {
+    return {
+        id: item.id,
+        name: item.name,
+    }
+}
 
 export default function BankAccount({params}: Route.ComponentProps) {
     const {itemId} = params
@@ -35,13 +38,13 @@ export default function BankAccount({params}: Route.ComponentProps) {
         pageDescription,
         pageBreadcrumbs,
     } = useItemPage<BankAccountPost, BankAccountGet>(
+        itemId,
+        BANK_ACCOUNT_PAGE_TITLE,
+        BANK_ACCOUNT_PAGE_DESCRIPTION,
+        BANK_ACCOUNT_BREADCRUMBS,
+        getBankAccountPageParams,
         getItemRouteBankAccountsItemIdGet,
         putItemRouteBankAccountsItemIdPut,
-        itemId,
-        BANK_ACCOUNTS_PAGE_DESCRIPTION,
-        BANK_ACCOUNTS_HREF,
-        BANK_ACCOUNT_PAGE_DESCRIPTION,
-        BANK_ACCOUNT_HREF,
         startLoading,
         stopLoading,
         setRevertDisabled,

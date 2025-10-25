@@ -1,48 +1,24 @@
-import {CollectionPageOld} from "~/components/pages/CollectionPageOld";
-import {
-    COMPARE_SCENARIOS_HREF,
-    COMPARE_SCENARIOS_PAGE_DESCRIPTION,
-    PAGE_TITLE,
-    SCENARIO_HREF,
-    SCENARIOS_HREF,
-    SCENARIOS_LABEL,
-    SCENARIOS_PAGE_DESCRIPTION
-} from "~/strings";
-import {
-    deleteItemRouteScenariosItemIdDelete,
-    getItemsRouteScenariosGet,
-    postItemRouteScenariosPost,
-    type ScenarioPost
-} from "~/client";
+import {SCENARIOS_BREADCRUMBS, SCENARIOS_PAGE_DESCRIPTION, SCENARIOS_PAGE_TITLE} from "~/strings";
+import {getItemsRouteScenariosGet,} from "~/client";
+import {Page} from "~/components/pages/Page";
+import {useDisclosure} from "@mantine/hooks";
+import {useGetItems} from "~/lib/hooks/useGetItems";
+import {ScenarioList} from "~/components/lists/ScenarioList";
 
-const COLLECTION_TITLE = PAGE_TITLE(SCENARIOS_PAGE_DESCRIPTION);
-const BREADCRUMBS = [
-    {
-        title: COMPARE_SCENARIOS_PAGE_DESCRIPTION,
-        href: COMPARE_SCENARIOS_HREF,
-    },
-    {
-        title: SCENARIOS_PAGE_DESCRIPTION,
-        href: SCENARIOS_HREF,
-    },
-];
+export default function Scenarios() {
+    const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
+    const items = useGetItems(
+        getItemsRouteScenariosGet,
+        startLoading,
+        stopLoading,
+    )
 
-export default function Entities() {
-    return <CollectionPageOld
-        collectionTitle={COLLECTION_TITLE}
-        collectionDescription={SCENARIOS_PAGE_DESCRIPTION}
-        collectionLabel={SCENARIOS_LABEL}
-        itemHref={SCENARIO_HREF}
-        breadcrumbs={BREADCRUMBS}
-        getItems={getItemsRouteScenariosGet}
-        postItem={(toAddData) => postItemRouteScenariosPost({
-            // TODO: can we properly type toAddData?
-            body: toAddData as ScenarioPost,
-        })}
-        deleteItem={(itemId) => deleteItemRouteScenariosItemIdDelete({
-            path: {
-                item_id: itemId,
-            }
-        })}
-    />
+    return <Page
+        title={SCENARIOS_PAGE_TITLE}
+        description={SCENARIOS_PAGE_DESCRIPTION}
+        breadcrumbs={SCENARIOS_BREADCRUMBS}
+        loading={loading}
+    >
+        <ScenarioList items={items}/>
+    </Page>
 }

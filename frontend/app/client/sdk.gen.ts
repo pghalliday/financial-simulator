@@ -18,6 +18,9 @@ import type {
     DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteData,
     DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteErrors,
     DeleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDeleteResponses,
+    DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteData,
+    DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteErrors,
+    DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteResponses,
     DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteData,
     DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteErrors,
     DeleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDeleteResponses,
@@ -37,22 +40,32 @@ import type {
     GetItemRouteScenariosItemIdGetErrors,
     GetItemRouteScenariosItemIdGetResponses,
     GetItemsRouteBankAccountsGetData,
+    GetItemsRouteBankAccountsGetErrors,
     GetItemsRouteBankAccountsGetResponses,
     GetItemsRouteEntitiesGetData,
+    GetItemsRouteEntitiesGetErrors,
     GetItemsRouteEntitiesGetResponses,
     GetItemsRouteLedgerAccountsGetData,
+    GetItemsRouteLedgerAccountsGetErrors,
     GetItemsRouteLedgerAccountsGetResponses,
     GetItemsRouteScenariosGetData,
+    GetItemsRouteScenariosGetErrors,
     GetItemsRouteScenariosGetResponses,
     GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetData,
     GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetErrors,
     GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetResponses,
+    GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetData,
+    GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetErrors,
+    GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetResponses,
     GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetData,
     GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetErrors,
     GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetResponses,
     GetRelatedItemsRouteEntitiesItemIdScenariosGetData,
     GetRelatedItemsRouteEntitiesItemIdScenariosGetErrors,
     GetRelatedItemsRouteEntitiesItemIdScenariosGetResponses,
+    GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetData,
+    GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetErrors,
+    GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetResponses,
     GetRelatedItemsRouteScenariosItemIdEntitiesGetData,
     GetRelatedItemsRouteScenariosItemIdEntitiesGetErrors,
     GetRelatedItemsRouteScenariosItemIdEntitiesGetResponses,
@@ -83,6 +96,9 @@ import type {
     PostRelatedItemRouteEntitiesItemIdScenariosPostData,
     PostRelatedItemRouteEntitiesItemIdScenariosPostErrors,
     PostRelatedItemRouteEntitiesItemIdScenariosPostResponses,
+    PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostData,
+    PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostErrors,
+    PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostResponses,
     PostRelatedItemRouteScenariosItemIdEntitiesPostData,
     PostRelatedItemRouteScenariosItemIdEntitiesPostErrors,
     PostRelatedItemRouteScenariosItemIdEntitiesPostResponses,
@@ -120,7 +136,7 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
  * Get Items Route
  */
 export const getItemsRouteScenariosGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsRouteScenariosGetData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetItemsRouteScenariosGetResponses, unknown, ThrowOnError>({
+    return (options?.client ?? client).get<GetItemsRouteScenariosGetResponses, GetItemsRouteScenariosGetErrors, ThrowOnError>({
         url: '/scenarios/',
         ...options
     });
@@ -236,7 +252,7 @@ export const getRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGet = <Throw
  * Get Items Route
  */
 export const getItemsRouteEntitiesGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsRouteEntitiesGetData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetItemsRouteEntitiesGetResponses, unknown, ThrowOnError>({
+    return (options?.client ?? client).get<GetItemsRouteEntitiesGetResponses, GetItemsRouteEntitiesGetErrors, ThrowOnError>({
         url: '/entities/',
         ...options
     });
@@ -352,7 +368,7 @@ export const getRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGet = <Throw
  * Get Items Route
  */
 export const getItemsRouteBankAccountsGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsRouteBankAccountsGetData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetItemsRouteBankAccountsGetResponses, unknown, ThrowOnError>({
+    return (options?.client ?? client).get<GetItemsRouteBankAccountsGetResponses, GetItemsRouteBankAccountsGetErrors, ThrowOnError>({
         url: '/bank-accounts/',
         ...options
     });
@@ -424,7 +440,7 @@ export const putItemRouteBankAccountsItemIdPut = <ThrowOnError extends boolean =
  * Get Items Route
  */
 export const getItemsRouteLedgerAccountsGet = <ThrowOnError extends boolean = false>(options?: Options<GetItemsRouteLedgerAccountsGetData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetItemsRouteLedgerAccountsGetResponses, unknown, ThrowOnError>({
+    return (options?.client ?? client).get<GetItemsRouteLedgerAccountsGetResponses, GetItemsRouteLedgerAccountsGetErrors, ThrowOnError>({
         url: '/ledger-accounts/',
         ...options
     });
@@ -489,6 +505,50 @@ export const putItemRouteLedgerAccountsItemIdPut = <ThrowOnError extends boolean
             'Content-Type': 'application/json',
             ...options.headers
         }
+    });
+};
+
+/**
+ * Get Related Items Route
+ */
+export const getRelatedItemsRouteLedgerAccountsItemIdSubAccountsGet = <ThrowOnError extends boolean = false>(options: Options<GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetResponses, GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetErrors, ThrowOnError>({
+        url: '/ledger-accounts/{item_id}/sub-accounts/',
+        ...options
+    });
+};
+
+/**
+ * Post Related Item Route
+ */
+export const postRelatedItemRouteLedgerAccountsItemIdSubAccountsPost = <ThrowOnError extends boolean = false>(options: Options<PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostResponses, PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostErrors, ThrowOnError>({
+        url: '/ledger-accounts/{item_id}/sub-accounts/',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Delete Related Item Route
+ */
+export const deleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteResponses, DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteErrors, ThrowOnError>({
+        url: '/ledger-accounts/{item_id}/sub-accounts/{related_item_id}',
+        ...options
+    });
+};
+
+/**
+ * Get Related Item Route
+ */
+export const getRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGet = <ThrowOnError extends boolean = false>(options: Options<GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetResponses, GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetErrors, ThrowOnError>({
+        url: '/ledger-accounts/{item_id}/sub-accounts/{related_item_id}',
+        ...options
     });
 };
 

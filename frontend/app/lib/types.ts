@@ -1,4 +1,12 @@
 import type {APIResult} from "~/lib/callApi";
+import type {
+    CorporationEntityGet,
+    CorporationEntityPatch,
+    CorporationEntityPost,
+    IndividualEntityGet,
+    IndividualEntityPatch,
+    IndividualEntityPost
+} from "~/client";
 
 export type KeysOfType<Type, ValueType> = keyof { [P in keyof Type as Type[P] extends ValueType ? P : never]: Type[P] }
 
@@ -14,11 +22,29 @@ export interface NamedItem extends IdItem {
     name: string
 }
 
-export type GetItemsApi<Get> = () => Promise<APIResult<Get[]>>
+export interface PageItem extends NamedItem {
+    parent?: PageItem,
+}
+
+export interface Breadcrumb {
+    title: string,
+    href: string,
+}
+
+export type GetItemsApi<Get> = (options?: {
+    query?: {
+        depth?: number,
+        max_parents?: number,
+    },
+}) => Promise<APIResult<Get[]>>
 
 export type GetItemApi<Get> = (options: {
     path: {
         item_id: string,
+    },
+    query?: {
+        depth?: number,
+        max_parents?: number,
     },
 }) => Promise<APIResult<Get>>
 
@@ -72,3 +98,7 @@ export type DeleteRelatedItemApi<Get> = (options: {
         related_item_id: string,
     },
 }) => Promise<APIResult<Get>>
+
+export type EntityGet = IndividualEntityGet | CorporationEntityGet
+export type EntityPost = IndividualEntityPost | CorporationEntityPost
+export type EntityPatch = IndividualEntityPatch | CorporationEntityPatch

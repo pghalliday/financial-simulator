@@ -9,6 +9,8 @@ import {
     COMPARE_SCENARIOS_PAGE_DESCRIPTION,
     ENTITIES_HREF,
     ENTITIES_PAGE_DESCRIPTION,
+    LEDGER_ACCOUNTS_HREF,
+    LEDGER_ACCOUNTS_PAGE_DESCRIPTION,
     SCENARIOS_HREF,
     SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
@@ -87,6 +89,11 @@ export function NavLayout({children}: { children: React.ReactNode }) {
                 <NavbarLink
                     href={BANK_ACCOUNTS_HREF}
                     label={BANK_ACCOUNTS_PAGE_DESCRIPTION}
+                    onClick={close}
+                />
+                <NavbarLink
+                    href={LEDGER_ACCOUNTS_HREF}
+                    label={LEDGER_ACCOUNTS_PAGE_DESCRIPTION}
                     onClick={close}
                 />
             </AppShell.Navbar>

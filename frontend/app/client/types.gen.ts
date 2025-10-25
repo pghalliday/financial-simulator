@@ -510,7 +510,12 @@ export type LedgerAccountGet = {
     /**
      * Parent Id
      */
-    parent_id?: string | null;
+    parent_id: string | null;
+    /**
+     * Sub Accounts
+     */
+    sub_accounts: Array<LedgerAccountGet>;
+    parent: LedgerAccountGet | null;
 };
 
 /**
@@ -555,6 +560,38 @@ export type LedgerAccountPost = {
      * Parent Id
      */
     parent_id?: string | null;
+};
+
+/**
+ * LedgerAccountSubAccountGet
+ */
+export type LedgerAccountSubAccountGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Account Name
+     */
+    account_name: string;
+};
+
+/**
+ * LedgerAccountSubAccountPost
+ */
+export type LedgerAccountSubAccountPost = {
+    /**
+     * Id
+     */
+    id: string;
 };
 
 /**
@@ -706,9 +743,27 @@ export type ValidationError = {
 export type GetItemsRouteScenariosGetData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/scenarios/';
 };
+
+export type GetItemsRouteScenariosGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetItemsRouteScenariosGetError = GetItemsRouteScenariosGetErrors[keyof GetItemsRouteScenariosGetErrors];
 
 export type GetItemsRouteScenariosGetResponses = {
     /**
@@ -791,7 +846,16 @@ export type GetItemRouteScenariosItemIdGetData = {
          */
         item_id: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/scenarios/{item_id}';
 };
 
@@ -897,7 +961,16 @@ export type GetRelatedItemsRouteScenariosItemIdEntitiesGetData = {
          */
         item_id: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/scenarios/{item_id}/entities/';
 };
 
@@ -1017,7 +1090,16 @@ export type GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetData = {
          */
         related_item_id: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/scenarios/{item_id}/entities/{related_item_id}';
 };
 
@@ -1047,9 +1129,27 @@ export type GetRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdGetResponse =
 export type GetItemsRouteEntitiesGetData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/entities/';
 };
+
+export type GetItemsRouteEntitiesGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetItemsRouteEntitiesGetError = GetItemsRouteEntitiesGetErrors[keyof GetItemsRouteEntitiesGetErrors];
 
 export type GetItemsRouteEntitiesGetResponses = {
     /**
@@ -1137,7 +1237,16 @@ export type GetItemRouteEntitiesItemIdGetData = {
          */
         item_id: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/entities/{item_id}';
 };
 
@@ -1254,7 +1363,16 @@ export type GetRelatedItemsRouteEntitiesItemIdScenariosGetData = {
          */
         item_id: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/entities/{item_id}/scenarios/';
 };
 
@@ -1374,7 +1492,16 @@ export type GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetData = {
          */
         related_item_id: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/entities/{item_id}/scenarios/{related_item_id}';
 };
 
@@ -1404,9 +1531,27 @@ export type GetRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdGetResponse =
 export type GetItemsRouteBankAccountsGetData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/bank-accounts/';
 };
+
+export type GetItemsRouteBankAccountsGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetItemsRouteBankAccountsGetError = GetItemsRouteBankAccountsGetErrors[keyof GetItemsRouteBankAccountsGetErrors];
 
 export type GetItemsRouteBankAccountsGetResponses = {
     /**
@@ -1493,7 +1638,16 @@ export type GetItemRouteBankAccountsItemIdGetData = {
          */
         item_id: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/bank-accounts/{item_id}';
 };
 
@@ -1602,9 +1756,27 @@ export type PutItemRouteBankAccountsItemIdPutResponse = PutItemRouteBankAccounts
 export type GetItemsRouteLedgerAccountsGetData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/ledger-accounts/';
 };
+
+export type GetItemsRouteLedgerAccountsGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetItemsRouteLedgerAccountsGetError = GetItemsRouteLedgerAccountsGetErrors[keyof GetItemsRouteLedgerAccountsGetErrors];
 
 export type GetItemsRouteLedgerAccountsGetResponses = {
     /**
@@ -1691,7 +1863,16 @@ export type GetItemRouteLedgerAccountsItemIdGetData = {
          */
         item_id: string;
     };
-    query?: never;
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
     url: '/ledger-accounts/{item_id}';
 };
 
@@ -1796,6 +1977,179 @@ export type PutItemRouteLedgerAccountsItemIdPutResponses = {
 };
 
 export type PutItemRouteLedgerAccountsItemIdPutResponse = PutItemRouteLedgerAccountsItemIdPutResponses[keyof PutItemRouteLedgerAccountsItemIdPutResponses];
+
+export type GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
+    url: '/ledger-accounts/{item_id}/sub-accounts/';
+};
+
+export type GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetError = GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetErrors[keyof GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetErrors];
+
+export type GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetResponses = {
+    /**
+     * Response Get Related Items Route Ledger Accounts  Item Id  Sub Accounts  Get
+     * Successful Response
+     */
+    200: Array<LedgerAccountSubAccountGet>;
+};
+
+export type GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetResponse = GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetResponses[keyof GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetResponses];
+
+export type PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostData = {
+    body: LedgerAccountSubAccountPost;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/ledger-accounts/{item_id}/sub-accounts/';
+};
+
+export type PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Database integrity error
+     */
+    409: HttpDatabaseIntegrityError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostError = PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostErrors[keyof PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostErrors];
+
+export type PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostResponses = {
+    /**
+     * Successful Response
+     */
+    201: LedgerAccountSubAccountGet;
+};
+
+export type PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostResponse = PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostResponses[keyof PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostResponses];
+
+export type DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+        /**
+         * Related Item Id
+         */
+        related_item_id: string;
+    };
+    query?: never;
+    url: '/ledger-accounts/{item_id}/sub-accounts/{related_item_id}';
+};
+
+export type DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteErrors = {
+    /**
+     * Response 404 Delete Related Item Route Ledger Accounts  Item Id  Sub Accounts  Related Item Id  Delete
+     * Not found
+     */
+    404: HttpNotFoundError | HttpRelatedItemNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteError = DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteErrors[keyof DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteErrors];
+
+export type DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    200: LedgerAccountSubAccountGet;
+};
+
+export type DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteResponse = DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteResponses[keyof DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteResponses];
+
+export type GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+        /**
+         * Related Item Id
+         */
+        related_item_id: string;
+    };
+    query?: {
+        /**
+         * Depth
+         */
+        depth?: number;
+        /**
+         * Max Parents
+         */
+        max_parents?: number;
+    };
+    url: '/ledger-accounts/{item_id}/sub-accounts/{related_item_id}';
+};
+
+export type GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetErrors = {
+    /**
+     * Response 404 Get Related Item Route Ledger Accounts  Item Id  Sub Accounts  Related Item Id  Get
+     * Not found
+     */
+    404: HttpNotFoundError | HttpRelatedItemNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetError = GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetErrors[keyof GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetErrors];
+
+export type GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: LedgerAccountSubAccountGet;
+};
+
+export type GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetResponse = GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetResponses[keyof GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetResponses];
 
 export type GetDummyDaysGetData = {
     body?: never;

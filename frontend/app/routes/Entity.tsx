@@ -1,5 +1,5 @@
 import type {Route} from "./+types/Entity";
-import {ENTITIES_HREF, ENTITIES_PAGE_DESCRIPTION, ENTITY_HREF, ENTITY_PAGE_DESCRIPTION, ENTITY_TYPES} from "~/strings";
+import {ENTITY_BREADCRUMBS, ENTITY_PAGE_DESCRIPTION, ENTITY_PAGE_TITLE} from "~/strings";
 import {ItemPageForm} from "~/components/pages/ItemPage/ItemPageForm";
 import {useState} from "react";
 import {
@@ -15,14 +15,21 @@ import {
     putItemRouteEntitiesItemIdPut
 } from "~/client";
 import {useDisclosure} from "@mantine/hooks";
-import {ItemTextInput} from "~/components/controls/ItemTextInput";
 import {useItemPage} from "~/lib/hooks/useItemPage";
 import {ItemPageRelations} from "~/components/pages/ItemPage/ItemPageRelations";
 import {RelationSelector} from "~/components/controls/RelationSelector";
-import {Title} from "@mantine/core";
-import {useTypeIndicator} from "~/lib/hooks/useTypeIndicator";
 import {Page} from "~/components/pages/Page";
 import {validateEntityPost} from "~/lib/validators";
+import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
+import type {EntityGet} from "~/lib/types";
+import {EntityPostForm} from "~/components/forms/EntityPostForm";
+
+export function getEntityPageParams(item: EntityGet): ItemPageParams {
+    return {
+        id: item.id,
+        name: item.name,
+    }
+}
 
 export default function Entity({params}: Route.ComponentProps) {
     const {itemId} = params
@@ -39,21 +46,19 @@ export default function Entity({params}: Route.ComponentProps) {
         pageDescription,
         pageBreadcrumbs,
     } = useItemPage<IndividualEntityPost | CorporationEntityPost, IndividualEntityGet | CorporationEntityGet>(
+        itemId,
+        ENTITY_PAGE_TITLE,
+        ENTITY_PAGE_DESCRIPTION,
+        ENTITY_BREADCRUMBS,
+        getEntityPageParams,
         getItemRouteEntitiesItemIdGet,
         putItemRouteEntitiesItemIdPut,
-        itemId,
-        ENTITIES_PAGE_DESCRIPTION,
-        ENTITIES_HREF,
-        ENTITY_PAGE_DESCRIPTION,
-        ENTITY_HREF,
         startLoading,
         stopLoading,
         setRevertDisabled,
         setSaveDisabled,
         validateEntityPost,
     )
-
-    const typeIndicator = useTypeIndicator(ENTITY_TYPES, getField)
 
     return <Page
         title={pageTitle}
@@ -67,24 +72,7 @@ export default function Entity({params}: Route.ComponentProps) {
             onSave={submit}
             saveDisabled={saveDisabled}
         >
-            <Title order={4}>{typeIndicator}</Title>
-            <ItemTextInput<IndividualEntityPost | CorporationEntityPost, "name">
-                field="name"
-                getField={getField}
-                setField={setField}
-                label="Name"
-                description={"Entity name"}
-                placeholder="Name"
-                required
-            />
-            <ItemTextInput<IndividualEntityPost | CorporationEntityPost, "description">
-                field="description"
-                getField={getField}
-                setField={setField}
-                label="Description"
-                description={"Entity description"}
-                placeholder="Description"
-            />
+            <EntityPostForm getField={getField} setField={setField}/>
         </ItemPageForm>
         <ItemPageRelations>
             <RelationSelector

@@ -23,7 +23,7 @@ export function Page({
             title: title,
             breadcrumbs: breadcrumbs,
         })
-    }, []);
+    }, [title, breadcrumbs]);
 
     return <Box pos="relative">
         <title>{title}</title>

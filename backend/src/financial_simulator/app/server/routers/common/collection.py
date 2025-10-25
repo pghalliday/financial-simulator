@@ -1,13 +1,11 @@
 import logging
-from typing import Sequence, TypeVar, Annotated, Optional
+from typing import Sequence, Annotated, Optional
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
-from pydantic import BaseModel
 from sqlalchemy import select, ColumnElement
 from sqlalchemy.orm import Session, InstrumentedAttribute
 
-from financial_simulator.app.database.schema import BaseWithNameAndDescription
 from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
     HTTPNotFoundError,
@@ -19,12 +17,6 @@ from financial_simulator.app.server.util import get_item, ModelMapper
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
 logger = logging.getLogger(__name__)
-
-TABLE = TypeVar("TABLE", bound=BaseWithNameAndDescription)
-GET = TypeVar("GET", bound=BaseModel)
-POST = TypeVar("POST", bound=BaseModel)
-PATCH = TypeVar("PATCH", bound=BaseModel)
-
 
 def add_endpoints(
     router: APIRouter,
@@ -43,14 +35,14 @@ def add_endpoints(
         "/",
         response_model=Sequence[model_mapper.get_model],
     )
-    async def get_items_route(session: DBSessionDependency) -> Sequence[GET]:
+    async def get_items_route(session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> Sequence[model_mapper.get_model]:
         query = select(model_mapper.table_model)
         if where is not None:
             query = query.where(where)
         if order_by is not None:
             query = query.order_by(order_by)
         items = session.scalars(query)
-        return [model_mapper.map_get(item) for item in items]
+        return [model_mapper.map_get(item, depth, max_parents) for item in items]
 
     @router.get(
         "/{item_id}",
@@ -59,9 +51,9 @@ def add_endpoints(
             404: {"model": HTTPNotFoundError, "description": "Not found"},
         },
     )
-    async def get_item_route(item_id: UUID, session: DBSessionDependency) -> GET:
+    async def get_item_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> model_mapper.get_model:
         logger.info(f"Getting item {item_id}")
-        return model_mapper.map_get(get_item(session, model_mapper.table_model, item_id))
+        return model_mapper.map_get(get_item(session, model_mapper.table_model, item_id), depth, max_parents)
 
     @router.post(
         "/",
@@ -77,7 +69,7 @@ def add_endpoints(
     )
     async def post_item_route(
         item_post: model_mapper.post_model, session: DBSessionDependency
-    ) -> GET:
+    ) -> model_mapper.get_model:
         item = model_mapper.map_post(session, item_post)
         session.add(item)
         session.commit()
@@ -96,7 +88,7 @@ def add_endpoints(
     )
     async def put_item_route(
         item_id: UUID, item_post: model_mapper.post_model, session: DBSessionDependency
-    ) -> GET:
+    ) -> model_mapper.get_model:
         item = model_mapper.map_post(session, item_post, item_id)
         merged = session.merge(item)
         session.commit()
@@ -116,7 +108,7 @@ def add_endpoints(
     )
     async def patch_item_route(
             item_id: UUID, item_patch: model_mapper.patch_model, session: DBSessionDependency
-    ) -> GET:
+    ) -> model_mapper.get_model:
         item = get_item(session, model_mapper.table_model, item_id)
         model_mapper.map_patch(session, item, item_patch)
         session.commit()
@@ -131,7 +123,7 @@ def add_endpoints(
     )
     async def delete_item_route(
             item_id: UUID, session: DBSessionDependency
-    ) -> GET:
+    ) -> model_mapper.get_model:
         item = get_item(session, model_mapper.table_model, item_id)
         session.delete(item)
         session.commit()
