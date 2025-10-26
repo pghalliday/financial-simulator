@@ -1,13 +1,10 @@
 import {useState} from 'react';
 import {CheckIcon, Combobox, Group, Pill, PillsInput, useCombobox} from '@mantine/core';
-import type {ConstrainedItemPostFieldGetter, ConstrainedItemPostFieldSetter} from "~/lib/hooks/useItemPost";
 
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 export interface LedgerAccountSelectorProps<Type extends {}, Key extends keyof Type> {
     field: Key
-    getField: ConstrainedItemPostFieldGetter<Type, Key, string>
-    setField: ConstrainedItemPostFieldSetter<Type, Key, string>
     label: string
     description: string
     placeholder: string

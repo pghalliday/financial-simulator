@@ -1,6 +1,6 @@
 import type {Route} from "./+types/Entity";
 import {ENTITY_BREADCRUMBS, ENTITY_PAGE_DESCRIPTION, ENTITY_PAGE_TITLE} from "~/strings";
-import {ItemPageForm} from "~/components/forms/ItemPageForm";
+import {ItemPageForm} from "~/components/pages/ItemPageForm";
 import {useState} from "react";
 import {
     type CorporationEntityGet,
@@ -23,6 +23,7 @@ import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
 import type {EntityGet} from "~/lib/types";
 import {EntityPostForm} from "~/components/forms/EntityPostForm";
 import {Stack} from "@mantine/core";
+import {GetSetProvider} from "~/components/providers/GetSetProvider";
 
 export function getEntityPageParams(item: EntityGet): ItemPageParams {
     return {
@@ -72,7 +73,9 @@ export default function Entity({params}: Route.ComponentProps) {
             onSave={submit}
             saveDisabled={saveDisabled}
         >
-            <EntityPostForm getField={getField} setField={setField}/>
+            <GetSetProvider getField={getField} setField={setField}>
+                <EntityPostForm/>
+            </GetSetProvider>
         </ItemPageForm>
         <Stack>
             <RelationSelector

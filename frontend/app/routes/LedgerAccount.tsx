@@ -1,6 +1,6 @@
 import type {Route} from "./+types/LedgerAccount";
 import {LEDGER_ACCOUNT_BREADCRUMBS, LEDGER_ACCOUNT_PAGE_DESCRIPTION, LEDGER_ACCOUNT_PAGE_TITLE,} from "~/strings";
-import {ItemPageForm} from "~/components/forms/ItemPageForm";
+import {ItemPageForm} from "~/components/pages/ItemPageForm";
 import {useState} from "react";
 import {
     getItemRouteLedgerAccountsItemIdGet,
@@ -16,6 +16,7 @@ import {LedgerAccountPostForm} from "~/components/forms/LedgerAccountPostForm";
 import {LedgerAccountList} from "~/components/lists/LedgerAccountList";
 import {Space, Title} from "@mantine/core";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
+import {GetSetProvider} from "~/components/providers/GetSetProvider";
 
 export function getLedgerAccountPageParams(item: LedgerAccountGet): ItemPageParams {
     const itemPageParams: ItemPageParams = {
@@ -72,7 +73,9 @@ export default function LedgerAccount({params}: Route.ComponentProps) {
             onSave={submit}
             saveDisabled={saveDisabled}
         >
-            <LedgerAccountPostForm parent={undefined} getField={getField} setField={setField}/>
+            <GetSetProvider getField={getField} setField={setField}>
+                <LedgerAccountPostForm parent={undefined}/>
+            </GetSetProvider>
         </ItemPageForm>
         <Space h={20}/>
         <Title order={4}>Sub Accounts</Title>

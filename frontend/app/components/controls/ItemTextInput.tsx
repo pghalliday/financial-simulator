@@ -1,11 +1,9 @@
 import {TextInput} from "@mantine/core";
-import {type ConstrainedItemPostFieldGetter, type ConstrainedItemPostFieldSetter,} from "~/lib/hooks/useItemPost";
 import {useEffect, useState} from "react";
+import {useGetSetWithType} from "~/components/providers/GetSetProvider";
 
 interface ItemTextInputProps<Type extends {}, Key extends keyof Type> {
     field: Key
-    getField: ConstrainedItemPostFieldGetter<Type, Key, string>
-    setField: ConstrainedItemPostFieldSetter<Type, Key, string>
     label: string
     description: string
     placeholder: string
@@ -14,14 +12,13 @@ interface ItemTextInputProps<Type extends {}, Key extends keyof Type> {
 
 export function ItemTextInput<Type extends {}, Key extends keyof Type>({
                                                                            field,
-                                                                           getField,
-                                                                           setField,
                                                                            label,
                                                                            description,
                                                                            placeholder,
                                                                            required = false,
                                                                        }: ItemTextInputProps<Type, Key>) {
-    const [value, setValue] = useState<string>("")
+    const {getField, setField} = useGetSetWithType<Type, string>()
+    const [value, setValue] = useState("")
 
     useEffect(() => {
         setValue(getField(field) || "")

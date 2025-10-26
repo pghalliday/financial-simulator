@@ -1,6 +1,6 @@
 import type {Route} from "./+types/BankAccount";
 import {BANK_ACCOUNT_BREADCRUMBS, BANK_ACCOUNT_PAGE_DESCRIPTION, BANK_ACCOUNT_PAGE_TITLE} from "~/strings";
-import {ItemPageForm} from "~/components/forms/ItemPageForm";
+import {ItemPageForm} from "~/components/pages/ItemPageForm";
 import {useState} from "react";
 import {
     type BankAccountGet,
@@ -14,6 +14,7 @@ import {Page} from "~/components/pages/Page";
 import {validateBankAccountPost} from "~/lib/validators";
 import {BankAccountPostForm} from "~/components/forms/BankAccountPostForm";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
+import {GetSetProvider} from "~/components/providers/GetSetProvider";
 
 
 export function getBankAccountPageParams(item: BankAccountGet): ItemPageParams {
@@ -64,7 +65,9 @@ export default function BankAccount({params}: Route.ComponentProps) {
             onSave={submit}
             saveDisabled={saveDisabled}
         >
-            <BankAccountPostForm getField={getField} setField={setField}/>
+            <GetSetProvider getField={getField} setField={setField}>
+                <BankAccountPostForm/>
+            </GetSetProvider>
         </ItemPageForm>
     </Page>
 }

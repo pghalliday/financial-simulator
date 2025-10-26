@@ -1,6 +1,6 @@
 import type {Route} from "./+types/Scenario";
 import {SCENARIO_BREADCRUMBS, SCENARIO_PAGE_DESCRIPTION, SCENARIO_PAGE_TITLE} from "~/strings";
-import {ItemPageForm} from "~/components/forms/ItemPageForm";
+import {ItemPageForm} from "~/components/pages/ItemPageForm";
 import {useState} from "react";
 import {
     deleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDelete,
@@ -20,6 +20,7 @@ import {validateScenarioPost} from "~/lib/validators";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
 import {ScenarioPostForm} from "~/components/forms/ScenarioPostForm";
 import {Stack} from "@mantine/core";
+import {GetSetProvider} from "~/components/providers/GetSetProvider";
 
 export function getScenarioPageParams(item: ScenarioGet): ItemPageParams {
     return {
@@ -69,7 +70,9 @@ export default function BankAccount({params}: Route.ComponentProps) {
             onSave={submit}
             saveDisabled={saveDisabled}
         >
-            <ScenarioPostForm getField={getField} setField={setField}/>
+            <GetSetProvider getField={getField} setField={setField}>
+                <ScenarioPostForm/>
+            </GetSetProvider>
         </ItemPageForm>
         <Stack>
             <RelationSelector

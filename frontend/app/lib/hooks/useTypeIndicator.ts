@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
+import type {ConstrainedItemPostFieldGetter} from "~/lib/hooks/useItemPost";
+import type {TypedItem} from "~/lib/types";
 
-export function useTypeIndicator(types: Record<string, string>, getItemPostField: (field: "type") => string | undefined) {
+export function useTypeIndicator<Type extends TypedItem>(types: Record<string, string>, getItemPostField: ConstrainedItemPostFieldGetter<Type, keyof Type, string>) {
     const [typeIndicator, setTypeIndicator] = useState("")
 
     useEffect(() => {

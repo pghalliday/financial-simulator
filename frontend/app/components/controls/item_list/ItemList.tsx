@@ -13,18 +13,13 @@ const DEFAULT_REVERSED = false
 const DEFAULT_SEARCH = ""
 
 export type SearchKeys<Type> = KeysOfType<Type, string>
-type ColumnTypes = string | number | boolean
-type ColumnKeys<Type> = KeysOfType<Type, ColumnTypes>
 
-interface _Column<Type, Key extends ColumnKeys<Type>> {
-    field: Key,
+export interface Column<Type> {
     heading: string,
     hasLink: boolean,
-    compare: (a: Type[Key], b: Type[Key]) => number,
-    render?: (value: Type[Key]) => string,
+    compare: (a: Type, b: Type) => number,
+    render: (item: Type) => string,
 }
-
-export type Column<Type> = _Column<Type, ColumnKeys<Type>>
 
 export interface SortBy<Type> {
     column: Column<Type>
@@ -64,20 +59,19 @@ function filterData<Type>(data: Type[], search: string, searchFields: SearchKeys
         ));
 }
 
-function compareField<Type>(a: Type, b: Type, sortBy: SortBy<Type>): number {
+function compareColumn<Type>(a: Type, b: Type, sortBy: SortBy<Type>): number {
     const column = sortBy.column
     const compare = column.compare
-    const field = column.field
     if (sortBy.reversed) {
-        return compare(b[field], a[field])
+        return compare(b, a)
     }
-    return compare(a[field], b[field])
+    return compare(a, b)
 }
 
 function compare<Type>(a: Type, b: Type, sortBy: SortBy<Type>[]): number {
     let result = 0
     for (const s of sortBy) {
-        result = compareField(a, b, s)
+        result = compareColumn(a, b, s)
         if (result !== 0) {
             return result
         }
@@ -147,8 +141,7 @@ export function ItemList<Type extends IdItem>({
     useEffect(() => {
         setRows(sortedData.map((item) => {
             const cells = columns.map(column => {
-                const value = getFieldOfType(item, column.field)
-                const rendered = column.render !== undefined ? column.render(value) : value
+                const rendered = column.render(item)
                 const content = column.hasLink ? (
                     <Anchor component={Link} to={href(getItemPageParams(item))}>
                         {rendered}
@@ -176,7 +169,7 @@ export function ItemList<Type extends IdItem>({
     }, [sortedData]);
 
     const setSorting = (column: Column<Type>) => {
-        if (column.field === sortBy[0].column.field) {
+        if (column.heading === sortBy[0].column.heading) {
             setSortBy([{
                 column,
                 reversed: !sortBy[0].reversed,
@@ -185,7 +178,7 @@ export function ItemList<Type extends IdItem>({
             setSortBy([{
                 column,
                 reversed: DEFAULT_REVERSED,
-            }, ...sortBy.filter(s => s.column.field !== column.field)])
+            }, ...sortBy.filter(s => s.column.heading !== column.heading)])
         }
     };
 
@@ -197,7 +190,7 @@ export function ItemList<Type extends IdItem>({
     const headings = columns.map(column => (
         <Th
             key={column.heading}
-            sorted={sortBy[0].column.field === column.field}
+            sorted={sortBy[0].column.heading === column.heading}
             reversed={sortBy[0].reversed}
             onSort={() => setSorting(column)}
         >

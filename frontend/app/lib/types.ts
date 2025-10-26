@@ -14,16 +14,16 @@ export function getFieldOfType<Type, ValueType>(obj: Type, key: KeysOfType<Type,
     return obj[key] as ValueType
 }
 
+export interface TypedItem {
+    type: string
+}
+
 export interface IdItem {
     id: string
 }
 
 export interface NamedItem extends IdItem {
     name: string
-}
-
-export interface PageItem extends NamedItem {
-    parent?: PageItem,
 }
 
 export interface Breadcrumb {
