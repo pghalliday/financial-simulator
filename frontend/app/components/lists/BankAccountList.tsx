@@ -1,4 +1,4 @@
-import {AddItemModal} from "~/components/modals/AddItemModal/AddItemModal";
+import {AddItemModal} from "~/components/modals/AddItemModal";
 import {ConfirmDeleteModal} from "~/components/modals/ConfirmDeleteModal";
 import {
     BANK_ACCOUNT_HREF,

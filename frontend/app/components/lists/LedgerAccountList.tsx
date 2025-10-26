@@ -1,4 +1,4 @@
-import {AddItemModal} from "~/components/modals/AddItemModal/AddItemModal";
+import {AddItemModal} from "~/components/modals/AddItemModal";
 import {LedgerAccountPostForm} from "~/components/forms/LedgerAccountPostForm";
 import {ConfirmDeleteModal} from "~/components/modals/ConfirmDeleteModal";
 import {

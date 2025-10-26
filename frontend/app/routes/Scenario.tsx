@@ -1,6 +1,6 @@
 import type {Route} from "./+types/Scenario";
 import {SCENARIO_BREADCRUMBS, SCENARIO_PAGE_DESCRIPTION, SCENARIO_PAGE_TITLE} from "~/strings";
-import {ItemPageForm} from "~/components/pages/ItemPage/ItemPageForm";
+import {ItemPageForm} from "~/components/forms/ItemPageForm";
 import {useState} from "react";
 import {
     deleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDelete,
@@ -14,12 +14,12 @@ import {
 } from "~/client";
 import {useDisclosure} from "@mantine/hooks";
 import {useItemPage} from "~/lib/hooks/useItemPage";
-import {ItemPageRelations} from "~/components/pages/ItemPage/ItemPageRelations";
 import {RelationSelector} from "~/components/controls/RelationSelector";
 import {Page} from "~/components/pages/Page";
 import {validateScenarioPost} from "~/lib/validators";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
 import {ScenarioPostForm} from "~/components/forms/ScenarioPostForm";
+import {Stack} from "@mantine/core";
 
 export function getScenarioPageParams(item: ScenarioGet): ItemPageParams {
     return {
@@ -71,7 +71,7 @@ export default function BankAccount({params}: Route.ComponentProps) {
         >
             <ScenarioPostForm getField={getField} setField={setField}/>
         </ItemPageForm>
-        <ItemPageRelations>
+        <Stack>
             <RelationSelector
                 itemId={itemId}
                 label="entities"
@@ -82,6 +82,6 @@ export default function BankAccount({params}: Route.ComponentProps) {
                 startLoading={startLoading}
                 stopLoading={stopLoading}
             />
-        </ItemPageRelations>
+        </Stack>
     </Page>
 }

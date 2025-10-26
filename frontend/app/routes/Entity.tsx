@@ -1,6 +1,6 @@
 import type {Route} from "./+types/Entity";
 import {ENTITY_BREADCRUMBS, ENTITY_PAGE_DESCRIPTION, ENTITY_PAGE_TITLE} from "~/strings";
-import {ItemPageForm} from "~/components/pages/ItemPage/ItemPageForm";
+import {ItemPageForm} from "~/components/forms/ItemPageForm";
 import {useState} from "react";
 import {
     type CorporationEntityGet,
@@ -16,13 +16,13 @@ import {
 } from "~/client";
 import {useDisclosure} from "@mantine/hooks";
 import {useItemPage} from "~/lib/hooks/useItemPage";
-import {ItemPageRelations} from "~/components/pages/ItemPage/ItemPageRelations";
 import {RelationSelector} from "~/components/controls/RelationSelector";
 import {Page} from "~/components/pages/Page";
 import {validateEntityPost} from "~/lib/validators";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
 import type {EntityGet} from "~/lib/types";
 import {EntityPostForm} from "~/components/forms/EntityPostForm";
+import {Stack} from "@mantine/core";
 
 export function getEntityPageParams(item: EntityGet): ItemPageParams {
     return {
@@ -74,7 +74,7 @@ export default function Entity({params}: Route.ComponentProps) {
         >
             <EntityPostForm getField={getField} setField={setField}/>
         </ItemPageForm>
-        <ItemPageRelations>
+        <Stack>
             <RelationSelector
                 itemId={itemId}
                 label="scenarios"
@@ -85,6 +85,6 @@ export default function Entity({params}: Route.ComponentProps) {
                 startLoading={startLoading}
                 stopLoading={stopLoading}
             />
-        </ItemPageRelations>
+        </Stack>
     </Page>
 }

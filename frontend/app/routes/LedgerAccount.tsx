@@ -1,6 +1,6 @@
 import type {Route} from "./+types/LedgerAccount";
 import {LEDGER_ACCOUNT_BREADCRUMBS, LEDGER_ACCOUNT_PAGE_DESCRIPTION, LEDGER_ACCOUNT_PAGE_TITLE,} from "~/strings";
-import {ItemPageForm} from "~/components/pages/ItemPage/ItemPageForm";
+import {ItemPageForm} from "~/components/forms/ItemPageForm";
 import {useState} from "react";
 import {
     getItemRouteLedgerAccountsItemIdGet,
