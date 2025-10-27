@@ -10,7 +10,7 @@ from financial_simulator.app.database.schema import (
 )
 from pydantic import BaseModel
 
-from .common import collection
+from .common.collection import Collection
 from ..util.model_mapper import (
     ModelMapper,
     FieldRelation,
@@ -104,8 +104,9 @@ model_mapper = ModelMapper(
     },
 )
 
-collection.add_endpoints(
-    router=router,
+Collection(
     order_by=BankAccount.name,
     model_mapper=model_mapper,
+).add_endpoints(
+    router=router,
 )

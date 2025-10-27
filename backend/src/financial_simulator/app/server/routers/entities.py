@@ -12,7 +12,9 @@ from financial_simulator.app.database.schema import (
     Scenario,
 )
 
-from .common import typed_collection, relation
+from .common import typed_collection
+from .common.relation import Relation
+from .common.typed_collection import TypedCollection
 from ..util.model_mapper import (
     GetMapper,
     ModelMapper,
@@ -57,7 +59,12 @@ class CorporationEntityGet(EntityGet):
     type: CorporationEntityType
 
 
-individual_model_mapper = ModelMapper(
+individual_model_mapper = ModelMapper[
+    IndividualEntity,
+    IndividualEntityGet,
+    IndividualEntityPost,
+    IndividualEntityPatch
+](
     table_model=IndividualEntity,
     get_model=IndividualEntityGet,
     post_model=IndividualEntityPost,
@@ -69,7 +76,12 @@ individual_model_mapper = ModelMapper(
     },
 )
 
-corporation_model_mapper = ModelMapper(
+corporation_model_mapper = ModelMapper[
+    CorporationEntity,
+    CorporationEntityGet,
+    CorporationEntityPost,
+    CorporationEntityPatch,
+](
     table_model=CorporationEntity,
     get_model=CorporationEntityGet,
     post_model=CorporationEntityPost,
@@ -86,17 +98,22 @@ router = APIRouter(
     tags=["entities"],
 )
 
-typed_collection.add_endpoints(
-    router=router,
-    base_table_model=Entity,
+EntityGet = Union[IndividualEntityGet, CorporationEntityGet]
+EntityPost = Union[IndividualEntityPost, CorporationEntityPost]
+EntityPatch = Union[IndividualEntityPatch, CorporationEntityPatch]
+
+TypedCollection(
+    table_model=Entity,
     order_by=Entity.name,
-    get_model=Union[IndividualEntityGet, CorporationEntityGet],
-    post_model=Union[IndividualEntityPost, CorporationEntityPost],
-    patch_model=Union[IndividualEntityPatch, CorporationEntityPatch],
+    get_model=EntityGet,
+    post_model=EntityPost,
+    patch_model=EntityPatch,
     model_mappers={
         "individual_entity": individual_model_mapper,
         "corporation_entity": corporation_model_mapper,
     },
+).add_endpoints(
+    router=router,
 )
 
 class EntityScenarioGet(BaseModel):
@@ -113,10 +130,11 @@ related_get_mapper = GetMapper(
     },
 )
 
-relation.add_endpoints(
-    router=router,
+Relation(
     relation_route="scenarios",
     relation_field="scenarios",
     table_model=Entity,
     get_mapper=related_get_mapper,
+).add_endpoints(
+    router=router,
 )

@@ -22,7 +22,7 @@ from .fields import (
     TreeParentGetField,
     TreeParentModelField,
 )
-from .types import FieldRelation
+from .types import TABLE, GET, POST, PATCH, FieldRelation
 
 __all__ = [
     "ModelMapper",
@@ -47,5 +47,9 @@ __all__ = [
     "TreeChildrenModelField",
     "TreeParentGetField",
     "TreeParentModelField",
+    "TABLE",
+    "GET",
+    "POST",
+    "PATCH",
     "FieldRelation",
 ]

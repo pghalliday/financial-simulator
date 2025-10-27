@@ -7,7 +7,8 @@ from fastapi import APIRouter
 from financial_simulator.app.database.schema import Scenario, Entity
 from pydantic import BaseModel
 
-from .common import collection, relation
+from .common.collection import Collection
+from .common.relation import Relation
 from ..util.model_mapper import (
     GetMapper,
     ModelMapper,
@@ -46,10 +47,11 @@ model_mapper = ModelMapper(
     }
 )
 
-collection.add_endpoints(
-    router=router,
+Collection(
     model_mapper=model_mapper,
     order_by=Scenario.name,
+).add_endpoints(
+    router=router,
 )
 
 class ScenarioEntityGet(BaseModel):
@@ -68,10 +70,11 @@ related_get_mapper = GetMapper(
     },
 )
 
-relation.add_endpoints(
-    router=router,
+Relation(
     relation_route="entities",
     relation_field="entities",
     table_model=Scenario,
     get_mapper=related_get_mapper,
+).add_endpoints(
+    router=router,
 )

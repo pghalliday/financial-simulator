@@ -8,7 +8,7 @@ from fastapi import APIRouter
 from financial_simulator.app.database.schema import LedgerAccount
 from pydantic import BaseModel
 
-from .common import collection
+from .common.collection import Collection
 from ..util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
@@ -65,9 +65,10 @@ model_mapper = ModelMapper(
 
 where = LedgerAccount.parent_id == None
 
-collection.add_endpoints(
-    router=router,
+Collection(
     model_mapper=model_mapper,
     order_by=LedgerAccount.name,
     where=LedgerAccount.parent_id == None,
+).add_endpoints(
+    router=router,
 )
