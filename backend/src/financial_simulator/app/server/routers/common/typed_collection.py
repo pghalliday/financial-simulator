@@ -20,9 +20,12 @@ from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
     HTTPNotFoundError,
     HTTPDatabaseIntegrityError,
-    HTTPChangeTypeError, ChangeTypeError,
+    HTTPChangeTypeError,
+    ChangeTypeError,
+    HTTPRelationInvalidError,
 )
-from financial_simulator.app.server.util import ModelMapper, get_item
+from financial_simulator.app.server.util import get_item
+from financial_simulator.app.server.util.model_mapper import ModelMapper
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
@@ -46,6 +49,13 @@ def add_endpoints(
     order_by: Optional[InstrumentedAttribute[str]] = None,
     where: Optional[ColumnElement[bool]] = None,
 ):
+    if any(model_mapper.has_invalid_relation_error for model_mapper in model_mappers.values()):
+        invalid_relation_error = {
+            400: {"model": HTTPRelationInvalidError, "description": "Relation invalid"},
+        }
+    else:
+        invalid_relation_error = {}
+
     @router.get(
         "/",
         response_model=Sequence[get_model],
@@ -75,6 +85,7 @@ def add_endpoints(
         status_code=201,
         response_model=get_model,
         responses={
+            **invalid_relation_error,
             409: {
                 "model": HTTPDatabaseIntegrityError,
                 "description": "Database integrity error",
@@ -93,6 +104,7 @@ def add_endpoints(
         "/{item_id}",
         response_model=get_model,
         responses={
+            **invalid_relation_error,
             409: {
                 "model": Union[HTTPDatabaseIntegrityError, HTTPChangeTypeError],
                 "description": "Database error",
@@ -120,6 +132,7 @@ def add_endpoints(
         "/{item_id}",
         response_model=get_model,
         responses={
+            **invalid_relation_error,
             404: {"model": HTTPNotFoundError, "description": "Not found"},
             409: {
                 "model": Union[HTTPDatabaseIntegrityError, HTTPChangeTypeError],

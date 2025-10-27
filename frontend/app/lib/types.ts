@@ -1,12 +1,5 @@
 import type {APIResult} from "~/lib/callApi";
-import type {
-    CorporationEntityGet,
-    CorporationEntityPatch,
-    CorporationEntityPost,
-    IndividualEntityGet,
-    IndividualEntityPatch,
-    IndividualEntityPost
-} from "~/client";
+import type {CorporationEntityGet, CorporationEntityPost, IndividualEntityGet, IndividualEntityPost} from "~/client";
 
 export type KeysOfType<Type, ValueType> = keyof { [P in keyof Type as Type[P] extends ValueType ? P : never]: Type[P] }
 
@@ -101,4 +94,3 @@ export type DeleteRelatedItemApi<Get> = (options: {
 
 export type EntityGet = IndividualEntityGet | CorporationEntityGet
 export type EntityPost = IndividualEntityPost | CorporationEntityPost
-export type EntityPatch = IndividualEntityPatch | CorporationEntityPatch

@@ -1,24 +1,17 @@
-from typing import Optional, Sequence
-from uuid import UUID
+from typing import Sequence
 
-from sqlalchemy.orm import Session
 
-from .model_mapper import (
-    ModelMapper,
+from financial_simulator.app.server.util.model_mapper.get_mapper import (
+    GetMapper,
     TABLE,
     GET,
-    POST,
-    PATCH,
 )
 
 
-class SimpleModelMapper(ModelMapper[TABLE, GET, POST, PATCH]):
+class SimpleGetMapper(GetMapper[TABLE, GET]):
     fields: Sequence[str] = []
     tree_children_fields: Sequence[str] = []
     tree_parent_fields: Sequence[str] = []
-
-    def has_invalid_relation_error(self) -> bool:
-        return False
 
     def map_get(self, item: TABLE, depth: int = 0, max_parents: int = 0) -> GET:
         params = {
@@ -43,13 +36,3 @@ class SimpleModelMapper(ModelMapper[TABLE, GET, POST, PATCH]):
         return self.get_model(
             **params,
         )
-
-    def map_post(self, session: Session, item_post: POST, item_id: Optional[UUID] = None) -> TABLE:
-        if item_id is not None:
-            return self.table_model(id=item_id, **item_post.model_dump())
-        return self.table_model(**item_post.model_dump())
-
-    def map_patch(self, session: Session, item: TABLE, item_patch: POST) -> None:
-        updated_data = item_patch.model_dump(exclude_unset=True)
-        for key, value in updated_data.items():
-            setattr(item, key, value)

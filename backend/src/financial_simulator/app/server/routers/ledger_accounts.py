@@ -8,8 +8,8 @@ from fastapi import APIRouter
 from financial_simulator.app.database.schema import LedgerAccount
 from pydantic import BaseModel
 
-from .common import collection, relation
-from ..util import RelatedModelMapper, FieldRelation
+from .common import collection
+from ..util.model_mapper import RelatedModelMapper, FieldRelation
 
 logger = logging.getLogger(__name__)
 
@@ -67,55 +67,4 @@ collection.add_endpoints(
     model_mapper=model_mapper,
     order_by=LedgerAccount.name,
     where=LedgerAccount.parent_id == None,
-)
-
-class LedgerAccountSubAccountGet(BaseModel):
-    id: UUID
-    name: str
-    description: str
-    account_name: str
-
-class LedgerAccountSubAccountPatch(BaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
-    account_name: Optional[str] = None
-
-class LedgerAccountSubAccountPost(BaseModel):
-    id: UUID
-
-def map_ledger_account_sub_account(ledger_account: LedgerAccount) -> LedgerAccountSubAccountGet:
-    return LedgerAccountSubAccountGet(
-        id=ledger_account.id,
-        name=ledger_account.name,
-        description=ledger_account.description,
-        account_name=ledger_account.account_name,
-    )
-
-related_model_mapper = RelatedModelMapper(
-    table_model=LedgerAccount,
-    get_model=LedgerAccountSubAccountGet,
-    post_model=LedgerAccountSubAccountPost,
-    patch_model=LedgerAccountSubAccountPatch,
-    ordinary_fields=[
-        "name",
-        "description",
-        "account_name",
-    ],
-    optional_related_fields={
-        "parent_id": FieldRelation(field="parent", model=LedgerAccount),
-    },
-    tree_children_fields=[
-        "sub_accounts"
-    ],
-    tree_parent_fields=[
-        "parent"
-    ],
-)
-
-relation.add_endpoints(
-    router=router,
-    relation_route="sub-accounts",
-    relation_field="sub_accounts",
-    table_model=LedgerAccount,
-    model_mapper=related_model_mapper,
 )

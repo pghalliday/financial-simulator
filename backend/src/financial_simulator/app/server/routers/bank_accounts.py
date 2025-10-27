@@ -11,10 +11,7 @@ from financial_simulator.app.database.schema import (
 from pydantic import BaseModel
 
 from .common import collection
-from ..util import (
-    RelatedModelMapper,
-    FieldRelation,
-)
+from ..util.model_mapper import RelatedModelMapper, FieldRelation
 
 logger = logging.getLogger(__name__)
 

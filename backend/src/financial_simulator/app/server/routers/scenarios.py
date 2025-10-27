@@ -8,7 +8,7 @@ from financial_simulator.app.database.schema import Scenario, Entity
 from pydantic import BaseModel
 
 from .common import collection, relation
-from ..util import SimpleModelMapper
+from ..util.model_mapper import SimpleModelMapper, SimpleGetMapper
 
 logger = logging.getLogger(__name__)
 
@@ -53,19 +53,9 @@ class ScenarioEntityGet(BaseModel):
     name: str
     description: str
 
-class ScenarioEntityPost(BaseModel):
-    id: UUID
-
-class ScenarioEntityPatch(BaseModel):
-    type: Optional[Literal["individual_entity", "corporation_entity"]] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-
-related_model_mapper = SimpleModelMapper(
+related_get_mapper = SimpleGetMapper(
     table_model=Entity,
     get_model=ScenarioEntityGet,
-    post_model=ScenarioEntityPost,
-    patch_model=ScenarioEntityPatch,
     fields=[
         "type",
         "name",
@@ -78,5 +68,5 @@ relation.add_endpoints(
     relation_route="entities",
     relation_field="entities",
     table_model=Scenario,
-    model_mapper=related_model_mapper,
+    get_mapper=related_get_mapper,
 )

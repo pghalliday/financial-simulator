@@ -375,16 +375,6 @@ export type EntityScenarioGet = {
 };
 
 /**
- * EntityScenarioPost
- */
-export type EntityScenarioPost = {
-    /**
-     * Id
-     */
-    id: string;
-};
-
-/**
  * HTTPChangeTypeError
  */
 export type HttpChangeTypeError = {
@@ -563,38 +553,6 @@ export type LedgerAccountPost = {
 };
 
 /**
- * LedgerAccountSubAccountGet
- */
-export type LedgerAccountSubAccountGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string;
-    /**
-     * Account Name
-     */
-    account_name: string;
-};
-
-/**
- * LedgerAccountSubAccountPost
- */
-export type LedgerAccountSubAccountPost = {
-    /**
-     * Id
-     */
-    id: string;
-};
-
-/**
  * NotFoundError
  */
 export type NotFoundError = {
@@ -620,6 +578,16 @@ export type RelatedItemNotFoundError = {
      * Relation Name
      */
     relation_name: string;
+    /**
+     * Id
+     */
+    id: string;
+};
+
+/**
+ * RelatedPost
+ */
+export type RelatedPost = {
     /**
      * Id
      */
@@ -664,16 +632,6 @@ export type ScenarioEntityGet = {
      * Description
      */
     description: string;
-};
-
-/**
- * ScenarioEntityPost
- */
-export type ScenarioEntityPost = {
-    /**
-     * Id
-     */
-    id: string;
 };
 
 /**
@@ -998,7 +956,7 @@ export type GetRelatedItemsRouteScenariosItemIdEntitiesGetResponses = {
 export type GetRelatedItemsRouteScenariosItemIdEntitiesGetResponse = GetRelatedItemsRouteScenariosItemIdEntitiesGetResponses[keyof GetRelatedItemsRouteScenariosItemIdEntitiesGetResponses];
 
 export type PostRelatedItemRouteScenariosItemIdEntitiesPostData = {
-    body: ScenarioEntityPost;
+    body: RelatedPost;
     path: {
         /**
          * Item Id
@@ -1400,7 +1358,7 @@ export type GetRelatedItemsRouteEntitiesItemIdScenariosGetResponses = {
 export type GetRelatedItemsRouteEntitiesItemIdScenariosGetResponse = GetRelatedItemsRouteEntitiesItemIdScenariosGetResponses[keyof GetRelatedItemsRouteEntitiesItemIdScenariosGetResponses];
 
 export type PostRelatedItemRouteEntitiesItemIdScenariosPostData = {
-    body: EntityScenarioPost;
+    body: RelatedPost;
     path: {
         /**
          * Item Id
@@ -1977,179 +1935,6 @@ export type PutItemRouteLedgerAccountsItemIdPutResponses = {
 };
 
 export type PutItemRouteLedgerAccountsItemIdPutResponse = PutItemRouteLedgerAccountsItemIdPutResponses[keyof PutItemRouteLedgerAccountsItemIdPutResponses];
-
-export type GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetData = {
-    body?: never;
-    path: {
-        /**
-         * Item Id
-         */
-        item_id: string;
-    };
-    query?: {
-        /**
-         * Depth
-         */
-        depth?: number;
-        /**
-         * Max Parents
-         */
-        max_parents?: number;
-    };
-    url: '/ledger-accounts/{item_id}/sub-accounts/';
-};
-
-export type GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetErrors = {
-    /**
-     * Not found
-     */
-    404: HttpNotFoundError;
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetError = GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetErrors[keyof GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetErrors];
-
-export type GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetResponses = {
-    /**
-     * Response Get Related Items Route Ledger Accounts  Item Id  Sub Accounts  Get
-     * Successful Response
-     */
-    200: Array<LedgerAccountSubAccountGet>;
-};
-
-export type GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetResponse = GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetResponses[keyof GetRelatedItemsRouteLedgerAccountsItemIdSubAccountsGetResponses];
-
-export type PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostData = {
-    body: LedgerAccountSubAccountPost;
-    path: {
-        /**
-         * Item Id
-         */
-        item_id: string;
-    };
-    query?: never;
-    url: '/ledger-accounts/{item_id}/sub-accounts/';
-};
-
-export type PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostErrors = {
-    /**
-     * Relation invalid
-     */
-    400: HttpRelationInvalidError;
-    /**
-     * Not found
-     */
-    404: HttpNotFoundError;
-    /**
-     * Database integrity error
-     */
-    409: HttpDatabaseIntegrityError;
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostError = PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostErrors[keyof PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostErrors];
-
-export type PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostResponses = {
-    /**
-     * Successful Response
-     */
-    201: LedgerAccountSubAccountGet;
-};
-
-export type PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostResponse = PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostResponses[keyof PostRelatedItemRouteLedgerAccountsItemIdSubAccountsPostResponses];
-
-export type DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteData = {
-    body?: never;
-    path: {
-        /**
-         * Item Id
-         */
-        item_id: string;
-        /**
-         * Related Item Id
-         */
-        related_item_id: string;
-    };
-    query?: never;
-    url: '/ledger-accounts/{item_id}/sub-accounts/{related_item_id}';
-};
-
-export type DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteErrors = {
-    /**
-     * Response 404 Delete Related Item Route Ledger Accounts  Item Id  Sub Accounts  Related Item Id  Delete
-     * Not found
-     */
-    404: HttpNotFoundError | HttpRelatedItemNotFoundError;
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteError = DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteErrors[keyof DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteErrors];
-
-export type DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteResponses = {
-    /**
-     * Successful Response
-     */
-    200: LedgerAccountSubAccountGet;
-};
-
-export type DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteResponse = DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteResponses[keyof DeleteRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdDeleteResponses];
-
-export type GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetData = {
-    body?: never;
-    path: {
-        /**
-         * Item Id
-         */
-        item_id: string;
-        /**
-         * Related Item Id
-         */
-        related_item_id: string;
-    };
-    query?: {
-        /**
-         * Depth
-         */
-        depth?: number;
-        /**
-         * Max Parents
-         */
-        max_parents?: number;
-    };
-    url: '/ledger-accounts/{item_id}/sub-accounts/{related_item_id}';
-};
-
-export type GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetErrors = {
-    /**
-     * Response 404 Get Related Item Route Ledger Accounts  Item Id  Sub Accounts  Related Item Id  Get
-     * Not found
-     */
-    404: HttpNotFoundError | HttpRelatedItemNotFoundError;
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetError = GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetErrors[keyof GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetErrors];
-
-export type GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetResponses = {
-    /**
-     * Successful Response
-     */
-    200: LedgerAccountSubAccountGet;
-};
-
-export type GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetResponse = GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetResponses[keyof GetRelatedItemRouteLedgerAccountsItemIdSubAccountsRelatedItemIdGetResponses];
 
 export type GetDummyDaysGetData = {
     body?: never;

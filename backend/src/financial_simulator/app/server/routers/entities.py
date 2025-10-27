@@ -13,7 +13,7 @@ from financial_simulator.app.database.schema import (
 )
 
 from .common import typed_collection, relation
-from ..util import SimpleModelMapper
+from ..util.model_mapper import SimpleModelMapper, SimpleGetMapper
 
 logger = logging.getLogger(__name__)
 
@@ -100,25 +100,9 @@ class EntityScenarioGet(BaseModel):
     name: str
     description: str
 
-class EntityScenarioPatch(BaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
-
-class EntityScenarioPost(BaseModel):
-    id: UUID
-
-def map_entity_scenario(scenario: Scenario) -> EntityScenarioGet:
-    return EntityScenarioGet(
-        id=scenario.id,
-        name=scenario.name,
-        description=scenario.description,
-    )
-
-related_model_mapper = SimpleModelMapper(
+related_get_mapper = SimpleGetMapper(
     table_model=Scenario,
     get_model=EntityScenarioGet,
-    post_model=EntityScenarioPost,
-    patch_model=EntityScenarioPatch,
     fields=[
         "name",
         "description",
@@ -130,5 +114,5 @@ relation.add_endpoints(
     relation_route="scenarios",
     relation_field="scenarios",
     table_model=Entity,
-    model_mapper=related_model_mapper,
+    get_mapper=related_get_mapper,
 )

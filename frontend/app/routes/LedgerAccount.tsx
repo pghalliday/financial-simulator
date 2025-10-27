@@ -74,7 +74,7 @@ export default function LedgerAccount({params}: Route.ComponentProps) {
             saveDisabled={saveDisabled}
         >
             <GetSetProvider getField={getField} setField={setField}>
-                <LedgerAccountPostForm parent={undefined}/>
+                <LedgerAccountPostForm parent={item?.parent}/>
             </GetSetProvider>
         </ItemPageForm>
         <Space h={20}/>

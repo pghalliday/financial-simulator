@@ -5,9 +5,9 @@ import {Title} from "@mantine/core";
 export function LedgerAccountPostForm({
                                           parent,
                                       }: {
-    parent?: LedgerAccountGet,
+    parent?: LedgerAccountGet | null,
 }) {
-    const parentIndicator = parent === undefined ? "Top level account" : `Parent: ${parent.name}`
+    const parentIndicator = parent === undefined ? "" : parent === null ? "Top level account" : `Parent: ${parent.name}`
     return <>
         <Title order={4}>{parentIndicator}</Title>
         <ItemTextInput<LedgerAccountPost, "name">

@@ -1,30 +1,38 @@
 import logging
-from typing import Sequence, Annotated, Optional
+from typing import Sequence, Annotated, Optional, TypeVar
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
+from pydantic import BaseModel
 from sqlalchemy import select, ColumnElement
 from sqlalchemy.orm import Session, InstrumentedAttribute
 
+from financial_simulator.app.database.schema import BaseWithId
 from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
     HTTPNotFoundError,
     HTTPDatabaseIntegrityError,
     HTTPRelationInvalidError,
 )
-from financial_simulator.app.server.util import get_item, ModelMapper
+from financial_simulator.app.server.util import get_item
+from financial_simulator.app.server.util.model_mapper import ModelMapper
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
 logger = logging.getLogger(__name__)
 
+TABLE = TypeVar("TABLE", bound=BaseWithId)
+GET = TypeVar("GET", bound=BaseModel)
+POST = TypeVar("POST", bound=BaseModel)
+PATCH = TypeVar("PATCH", bound=BaseModel)
+
 def add_endpoints(
     router: APIRouter,
-    model_mapper: ModelMapper,
+    model_mapper: ModelMapper[TABLE, GET, POST, PATCH],
     order_by: Optional[InstrumentedAttribute[str]] = None,
     where: Optional[ColumnElement[bool]] = None,
 ):
-    if model_mapper.has_invalid_relation_error():
+    if model_mapper.has_invalid_relation_error:
         invalid_relation_error = {
             400: {"model": HTTPRelationInvalidError, "description": "Relation invalid"},
         }
@@ -35,7 +43,7 @@ def add_endpoints(
         "/",
         response_model=Sequence[model_mapper.get_model],
     )
-    async def get_items_route(session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> Sequence[model_mapper.get_model]:
+    async def get_items_route(session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> Sequence[GET]:
         query = select(model_mapper.table_model)
         if where is not None:
             query = query.where(where)
@@ -51,7 +59,7 @@ def add_endpoints(
             404: {"model": HTTPNotFoundError, "description": "Not found"},
         },
     )
-    async def get_item_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> model_mapper.get_model:
+    async def get_item_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> GET:
         logger.info(f"Getting item {item_id}")
         return model_mapper.map_get(get_item(session, model_mapper.table_model, item_id), depth, max_parents)
 
@@ -69,7 +77,7 @@ def add_endpoints(
     )
     async def post_item_route(
         item_post: model_mapper.post_model, session: DBSessionDependency
-    ) -> model_mapper.get_model:
+    ) -> GET:
         item = model_mapper.map_post(session, item_post)
         session.add(item)
         session.commit()
@@ -88,7 +96,7 @@ def add_endpoints(
     )
     async def put_item_route(
         item_id: UUID, item_post: model_mapper.post_model, session: DBSessionDependency
-    ) -> model_mapper.get_model:
+    ) -> GET:
         item = model_mapper.map_post(session, item_post, item_id)
         merged = session.merge(item)
         session.commit()
@@ -108,7 +116,7 @@ def add_endpoints(
     )
     async def patch_item_route(
             item_id: UUID, item_patch: model_mapper.patch_model, session: DBSessionDependency
-    ) -> model_mapper.get_model:
+    ) -> GET:
         item = get_item(session, model_mapper.table_model, item_id)
         model_mapper.map_patch(session, item, item_patch)
         session.commit()
@@ -123,7 +131,7 @@ def add_endpoints(
     )
     async def delete_item_route(
             item_id: UUID, session: DBSessionDependency
-    ) -> model_mapper.get_model:
+    ) -> GET:
         item = get_item(session, model_mapper.table_model, item_id)
         session.delete(item)
         session.commit()

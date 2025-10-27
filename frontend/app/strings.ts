@@ -57,10 +57,6 @@ export const SCENARIOS_HREF = '/scenarios';
 export const SCENARIOS_LABEL = 'scenario';
 export const SCENARIOS_BREADCRUMBS = [
     {
-        title: COMPARE_SCENARIOS_PAGE_DESCRIPTION,
-        href: COMPARE_SCENARIOS_HREF,
-    },
-    {
         title: SCENARIOS_PAGE_DESCRIPTION,
         href: SCENARIOS_HREF,
     },
@@ -79,10 +75,6 @@ export const ENTITIES_PAGE_TITLE = PAGE_TITLE(ENTITIES_PAGE_DESCRIPTION);
 export const ENTITIES_HREF = '/entities';
 export const ENTITIES_LABEL = 'entity';
 export const ENTITIES_BREADCRUMBS = [
-    {
-        title: COMPARE_SCENARIOS_PAGE_DESCRIPTION,
-        href: COMPARE_SCENARIOS_HREF,
-    },
     {
         title: ENTITIES_PAGE_DESCRIPTION,
         href: ENTITIES_HREF,
@@ -107,10 +99,6 @@ export const BANK_ACCOUNTS_HREF = '/bank-accounts'
 export const BANK_ACCOUNTS_LABEL = 'bank account'
 export const BANK_ACCOUNTS_BREADCRUMBS = [
     {
-        title: COMPARE_SCENARIOS_PAGE_DESCRIPTION,
-        href: COMPARE_SCENARIOS_HREF,
-    },
-    {
         title: BANK_ACCOUNTS_PAGE_DESCRIPTION,
         href: BANK_ACCOUNTS_HREF,
     },
@@ -129,10 +117,6 @@ export const LEDGER_ACCOUNTS_PAGE_TITLE = PAGE_TITLE(LEDGER_ACCOUNTS_PAGE_DESCRI
 export const LEDGER_ACCOUNTS_HREF = '/ledger-accounts'
 export const LEDGER_ACCOUNTS_LABEL = 'ledger account'
 export const LEDGER_ACCOUNTS_BREADCRUMBS = [
-    {
-        title: COMPARE_SCENARIOS_PAGE_DESCRIPTION,
-        href: COMPARE_SCENARIOS_HREF,
-    },
     {
         title: LEDGER_ACCOUNTS_PAGE_DESCRIPTION,
         href: LEDGER_ACCOUNTS_HREF,
