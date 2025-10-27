@@ -67,6 +67,6 @@ export function EntityList({items}: { items: EntityGet[] }) {
         confirmDeleteItemModalTitle={ENTITIES_CONFIRM_DELETE_ITEM_MODAL_TITLE}
         confirmDeleteItemModalPrompt={ENTITIES_CONFIRM_DELETE_ITEM_MODAL_PROMPT}
     >
-        <EntityPostForm/>
+        <EntityPostForm allowSelectType/>
     </CollectionList>
 }
