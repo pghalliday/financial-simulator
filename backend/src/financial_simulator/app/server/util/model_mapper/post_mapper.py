@@ -1,22 +1,31 @@
-from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, Optional
+from typing import Optional, Dict
 from uuid import UUID
 
-from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from financial_simulator.app.database.schema import BaseWithId
+from financial_simulator.app.server.util.model_mapper.fields import PostField
+from financial_simulator.app.server.util.model_mapper.types import (
+    TABLE,
+    POST,
+    PostMapperInterface,
+)
 
 
-TABLE = TypeVar("TABLE", bound=BaseWithId)
-POST = TypeVar("POST", bound=BaseModel)
-
-class PostMapper(BaseModel, ABC, Generic[TABLE, POST]):
-    class Config:
-        frozen = True
+class PostMapper(PostMapperInterface[TABLE, POST]):
     table_model: type[TABLE]
     post_model: type[POST]
+    __fields: Dict[str, PostField[TABLE, POST] | None]
 
-    @abstractmethod
-    def map_post(self, session: Session, item_post: POST, item_id: Optional[UUID] = None) -> TABLE:
-        raise NotImplementedError()
+    def __init__(self, table_model: type[TABLE], post_model: type[POST], fields: Dict[str, PostField[TABLE, POST]]) -> None:
+        self.table_model = table_model
+        self.post_model = post_model
+        self.__fields = fields
+
+    def map(self, session: Session, item_post: POST, item_id: Optional[UUID] = None) -> TABLE:
+        item = self.table_model()
+        if item_id is not None:
+            item.id = item_id
+        for field, post_field in self.__fields.items():
+            if post_field is not None:
+                post_field.map(field, session, item, item_post)
+        return item

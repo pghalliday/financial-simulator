@@ -9,7 +9,14 @@ from financial_simulator.app.database.schema import LedgerAccount
 from pydantic import BaseModel
 
 from .common import collection
-from ..util.model_mapper import RelatedModelMapper, FieldRelation
+from ..util.model_mapper import (
+    ModelMapper,
+    OrdinaryModelField,
+    OptionalRelatedModelField,
+    FieldRelation,
+    TreeChildrenModelField,
+    TreeParentModelField,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -39,25 +46,21 @@ router = APIRouter(
     tags=["ledger-accounts"],
 )
 
-model_mapper = RelatedModelMapper(
+model_mapper = ModelMapper(
     table_model=LedgerAccount,
     get_model=LedgerAccountGet,
     post_model=LedgerAccountPost,
     patch_model=LedgerAccountPatch,
-    ordinary_fields=[
-        "name",
-        "description",
-        "account_name",
-    ],
-    optional_related_fields={
-        "parent_id": FieldRelation(field="parent", model=LedgerAccount),
+    fields={
+        "name": OrdinaryModelField(),
+        "description": OrdinaryModelField(),
+        "account_name": OrdinaryModelField(),
+        "parent_id": OptionalRelatedModelField(
+            FieldRelation(field="parent", model=LedgerAccount)
+        ),
+        "sub_accounts": TreeChildrenModelField(),
+        "parent": TreeParentModelField(),
     },
-    tree_children_fields=[
-        "sub_accounts"
-    ],
-    tree_parent_fields=[
-        "parent"
-    ],
 )
 
 where = LedgerAccount.parent_id == None

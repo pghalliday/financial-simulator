@@ -11,7 +11,13 @@ from financial_simulator.app.database.schema import (
 from pydantic import BaseModel
 
 from .common import collection
-from ..util.model_mapper import RelatedModelMapper, FieldRelation
+from ..util.model_mapper import (
+    ModelMapper,
+    FieldRelation,
+    OptionalRelatedModelField,
+    OrdinaryModelField,
+    RelatedModelField,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -60,27 +66,41 @@ router = APIRouter(
     tags=["bank-accounts"],
 )
 
-model_mapper = RelatedModelMapper(
+model_mapper = ModelMapper(
     table_model=BankAccount,
     get_model=BankAccountGet,
     post_model=BankAccountPost,
     patch_model=BankAccountPatch,
-    ordinary_fields=[
-        "name",
-        "description",
-    ],
-    related_fields={
-        "asset_account_id": FieldRelation(field="asset_account", model=LedgerAccount),
-        "interest_income_account_id": FieldRelation(field="interest_income_account", model=LedgerAccount),
-        "interest_receivable_account_id": FieldRelation(field="interest_receivable_account", model=LedgerAccount),
-        "fee_expenses_account_id": FieldRelation(field="fee_expenses_account", model=LedgerAccount),
-        "fees_payable_account_id": FieldRelation(field="fees_payable_account", model=LedgerAccount),
-    },
-    optional_related_fields={
-        "fees_provider_id": FieldRelation(field="fees_provider", model=Provider),
-        "fee_payment_schedule_id": FieldRelation(field="fee_payment_schedule", model=Schedule),
-        "rate_provider_id": FieldRelation(field="rate_provider", model=Provider),
-        "interest_payment_schedule_id": FieldRelation(field="interest_payment_schedule", model=Schedule),
+    fields={
+        "name": OrdinaryModelField(),
+        "description": OrdinaryModelField(),
+        "asset_account_id": RelatedModelField(
+            FieldRelation(field="asset_account", model=LedgerAccount)
+        ),
+        "interest_income_account_id": RelatedModelField(
+            FieldRelation(field="interest_income_account", model=LedgerAccount)
+        ),
+        "interest_receivable_account_id": RelatedModelField(
+            FieldRelation(field="interest_receivable_account", model=LedgerAccount)
+        ),
+        "fee_expenses_account_id": RelatedModelField(
+            FieldRelation(field="fee_expenses_account", model=LedgerAccount)
+        ),
+        "fees_payable_account_id": RelatedModelField(
+            FieldRelation(field="fees_payable_account", model=LedgerAccount)
+        ),
+        "fees_provider_id": OptionalRelatedModelField(
+            FieldRelation(field="fees_provider", model=Provider)
+        ),
+        "fee_payment_schedule_id": OptionalRelatedModelField(
+            FieldRelation(field="fee_payment_schedule", model=Schedule)
+        ),
+        "rate_provider_id": OptionalRelatedModelField(
+            FieldRelation(field="rate_provider", model=Provider)
+        ),
+        "interest_payment_schedule_id": OptionalRelatedModelField(
+            FieldRelation(field="interest_payment_schedule", model=Schedule)
+        ),
     },
 )
 

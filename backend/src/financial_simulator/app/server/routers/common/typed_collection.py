@@ -78,7 +78,7 @@ def add_endpoints(
     )
     async def get_item_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> GET:
         item = get_item(session, base_table_model, item_id)
-        return model_mappers[item.type].map_get(item, depth, max_parents)
+        return model_mappers[str(item.type)].map_get(item, depth, max_parents)
 
     @router.post(
         "/",
@@ -147,7 +147,7 @@ def add_endpoints(
         if item.type != item_patch.type:
             raise HTTPException(
                 status_code=409, detail=jsonable_encoder(ChangeTypeError(
-                    current_type=item.type,
+                    current_type=str(item.type),
                     new_type=item_patch.type,
                 ))
             )
@@ -168,4 +168,4 @@ def add_endpoints(
         item = get_item(session, base_table_model, item_id)
         session.delete(item)
         session.commit()
-        return model_mappers[item.type].map_get(item)
+        return model_mappers[str(item.type)].map_get(item)

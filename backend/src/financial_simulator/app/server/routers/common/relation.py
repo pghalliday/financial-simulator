@@ -48,7 +48,7 @@ def add_endpoints(
         }
     )
     async def get_related_items_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> Sequence[GET]:
-        return [get_mapper.map_get(related_item, depth, max_parents) for related_item in getattr(
+        return [get_mapper.map(related_item, depth, max_parents) for related_item in getattr(
             get_item(session, table_model, item_id),
             relation_field
         )]
@@ -73,7 +73,7 @@ def add_endpoints(
         )
         getattr(item, relation_field).append(related_item)
         session.commit()
-        return get_mapper.map_get(related_item)
+        return get_mapper.map(related_item)
 
     @router.get(
         f"/{{item_id}}/{relation_route}/{{related_item_id}}",
@@ -83,7 +83,7 @@ def add_endpoints(
         },
     )
     async def get_related_item_route(item_id: UUID, related_item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> GET:
-        return get_mapper.map_get(find_related_item(
+        return get_mapper.map(find_related_item(
             table_model,
             get_mapper.table_model,
             relation_field,
@@ -109,4 +109,4 @@ def add_endpoints(
         )
         getattr(item, relation_field).remove(related_item)
         session.commit()
-        return get_mapper.map_get(related_item)
+        return get_mapper.map(related_item)

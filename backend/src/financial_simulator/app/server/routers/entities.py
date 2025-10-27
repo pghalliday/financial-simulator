@@ -13,7 +13,11 @@ from financial_simulator.app.database.schema import (
 )
 
 from .common import typed_collection, relation
-from ..util.model_mapper import SimpleModelMapper, SimpleGetMapper
+from ..util.model_mapper import (
+    GetMapper,
+    ModelMapper,
+)
+from ..util.model_mapper import OrdinaryGetField, OrdinaryModelField
 
 logger = logging.getLogger(__name__)
 
@@ -53,28 +57,28 @@ class CorporationEntityGet(EntityGet):
     type: CorporationEntityType
 
 
-individual_model_mapper = SimpleModelMapper(
+individual_model_mapper = ModelMapper(
     table_model=IndividualEntity,
     get_model=IndividualEntityGet,
     post_model=IndividualEntityPost,
     patch_model=IndividualEntityPatch,
-    fields=[
-        "type",
-        "name",
-        "description",
-    ]
+    fields={
+        "type": OrdinaryModelField(),
+        "name": OrdinaryModelField(),
+        "description": OrdinaryModelField(),
+    },
 )
 
-corporation_model_mapper = SimpleModelMapper(
+corporation_model_mapper = ModelMapper(
     table_model=CorporationEntity,
     get_model=CorporationEntityGet,
     post_model=CorporationEntityPost,
     patch_model=CorporationEntityPatch,
-    fields=[
-        "type",
-        "name",
-        "description",
-    ]
+    fields={
+        "type": OrdinaryModelField(),
+        "name": OrdinaryModelField(),
+        "description": OrdinaryModelField(),
+    },
 )
 
 router = APIRouter(
@@ -100,13 +104,13 @@ class EntityScenarioGet(BaseModel):
     name: str
     description: str
 
-related_get_mapper = SimpleGetMapper(
+related_get_mapper = GetMapper(
     table_model=Scenario,
     get_model=EntityScenarioGet,
-    fields=[
-        "name",
-        "description",
-    ]
+    fields={
+        "name": OrdinaryGetField(),
+        "description": OrdinaryGetField(),
+    },
 )
 
 relation.add_endpoints(

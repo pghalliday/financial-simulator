@@ -8,7 +8,12 @@ from financial_simulator.app.database.schema import Scenario, Entity
 from pydantic import BaseModel
 
 from .common import collection, relation
-from ..util.model_mapper import SimpleModelMapper, SimpleGetMapper
+from ..util.model_mapper import (
+    GetMapper,
+    ModelMapper,
+    OrdinaryGetField,
+    OrdinaryModelField,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -30,15 +35,15 @@ router = APIRouter(
     tags=["scenarios"],
 )
 
-model_mapper = SimpleModelMapper(
+model_mapper = ModelMapper(
     table_model=Scenario,
     get_model=ScenarioGet,
     post_model=ScenarioPost,
     patch_model=ScenarioPatch,
-    fields=[
-        "name",
-        "description",
-    ]
+    fields={
+        "name": OrdinaryModelField(),
+        "description": OrdinaryModelField(),
+    }
 )
 
 collection.add_endpoints(
@@ -53,14 +58,14 @@ class ScenarioEntityGet(BaseModel):
     name: str
     description: str
 
-related_get_mapper = SimpleGetMapper(
+related_get_mapper = GetMapper(
     table_model=Entity,
     get_model=ScenarioEntityGet,
-    fields=[
-        "type",
-        "name",
-        "description",
-    ]
+    fields={
+        "type": OrdinaryGetField(),
+        "name": OrdinaryGetField(),
+        "description": OrdinaryGetField(),
+    },
 )
 
 relation.add_endpoints(
