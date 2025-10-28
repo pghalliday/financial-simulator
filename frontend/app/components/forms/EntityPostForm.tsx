@@ -4,20 +4,18 @@ import {ItemSelectInput} from "~/components/controls/ItemSelectInput";
 import {ENTITY_TYPES} from "~/strings";
 import {Title} from "@mantine/core";
 import {useTypeIndicator} from "~/lib/hooks/useTypeIndicator";
-import {useGetSetWithType} from "~/components/providers/GetSetProvider";
 
 export function EntityPostForm({
                                    allowSelectType,
                                }: {
     allowSelectType?: boolean,
 }) {
-    const {getField} = useGetSetWithType<EntityPost, string>()
-    const typeIndicator = useTypeIndicator(ENTITY_TYPES, getField)
+    const typeIndicator = useTypeIndicator<EntityPost>("type", ENTITY_TYPES)
     const typeSelectData = Object.entries(ENTITY_TYPES).map(entry => ({
         value: entry[0],
         label: entry[1],
     }))
-    const selectType = allowSelectType ? <ItemSelectInput<EntityPost, "type">
+    const selectType = allowSelectType ? <ItemSelectInput<EntityPost>
         field={"type"}
         label="Type"
         description={"Select the entity type"}
@@ -27,14 +25,14 @@ export function EntityPostForm({
     /> : <Title order={4}>{typeIndicator}</Title>
     return <>
         {selectType}
-        <ItemTextInput<EntityPost, "name">
+        <ItemTextInput<EntityPost>
             field="name"
             label="Name"
             description={"Entity name"}
             placeholder="Name"
             required
         />
-        <ItemTextInput<EntityPost, "description">
+        <ItemTextInput<EntityPost>
             field="description"
             label="Description"
             description={"Entity description"}

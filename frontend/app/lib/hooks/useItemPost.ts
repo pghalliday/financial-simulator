@@ -1,13 +1,14 @@
 import {useCallback, useEffect, useState} from "react";
 import _ from "lodash";
+import type {KeysOfType} from "~/lib/types";
 
 export type ItemPostSetter<Type> = (itemPost: Partial<Type>) => void
 export type ItemPostSubmitter<Type> = (itemPost: Type) => void
 export type ItemPostValidator<Type> = (itemPost: Partial<Type>) => Type | undefined
 export type ItemPostFieldSetter<Type> = <Key extends keyof Type>(field: Key, value: Partial<Type>[Key]) => void
 export type ItemPostFieldGetter<Type> = <Key extends keyof Type>(field: Key) => Partial<Type>[Key]
-export type ConstrainedItemPostFieldSetter<Type, Key extends keyof Type, Value> = (field: Key, value: Value | undefined) => void
-export type ConstrainedItemPostFieldGetter<Type, Key extends keyof Type, Value> = (field: Key) => Value | undefined
+export type ConstrainedItemPostFieldSetter<Type, Value> = <Key extends KeysOfType<Type, Value>>(field: Key, value: Value | undefined) => void
+export type ConstrainedItemPostFieldGetter<Type, Value> = <Key extends KeysOfType<Type, Value>>(field: Key) => Value | undefined
 
 export function useItemPost<Type extends {}>(
     onValidate: ItemPostValidator<Type>,

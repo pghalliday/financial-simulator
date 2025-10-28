@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useState} from 'react';
 import {Combobox, Pill, PillsInput, Text, useCombobox} from '@mantine/core';
-import {useGetSetWithType} from "~/components/providers/GetSetProvider";
+import {useGetSet} from "~/components/providers/GetSetProvider";
+import type {KeysOfType} from "~/lib/types";
 
 export interface TreeNode {
     id: string,
@@ -16,8 +17,8 @@ export const EMPTY_TREE_DATA: TreeData = {
     "": {id: "", label: "", children: [], parent: "", path: []}
 }
 
-export interface TreeSelectorProps<Type extends {}, Key extends keyof Type> {
-    field: Key
+export interface TreeSelectorProps<Type> {
+    field: KeysOfType<Type, string>,
     onCreate?: (search: string, parent_id?: string) => void,
     createPrompt?: string,
     data: TreeData,
@@ -27,17 +28,17 @@ export interface TreeSelectorProps<Type extends {}, Key extends keyof Type> {
     required?: boolean
 }
 
-export function TreeSelector<Type extends {}, Key extends keyof Type>({
-                                                                          field,
-                                                                          onCreate,
-                                                                          createPrompt,
-                                                                          data,
-                                                                          label,
-                                                                          description,
-                                                                          placeholder,
-                                                                          required,
-                                                                      }: TreeSelectorProps<Type, Key>) {
-    const {getField, setField} = useGetSetWithType<Type, string>()
+export function TreeSelector<Type>({
+                                       field,
+                                       onCreate,
+                                       createPrompt,
+                                       data,
+                                       label,
+                                       description,
+                                       placeholder,
+                                       required,
+                                   }: TreeSelectorProps<Type>) {
+    const {get, set} = useGetSet<Type, string>(field)
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
         onDropdownOpen: () => combobox.selectFirstOption(),
@@ -50,11 +51,11 @@ export function TreeSelector<Type extends {}, Key extends keyof Type>({
     const [values, setValues] = useState<TreeNode[]>([]);
 
     useEffect(() => {
-        setValue(getField(field) || '')
-    }, [getField]);
+        setValue(get() || '')
+    }, [get]);
 
     useEffect(() => {
-        setField(field, value || undefined)
+        set(value || undefined)
     }, [value]);
 
     const handleValueRemove = useCallback(() => {

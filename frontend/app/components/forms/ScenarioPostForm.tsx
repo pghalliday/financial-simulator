@@ -3,14 +3,14 @@ import type {ScenarioPost} from "~/client";
 
 export function ScenarioPostForm() {
     return <>
-        <ItemTextInput<ScenarioPost, "name">
+        <ItemTextInput<ScenarioPost>
             field="name"
             label="Name"
             description={"Scenario name"}
             placeholder="Name"
             required
         />
-        <ItemTextInput<ScenarioPost, "description">
+        <ItemTextInput<ScenarioPost>
             field="description"
             label="Description"
             description={"Scenario description"}

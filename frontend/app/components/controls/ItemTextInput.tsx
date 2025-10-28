@@ -1,31 +1,32 @@
 import {TextInput} from "@mantine/core";
 import {useEffect, useState} from "react";
-import {useGetSetWithType} from "~/components/providers/GetSetProvider";
+import {useGetSet} from "~/components/providers/GetSetProvider";
+import type {KeysOfType} from "~/lib/types";
 
-interface ItemTextInputProps<Type extends {}, Key extends keyof Type> {
-    field: Key
+interface ItemTextInputProps<Type> {
+    field: KeysOfType<Type, string>
     label: string
     description: string
     placeholder: string
     required?: boolean
 }
 
-export function ItemTextInput<Type extends {}, Key extends keyof Type>({
-                                                                           field,
-                                                                           label,
-                                                                           description,
-                                                                           placeholder,
-                                                                           required = false,
-                                                                       }: ItemTextInputProps<Type, Key>) {
-    const {getField, setField} = useGetSetWithType<Type, string>()
+export function ItemTextInput<Type>({
+                                        field,
+                                        label,
+                                        description,
+                                        placeholder,
+                                        required = false,
+                                    }: ItemTextInputProps<Type>) {
+    const {get, set} = useGetSet<Type, string>(field)
     const [value, setValue] = useState("")
 
     useEffect(() => {
-        setValue(getField(field) || "")
-    }, [getField]);
+        setValue(get() || "")
+    }, [get]);
 
     useEffect(() => {
-        setField(field, value)
+        set(value)
     }, [value]);
 
     return <TextInput

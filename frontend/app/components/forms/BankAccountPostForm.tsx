@@ -76,20 +76,20 @@ export function BankAccountPostForm({startLoading, stopLoading}: BankAccountPost
     }, [ledgerAccounts])
 
     return <>
-        <ItemTextInput<BankAccountPost, "name">
+        <ItemTextInput<BankAccountPost>
             field="name"
             label="Name"
             description={"Bank account name"}
             placeholder="Name"
             required
         />
-        <ItemTextInput<BankAccountPost, "description">
+        <ItemTextInput<BankAccountPost>
             field="description"
             label="Description"
             description={"Bank account description"}
             placeholder="Description"
         />
-        <TreeSelector<BankAccountPost, "asset_account_id">
+        <TreeSelector<BankAccountPost>
             field="asset_account_id"
             data={ledgerAccountTreeData}
             onCreate={addLedgerAccount}
@@ -98,7 +98,7 @@ export function BankAccountPostForm({startLoading, stopLoading}: BankAccountPost
             description={"Bank account asset ledger account"}
             placeholder="Asset account"
         />
-        <TreeSelector<BankAccountPost, "interest_income_account_id">
+        <TreeSelector<BankAccountPost>
             field="interest_income_account_id"
             data={ledgerAccountTreeData}
             onCreate={addLedgerAccount}
@@ -107,7 +107,7 @@ export function BankAccountPostForm({startLoading, stopLoading}: BankAccountPost
             description={"Bank account interest income ledger account"}
             placeholder="Interest income account"
         />
-        <TreeSelector<BankAccountPost, "interest_receivable_account_id">
+        <TreeSelector<BankAccountPost>
             field="interest_receivable_account_id"
             data={ledgerAccountTreeData}
             onCreate={addLedgerAccount}
@@ -116,7 +116,7 @@ export function BankAccountPostForm({startLoading, stopLoading}: BankAccountPost
             description={"Bank account interest receivable ledger account"}
             placeholder="Interest receivable account"
         />
-        <TreeSelector<BankAccountPost, "fee_expenses_account_id">
+        <TreeSelector<BankAccountPost>
             field="fee_expenses_account_id"
             data={ledgerAccountTreeData}
             onCreate={addLedgerAccount}
@@ -125,7 +125,7 @@ export function BankAccountPostForm({startLoading, stopLoading}: BankAccountPost
             description={"Bank account fee expenses ledger account"}
             placeholder="Fee expenses account"
         />
-        <TreeSelector<BankAccountPost, "fees_payable_account_id">
+        <TreeSelector<BankAccountPost>
             field="fees_payable_account_id"
             data={ledgerAccountTreeData}
             onCreate={addLedgerAccount}

@@ -3,14 +3,14 @@ import type {CorporationEntityPost} from "~/client";
 
 export function CorporationEntityPostForm() {
     return <>
-        <ItemTextInput<CorporationEntityPost, "name">
+        <ItemTextInput<CorporationEntityPost>
             field="name"
             label="Name"
             description={"Corporation name"}
             placeholder="Name"
             required
         />
-        <ItemTextInput<CorporationEntityPost, "description">
+        <ItemTextInput<CorporationEntityPost>
             field="description"
             label="Description"
             description={"Corporation description"}

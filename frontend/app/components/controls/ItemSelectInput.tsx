@@ -1,9 +1,10 @@
 import {Select} from "@mantine/core";
 import {useEffect, useState} from "react";
-import {useGetSetWithType} from "~/components/providers/GetSetProvider";
+import {useGetSet} from "~/components/providers/GetSetProvider";
+import type {KeysOfType} from "~/lib/types";
 
-interface ItemTextInputProps<Type extends {}, Key extends keyof Type> {
-    field: Key
+interface ItemSelectInputProps<Type> {
+    field: KeysOfType<Type, string>
     label: string
     description: string
     placeholder: string
@@ -11,23 +12,23 @@ interface ItemTextInputProps<Type extends {}, Key extends keyof Type> {
     required?: boolean
 }
 
-export function ItemSelectInput<Type extends {}, Key extends keyof Type>({
-                                                                             field,
-                                                                             label,
-                                                                             description,
-                                                                             placeholder,
-                                                                             data,
-                                                                             required = false,
-                                                                         }: ItemTextInputProps<Type, Key>) {
-    const {getField, setField} = useGetSetWithType<Type, string>()
+export function ItemSelectInput<Type>({
+                                          field,
+                                          label,
+                                          description,
+                                          placeholder,
+                                          data,
+                                          required = false,
+                                      }: ItemSelectInputProps<Type>) {
+    const {get, set} = useGetSet<Type, string>(field)
     const [value, setValue] = useState<string | null>(null)
 
     useEffect(() => {
-        setValue(getField(field) || null)
-    }, [getField]);
+        setValue(get() || null)
+    }, [get]);
 
     useEffect(() => {
-        setField(field, value === null ? undefined : value)
+        set(value === null ? undefined : value)
     }, [value]);
 
     return <Select
