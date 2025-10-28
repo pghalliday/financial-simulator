@@ -19,6 +19,6 @@ export default function Scenarios() {
         breadcrumbs={BANK_ACCOUNTS_BREADCRUMBS}
         loading={loading}
     >
-        <BankAccountList items={items}/>
+        <BankAccountList items={items} startLoading={startLoading} stopLoading={stopLoading}/>
     </Page>
 }

@@ -35,7 +35,13 @@ const DEFAULT_SORT_BY: SortBy<BankAccountGet>[] = [{
 }]
 const SEARCH_FIELDS: SearchKeys<BankAccountGet>[] = ["name", "description"]
 
-export function BankAccountList({items}: { items: BankAccountGet[] }) {
+interface BankAccountListProps {
+    items: BankAccountGet[],
+    startLoading: () => void,
+    stopLoading: () => void,
+}
+
+export function BankAccountList({items, startLoading, stopLoading}: BankAccountListProps) {
     return <CollectionList
         columns={COLUMNS}
         searchFields={SEARCH_FIELDS}
@@ -54,6 +60,6 @@ export function BankAccountList({items}: { items: BankAccountGet[] }) {
         confirmDeleteItemModalTitle={BANK_ACCOUNTS_CONFIRM_DELETE_ITEM_MODAL_TITLE}
         confirmDeleteItemModalPrompt={BANK_ACCOUNTS_CONFIRM_DELETE_ITEM_MODAL_PROMPT}
     >
-        <BankAccountPostForm/>
+        <BankAccountPostForm startLoading={startLoading} stopLoading={stopLoading}/>
     </CollectionList>
 }

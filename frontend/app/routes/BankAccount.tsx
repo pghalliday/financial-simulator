@@ -66,7 +66,7 @@ export default function BankAccount({params}: Route.ComponentProps) {
             saveDisabled={saveDisabled}
         >
             <GetSetProvider getField={getField} setField={setField}>
-                <BankAccountPostForm/>
+                <BankAccountPostForm startLoading={startLoading} stopLoading={stopLoading}/>
             </GetSetProvider>
         </ItemPageForm>
     </Page>

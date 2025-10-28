@@ -1,10 +1,11 @@
-import {useState} from 'react';
-import {CheckIcon, Combobox, Group, Pill, PillsInput, useCombobox} from '@mantine/core';
-
-const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
+import {type ReactElement, useEffect, useState} from 'react';
+import {Combobox, Group, Pill, PillsInput, useCombobox} from '@mantine/core';
+import {type LedgerAccountGet} from "~/client";
+import {useGetSetWithType} from "~/components/providers/GetSetProvider";
 
 export interface LedgerAccountSelectorProps<Type extends {}, Key extends keyof Type> {
     field: Key
+    ledgerAccounts: LedgerAccountGet[],
     label: string
     description: string
     placeholder: string
@@ -12,49 +13,85 @@ export interface LedgerAccountSelectorProps<Type extends {}, Key extends keyof T
 }
 
 export function LedgerAccountSelector<Type extends {}, Key extends keyof Type>({
+                                                                                   field,
+                                                                                   ledgerAccounts,
                                                                                    label,
                                                                                    description,
-                                                                                   placeholder
+                                                                                   placeholder,
+                                                                                   required,
                                                                                }: LedgerAccountSelectorProps<Type, Key>) {
+    const {getField, setField} = useGetSetWithType<Type, string>()
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
         onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
     });
 
+    const [options, setOptions] = useState<ReactElement[]>([])
     const [search, setSearch] = useState('');
-    const [value, setValue] = useState<string[]>([]);
+    const [value, setValue] = useState<string>();
+    const [values, setValues] = useState<ReactElement[]>([]);
 
-    const handleValueSelect = (val: string) =>
-        setValue((current) =>
-            current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
-        );
+    useEffect(() => {
+        setValue(getField(field))
+    }, [getField]);
 
-    const handleValueRemove = (val: string) =>
-        setValue((current) => current.filter((v) => v !== val));
+    useEffect(() => {
+        setField(field, value)
+    }, [value]);
 
-    const values = value.map((item) => (
-        <Pill key={item} onRemove={() => handleValueRemove(item)}>
-            {item}
-        </Pill>
-    ));
+    function locate(ledgerAccounts: LedgerAccountGet[], ledgerAccountId: string | undefined): LedgerAccountGet[] {
+        if (ledgerAccountId !== undefined) {
+            for (const ledgerAccount of ledgerAccounts) {
+                if (ledgerAccount.id === ledgerAccountId) {
+                    return [ledgerAccount]
+                }
+                const result = locate(ledgerAccount.sub_accounts, ledgerAccountId)
+                if (result.length > 0) {
+                    return [ledgerAccount, ...result]
+                }
+            }
+        }
+        return []
+    }
 
-    const options = groceries
-        .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))
-        .map((item) => (
-            <Combobox.Option value={item} key={item} active={value.includes(item)}>
-                <Group gap="sm">
-                    {value.includes(item) ? <CheckIcon size={12}/> : null}
-                    <span>{item}</span>
-                </Group>
-            </Combobox.Option>
-        ));
+    function getParent(ledgerAccountId: string): LedgerAccountGet | undefined {
+        const path = locate(ledgerAccounts, ledgerAccountId)
+        if (path.length > 1) return path[path.length - 2]
+        return undefined
+    }
+
+    const handleValueRemove = () =>
+        setValue((current) => getParent(current!)?.id)
+
+    useEffect(() => {
+        setValues(locate(ledgerAccounts, value).map((ledgerAccount) => (
+            <Pill key={ledgerAccount.id}>
+                {ledgerAccount.account_name}
+            </Pill>
+        )));
+    }, [ledgerAccounts, value]);
+
+    useEffect(() => {
+        const path = locate(ledgerAccounts, value)
+        const subAccounts = path.length === 0 ? ledgerAccounts : path[path.length - 1].sub_accounts
+        setOptions(subAccounts
+            .filter(subAccount => subAccount.account_name.includes(search))
+            .map(subAccount => (
+                <Combobox.Option value={subAccount.id} key={subAccount.id}>
+                    <Group gap="sm">
+                        <span>{subAccount.account_name}</span>
+                    </Group>
+                </Combobox.Option>
+            )))
+    }, [value, search, ledgerAccounts]);
 
     return (
-        <Combobox store={combobox} onOptionSubmit={handleValueSelect}>
+        <Combobox store={combobox} onOptionSubmit={setValue}>
             <Combobox.DropdownTarget>
                 <PillsInput
                     label={label}
                     description={description}
+                    required={required}
                     onClick={() => combobox.openDropdown()}
                 >
                     <Pill.Group>
@@ -71,9 +108,9 @@ export function LedgerAccountSelector<Type extends {}, Key extends keyof Type>({
                                     setSearch(event.currentTarget.value);
                                 }}
                                 onKeyDown={(event) => {
-                                    if (event.key === 'Backspace' && search.length === 0 && value.length > 0) {
+                                    if (event.key === 'Backspace' && search.length === 0 && values.length > 0) {
                                         event.preventDefault();
-                                        handleValueRemove(value[value.length - 1]);
+                                        handleValueRemove();
                                     }
                                 }}
                             />

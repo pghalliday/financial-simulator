@@ -58,12 +58,11 @@ class Relation(Generic[TABLE, RELATED_TABLE, GET]):
 
         @router.get(
             f"/{{item_id}}/{relation_route}/",
-            response_model=List[get_model],
             responses={
                 404: {"model": HTTPNotFoundError, "description": "Not found"},
             }
         )
-        async def get_related_items_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> Sequence[GET]:
+        async def get_related_items_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> List[get_model]:
             return [get_mapper.map(related_item, depth, max_parents) for related_item in getattr(
                 get_item(session, table_model, item_id),
                 relation_field
@@ -72,7 +71,6 @@ class Relation(Generic[TABLE, RELATED_TABLE, GET]):
         @router.post(
             f"/{{item_id}}/{relation_route}/",
             status_code=201,
-            response_model=get_model,
             responses={
                 404: {"model": HTTPNotFoundError, "description": "Not found"},
                 400: {"model": HTTPRelationInvalidError, "description": "Relation invalid"},
@@ -82,7 +80,7 @@ class Relation(Generic[TABLE, RELATED_TABLE, GET]):
                 },
             },
         )
-        async def post_related_item_route(item_id: UUID, related_post: RelatedPost, session: DBSessionDependency) -> GET:
+        async def post_related_item_route(item_id: UUID, related_post: RelatedPost, session: DBSessionDependency) -> get_model:
             item = get_item(session, table_model, item_id)
             related_item = get_related_item(
                 session, get_mapper.table_model, relation_field, related_post.id
@@ -93,12 +91,11 @@ class Relation(Generic[TABLE, RELATED_TABLE, GET]):
 
         @router.get(
             f"/{{item_id}}/{relation_route}/{{related_item_id}}",
-            response_model=get_model,
             responses={
                 404: {"model": HTTPNotFoundError | HTTPRelatedItemNotFoundError, "description": "Not found"},
             },
         )
-        async def get_related_item_route(item_id: UUID, related_item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> GET:
+        async def get_related_item_route(item_id: UUID, related_item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> get_model:
             return get_mapper.map(find_related_item(
                 table_model,
                 get_mapper.table_model,
@@ -109,12 +106,11 @@ class Relation(Generic[TABLE, RELATED_TABLE, GET]):
 
         @router.delete(
             f"/{{item_id}}/{relation_route}/{{related_item_id}}",
-            response_model=get_model,
             responses={
                 404: {"model": HTTPNotFoundError | HTTPRelatedItemNotFoundError, "description": "Not found"},
             },
         )
-        async def delete_related_item_route(item_id: UUID, related_item_id: UUID, session: DBSessionDependency) -> GET:
+        async def delete_related_item_route(item_id: UUID, related_item_id: UUID, session: DBSessionDependency) -> get_model:
             item = get_item(session, table_model, item_id)
             related_item = find_related_item(
                 table_model,

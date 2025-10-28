@@ -85,9 +85,8 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
 
         @router.get(
             "/",
-            response_model=List[get_model],
         )
-        async def get_items_route(session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> Sequence[GET]:
+        async def get_items_route(session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> Sequence[get_model]:
             query = select(table_model)
             if where is not None:
                 query = query.where(where)
@@ -98,19 +97,17 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
 
         @router.get(
             "/{item_id}",
-            response_model=get_model,
             responses={
                 404: {"model": HTTPNotFoundError, "description": "Not found"},
             },
         )
-        async def get_item_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> GET:
+        async def get_item_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> get_model:
             item = get_item(session, table_model, item_id)
             return model_mappers[str(item.type)].map_get(item, depth, max_parents)
 
         @router.post(
             "/",
             status_code=201,
-            response_model=self.__get_model,
             responses={
                 **invalid_relation_error,
                 409: {
@@ -121,7 +118,7 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
         )
         async def post_item_route(
             item_post: post_model, session: DBSessionDependency
-        ) -> GET:
+        ) -> get_model:
             item = model_mappers[item_post.type].map_post(session, item_post)
             session.add(item)
             session.commit()
@@ -129,7 +126,6 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
 
         @router.put(
             "/{item_id}",
-            response_model=get_model,
             responses={
                 **invalid_relation_error,
                 409: {
@@ -140,7 +136,7 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
         )
         async def put_item_route(
             item_id: UUID, item_post: post_model, session: DBSessionDependency
-        ) -> GET:
+        ) -> get_model:
             item = session.get(table_model, item_id)
             if item:
                 if item.type != item_post.type:
@@ -157,7 +153,6 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
 
         @router.patch(
             "/{item_id}",
-            response_model=get_model,
             responses={
                 **invalid_relation_error,
                 404: {"model": HTTPNotFoundError, "description": "Not found"},
@@ -169,7 +164,7 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
         )
         async def patch_item_route(
                 item_id: UUID, item_patch: patch_model, session: DBSessionDependency
-        ) -> GET:
+        ) -> get_model:
             item = get_item(session, table_model, item_id)
             if item.type != item_patch.type:
                 raise HTTPException(
@@ -184,14 +179,13 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
 
         @router.delete(
             "/{item_id}",
-            response_model=get_model,
             responses={
                 404: {"model": HTTPNotFoundError, "description": "Not found"},
             }
         )
         async def delete_item_route(
                 item_id: UUID, session: DBSessionDependency
-        ) -> GET:
+        ) -> get_model:
             item = get_item(session, table_model, item_id)
             session.delete(item)
             session.commit()
