@@ -5,13 +5,14 @@ import {
     ENTITY_HREF,
     ENTITY_TYPES
 } from "~/strings";
-import {type Column, type SearchKeys, type SortBy} from "~/components/controls/item_list/ItemList";
+import {type Column, ItemList, type SearchKeys, type SortBy} from "~/components/controls/item_list/ItemList";
 import {deleteItemRouteEntitiesItemIdDelete, postItemRouteEntitiesPost} from "~/client";
 import {validateEntityPost} from "~/lib/validators";
-import type {EntityGet} from "~/lib/types";
+import type {EntityGet, EntityPost} from "~/lib/types";
 import {EntityPostForm} from "~/components/forms/EntityPostForm";
 import {getEntityPageParams} from "~/routes/Entity";
-import {CollectionList} from "~/components/controls/CollectionList";
+import {useRef} from "react";
+import {Collection, type CollectionRef} from "~/components/controls/Collection";
 
 const NAME_COLUMN: Column<EntityGet> = {
     heading: "Name",
@@ -48,25 +49,37 @@ const DEFAULT_SORT_BY: SortBy<EntityGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<EntityGet>[] = ["name", "description"]
 
 
-export function EntityList({items}: { items: EntityGet[] }) {
-    return <CollectionList
-        columns={COLUMNS}
-        searchFields={SEARCH_FIELDS}
-        defaultSortBy={DEFAULT_SORT_BY}
-        getItemPageParams={getEntityPageParams}
-        itemHref={ENTITY_HREF}
-        items={items}
-        onPost={postItemRouteEntitiesPost}
-        onDelete={deleteItemRouteEntitiesItemIdDelete}
-        onValidate={validateEntityPost}
-        addItemModalTitle={ENTITIES_ADD_ITEM_MODAL_TITLE}
-        addItemModalDefaultPost={{
-            name: "",
-            description: "",
-        }}
-        confirmDeleteItemModalTitle={ENTITIES_CONFIRM_DELETE_ITEM_MODAL_TITLE}
-        confirmDeleteItemModalPrompt={ENTITIES_CONFIRM_DELETE_ITEM_MODAL_PROMPT}
-    >
-        <EntityPostForm allowSelectType/>
-    </CollectionList>
+export function EntityList({items, setItems}: {
+    items: EntityGet[],
+    setItems: (items: EntityGet[]) => void,
+}) {
+    const collection = useRef<CollectionRef<EntityGet, EntityPost>>(null)
+    return <>
+        <Collection
+            ref={collection}
+            items={items}
+            setItems={setItems}
+            onPost={postItemRouteEntitiesPost}
+            onDelete={deleteItemRouteEntitiesItemIdDelete}
+            onValidate={validateEntityPost}
+            addItemModalTitle={ENTITIES_ADD_ITEM_MODAL_TITLE}
+            confirmDeleteItemModalTitle={ENTITIES_CONFIRM_DELETE_ITEM_MODAL_TITLE}
+            confirmDeleteItemModalPrompt={ENTITIES_CONFIRM_DELETE_ITEM_MODAL_PROMPT}
+        >
+            <EntityPostForm allowSelectType/>
+        </Collection>
+        <ItemList
+            columns={COLUMNS}
+            items={items}
+            getItemPageParams={getEntityPageParams}
+            href={ENTITY_HREF}
+            onAdd={() => collection.current?.startAddItem({
+                name: "",
+                description: "",
+            })}
+            onDelete={(item) => collection.current?.startDeleteItem(item)}
+            searchFields={SEARCH_FIELDS}
+            defaultSortBy={DEFAULT_SORT_BY}
+        />
+    </>
 }

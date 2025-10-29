@@ -9,7 +9,10 @@ export function useGetItems<Get>(
     stopGetting: () => void,
     depth: number = 0,
     maxParents: number = 0,
-): Get[] {
+): {
+    items: Get[],
+    setItems: (items: Get[]) => void,
+} {
     const [items, setItems] = useState<Get[]>([])
 
     useEffect(() => {
@@ -27,5 +30,5 @@ export function useGetItems<Get>(
         })
     }, []);
 
-    return items
+    return {items, setItems}
 }

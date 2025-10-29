@@ -7,7 +7,7 @@ import {EntityList} from "~/components/lists/EntityList";
 
 export default function Entities() {
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const items = useGetItems(
+    const {items, setItems} = useGetItems(
         getItemsRouteEntitiesGet,
         startLoading,
         stopLoading,
@@ -19,6 +19,6 @@ export default function Entities() {
         breadcrumbs={ENTITIES_BREADCRUMBS}
         loading={loading}
     >
-        <EntityList items={items}/>
+        <EntityList items={items} setItems={setItems}/>
     </Page>
 }

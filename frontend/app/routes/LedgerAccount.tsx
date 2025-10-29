@@ -1,7 +1,7 @@
 import type {Route} from "./+types/LedgerAccount";
 import {LEDGER_ACCOUNT_BREADCRUMBS, LEDGER_ACCOUNT_PAGE_DESCRIPTION, LEDGER_ACCOUNT_PAGE_TITLE,} from "~/strings";
 import {ItemPageForm} from "~/components/pages/ItemPageForm";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
     getItemRouteLedgerAccountsItemIdGet,
     type LedgerAccountGet,
@@ -34,6 +34,7 @@ export default function LedgerAccount({params}: Route.ComponentProps) {
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
     const [revertDisabled, setRevertDisabled] = useState(true)
     const [saveDisabled, setSaveDisabled] = useState(true)
+    const [subAccounts, setSubAccounts] = useState<LedgerAccountGet[]>([])
 
     const {
         item,
@@ -61,6 +62,12 @@ export default function LedgerAccount({params}: Route.ComponentProps) {
         -1,
     )
 
+    useEffect(() => {
+        if (item !== undefined) {
+            setSubAccounts(item.sub_accounts)
+        }
+    }, [item]);
+
     return <Page
         title={pageTitle}
         description={pageDescription}
@@ -80,6 +87,6 @@ export default function LedgerAccount({params}: Route.ComponentProps) {
         <Space h={20}/>
         <Title order={4}>Sub Accounts</Title>
         <Space h={20}/>
-        <LedgerAccountList parent={item} items={item?.sub_accounts || []}/>
+        <LedgerAccountList parent={item} items={subAccounts} setItems={setSubAccounts}/>
     </Page>
 }

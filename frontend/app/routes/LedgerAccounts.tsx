@@ -7,7 +7,7 @@ import {LedgerAccountList} from "~/components/lists/LedgerAccountList";
 
 export default function LedgerAccounts() {
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const items = useGetItems(
+    const {items, setItems} = useGetItems(
         getItemsRouteLedgerAccountsGet,
         startLoading,
         stopLoading,
@@ -21,6 +21,6 @@ export default function LedgerAccounts() {
         breadcrumbs={LEDGER_ACCOUNTS_BREADCRUMBS}
         loading={loading}
     >
-        <LedgerAccountList items={items}/>
+        <LedgerAccountList items={items} setItems={setItems}/>
     </Page>
 }

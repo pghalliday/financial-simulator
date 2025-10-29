@@ -21,21 +21,23 @@ export function ItemSelectInput<Type>({
                                           required = false,
                                       }: ItemSelectInputProps<Type>) {
     const {get, set} = useGetSet<Type, string>(field)
-    const [value, setValue] = useState<string | null>(null)
+    const [value, setValue] = useState<string | null>()
 
     useEffect(() => {
         setValue(get() || null)
     }, [get]);
 
     useEffect(() => {
-        set(value === null ? undefined : value)
+        if (value !== undefined) {
+            set(value === null ? undefined : value)
+        }
     }, [value]);
 
     return <Select
         label={label}
         description={description}
         placeholder={placeholder}
-        value={value}
+        value={value ?? null}
         onChange={setValue}
         data={data}
         required={required}

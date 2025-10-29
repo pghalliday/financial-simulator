@@ -4,12 +4,18 @@ import {
     SCENARIOS_CONFIRM_DELETE_ITEM_MODAL_PROMPT,
     SCENARIOS_CONFIRM_DELETE_ITEM_MODAL_TITLE
 } from "~/strings";
-import {type Column, type SearchKeys, type SortBy} from "~/components/controls/item_list/ItemList";
-import {deleteItemRouteScenariosItemIdDelete, postItemRouteScenariosPost, type ScenarioGet} from "~/client";
+import {type Column, ItemList, type SearchKeys, type SortBy} from "~/components/controls/item_list/ItemList";
+import {
+    deleteItemRouteScenariosItemIdDelete,
+    postItemRouteScenariosPost,
+    type ScenarioGet,
+    type ScenarioPost
+} from "~/client";
 import {validateScenarioPost} from "~/lib/validators";
 import {ScenarioPostForm} from "~/components/forms/ScenarioPostForm";
 import {getScenarioPageParams} from "~/routes/Scenario";
-import {CollectionList} from "~/components/controls/CollectionList";
+import {useRef} from "react";
+import {Collection, type CollectionRef} from "~/components/controls/Collection";
 
 const NAME_COLUMN: Column<ScenarioGet> = {
     heading: "Name",
@@ -36,25 +42,37 @@ const DEFAULT_SORT_BY: SortBy<ScenarioGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<ScenarioGet>[] = ["name", "description"]
 
 
-export function ScenarioList({items}: { items: ScenarioGet[] }) {
-    return <CollectionList
-        columns={COLUMNS}
-        searchFields={SEARCH_FIELDS}
-        defaultSortBy={DEFAULT_SORT_BY}
-        getItemPageParams={getScenarioPageParams}
-        itemHref={SCENARIO_HREF}
-        items={items}
-        onPost={postItemRouteScenariosPost}
-        onDelete={deleteItemRouteScenariosItemIdDelete}
-        onValidate={validateScenarioPost}
-        addItemModalTitle={SCENARIOS_ADD_ITEM_MODAL_TITLE}
-        addItemModalDefaultPost={{
-            name: "",
-            description: "",
-        }}
-        confirmDeleteItemModalTitle={SCENARIOS_CONFIRM_DELETE_ITEM_MODAL_TITLE}
-        confirmDeleteItemModalPrompt={SCENARIOS_CONFIRM_DELETE_ITEM_MODAL_PROMPT}
-    >
-        <ScenarioPostForm/>
-    </CollectionList>
+export function ScenarioList({items, setItems}: {
+    items: ScenarioGet[],
+    setItems: (items: ScenarioGet[]) => void,
+}) {
+    const collection = useRef<CollectionRef<ScenarioGet, ScenarioPost>>(null)
+    return <>
+        <Collection
+            ref={collection}
+            items={items}
+            setItems={setItems}
+            onPost={postItemRouteScenariosPost}
+            onDelete={deleteItemRouteScenariosItemIdDelete}
+            onValidate={validateScenarioPost}
+            addItemModalTitle={SCENARIOS_ADD_ITEM_MODAL_TITLE}
+            confirmDeleteItemModalTitle={SCENARIOS_CONFIRM_DELETE_ITEM_MODAL_TITLE}
+            confirmDeleteItemModalPrompt={SCENARIOS_CONFIRM_DELETE_ITEM_MODAL_PROMPT}
+        >
+            <ScenarioPostForm/>
+        </Collection>
+        <ItemList
+            columns={COLUMNS}
+            items={items}
+            getItemPageParams={getScenarioPageParams}
+            href={SCENARIO_HREF}
+            onAdd={() => collection.current?.startAddItem({
+                name: "",
+                description: "",
+            })}
+            onDelete={(item) => collection.current?.startDeleteItem(item)}
+            searchFields={SEARCH_FIELDS}
+            defaultSortBy={DEFAULT_SORT_BY}
+        />
+    </>
 }

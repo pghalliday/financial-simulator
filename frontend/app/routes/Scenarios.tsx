@@ -7,7 +7,7 @@ import {ScenarioList} from "~/components/lists/ScenarioList";
 
 export default function Scenarios() {
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const items = useGetItems(
+    const {items, setItems} = useGetItems(
         getItemsRouteScenariosGet,
         startLoading,
         stopLoading,
@@ -19,6 +19,6 @@ export default function Scenarios() {
         breadcrumbs={SCENARIOS_BREADCRUMBS}
         loading={loading}
     >
-        <ScenarioList items={items}/>
+        <ScenarioList items={items} setItems={setItems}/>
     </Page>
 }

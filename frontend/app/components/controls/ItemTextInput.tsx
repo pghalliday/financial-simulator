@@ -19,14 +19,16 @@ export function ItemTextInput<Type>({
                                         required = false,
                                     }: ItemTextInputProps<Type>) {
     const {get, set} = useGetSet<Type, string>(field)
-    const [value, setValue] = useState("")
+    const [value, setValue] = useState<string>()
 
     useEffect(() => {
-        setValue(get() || "")
+        setValue(get())
     }, [get]);
 
     useEffect(() => {
-        set(value)
+        if (value !== undefined) {
+            set(value)
+        }
     }, [value]);
 
     return <TextInput
@@ -34,7 +36,7 @@ export function ItemTextInput<Type>({
         description={description}
         placeholder={placeholder}
         required={required}
-        value={value}
+        value={value ?? ""}
         onChange={event => setValue(event.currentTarget.value)}
         size="sm"
     />

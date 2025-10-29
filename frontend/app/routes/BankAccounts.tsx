@@ -7,7 +7,7 @@ import {BankAccountList} from "~/components/lists/BankAccountList";
 
 export default function Scenarios() {
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const items = useGetItems(
+    const {items, setItems} = useGetItems(
         getItemsRouteBankAccountsGet,
         startLoading,
         stopLoading,
@@ -19,6 +19,6 @@ export default function Scenarios() {
         breadcrumbs={BANK_ACCOUNTS_BREADCRUMBS}
         loading={loading}
     >
-        <BankAccountList items={items} startLoading={startLoading} stopLoading={stopLoading}/>
+        <BankAccountList items={items} setItems={setItems} startLoading={startLoading} stopLoading={stopLoading}/>
     </Page>
 }

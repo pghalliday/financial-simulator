@@ -46,7 +46,7 @@ export function TreeSelector<Type>({
 
     const [options, setOptions] = useState<TreeNode[]>([])
     const [search, setSearch] = useState('');
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState<string>();
     const [lastSelected, setLastSelected] = useState<TreeNode>();
     const [values, setValues] = useState<TreeNode[]>([]);
 
@@ -55,11 +55,13 @@ export function TreeSelector<Type>({
     }, [get]);
 
     useEffect(() => {
-        set(value || undefined)
+        if (value !== undefined) {
+            set(value || undefined)
+        }
     }, [value]);
 
     const handleValueRemove = useCallback(() => {
-        const node = data[value]
+        const node = data[value || ""]
         setValue(node.parent)
     }, [data, value])
 
@@ -73,12 +75,12 @@ export function TreeSelector<Type>({
     }, [onCreate, search, value])
 
     useEffect(() => {
-        setValues(data[value].path.map(id => data[id]))
+        setValues(data[value || ""].path.map(id => data[id]))
     }, [data, value]);
 
     useEffect(() => {
         setLastSelected(options[combobox.selectedOptionIndex])
-        setOptions(data[value].children
+        setOptions(data[value || ""].children
             .map(key => data[key])
             .filter(node => node.label.includes(search)))
     }, [value, search, data, onCreate]);

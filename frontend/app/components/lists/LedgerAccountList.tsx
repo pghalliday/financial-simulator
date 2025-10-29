@@ -5,15 +5,17 @@ import {
     LEDGER_ACCOUNTS_CONFIRM_DELETE_ITEM_MODAL_PROMPT,
     LEDGER_ACCOUNTS_CONFIRM_DELETE_ITEM_MODAL_TITLE
 } from "~/strings";
-import {type Column, type SearchKeys, type SortBy} from "~/components/controls/item_list/ItemList";
+import {type Column, ItemList, type SearchKeys, type SortBy} from "~/components/controls/item_list/ItemList";
 import {
     deleteItemRouteLedgerAccountsItemIdDelete,
     type LedgerAccountGet,
+    type LedgerAccountPost,
     postItemRouteLedgerAccountsPost
 } from "~/client";
 import {validateLedgerAccountPost} from "~/lib/validators";
 import {getLedgerAccountPageParams} from "~/routes/LedgerAccount";
-import {CollectionList} from "~/components/controls/CollectionList";
+import {useRef} from "react";
+import {Collection, type CollectionRef} from "~/components/controls/Collection";
 
 const ACCOUNT_NAME_COLUMN: Column<LedgerAccountGet> = {
     heading: "Account name",
@@ -50,27 +52,40 @@ const DEFAULT_SORT_BY: SortBy<LedgerAccountGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<LedgerAccountGet>[] = ["account_name", "name", "description"]
 
 
-export function LedgerAccountList({parent, items}: { parent?: LedgerAccountGet, items: LedgerAccountGet[] }) {
-    return <CollectionList
-        columns={COLUMNS}
-        searchFields={SEARCH_FIELDS}
-        defaultSortBy={DEFAULT_SORT_BY}
-        getItemPageParams={getLedgerAccountPageParams}
-        itemHref={LEDGER_ACCOUNT_HREF}
-        items={items}
-        onPost={postItemRouteLedgerAccountsPost}
-        onDelete={deleteItemRouteLedgerAccountsItemIdDelete}
-        onValidate={validateLedgerAccountPost}
-        addItemModalTitle={LEDGER_ACCOUNTS_ADD_ITEM_MODAL_TITLE}
-        addItemModalDefaultPost={{
-            parent_id: parent?.id,
-            name: "",
-            account_name: "",
-            description: "",
-        }}
-        confirmDeleteItemModalTitle={LEDGER_ACCOUNTS_CONFIRM_DELETE_ITEM_MODAL_TITLE}
-        confirmDeleteItemModalPrompt={LEDGER_ACCOUNTS_CONFIRM_DELETE_ITEM_MODAL_PROMPT}
-    >
-        <LedgerAccountPostForm/>
-    </CollectionList>
+export function LedgerAccountList({parent, items, setItems}: {
+    parent?: LedgerAccountGet,
+    items: LedgerAccountGet[],
+    setItems: (items: LedgerAccountGet[]) => void,
+}) {
+    const collection = useRef<CollectionRef<LedgerAccountGet, LedgerAccountPost>>(null)
+    return <>
+        <Collection
+            ref={collection}
+            items={items}
+            setItems={setItems}
+            onPost={postItemRouteLedgerAccountsPost}
+            onDelete={deleteItemRouteLedgerAccountsItemIdDelete}
+            onValidate={validateLedgerAccountPost}
+            addItemModalTitle={LEDGER_ACCOUNTS_ADD_ITEM_MODAL_TITLE}
+            confirmDeleteItemModalTitle={LEDGER_ACCOUNTS_CONFIRM_DELETE_ITEM_MODAL_TITLE}
+            confirmDeleteItemModalPrompt={LEDGER_ACCOUNTS_CONFIRM_DELETE_ITEM_MODAL_PROMPT}
+        >
+            <LedgerAccountPostForm/>
+        </Collection>
+        <ItemList
+            columns={COLUMNS}
+            items={items}
+            getItemPageParams={getLedgerAccountPageParams}
+            href={LEDGER_ACCOUNT_HREF}
+            onAdd={() => collection.current?.startAddItem({
+                parent_id: parent?.id,
+                name: "",
+                account_name: "",
+                description: "",
+            })}
+            onDelete={(item) => collection.current?.startDeleteItem(item)}
+            searchFields={SEARCH_FIELDS}
+            defaultSortBy={DEFAULT_SORT_BY}
+        />
+    </>
 }
