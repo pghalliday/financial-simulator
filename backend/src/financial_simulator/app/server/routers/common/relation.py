@@ -1,5 +1,5 @@
 import logging
-from typing import Sequence, TypeVar, Annotated, List, Generic
+from typing import TypeVar, Annotated, List, Generic
 from uuid import UUID
 
 from fastapi import APIRouter, Depends

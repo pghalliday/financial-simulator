@@ -6,7 +6,7 @@ from typing import (
     Mapping,
     Union,
     Optional,
-    List, Generic,
+    Generic,
 )
 from uuid import UUID
 
