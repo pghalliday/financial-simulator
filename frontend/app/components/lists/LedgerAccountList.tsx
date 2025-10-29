@@ -83,7 +83,22 @@ export function LedgerAccountList({parent, items, setItems}: {
                 account_name: "",
                 description: "",
             })}
-            onDelete={(item) => collection.current?.startDeleteItem(item)}
+            onDelete={(item) => {
+                function listDependents(ledgerAccount: LedgerAccountGet) {
+                    console.log(ledgerAccount)
+                    console.log(ledgerAccount.bank_account_asset_accounts)
+                    console.log(ledgerAccount.bank_account_interest_income_accounts)
+                    console.log(ledgerAccount.bank_account_interest_receivable_accounts)
+                    console.log(ledgerAccount.bank_account_fee_expenses_accounts)
+                    console.log(ledgerAccount.bank_account_fees_payable_accounts)
+                    for (const subAccount of ledgerAccount.sub_accounts) {
+                        listDependents(subAccount)
+                    }
+                }
+
+                listDependents(item)
+                collection.current?.startDeleteItem(item)
+            }}
             searchFields={SEARCH_FIELDS}
             defaultSortBy={DEFAULT_SORT_BY}
         />

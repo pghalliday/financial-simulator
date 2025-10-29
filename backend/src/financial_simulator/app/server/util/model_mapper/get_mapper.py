@@ -2,7 +2,7 @@ import logging
 from typing import Mapping
 
 
-from financial_simulator.app.server.util.model_mapper.fields import GetField
+from financial_simulator.app.server.util.model_mapper.fields.get_field import GetField
 from financial_simulator.app.server.util.model_mapper.types import (
     TABLE,
     GET,
@@ -12,8 +12,6 @@ from financial_simulator.app.server.util.model_mapper.types import (
 logger = logging.getLogger(__name__)
 
 class GetMapper(GetMapperInterface[TABLE, GET]):
-    table_model: type[TABLE]
-    get_model: type[GET]
     __fields: Mapping[str, GetField[TABLE, GET] | None]
 
     def __init__(self, table_model: type[TABLE], get_model: type[GET], fields: Mapping[str, GetField[TABLE, GET]]) -> None:

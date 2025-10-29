@@ -3,7 +3,7 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 
-from financial_simulator.app.server.util.model_mapper.fields import PostField
+from financial_simulator.app.server.util.model_mapper.fields.post_field import PostField
 from financial_simulator.app.server.util.model_mapper.types import (
     TABLE,
     POST,
@@ -12,8 +12,6 @@ from financial_simulator.app.server.util.model_mapper.types import (
 
 
 class PostMapper(PostMapperInterface[TABLE, POST]):
-    table_model: type[TABLE]
-    post_model: type[POST]
     __fields: Dict[str, PostField[TABLE, POST] | None]
 
     def __init__(self, table_model: type[TABLE], post_model: type[POST], fields: Dict[str, PostField[TABLE, POST]]) -> None:

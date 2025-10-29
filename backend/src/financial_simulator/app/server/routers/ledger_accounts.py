@@ -5,7 +5,7 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from financial_simulator.app.database.schema import LedgerAccount
+from financial_simulator.app.database.schema import LedgerAccount, BankAccount
 from pydantic import BaseModel
 
 from .common.collection import Collection
@@ -14,8 +14,10 @@ from ..util.model_mapper import (
     OrdinaryModelField,
     OptionalRelatedModelField,
     FieldRelation,
-    TreeChildrenModelField,
-    TreeParentModelField,
+    ChildrenModelField,
+    ParentModelField,
+    GetMapper,
+    OrdinaryGetField,
 )
 
 logger = logging.getLogger(__name__)
@@ -32,6 +34,11 @@ class LedgerAccountPatch(BaseModel):
     account_name: Optional[str] = None
     parent_id: Optional[UUID] = None
 
+class LedgerAccountBankAccountGet(BaseModel):
+    id: UUID
+    name: str
+    description: str
+
 class LedgerAccountGet(BaseModel):
     id: UUID
     name: str
@@ -40,10 +47,24 @@ class LedgerAccountGet(BaseModel):
     parent_id: Optional[UUID]
     sub_accounts: List[LedgerAccountGet]
     parent: Optional[LedgerAccountGet]
+    bank_account_asset_accounts: List[LedgerAccountBankAccountGet]
+    bank_account_interest_income_accounts: List[LedgerAccountBankAccountGet]
+    bank_account_interest_receivable_accounts: List[LedgerAccountBankAccountGet]
+    bank_account_fee_expenses_accounts: List[LedgerAccountBankAccountGet]
+    bank_account_fees_payable_accounts: List[LedgerAccountBankAccountGet]
 
 router = APIRouter(
     prefix="/ledger-accounts",
     tags=["ledger-accounts"],
+)
+
+bank_account_get_mapper = GetMapper(
+    table_model=BankAccount,
+    get_model=LedgerAccountBankAccountGet,
+    fields={
+        "name": OrdinaryGetField(),
+        "description": OrdinaryGetField(),
+    },
 )
 
 model_mapper = ModelMapper(
@@ -58,8 +79,13 @@ model_mapper = ModelMapper(
         "parent_id": OptionalRelatedModelField(
             FieldRelation(field="parent", model=LedgerAccount)
         ),
-        "sub_accounts": TreeChildrenModelField(),
-        "parent": TreeParentModelField(),
+        "sub_accounts": ChildrenModelField(),
+        "parent": ParentModelField(),
+        "bank_account_asset_accounts": ChildrenModelField(get_mapper=bank_account_get_mapper),
+        "bank_account_interest_income_accounts": ChildrenModelField(get_mapper=bank_account_get_mapper),
+        "bank_account_interest_receivable_accounts": ChildrenModelField(get_mapper=bank_account_get_mapper),
+        "bank_account_fee_expenses_accounts": ChildrenModelField(get_mapper=bank_account_get_mapper),
+        "bank_account_fees_payable_accounts": ChildrenModelField(get_mapper=bank_account_get_mapper),
     },
 )
 

@@ -26,7 +26,9 @@ from financial_simulator.app.server.errors import (
     HTTPRelationInvalidError,
 )
 from financial_simulator.app.server.util import get_item
-from financial_simulator.app.server.util.model_mapper import ModelMapper
+from financial_simulator.app.server.util.model_mapper import (
+    ModelMapperInterface,
+)
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
@@ -45,7 +47,7 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
     __get_model: type[GET]
     __post_model: type[POST]
     __patch_model: type[PATCH]
-    __model_mappers: Mapping[str, ModelMapper[TABLE, GET, POST, PATCH]]
+    __model_mappers: Mapping[str, ModelMapperInterface[TABLE, GET, POST, PATCH]]
     __order_by: Optional[InstrumentedAttribute[str]]
     __where: Optional[ColumnElement[bool]]
 
@@ -55,7 +57,7 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
             get_model: type[GET],
             post_model: type[POST],
             patch_model: type[PATCH],
-            model_mappers: Mapping[str, ModelMapper[TABLE, GET, POST, PATCH]],
+            model_mappers: Mapping[str, ModelMapperInterface[TABLE, GET, POST, PATCH]],
             order_by: Optional[InstrumentedAttribute[str]] = None,
             where: Optional[ColumnElement[bool]] = None
     ) -> None:

@@ -2,7 +2,7 @@ from typing import Dict
 
 from sqlalchemy.orm import Session
 
-from financial_simulator.app.server.util.model_mapper.fields import PatchField
+from financial_simulator.app.server.util.model_mapper.fields.patch_field import PatchField
 from financial_simulator.app.server.util.model_mapper.types import (
     TABLE,
     PATCH,
@@ -11,8 +11,6 @@ from financial_simulator.app.server.util.model_mapper.types import (
 
 
 class PatchMapper(PatchMapperInterface[TABLE, PATCH]):
-    table_model: type[TABLE]
-    patch_model: type[PATCH]
     __fields: Dict[str, PatchField[TABLE] | None]
 
     def __init__(self, table_model: type[TABLE], patch_model: type[PATCH], fields: Dict[str, PatchField[TABLE]]):

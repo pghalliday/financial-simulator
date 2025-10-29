@@ -5,8 +5,8 @@ from .model_field import ModelField
 from .ordinary import OrdinaryGetField, OrdinaryPostField, OrdinaryPatchField, OrdinaryModelField
 from .related import RelatedPostField, RelatedPatchField, RelatedModelField
 from .optional_related import OptionalRelatedPostField, OptionalRelatedPatchField, OptionalRelatedModelField
-from .tree_children import TreeChildrenGetField, TreeChildrenModelField
-from .tree_parent import TreeParentGetField, TreeParentModelField
+from .children import ChildrenGetField, ChildrenModelField
+from .parent import ParentGetField, ParentModelField
 
 __all__ = [
     "GetField",
@@ -23,8 +23,8 @@ __all__ = [
     "OptionalRelatedPostField",
     "OptionalRelatedPatchField",
     "OptionalRelatedModelField",
-    "TreeParentGetField",
-    "TreeParentModelField",
-    "TreeChildrenGetField",
-    "TreeChildrenModelField",
+    "ParentGetField",
+    "ParentModelField",
+    "ChildrenGetField",
+    "ChildrenModelField",
 ]

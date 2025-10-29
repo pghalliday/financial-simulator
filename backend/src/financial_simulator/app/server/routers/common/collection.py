@@ -14,11 +14,11 @@ from financial_simulator.app.server.errors import (
 )
 from financial_simulator.app.server.util import get_item
 from financial_simulator.app.server.util.model_mapper import (
-    ModelMapper,
     TABLE,
     GET,
     POST,
     PATCH,
+    ModelMapperInterface,
 )
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
@@ -26,13 +26,13 @@ DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 logger = logging.getLogger(__name__)
 
 class Collection(Generic[TABLE, GET, POST, PATCH]):
-    __model_mapper: ModelMapper[TABLE, GET, POST, PATCH]
+    __model_mapper: ModelMapperInterface[TABLE, GET, POST, PATCH]
     __order_by: Optional[InstrumentedAttribute[str]]
     __where: Optional[ColumnElement[bool]]
 
     def __init__(
             self,
-            model_mapper: ModelMapper[TABLE, GET, POST, PATCH],
+            model_mapper: ModelMapperInterface[TABLE, GET, POST, PATCH],
             order_by: Optional[InstrumentedAttribute[str]] = None,
             where: Optional[ColumnElement[bool]] = None
     ) -> None:

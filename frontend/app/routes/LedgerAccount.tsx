@@ -58,7 +58,7 @@ export default function LedgerAccount({params}: Route.ComponentProps) {
         setRevertDisabled,
         setSaveDisabled,
         validateLedgerAccountPost,
-        1,
+        -1,
         -1,
     )
 

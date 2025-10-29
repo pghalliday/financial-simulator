@@ -11,8 +11,8 @@ export default function LedgerAccounts() {
         getItemsRouteLedgerAccountsGet,
         startLoading,
         stopLoading,
-        0,
         -1,
+        0,
     )
 
     return <Page

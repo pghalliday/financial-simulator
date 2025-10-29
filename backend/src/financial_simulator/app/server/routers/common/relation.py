@@ -1,12 +1,11 @@
 import logging
-from typing import TypeVar, Annotated, List, Generic
+from typing import Annotated, List, Generic
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from financial_simulator.app.database.schema import BaseWithId
 from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
     HTTPNotFoundError,
@@ -19,13 +18,16 @@ from financial_simulator.app.server.util import (
     find_related_item,
     get_related_item,
 )
-from financial_simulator.app.server.util.model_mapper import GetMapper, TABLE, GET
+from financial_simulator.app.server.util.model_mapper import (
+    TABLE,
+    GET,
+    RELATED_TABLE,
+    GetMapperInterface,
+)
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
 logger = logging.getLogger(__name__)
-
-RELATED_TABLE = TypeVar("RELATED_TABLE", bound=BaseWithId)
 
 class RelatedPost(BaseModel):
     id: UUID
@@ -35,14 +37,14 @@ class Relation(Generic[TABLE, RELATED_TABLE, GET]):
     relation_route: str
     relation_field: str
     table_model: type[TABLE]
-    get_mapper: GetMapper[RELATED_TABLE, GET]
+    get_mapper: GetMapperInterface[RELATED_TABLE, GET]
 
     def __init__(
             self,
             relation_route: str,
             relation_field: str,
             table_model: type[TABLE],
-            get_mapper: GetMapper[RELATED_TABLE, GET]
+            get_mapper: GetMapperInterface[RELATED_TABLE, GET]
     ) -> None:
         self.relation_route = relation_route
         self.relation_field = relation_field

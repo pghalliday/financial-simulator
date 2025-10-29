@@ -478,6 +478,24 @@ export type IndividualEntityPost = {
 };
 
 /**
+ * LedgerAccountBankAccountGet
+ */
+export type LedgerAccountBankAccountGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+};
+
+/**
  * LedgerAccountGet
  */
 export type LedgerAccountGet = {
@@ -506,6 +524,26 @@ export type LedgerAccountGet = {
      */
     sub_accounts: Array<LedgerAccountGet>;
     parent: LedgerAccountGet | null;
+    /**
+     * Bank Account Asset Accounts
+     */
+    bank_account_asset_accounts: Array<LedgerAccountBankAccountGet>;
+    /**
+     * Bank Account Interest Income Accounts
+     */
+    bank_account_interest_income_accounts: Array<LedgerAccountBankAccountGet>;
+    /**
+     * Bank Account Interest Receivable Accounts
+     */
+    bank_account_interest_receivable_accounts: Array<LedgerAccountBankAccountGet>;
+    /**
+     * Bank Account Fee Expenses Accounts
+     */
+    bank_account_fee_expenses_accounts: Array<LedgerAccountBankAccountGet>;
+    /**
+     * Bank Account Fees Payable Accounts
+     */
+    bank_account_fees_payable_accounts: Array<LedgerAccountBankAccountGet>;
 };
 
 /**
