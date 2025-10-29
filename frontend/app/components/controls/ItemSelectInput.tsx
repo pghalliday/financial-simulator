@@ -24,7 +24,7 @@ export function ItemSelectInput<Type>({
     const [value, setValue] = useState<string | null>()
 
     useEffect(() => {
-        setValue(get() || null)
+        setValue(get() ?? null)
     }, [get]);
 
     useEffect(() => {

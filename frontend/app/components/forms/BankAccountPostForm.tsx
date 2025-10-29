@@ -51,12 +51,40 @@ function getLedgerAccountTreeData(ledgerAccounts: LedgerAccountGet[]): TreeData 
     const children = ledgerAccounts.map(ledgerAccount => ledgerAccount.id)
     const parent = ""
     const path: string[] = []
-    let data = {[id]: {id, label, parent, children, path}}
+    let data: TreeData = {[id]: {id, label, parent, children, path}}
+    // When we add a sub-account, it will be added to the top level by
+    // the Collection component (which does not know about tree collections).
+    // So, we record any accounts with parents to add to the tree data at the end
+    // TODO: maybe we should have a separate collection component for trees
+    const newChildLedgerAccounts: LedgerAccountGet[] = []
     for (const ledgerAccount of ledgerAccounts) {
-        data = {
-            ...data,
-            ...compileLedgerAccountTreeData(ledgerAccount, id, path),
+        if (ledgerAccount.parent_id !== null) {
+            newChildLedgerAccounts.push(ledgerAccount)
+        } else {
+            data = {
+                ...data,
+                ...compileLedgerAccountTreeData(ledgerAccount, id, path),
+            }
         }
+    }
+    // Now we deal with the new child ledger accounts
+    for (const ledgerAccount of newChildLedgerAccounts) {
+        const path: string[] = [ledgerAccount.id]
+        let current_parent_id = ledgerAccount.parent_id ?? ""
+        while (current_parent_id !== "") {
+            path.unshift(current_parent_id)
+            current_parent_id = data[current_parent_id].parent
+        }
+        data[ledgerAccount.id] = {
+            id: ledgerAccount.id,
+            label: ledgerAccount.account_name,
+            // If children were added later, then they should appear later in the for loop.
+            // As such, they will be added to the children array at that point
+            children: [],
+            parent: ledgerAccount.parent_id ?? "",
+            path,
+        }
+        data[ledgerAccount.parent_id ?? ""].children.push(ledgerAccount.id)
     }
     return data
 }
@@ -87,14 +115,21 @@ export function BankAccountPostForm({startLoading, stopLoading}: BankAccountPost
         setLedgerAccountTreeData(getLedgerAccountTreeData(ledgerAccounts))
     }, [ledgerAccounts]);
 
-    const addLedgerAccount = useCallback((account_name: string, parent_id?: string) => {
+    const addLedgerAccount = useCallback((account_name: string, parent_id: string) => {
+        const path = [account_name]
+        let current_parent_id = parent_id
+        while (current_parent_id !== "") {
+            const parent = ledgerAccountTreeData[current_parent_id]
+            path.unshift(parent.label)
+            current_parent_id = parent.parent
+        }
         ledgerAccountCollection.current?.startAddItem({
-            parent_id,
-            name: "TODO: construct default name from parents (or get rid of name in model?)",
+            parent_id: parent_id || undefined,
+            name: path.join(" - "),
             account_name,
             description: "",
         })
-    }, [])
+    }, [ledgerAccountTreeData])
 
     return <>
         <Collection

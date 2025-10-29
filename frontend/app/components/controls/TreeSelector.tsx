@@ -19,7 +19,7 @@ export const EMPTY_TREE_DATA: TreeData = {
 
 export interface TreeSelectorProps<Type> {
     field: KeysOfType<Type, string>,
-    onCreate?: (search: string, parent_id?: string) => void,
+    onCreate?: (search: string, parent_id: string) => void,
     createPrompt?: string,
     data: TreeData,
     label: string
@@ -51,7 +51,7 @@ export function TreeSelector<Type>({
     const [values, setValues] = useState<TreeNode[]>([]);
 
     useEffect(() => {
-        setValue(get() || '')
+        setValue(get() ?? "")
     }, [get]);
 
     useEffect(() => {
@@ -61,26 +61,26 @@ export function TreeSelector<Type>({
     }, [value]);
 
     const handleValueRemove = useCallback(() => {
-        const node = data[value || ""]
+        const node = data[value ?? ""]
         setValue(node.parent)
     }, [data, value])
 
     const handleOptionSelect = useCallback((optionValue: string) => {
         if (optionValue === "") {
-            onCreate && onCreate(search, value || undefined)
+            onCreate && onCreate(search, value ?? "")
         } else {
             setValue(optionValue)
-            setSearch('')
+            setSearch("")
         }
     }, [onCreate, search, value])
 
     useEffect(() => {
-        setValues(data[value || ""].path.map(id => data[id]))
+        setValues(data[value ?? ""].path.map(id => data[id]))
     }, [data, value]);
 
     useEffect(() => {
         setLastSelected(options[combobox.selectedOptionIndex])
-        setOptions(data[value || ""].children
+        setOptions(data[value ?? ""].children
             .map(key => data[key])
             .filter(node => node.label.includes(search)))
     }, [value, search, data, onCreate]);
