@@ -8,6 +8,7 @@ import {
 import {type Column, ItemList, type SearchKeys, type SortBy} from "~/components/controls/item_list/ItemList";
 import {
     deleteItemRouteLedgerAccountsItemIdDelete,
+    type LedgerAccountBankAccountGet,
     type LedgerAccountGet,
     type LedgerAccountPost,
     postItemRouteLedgerAccountsPost
@@ -16,6 +17,7 @@ import {validateLedgerAccountPost} from "~/lib/validators";
 import {getLedgerAccountPageParams} from "~/routes/LedgerAccount";
 import {useRef} from "react";
 import {Collection, type CollectionRef} from "~/components/controls/Collection";
+import type {Impact} from "~/components/modals/ConfirmDeleteModal";
 
 const ACCOUNT_NAME_COLUMN: Column<LedgerAccountGet> = {
     heading: "Account name",
@@ -84,20 +86,36 @@ export function LedgerAccountList({parent, items, setItems}: {
                 description: "",
             })}
             onDelete={(item) => {
-                function listDependents(ledgerAccount: LedgerAccountGet) {
-                    console.log(ledgerAccount)
-                    console.log(ledgerAccount.bank_account_asset_accounts)
-                    console.log(ledgerAccount.bank_account_interest_income_accounts)
-                    console.log(ledgerAccount.bank_account_interest_receivable_accounts)
-                    console.log(ledgerAccount.bank_account_fee_expenses_accounts)
-                    console.log(ledgerAccount.bank_account_fees_payable_accounts)
-                    for (const subAccount of ledgerAccount.sub_accounts) {
-                        listDependents(subAccount)
+                const subLedgerAccounts: LedgerAccountGet[] = []
+                const bankAccounts: LedgerAccountBankAccountGet[] = []
+
+                function listDependents(subAccounts: LedgerAccountGet[]) {
+                    for (const subAccount of subAccounts) {
+                        subLedgerAccounts.push(subAccount)
+                        bankAccounts.push(...subAccount.bank_account_asset_accounts)
+                        bankAccounts.push(...subAccount.bank_account_interest_income_accounts)
+                        bankAccounts.push(...subAccount.bank_account_interest_receivable_accounts)
+                        bankAccounts.push(...subAccount.bank_account_fee_expenses_accounts)
+                        bankAccounts.push(...subAccount.bank_account_fees_payable_accounts)
+                        listDependents(subAccount.sub_accounts)
                     }
                 }
 
-                listDependents(item)
-                collection.current?.startDeleteItem(item)
+                listDependents(item.sub_accounts)
+                const dependents: Impact = {}
+                if (bankAccounts.length > 0) {
+                    dependents["Bank accounts"] = {}
+                    for (const bankAccount of bankAccounts) {
+                        dependents["Bank accounts"][bankAccount.id] = bankAccount.name
+                    }
+                }
+                if (subLedgerAccounts.length > 0) {
+                    dependents["Sub ledger accounts"] = {}
+                    for (const sub_ledger_account of subLedgerAccounts) {
+                        dependents["Sub ledger accounts"][sub_ledger_account.id] = sub_ledger_account.name
+                    }
+                }
+                collection.current?.startDeleteItem(item, dependents)
             }}
             searchFields={SEARCH_FIELDS}
             defaultSortBy={DEFAULT_SORT_BY}

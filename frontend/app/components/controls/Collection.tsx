@@ -1,7 +1,7 @@
 import {AddItemModal} from "~/components/modals/AddItemModal";
-import {ConfirmDeleteModal} from "~/components/modals/ConfirmDeleteModal";
+import {ConfirmDeleteModal, type Impact} from "~/components/modals/ConfirmDeleteModal";
 import {useDisclosure} from "@mantine/hooks";
-import {type PropsWithChildren, type Ref, useCallback, useImperativeHandle, useState} from "react";
+import {type PropsWithChildren, type ReactElement, type Ref, useCallback, useImperativeHandle, useState} from "react";
 import {type ItemPostValidator, useItemPost} from "~/lib/hooks/useItemPost";
 import {usePostItem} from "~/lib/hooks/usePostItem";
 import {useDeleteItem} from "~/lib/hooks/useDeleteItem";
@@ -10,7 +10,7 @@ import {GetSetProvider} from "~/components/providers/GetSetProvider";
 
 export interface CollectionRef<Get extends IdItem, Post extends {}> {
     startAddItem: (initialValues: Partial<Post>) => void
-    startDeleteItem: (item: Get) => void
+    startDeleteItem: (item: Get, dependents?: Impact, references?: Impact) => void
 }
 
 export interface CollectionProps<Get extends IdItem, Post extends {}> {
@@ -22,7 +22,7 @@ export interface CollectionProps<Get extends IdItem, Post extends {}> {
     onValidate: ItemPostValidator<Post>
     addItemModalTitle: string,
     confirmDeleteItemModalTitle: string,
-    confirmDeleteItemModalPrompt: (item: Get) => string,
+    confirmDeleteItemModalPrompt: (item: Get) => ReactElement,
 }
 
 export function Collection<Get extends IdItem, Post extends {}>({
@@ -39,7 +39,9 @@ export function Collection<Get extends IdItem, Post extends {}>({
                                                                 }: PropsWithChildren<CollectionProps<Get, Post>>) {
     const [addItemModalOpened, {open: openAddItemModal, close: closeAddItemModal}] = useDisclosure()
     const [addingItem, {open: startAddingItem, close: stopAddingItem}] = useDisclosure()
-    const [confirmDeletePrompt, setConfirmDeletePrompt] = useState("")
+    const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
+    const [confirmDeleteDependents, setConfirmDeleteDependents] = useState<Impact>({})
+    const [confirmDeleteReferences, setConfirmDeleteReferences] = useState<Impact>({})
     const [confirmDeleteItemModalOpened, {
         open: openConfirmDeleteItemModal,
         close: closeConfirmDeleteItemModal
@@ -71,9 +73,11 @@ export function Collection<Get extends IdItem, Post extends {}>({
         openAddItemModal()
     }, [setItemPost])
 
-    const startDeleteItem = useCallback((item: Get) => {
+    const startDeleteItem = useCallback((item: Get, dependents: Impact = {}, references: Impact = {}) => {
         setToDelete(item)
         setConfirmDeletePrompt(confirmDeleteItemModalPrompt(item))
+        setConfirmDeleteDependents(dependents)
+        setConfirmDeleteReferences(references)
         openConfirmDeleteItemModal()
     }, [setToDelete])
 
@@ -100,6 +104,8 @@ export function Collection<Get extends IdItem, Post extends {}>({
             working={deletingItem}
             title={confirmDeleteItemModalTitle}
             prompt={confirmDeletePrompt}
+            dependents={confirmDeleteDependents}
+            references={confirmDeleteReferences}
             onConfirm={deleteItem}
             onCancel={closeConfirmDeleteItemModal}
         />

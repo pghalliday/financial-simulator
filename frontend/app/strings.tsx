@@ -46,7 +46,14 @@ export const APP_NAME = 'Financial Simulator';
 export const PAGE_TITLE = (suffix: string) => `${APP_NAME} - ${suffix}`;
 export const ADD_ITEM_MODAL_TITLE = (label: string) => `Add ${label}`
 export const CONFIRM_DELETE_ITEM_MODAL_TITLE = (label: string) => `Confirm delete ${label}`
-export const CONFIRM_DELETE_ITEM_MODAL_PROMPT = (label: string) => (name: string) => `Are you sure you want to delete ${label}: "${name}"?`
+export const CONFIRM_DELETE_ITEM_MODAL_PROMPT = (label: string) => (name: string) => (
+    <p>
+        Are you sure you want to delete {label}:
+        <ul>
+            <li><b>{name}</b></li>
+        </ul>
+    </p>
+)
 
 export const COMPARE_SCENARIOS_PAGE_DESCRIPTION = 'Compare scenarios';
 export const COMPARE_SCENARIOS_HREF = '/';

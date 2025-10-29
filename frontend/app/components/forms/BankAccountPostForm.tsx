@@ -46,16 +46,19 @@ function compileLedgerAccountTreeData(ledgerAccount: LedgerAccountGet, parent: s
 }
 
 function getLedgerAccountTreeData(ledgerAccounts: LedgerAccountGet[]): TreeData {
-    const id = ""
-    const label = ""
-    const children = ledgerAccounts.map(ledgerAccount => ledgerAccount.id)
-    const parent = ""
-    const path: string[] = []
-    let data: TreeData = {[id]: {id, label, parent, children, path}}
     // When we add a sub-account, it will be added to the top level by
     // the Collection component (which does not know about tree collections).
     // So, we record any accounts with parents to add to the tree data at the end
     // TODO: maybe we should have a separate collection component for trees
+    const id = ""
+    const label = ""
+    const children = ledgerAccounts
+        // Filter out the new child ledger accounts
+        .filter(ledgerAccount => ledgerAccount.parent_id === null)
+        .map(ledgerAccount => ledgerAccount.id)
+    const parent = ""
+    const path: string[] = []
+    let data: TreeData = {[id]: {id, label, parent, children, path}}
     const newChildLedgerAccounts: LedgerAccountGet[] = []
     for (const ledgerAccount of ledgerAccounts) {
         if (ledgerAccount.parent_id !== null) {
