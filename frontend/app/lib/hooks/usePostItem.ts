@@ -3,26 +3,29 @@ import {callApi} from "~/lib/callApi";
 import {POST_ITEM_ERROR_TITLE} from "~/strings";
 import {useCallback} from "react";
 
+export interface Props<Post, Get> {
+    onSuccess: (item: Get) => void,
+    onPost: PostItemApi<Post, Get>,
+    onBegin?: () => void,
+    onEnd?: () => void,
+}
+
 export function usePostItem<Post, Get>(
-    items: Get[],
-    setItems: (items: Get[]) => void,
-    postItemApi: PostItemApi<Post, Get>,
-    startPosting: () => void,
-    stopPosting: () => void,
-    onPostSuccess: () => void,
-): (post: Post) => void {
+    {
+        onSuccess,
+        onPost,
+        onBegin,
+        onEnd,
+    }: Props<Post, Get>): (post: Post) => void {
     return useCallback((post: Post) => {
         callApi({
-            api: () => postItemApi({
+            api: () => onPost({
                 body: post
             }),
             errorTitle: POST_ITEM_ERROR_TITLE,
-            onSuccess: (item) => {
-                setItems(items.concat([item]))
-                onPostSuccess()
-            },
-            begin: startPosting,
-            end: stopPosting,
+            onSuccess,
+            onBegin,
+            onEnd,
         });
-    }, [items])
+    }, [onSuccess, onPost, onBegin, onEnd])
 }

@@ -95,7 +95,7 @@ export const ENTITY_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Entity
 export const ENTITY_PAGE_TITLE = createItemPageTitleFunction(ENTITY_PAGE_DESCRIPTION);
 export const ENTITY_HREF = createItemHrefFunction(ENTITIES_HREF)
 export const ENTITY_BREADCRUMBS = createItemBreadcrumbsFunction(ENTITIES_BREADCRUMBS, ENTITY_HREF)
-export const ENTITY_TYPES = {
+export const ENTITY_TYPES: Record<EntityGet["type"], string> = {
     "individual_entity": "Individual",
     "corporation_entity": "Corporation",
 }

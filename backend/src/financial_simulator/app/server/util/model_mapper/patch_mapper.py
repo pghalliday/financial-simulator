@@ -23,4 +23,4 @@ class PatchMapper(PatchMapperInterface[TABLE, PATCH]):
         for field, value in updated_data.items():
             patch_field = self.__fields[field]
             if patch_field is not None:
-                patch_field.map(field, session, item, value)
+                patch_field.map(field, session, item, self.table_model, value)

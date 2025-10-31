@@ -14,5 +14,5 @@ class PatchField(ABC, Generic[TABLE]):
         raise NotImplementedError()
 
     @abstractmethod
-    def map(self, field: str, session: Session, item: TABLE, value: Any) -> None:
+    def map(self, field: str, session: Session, item: TABLE, model: type[TABLE], value: Any) -> None:
         raise NotImplementedError()

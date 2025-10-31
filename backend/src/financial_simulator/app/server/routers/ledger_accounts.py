@@ -1,6 +1,6 @@
 from __future__ import annotations
 import logging
-from typing import Optional, List
+from typing import List
 from uuid import UUID
 
 from fastapi import APIRouter
@@ -19,34 +19,35 @@ from ..util.model_mapper import (
     GetMapper,
     OrdinaryGetField,
 )
+from ..util.model_mapper.fields.children.children_model_field import ChildrenModelFieldParams
 
 logger = logging.getLogger(__name__)
 
 class LedgerAccountPost(BaseModel):
     name: str
-    description: str
+    description: str | None = None
     account_name: str
-    parent_id: Optional[UUID] = None
+    parent_id: UUID | None = None
 
 class LedgerAccountPatch(BaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
-    account_name: Optional[str] = None
-    parent_id: Optional[UUID] = None
+    name: str | None = None
+    description: str | None = None
+    account_name: str | None = None
+    parent_id: UUID | None = None
 
 class LedgerAccountBankAccountGet(BaseModel):
     id: UUID
     name: str
-    description: str
+    description: str | None = None
 
 class LedgerAccountGet(BaseModel):
     id: UUID
     name: str
-    description: str
+    description: str | None
     account_name: str
-    parent_id: Optional[UUID]
+    parent_id: UUID | None
     sub_accounts: List[LedgerAccountGet]
-    parent: Optional[LedgerAccountGet]
+    parent: LedgerAccountGet | None
     bank_account_asset_accounts: List[LedgerAccountBankAccountGet]
     bank_account_interest_income_accounts: List[LedgerAccountBankAccountGet]
     bank_account_interest_receivable_accounts: List[LedgerAccountBankAccountGet]
@@ -81,11 +82,11 @@ model_mapper = ModelMapper(
         ),
         "sub_accounts": ChildrenModelField(),
         "parent": ParentModelField(),
-        "bank_account_asset_accounts": ChildrenModelField(get_mapper=bank_account_get_mapper),
-        "bank_account_interest_income_accounts": ChildrenModelField(get_mapper=bank_account_get_mapper),
-        "bank_account_interest_receivable_accounts": ChildrenModelField(get_mapper=bank_account_get_mapper),
-        "bank_account_fee_expenses_accounts": ChildrenModelField(get_mapper=bank_account_get_mapper),
-        "bank_account_fees_payable_accounts": ChildrenModelField(get_mapper=bank_account_get_mapper),
+        "bank_account_asset_accounts": ChildrenModelField(ChildrenModelFieldParams(get_mapper=bank_account_get_mapper)),
+        "bank_account_interest_income_accounts": ChildrenModelField(ChildrenModelFieldParams(get_mapper=bank_account_get_mapper)),
+        "bank_account_interest_receivable_accounts": ChildrenModelField(ChildrenModelFieldParams(get_mapper=bank_account_get_mapper)),
+        "bank_account_fee_expenses_accounts": ChildrenModelField(ChildrenModelFieldParams(get_mapper=bank_account_get_mapper)),
+        "bank_account_fees_payable_accounts": ChildrenModelField(ChildrenModelFieldParams(get_mapper=bank_account_get_mapper)),
     },
 )
 

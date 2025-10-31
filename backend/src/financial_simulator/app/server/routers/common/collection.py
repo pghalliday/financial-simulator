@@ -59,14 +59,14 @@ class Collection(Generic[TABLE, GET, POST, PATCH]):
         @router.get(
             "/",
         )
-        async def get_items_route(session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> List[get_model]:
+        async def get_items_route(session: DBSessionDependency) -> List[get_model]:
             query = select(table_model)
             if where is not None:
                 query = query.where(where)
             if order_by is not None:
                 query = query.order_by(order_by)
             items = session.scalars(query)
-            return [model_mapper.map_get(item, depth, max_parents) for item in items]
+            return [model_mapper.map_get(item) for item in items]
 
         @router.get(
             "/{item_id}",
@@ -74,9 +74,9 @@ class Collection(Generic[TABLE, GET, POST, PATCH]):
                 404: {"model": HTTPNotFoundError, "description": "Not found"},
             },
         )
-        async def get_item_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> get_model:
+        async def get_item_route(item_id: UUID, session: DBSessionDependency) -> get_model:
             logger.info(f"Getting item {item_id}")
-            return model_mapper.map_get(get_item(session, table_model, item_id), depth, max_parents)
+            return model_mapper.map_get(get_item(session, table_model, item_id))
 
         @router.post(
             "/",

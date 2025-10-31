@@ -7,10 +7,6 @@ export function getFieldOfType<Type, ValueType>(obj: Type, key: KeysOfType<Type,
     return obj[key] as ValueType
 }
 
-export interface TypedItem {
-    type: string
-}
-
 export interface IdItem {
     id: string
 }

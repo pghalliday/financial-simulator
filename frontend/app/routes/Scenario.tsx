@@ -1,26 +1,12 @@
 import type {Route} from "./+types/Scenario";
-import {SCENARIO_BREADCRUMBS, SCENARIO_PAGE_DESCRIPTION, SCENARIO_PAGE_TITLE} from "~/strings";
-import {ItemPageForm} from "~/components/pages/ItemPageForm";
-import {useState} from "react";
-import {
-    deleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDelete,
-    getItemRouteScenariosItemIdGet,
-    getItemsRouteEntitiesGet,
-    getRelatedItemsRouteScenariosItemIdEntitiesGet,
-    postRelatedItemRouteScenariosItemIdEntitiesPost,
-    putItemRouteScenariosItemIdPut,
-    type ScenarioGet,
-    type ScenarioPost
-} from "~/client";
 import {useDisclosure} from "@mantine/hooks";
-import {useItemPage} from "~/lib/hooks/useItemPage";
-import {RelationSelector} from "~/components/controls/RelationSelector";
-import {Page} from "~/components/pages/Page";
-import {validateScenarioPost} from "~/lib/validators";
+import {ScenarioProvider} from "~/providers/item_providers";
+import ScenarioPage from "~/pages/ScenarioPage/ScenarioPage";
+import type {ScenarioGet} from "~/client";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
-import {ScenarioPostForm} from "~/components/forms/ScenarioPostForm";
-import {Stack} from "@mantine/core";
-import {GetSetProvider} from "~/components/providers/GetSetProvider";
+import {SCENARIO_BREADCRUMBS, SCENARIO_PAGE_DESCRIPTION, SCENARIO_PAGE_TITLE} from "~/strings";
+import {LoadingProvider} from "~/providers/LoadingProvider";
+import {EntitiesProvider} from "~/providers/items_providers";
 
 export function getScenarioPageParams(item: ScenarioGet): ItemPageParams {
     return {
@@ -29,62 +15,27 @@ export function getScenarioPageParams(item: ScenarioGet): ItemPageParams {
     }
 }
 
-export default function BankAccount({params}: Route.ComponentProps) {
+export default function Scenario({params}: Route.ComponentProps) {
     const {itemId} = params
-    const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const [revertDisabled, setRevertDisabled] = useState(true)
-    const [saveDisabled, setSaveDisabled] = useState(true)
-
-    const {
-        getField,
-        setField,
-        revert,
-        submit,
-        pageTitle,
-        pageDescription,
-        pageBreadcrumbs,
-    } = useItemPage<ScenarioPost, ScenarioGet>(
-        itemId,
-        SCENARIO_PAGE_TITLE,
-        SCENARIO_PAGE_DESCRIPTION,
-        SCENARIO_BREADCRUMBS,
-        getScenarioPageParams,
-        getItemRouteScenariosItemIdGet,
-        putItemRouteScenariosItemIdPut,
-        startLoading,
-        stopLoading,
-        setRevertDisabled,
-        setSaveDisabled,
-        validateScenarioPost,
-    )
-
-    return <Page
-        title={pageTitle}
-        description={pageDescription}
-        breadcrumbs={pageBreadcrumbs}
-        loading={loading}
-    >
-        <ItemPageForm
-            onRevert={revert}
-            revertDisabled={revertDisabled}
-            onSave={submit}
-            saveDisabled={saveDisabled}
+    const [loadingScenarios, {open: startLoadingScenarios, close: stopLoadingScenarios}] = useDisclosure()
+    const [loadingEntities, {open: startLoadingEntities, close: stopLoadingEntities}] = useDisclosure()
+    return <LoadingProvider loading={loadingScenarios || loadingEntities}>
+        <ScenarioProvider
+            itemId={itemId}
+            itemPageTitle={SCENARIO_PAGE_TITLE}
+            itemPageDescription={SCENARIO_PAGE_DESCRIPTION}
+            itemBreadcrumbs={SCENARIO_BREADCRUMBS}
+            getItemPageParams={getScenarioPageParams}
+            onBegin={startLoadingScenarios}
+            onEnd={stopLoadingScenarios}
+            depth={1}
         >
-            <GetSetProvider getField={getField} setField={setField}>
-                <ScenarioPostForm/>
-            </GetSetProvider>
-        </ItemPageForm>
-        <Stack>
-            <RelationSelector
-                itemId={itemId}
-                label="entities"
-                getRelatedOptions={getItemsRouteEntitiesGet}
-                getRelatedItems={getRelatedItemsRouteScenariosItemIdEntitiesGet}
-                postRelatedItem={postRelatedItemRouteScenariosItemIdEntitiesPost}
-                deleteRelatedItem={deleteRelatedItemRouteScenariosItemIdEntitiesRelatedItemIdDelete}
-                startLoading={startLoading}
-                stopLoading={stopLoading}
-            />
-        </Stack>
-    </Page>
+            <EntitiesProvider
+                onBegin={startLoadingEntities}
+                onEnd={stopLoadingEntities}
+            >
+                <ScenarioPage/>
+            </EntitiesProvider>
+        </ScenarioProvider>
+    </LoadingProvider>
 }

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@mantine/core": "^8.3.3",
+    "@mantine/form": "^8.3.6",
     "@mantine/hooks": "^8.3.3",
     "@mantine/notifications": "^8.3.4",
     "@react-router/node": "^7.9.2",

@@ -3,13 +3,22 @@ import {useCallback} from "react";
 import {PUT_ITEM_ERROR_TITLE} from "~/strings";
 import type {IdItem, PutItemApi} from "~/lib/types";
 
-export function usePutItem<Post, Get extends IdItem>(
+export interface Props<Post, Get extends IdItem> {
     item: Get | undefined,
-    setItem: (item: Get | undefined) => void,
+    onSuccess: (item: Get) => void,
     putItemApi: PutItemApi<Post, Get>,
-    startPutting: () => void,
-    stopPutting: () => void,
-): (postItem: Post) => void {
+    onBegin?: () => void,
+    onEnd?: () => void,
+}
+
+export function usePutItem<Post, Get extends IdItem>(
+    {
+        item,
+        onSuccess,
+        putItemApi,
+        onBegin,
+        onEnd,
+    }: Props<Post, Get>): (postItem: Post) => void {
     return useCallback((post: Post) => {
         if (item !== undefined) {
             callApi({
@@ -20,10 +29,10 @@ export function usePutItem<Post, Get extends IdItem>(
                     body: post,
                 }),
                 errorTitle: PUT_ITEM_ERROR_TITLE,
-                onSuccess: setItem,
-                begin: startPutting,
-                end: stopPutting,
+                onSuccess,
+                onBegin,
+                onEnd,
             });
         }
-    }, [item])
+    }, [item, onSuccess, putItemApi, onBegin, onEnd])
 }

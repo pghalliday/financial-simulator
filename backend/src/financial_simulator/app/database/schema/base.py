@@ -24,7 +24,7 @@ class BaseWithId(Base):
 class BaseWithNameAndDescription(BaseWithId):
     __abstract__ = True
     name: Mapped[str] = mapped_column(unique=True)
-    description: Mapped[str] = mapped_column()
+    description: Mapped[str | None] = mapped_column()
 
 
 class BaseWithType(BaseWithNameAndDescription):

@@ -9,8 +9,8 @@ import type {Route} from "./+types/root";
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
-import {NavLayout} from "~/components/layout/NavLayout";
-import {HeaderDataProvider} from "~/components/providers/HeaderDataProvider";
+import {Shell} from "~/components/layout/Shell";
+import {HeaderDataProvider} from "~/providers/HeaderDataProvider";
 import {ApiError} from "~/ApiError";
 import {Notifications} from "@mantine/notifications";
 
@@ -29,7 +29,7 @@ export function Layout({children}: { children: React.ReactNode }) {
         <MantineProvider>
             <Notifications/>
             <HeaderDataProvider>
-                <NavLayout>{children}</NavLayout>
+                <Shell>{children}</Shell>
             </HeaderDataProvider>
         </MantineProvider>
         <ScrollRestoration/>
@@ -39,10 +39,10 @@ export function Layout({children}: { children: React.ReactNode }) {
     );
 }
 
-// export function HydrateFallback() {
-//     return <p>Loading...</p>;
-// }
-//
+export function HydrateFallback() {
+    return <p>Loading...</p>;
+}
+
 export default function App() {
     return <Outlet/>;
 }

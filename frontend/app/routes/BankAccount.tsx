@@ -1,20 +1,12 @@
 import type {Route} from "./+types/BankAccount";
 import {BANK_ACCOUNT_BREADCRUMBS, BANK_ACCOUNT_PAGE_DESCRIPTION, BANK_ACCOUNT_PAGE_TITLE} from "~/strings";
-import {ItemPageForm} from "~/components/pages/ItemPageForm";
-import {useState} from "react";
-import {
-    type BankAccountGet,
-    type BankAccountPost,
-    getItemRouteBankAccountsItemIdGet,
-    putItemRouteBankAccountsItemIdPut
-} from "~/client";
+import {type BankAccountGet} from "~/client";
 import {useDisclosure} from "@mantine/hooks";
-import {useItemPage} from "~/lib/hooks/useItemPage";
-import {Page} from "~/components/pages/Page";
-import {validateBankAccountPost} from "~/lib/validators";
-import {BankAccountPostForm} from "~/components/forms/BankAccountPostForm";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
-import {GetSetProvider} from "~/components/providers/GetSetProvider";
+import {BankAccountProvider} from "~/providers/item_providers";
+import {LedgerAccountTreeProvider} from "~/providers/tree_providers";
+import BankAccountPage from "~/pages/BankAccountPage/BankAccountPage";
+import {LoadingProvider} from "~/providers/LoadingProvider";
 
 
 export function getBankAccountPageParams(item: BankAccountGet): ItemPageParams {
@@ -26,48 +18,28 @@ export function getBankAccountPageParams(item: BankAccountGet): ItemPageParams {
 
 export default function BankAccount({params}: Route.ComponentProps) {
     const {itemId} = params
-    const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const [revertDisabled, setRevertDisabled] = useState(true)
-    const [saveDisabled, setSaveDisabled] = useState(true)
+    const [loadingBankAccount, {open: startLoadingBankAccount, close: stopLoadingBankAccount}] = useDisclosure()
+    const [loadingLedgerAccounts, {
+        open: startLoadingLedgerAccounts,
+        close: stopLoadingLedgerAccounts
+    }] = useDisclosure()
 
-    const {
-        getField,
-        setField,
-        revert,
-        submit,
-        pageTitle,
-        pageDescription,
-        pageBreadcrumbs,
-    } = useItemPage<BankAccountPost, BankAccountGet>(
-        itemId,
-        BANK_ACCOUNT_PAGE_TITLE,
-        BANK_ACCOUNT_PAGE_DESCRIPTION,
-        BANK_ACCOUNT_BREADCRUMBS,
-        getBankAccountPageParams,
-        getItemRouteBankAccountsItemIdGet,
-        putItemRouteBankAccountsItemIdPut,
-        startLoading,
-        stopLoading,
-        setRevertDisabled,
-        setSaveDisabled,
-        validateBankAccountPost,
-    )
-
-    return <Page
-        title={pageTitle}
-        description={pageDescription}
-        breadcrumbs={pageBreadcrumbs}
-        loading={loading}
-    >
-        <ItemPageForm
-            onRevert={revert}
-            revertDisabled={revertDisabled}
-            onSave={submit}
-            saveDisabled={saveDisabled}
+    return <LoadingProvider loading={loadingBankAccount || loadingLedgerAccounts}>
+        <BankAccountProvider
+            itemId={itemId}
+            itemPageTitle={BANK_ACCOUNT_PAGE_TITLE}
+            itemPageDescription={BANK_ACCOUNT_PAGE_DESCRIPTION}
+            itemBreadcrumbs={BANK_ACCOUNT_BREADCRUMBS}
+            getItemPageParams={getBankAccountPageParams}
+            onBegin={startLoadingBankAccount}
+            onEnd={stopLoadingBankAccount}
         >
-            <GetSetProvider getField={getField} setField={setField}>
-                <BankAccountPostForm startLoading={startLoading} stopLoading={stopLoading}/>
-            </GetSetProvider>
-        </ItemPageForm>
-    </Page>
+            <LedgerAccountTreeProvider
+                onBegin={startLoadingLedgerAccounts}
+                onEnd={stopLoadingLedgerAccounts}
+            >
+                <BankAccountPage/>
+            </LedgerAccountTreeProvider>
+        </BankAccountProvider>
+    </LoadingProvider>
 }

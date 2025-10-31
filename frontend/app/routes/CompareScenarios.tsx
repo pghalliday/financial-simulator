@@ -9,12 +9,12 @@ import {
     type ScenarioGet
 } from "~/client";
 import {useDisclosure} from "@mantine/hooks";
-import {StickyItemMultiSelect} from "~/components/controls/StickyItemMultiSelect";
+import {StickyItemMultiSelect} from "~/components/controls/unbound/StickyItemMultiSelect";
 import {callApi} from "~/lib/callApi";
 import Plot from "react-plotly.js";
 
 import {useStickyState} from "~/lib/hooks/useStickyState";
-import {Page} from "~/components/pages/Page";
+import {Page} from "~/pages/common/Page";
 
 function get_balance(account: DummyDayAccount, sub_account_path: string[]): number {
     if (sub_account_path.length === 0) {
@@ -39,9 +39,18 @@ export default function CompareScenarios() {
     const [dummyDaysProgress, setDummyDaysProgress] = useState(0)
     const [scenarios, setScenarios] = useState<ScenarioGet[]>()
     const [selectedScenarios, setSelectedScenarios] = useState<string[]>([])
-    const [dummyDaysStart, setDummyDaysStart] = useStickyState<string | number>(0, "compare-scenarios--start")
-    const [dummyDaysEnd, setDummyDaysEnd] = useStickyState<string | number>(10, "compare-scenarios--end")
-    const [days, setDays] = useStickyState<DummyDayDay[]>([], "compare-scenarios--days")
+    const [dummyDaysStart, setDummyDaysStart] = useStickyState<string | number>({
+        defaultValue: 0,
+        key: "compare-scenarios--start",
+    })
+    const [dummyDaysEnd, setDummyDaysEnd] = useStickyState<string | number>({
+        defaultValue: 10,
+        key: "compare-scenarios--end",
+    })
+    const [days, setDays] = useStickyState<DummyDayDay[]>({
+        defaultValue: [],
+        key: "compare-scenarios--days",
+    })
 
     const pageDescription = COMPARE_SCENARIOS_PAGE_DESCRIPTION;
     const pageTitle = PAGE_TITLE(pageDescription)
@@ -57,8 +66,8 @@ export default function CompareScenarios() {
             api: () => getItemsRouteScenariosGet(),
             errorTitle: "Get scenarios error",
             onSuccess: setScenarios,
-            begin: startLoading,
-            end: stopLoading,
+            onBegin: startLoading,
+            onEnd: stopLoading,
         });
     }, []);
 
@@ -114,9 +123,11 @@ export default function CompareScenarios() {
     }
 
     return <Page
-        title={pageTitle}
-        description={pageDescription}
-        breadcrumbs={pageBreadcrumbs}
+        pageParams={{
+            title: pageTitle,
+            description: pageDescription,
+            breadcrumbs: pageBreadcrumbs,
+        }}
         loading={loading}
     >
         <LoadingOverlay

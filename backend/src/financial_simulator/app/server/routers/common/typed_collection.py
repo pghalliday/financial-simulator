@@ -1,12 +1,12 @@
 import logging
 from typing import (
-    Sequence,
     TypeVar,
     Annotated,
     Mapping,
     Union,
     Optional,
     Generic,
+    List,
 )
 from uuid import UUID
 
@@ -88,14 +88,14 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
         @router.get(
             "/",
         )
-        async def get_items_route(session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> Sequence[get_model]:
+        async def get_items_route(session: DBSessionDependency) -> List[get_model]:
             query = select(table_model)
             if where is not None:
                 query = query.where(where)
             if order_by is not None:
                 query = query.order_by(order_by)
             items = session.scalars(query)
-            return [model_mappers[item.type].map_get(item, depth, max_parents) for item in items]
+            return [model_mappers[item.type].map_get(item) for item in items]
 
         @router.get(
             "/{item_id}",
@@ -103,9 +103,9 @@ class TypedCollection(Generic[TABLE, GET, POST, PATCH]):
                 404: {"model": HTTPNotFoundError, "description": "Not found"},
             },
         )
-        async def get_item_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> get_model:
+        async def get_item_route(item_id: UUID, session: DBSessionDependency) -> get_model:
             item = get_item(session, table_model, item_id)
-            return model_mappers[str(item.type)].map_get(item, depth, max_parents)
+            return model_mappers[str(item.type)].map_get(item)
 
         @router.post(
             "/",

@@ -1,24 +1,22 @@
-import {ENTITIES_BREADCRUMBS, ENTITIES_PAGE_DESCRIPTION, ENTITIES_PAGE_TITLE} from "~/strings";
-import {getItemsRouteEntitiesGet,} from "~/client";
-import {Page} from "~/components/pages/Page";
 import {useDisclosure} from "@mantine/hooks";
-import {useGetItems} from "~/lib/hooks/useGetItems";
-import {EntityList} from "~/components/lists/EntityList";
+import {EntitiesProvider, ScenariosProvider} from "~/providers/items_providers";
+import EntitiesPage from "~/pages/EntitiesPage";
+import {LoadingProvider} from "~/providers/LoadingProvider";
 
 export default function Entities() {
-    const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const {items, setItems} = useGetItems(
-        getItemsRouteEntitiesGet,
-        startLoading,
-        stopLoading,
-    )
-
-    return <Page
-        title={ENTITIES_PAGE_TITLE}
-        description={ENTITIES_PAGE_DESCRIPTION}
-        breadcrumbs={ENTITIES_BREADCRUMBS}
-        loading={loading}
-    >
-        <EntityList items={items} setItems={setItems}/>
-    </Page>
+    const [loadingEntities, {open: startLoadingEntities, close: stopLoadingEntities}] = useDisclosure()
+    const [loadingScenarios, {open: startLoadingScenarios, close: stopLoadingScenarios}] = useDisclosure()
+    return <LoadingProvider loading={loadingEntities || loadingScenarios}>
+        <EntitiesProvider
+            onBegin={startLoadingEntities}
+            onEnd={stopLoadingEntities}
+        >
+            <ScenariosProvider
+                onBegin={startLoadingScenarios}
+                onEnd={stopLoadingScenarios}
+            >
+                <EntitiesPage/>
+            </ScenariosProvider>
+        </EntitiesProvider>
+    </LoadingProvider>
 }

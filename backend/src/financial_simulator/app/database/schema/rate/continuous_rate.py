@@ -11,6 +11,6 @@ class ContinuousRate(Rate):
     __tablename__ = "continuous_rate"
 
     id: Mapped[UUID] = mapped_column(ForeignKey("rate.id"), primary_key=True)
-    annual_rate: Mapped[Decimal] = mapped_column()
+    annual_rate: Mapped[Decimal | None] = mapped_column()
 
     __mapper_args__ = {"polymorphic_identity": "continuous_rate"}

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Optional
 from uuid import UUID
 
 from sqlalchemy import ForeignKey
@@ -20,19 +20,19 @@ else:
 class BankAccount(BaseWithNameAndDescription):
     __tablename__ = "bank_account"
 
-    asset_account_id: Mapped[UUID] = mapped_column(
+    asset_account_id: Mapped[UUID | None] = mapped_column(
         ForeignKey("ledger_account.id")
     )
-    interest_income_account_id: Mapped[UUID] = mapped_column(
+    interest_income_account_id: Mapped[UUID | None] = mapped_column(
         ForeignKey("ledger_account.id")
     )
-    interest_receivable_account_id: Mapped[UUID] = mapped_column(
+    interest_receivable_account_id: Mapped[UUID | None] = mapped_column(
         ForeignKey("ledger_account.id")
     )
-    fee_expenses_account_id: Mapped[UUID] = mapped_column(
+    fee_expenses_account_id: Mapped[UUID | None] = mapped_column(
         ForeignKey("ledger_account.id")
     )
-    fees_payable_account_id: Mapped[UUID] = mapped_column(
+    fees_payable_account_id: Mapped[UUID | None] = mapped_column(
         ForeignKey("ledger_account.id")
     )
     fees_provider_id: Mapped[UUID | None] = mapped_column(ForeignKey("provider.id"))
@@ -42,23 +42,23 @@ class BankAccount(BaseWithNameAndDescription):
         ForeignKey("schedule.id")
     )
 
-    asset_account: Mapped[LedgerAccount] = relationship(
+    asset_account: Mapped[Optional[LedgerAccount]] = relationship(
         back_populates="bank_account_asset_accounts",
         foreign_keys="BankAccount.asset_account_id",
     )
-    interest_income_account: Mapped[LedgerAccount] = relationship(
+    interest_income_account: Mapped[Optional[LedgerAccount]] = relationship(
         back_populates="bank_account_interest_income_accounts",
         foreign_keys="BankAccount.interest_income_account_id",
     )
-    interest_receivable_account: Mapped[LedgerAccount] = relationship(
+    interest_receivable_account: Mapped[Optional[LedgerAccount]] = relationship(
         back_populates="bank_account_interest_receivable_accounts",
         foreign_keys="BankAccount.interest_receivable_account_id",
     )
-    fee_expenses_account: Mapped[LedgerAccount] = relationship(
+    fee_expenses_account: Mapped[Optional[LedgerAccount]] = relationship(
         back_populates="bank_account_fee_expenses_accounts",
         foreign_keys="BankAccount.fee_expenses_account_id",
     )
-    fees_payable_account: Mapped[LedgerAccount] = relationship(
+    fees_payable_account: Mapped[Optional[LedgerAccount]] = relationship(
         back_populates="bank_account_fees_payable_accounts",
         foreign_keys="BankAccount.fees_payable_account_id",
     )

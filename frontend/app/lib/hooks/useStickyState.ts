@@ -6,9 +6,22 @@ export enum StickyStateType {
     SESSION,
 }
 
-export function useStickyState<T>(defaultValue: T, key: string, type: StickyStateType = StickyStateType.LOCAL): [T, Dispatch<SetStateAction<T>>] {
+export interface Props<Type> {
+    defaultValue: Type
+    key: string
+    type?: StickyStateType
+}
+
+
+export function useStickyState<Type>(
+    {
+        defaultValue,
+        key,
+        type = StickyStateType.LOCAL,
+    }: Props<Type>
+): [Type, Dispatch<SetStateAction<Type>>] {
     const storage = type === StickyStateType.LOCAL ? window.localStorage : window.sessionStorage
-    const [value, setValue] = useState<T>(() => {
+    const [value, setValue] = useState<Type>(() => {
         const stickyValue = storage.getItem(key);
 
         return stickyValue !== null

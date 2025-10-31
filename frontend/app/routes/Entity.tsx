@@ -1,29 +1,12 @@
 import type {Route} from "./+types/Entity";
 import {ENTITY_BREADCRUMBS, ENTITY_PAGE_DESCRIPTION, ENTITY_PAGE_TITLE} from "~/strings";
-import {ItemPageForm} from "~/components/pages/ItemPageForm";
-import {useState} from "react";
-import {
-    type CorporationEntityGet,
-    type CorporationEntityPost,
-    deleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDelete,
-    getItemRouteEntitiesItemIdGet,
-    getItemsRouteScenariosGet,
-    getRelatedItemsRouteEntitiesItemIdScenariosGet,
-    type IndividualEntityGet,
-    type IndividualEntityPost,
-    postRelatedItemRouteEntitiesItemIdScenariosPost,
-    putItemRouteEntitiesItemIdPut
-} from "~/client";
 import {useDisclosure} from "@mantine/hooks";
-import {useItemPage} from "~/lib/hooks/useItemPage";
-import {RelationSelector} from "~/components/controls/RelationSelector";
-import {Page} from "~/components/pages/Page";
-import {validateEntityPost} from "~/lib/validators";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
 import type {EntityGet} from "~/lib/types";
-import {EntityPostForm} from "~/components/forms/EntityPostForm";
-import {Stack} from "@mantine/core";
-import {GetSetProvider} from "~/components/providers/GetSetProvider";
+import {EntityProvider} from "~/providers/item_providers";
+import EntityPage from "~/pages/EntityPage/EntityPage";
+import {LoadingProvider} from "~/providers/LoadingProvider";
+import {ScenariosProvider} from "~/providers/items_providers";
 
 export function getEntityPageParams(item: EntityGet): ItemPageParams {
     return {
@@ -35,59 +18,20 @@ export function getEntityPageParams(item: EntityGet): ItemPageParams {
 export default function Entity({params}: Route.ComponentProps) {
     const {itemId} = params
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const [revertDisabled, setRevertDisabled] = useState(true)
-    const [saveDisabled, setSaveDisabled] = useState(true)
-
-    const {
-        getField,
-        setField,
-        revert,
-        submit,
-        pageTitle,
-        pageDescription,
-        pageBreadcrumbs,
-    } = useItemPage<IndividualEntityPost | CorporationEntityPost, IndividualEntityGet | CorporationEntityGet>(
-        itemId,
-        ENTITY_PAGE_TITLE,
-        ENTITY_PAGE_DESCRIPTION,
-        ENTITY_BREADCRUMBS,
-        getEntityPageParams,
-        getItemRouteEntitiesItemIdGet,
-        putItemRouteEntitiesItemIdPut,
-        startLoading,
-        stopLoading,
-        setRevertDisabled,
-        setSaveDisabled,
-        validateEntityPost,
-    )
-
-    return <Page
-        title={pageTitle}
-        description={pageDescription}
-        breadcrumbs={pageBreadcrumbs}
-        loading={loading}
-    >
-        <ItemPageForm
-            onRevert={revert}
-            revertDisabled={revertDisabled}
-            onSave={submit}
-            saveDisabled={saveDisabled}
+    return <LoadingProvider loading={loading}>
+        <EntityProvider
+            itemId={itemId}
+            itemPageTitle={ENTITY_PAGE_TITLE}
+            itemPageDescription={ENTITY_PAGE_DESCRIPTION}
+            itemBreadcrumbs={ENTITY_BREADCRUMBS}
+            getItemPageParams={getEntityPageParams}
+            onBegin={startLoading}
+            onEnd={stopLoading}
+            depth={1}
         >
-            <GetSetProvider getField={getField} setField={setField}>
-                <EntityPostForm/>
-            </GetSetProvider>
-        </ItemPageForm>
-        <Stack>
-            <RelationSelector
-                itemId={itemId}
-                label="scenarios"
-                getRelatedOptions={getItemsRouteScenariosGet}
-                getRelatedItems={getRelatedItemsRouteEntitiesItemIdScenariosGet}
-                postRelatedItem={postRelatedItemRouteEntitiesItemIdScenariosPost}
-                deleteRelatedItem={deleteRelatedItemRouteEntitiesItemIdScenariosRelatedItemIdDelete}
-                startLoading={startLoading}
-                stopLoading={stopLoading}
-            />
-        </Stack>
-    </Page>
+            <ScenariosProvider>
+                <EntityPage/>
+            </ScenariosProvider>
+        </EntityProvider>
+    </LoadingProvider>
 }

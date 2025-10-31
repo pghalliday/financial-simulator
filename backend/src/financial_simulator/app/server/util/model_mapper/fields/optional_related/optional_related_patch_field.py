@@ -13,7 +13,7 @@ class OptionalRelatedPatchField(PatchField[TABLE]):
     def __init__(self, field_relation: FieldRelation):
         self.__field_relation = field_relation
 
-    def map(self, field: str, session: Session, item: TABLE, value: Any) -> None:
+    def map(self, field: str, session: Session, item: TABLE, model: type[TABLE], value: Any) -> None:
         setattr(item, self.__field_relation.field, get_optional_related_item(
             session,
             self.__field_relation.model,

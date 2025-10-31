@@ -1,22 +1,11 @@
-import type {Route} from "./+types/LedgerAccount";
-import {LEDGER_ACCOUNT_BREADCRUMBS, LEDGER_ACCOUNT_PAGE_DESCRIPTION, LEDGER_ACCOUNT_PAGE_TITLE,} from "~/strings";
-import {ItemPageForm} from "~/components/pages/ItemPageForm";
-import {useEffect, useState} from "react";
-import {
-    getItemRouteLedgerAccountsItemIdGet,
-    type LedgerAccountGet,
-    type LedgerAccountPost,
-    putItemRouteLedgerAccountsItemIdPut
-} from "~/client";
+import type {Route} from "./+types/Scenario";
 import {useDisclosure} from "@mantine/hooks";
-import {useItemPage} from "~/lib/hooks/useItemPage";
-import {Page} from "~/components/pages/Page";
-import {validateLedgerAccountPost} from "~/lib/validators";
-import {LedgerAccountPostForm} from "~/components/forms/LedgerAccountPostForm";
-import {LedgerAccountList} from "~/components/lists/LedgerAccountList";
-import {Space, Title} from "@mantine/core";
+import {LedgerAccountProvider} from "~/providers/item_providers";
+import type {LedgerAccountGet} from "~/client";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
-import {GetSetProvider} from "~/components/providers/GetSetProvider";
+import {LEDGER_ACCOUNT_BREADCRUMBS, LEDGER_ACCOUNT_PAGE_DESCRIPTION, LEDGER_ACCOUNT_PAGE_TITLE} from "~/strings";
+import LedgerAccountPage from "~/pages/LedgerAccountPage/LedgerAccountPage";
+import {LoadingProvider} from "~/providers/LoadingProvider";
 
 export function getLedgerAccountPageParams(item: LedgerAccountGet): ItemPageParams {
     const itemPageParams: ItemPageParams = {
@@ -32,61 +21,18 @@ export function getLedgerAccountPageParams(item: LedgerAccountGet): ItemPagePara
 export default function LedgerAccount({params}: Route.ComponentProps) {
     const {itemId} = params
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const [revertDisabled, setRevertDisabled] = useState(true)
-    const [saveDisabled, setSaveDisabled] = useState(true)
-    const [subAccounts, setSubAccounts] = useState<LedgerAccountGet[]>([])
-
-    const {
-        item,
-        getField,
-        setField,
-        revert,
-        submit,
-        pageTitle,
-        pageDescription,
-        pageBreadcrumbs,
-    } = useItemPage<LedgerAccountPost, LedgerAccountGet>(
-        itemId,
-        LEDGER_ACCOUNT_PAGE_TITLE,
-        LEDGER_ACCOUNT_PAGE_DESCRIPTION,
-        LEDGER_ACCOUNT_BREADCRUMBS,
-        getLedgerAccountPageParams,
-        getItemRouteLedgerAccountsItemIdGet,
-        putItemRouteLedgerAccountsItemIdPut,
-        startLoading,
-        stopLoading,
-        setRevertDisabled,
-        setSaveDisabled,
-        validateLedgerAccountPost,
-        -1,
-        -1,
-    )
-
-    useEffect(() => {
-        if (item !== undefined) {
-            setSubAccounts(item.sub_accounts)
-        }
-    }, [item]);
-
-    return <Page
-        title={pageTitle}
-        description={pageDescription}
-        breadcrumbs={pageBreadcrumbs}
-        loading={loading}
-    >
-        <ItemPageForm
-            onRevert={revert}
-            revertDisabled={revertDisabled}
-            onSave={submit}
-            saveDisabled={saveDisabled}
+    return <LoadingProvider loading={loading}>
+        <LedgerAccountProvider
+            itemId={itemId}
+            itemPageTitle={LEDGER_ACCOUNT_PAGE_TITLE}
+            itemPageDescription={LEDGER_ACCOUNT_PAGE_DESCRIPTION}
+            itemBreadcrumbs={LEDGER_ACCOUNT_BREADCRUMBS}
+            getItemPageParams={getLedgerAccountPageParams}
+            onBegin={startLoading}
+            onEnd={stopLoading}
+            depth={-1}
         >
-            <GetSetProvider getField={getField} setField={setField}>
-                <LedgerAccountPostForm parent={item?.parent}/>
-            </GetSetProvider>
-        </ItemPageForm>
-        <Space h={20}/>
-        <Title order={4}>Sub Accounts</Title>
-        <Space h={20}/>
-        <LedgerAccountList parent={item} items={subAccounts} setItems={setSubAccounts}/>
-    </Page>
+            <LedgerAccountPage/>
+        </LedgerAccountProvider>
+    </LoadingProvider>
 }

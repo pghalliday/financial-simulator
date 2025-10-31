@@ -1,24 +1,22 @@
-import {SCENARIOS_BREADCRUMBS, SCENARIOS_PAGE_DESCRIPTION, SCENARIOS_PAGE_TITLE} from "~/strings";
-import {getItemsRouteScenariosGet,} from "~/client";
-import {Page} from "~/components/pages/Page";
 import {useDisclosure} from "@mantine/hooks";
-import {useGetItems} from "~/lib/hooks/useGetItems";
-import {ScenarioList} from "~/components/lists/ScenarioList";
+import {EntitiesProvider, ScenariosProvider} from "~/providers/items_providers";
+import {ScenariosPage} from "~/pages/ScenariosPage";
+import {LoadingProvider} from "~/providers/LoadingProvider";
 
 export default function Scenarios() {
-    const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    const {items, setItems} = useGetItems(
-        getItemsRouteScenariosGet,
-        startLoading,
-        stopLoading,
-    )
-
-    return <Page
-        title={SCENARIOS_PAGE_TITLE}
-        description={SCENARIOS_PAGE_DESCRIPTION}
-        breadcrumbs={SCENARIOS_BREADCRUMBS}
-        loading={loading}
-    >
-        <ScenarioList items={items} setItems={setItems}/>
-    </Page>
+    const [loadingScenario, {open: startLoadingScenario, close: stopLoadingScenario}] = useDisclosure()
+    const [loadingEntities, {open: startLoadingEntities, close: stopLoadingEntities}] = useDisclosure()
+    return <LoadingProvider loading={loadingScenario || loadingEntities}>
+        <ScenariosProvider
+            onBegin={startLoadingScenario}
+            onEnd={stopLoadingScenario}
+        >
+            <EntitiesProvider
+                onBegin={startLoadingEntities}
+                onEnd={stopLoadingEntities}
+            >
+                <ScenariosPage/>
+            </EntitiesProvider>
+        </ScenariosProvider>
+    </LoadingProvider>
 }

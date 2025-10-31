@@ -19,27 +19,27 @@ export type BankAccountGet = {
     /**
      * Description
      */
-    description: string;
+    description: string | null;
     /**
      * Asset Account Id
      */
-    asset_account_id: string;
+    asset_account_id: string | null;
     /**
      * Interest Income Account Id
      */
-    interest_income_account_id: string;
+    interest_income_account_id: string | null;
     /**
      * Interest Receivable Account Id
      */
-    interest_receivable_account_id: string;
+    interest_receivable_account_id: string | null;
     /**
      * Fee Expenses Account Id
      */
-    fee_expenses_account_id: string;
+    fee_expenses_account_id: string | null;
     /**
      * Fees Payable Account Id
      */
-    fees_payable_account_id: string;
+    fees_payable_account_id: string | null;
     /**
      * Fees Provider Id
      */
@@ -119,27 +119,27 @@ export type BankAccountPost = {
     /**
      * Description
      */
-    description: string;
+    description?: string | null;
     /**
      * Asset Account Id
      */
-    asset_account_id: string;
+    asset_account_id?: string | null;
     /**
      * Interest Income Account Id
      */
-    interest_income_account_id: string;
+    interest_income_account_id?: string | null;
     /**
      * Interest Receivable Account Id
      */
-    interest_receivable_account_id: string;
+    interest_receivable_account_id?: string | null;
     /**
      * Fee Expenses Account Id
      */
-    fee_expenses_account_id: string;
+    fee_expenses_account_id?: string | null;
     /**
      * Fees Payable Account Id
      */
-    fees_payable_account_id: string;
+    fees_payable_account_id?: string | null;
     /**
      * Fees Provider Id
      */
@@ -177,6 +177,16 @@ export type ChangeTypeError = {
 };
 
 /**
+ * ChildReference
+ */
+export type ChildReference = {
+    /**
+     * Id
+     */
+    id: string;
+};
+
+/**
  * CorporationEntityGet
  */
 export type CorporationEntityGet = {
@@ -195,7 +205,11 @@ export type CorporationEntityGet = {
     /**
      * Description
      */
-    description: string;
+    description: string | null;
+    /**
+     * Scenarios
+     */
+    scenarios: Array<EntityScenarioGet>;
 };
 
 /**
@@ -214,6 +228,10 @@ export type CorporationEntityPatch = {
      * Description
      */
     description?: string | null;
+    /**
+     * Scenarios
+     */
+    scenarios?: Array<ChildReference> | null;
 };
 
 /**
@@ -231,7 +249,11 @@ export type CorporationEntityPost = {
     /**
      * Description
      */
-    description: string;
+    description?: string | null;
+    /**
+     * Scenarios
+     */
+    scenarios: Array<ChildReference>;
 };
 
 /**
@@ -371,7 +393,7 @@ export type EntityScenarioGet = {
     /**
      * Description
      */
-    description: string;
+    description: string | null;
 };
 
 /**
@@ -438,7 +460,11 @@ export type IndividualEntityGet = {
     /**
      * Description
      */
-    description: string;
+    description: string | null;
+    /**
+     * Scenarios
+     */
+    scenarios: Array<EntityScenarioGet>;
 };
 
 /**
@@ -457,6 +483,10 @@ export type IndividualEntityPatch = {
      * Description
      */
     description?: string | null;
+    /**
+     * Scenarios
+     */
+    scenarios?: Array<ChildReference> | null;
 };
 
 /**
@@ -474,7 +504,11 @@ export type IndividualEntityPost = {
     /**
      * Description
      */
-    description: string;
+    description?: string | null;
+    /**
+     * Scenarios
+     */
+    scenarios: Array<ChildReference>;
 };
 
 /**
@@ -492,7 +526,7 @@ export type LedgerAccountBankAccountGet = {
     /**
      * Description
      */
-    description: string;
+    description?: string | null;
 };
 
 /**
@@ -510,7 +544,7 @@ export type LedgerAccountGet = {
     /**
      * Description
      */
-    description: string;
+    description: string | null;
     /**
      * Account Name
      */
@@ -579,7 +613,7 @@ export type LedgerAccountPost = {
     /**
      * Description
      */
-    description: string;
+    description?: string | null;
     /**
      * Account Name
      */
@@ -669,7 +703,7 @@ export type ScenarioEntityGet = {
     /**
      * Description
      */
-    description: string;
+    description: string | null;
 };
 
 /**
@@ -687,7 +721,11 @@ export type ScenarioGet = {
     /**
      * Description
      */
-    description: string;
+    description: string | null;
+    /**
+     * Entities
+     */
+    entities: Array<ScenarioEntityGet>;
 };
 
 /**
@@ -702,6 +740,10 @@ export type ScenarioPatch = {
      * Description
      */
     description?: string | null;
+    /**
+     * Entities
+     */
+    entities?: Array<ChildReference> | null;
 };
 
 /**
@@ -715,7 +757,11 @@ export type ScenarioPost = {
     /**
      * Description
      */
-    description: string;
+    description?: string | null;
+    /**
+     * Entities
+     */
+    entities: Array<ChildReference>;
 };
 
 /**
@@ -779,6 +825,10 @@ export type PostItemRouteScenariosPostData = {
 };
 
 export type PostItemRouteScenariosPostErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
     /**
      * Database integrity error
      */
@@ -891,6 +941,10 @@ export type PatchItemRouteScenariosItemIdPatchData = {
 
 export type PatchItemRouteScenariosItemIdPatchErrors = {
     /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
      * Not found
      */
     404: HttpNotFoundError;
@@ -928,6 +982,10 @@ export type PutItemRouteScenariosItemIdPutData = {
 };
 
 export type PutItemRouteScenariosItemIdPutErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
     /**
      * Database integrity error
      */
@@ -1169,6 +1227,10 @@ export type PostItemRouteEntitiesPostData = {
 
 export type PostItemRouteEntitiesPostErrors = {
     /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
      * Database integrity error
      */
     409: HttpDatabaseIntegrityError;
@@ -1286,6 +1348,10 @@ export type PatchItemRouteEntitiesItemIdPatchData = {
 
 export type PatchItemRouteEntitiesItemIdPatchErrors = {
     /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
      * Not found
      */
     404: HttpNotFoundError;
@@ -1328,6 +1394,10 @@ export type PutItemRouteEntitiesItemIdPutData = {
 };
 
 export type PutItemRouteEntitiesItemIdPutErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
     /**
      * Response 409 Put Item Route Entities  Item Id  Put
      * Database error

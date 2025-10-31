@@ -1,5 +1,5 @@
 import logging
-from typing import Optional, Union, Literal
+from typing import Union, Literal, Sequence
 from uuid import UUID
 
 from fastapi import APIRouter
@@ -18,8 +18,11 @@ from .common.typed_collection import TypedCollection
 from ..util.model_mapper import (
     GetMapper,
     ModelMapper,
+    ChildrenModelField,
+    ChildReference,
 )
 from ..util.model_mapper import OrdinaryGetField, OrdinaryModelField
+from ..util.model_mapper.fields.children.children_model_field import ChildrenModelFieldParams
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +31,8 @@ CorporationEntityType = Literal["corporation_entity"]
 
 class EntityPost(typed_collection.TypedBaseModel):
     name: str
-    description: str
+    description: str | None = None
+    scenarios: Sequence[ChildReference]
 
 class IndividualEntityPost(EntityPost):
     type: IndividualEntityType
@@ -38,8 +42,9 @@ class CorporationEntityPost(EntityPost):
 
 
 class EntityPatch(typed_collection.TypedBaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
+    name: str | None = None
+    description: str | None = None
+    scenarios: Sequence[ChildReference] | None = None
 
 class IndividualEntityPatch(EntityPatch):
     type: IndividualEntityType
@@ -47,10 +52,16 @@ class IndividualEntityPatch(EntityPatch):
 class CorporationEntityPatch(EntityPatch):
     type: CorporationEntityType
 
+class EntityScenarioGet(BaseModel):
+    id: UUID
+    name: str
+    description: str | None
+
 class EntityGet(typed_collection.TypedBaseModel):
     id: UUID
     name: str
-    description: str
+    description: str | None
+    scenarios: Sequence[EntityScenarioGet]
 
 class IndividualEntityGet(EntityGet):
     type: IndividualEntityType
@@ -58,6 +69,15 @@ class IndividualEntityGet(EntityGet):
 class CorporationEntityGet(EntityGet):
     type: CorporationEntityType
 
+
+entity_scenario_get_mapper = GetMapper(
+    table_model=Scenario,
+    get_model=EntityScenarioGet,
+    fields={
+        "name": OrdinaryGetField(),
+        "description": OrdinaryGetField(),
+    },
+)
 
 individual_model_mapper = ModelMapper[
     IndividualEntity,
@@ -73,6 +93,10 @@ individual_model_mapper = ModelMapper[
         "type": OrdinaryModelField(),
         "name": OrdinaryModelField(),
         "description": OrdinaryModelField(),
+        "scenarios": ChildrenModelField(ChildrenModelFieldParams(
+            include_post_and_patch=True,
+            get_mapper=entity_scenario_get_mapper,
+        )),
     },
 )
 
@@ -90,6 +114,12 @@ corporation_model_mapper = ModelMapper[
         "type": OrdinaryModelField(),
         "name": OrdinaryModelField(),
         "description": OrdinaryModelField(),
+        "scenarios": ChildrenModelField(
+            ChildrenModelFieldParams(
+                include_post_and_patch=True,
+                get_mapper=entity_scenario_get_mapper,
+            )
+        ),
     },
 )
 
@@ -116,25 +146,11 @@ TypedCollection(
     router=router,
 )
 
-class EntityScenarioGet(BaseModel):
-    id: UUID
-    name: str
-    description: str
-
-related_get_mapper = GetMapper(
-    table_model=Scenario,
-    get_model=EntityScenarioGet,
-    fields={
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
-)
-
 Relation(
     relation_route="scenarios",
     relation_field="scenarios",
     table_model=Entity,
-    get_mapper=related_get_mapper,
+    get_mapper=entity_scenario_get_mapper,
 ).add_endpoints(
     router=router,
 )

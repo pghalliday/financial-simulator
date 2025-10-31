@@ -2,7 +2,13 @@ import cx from 'clsx'
 import {NavLink} from "@mantine/core";
 import {NavLink as RRNavLink} from 'react-router'
 
-export function NavbarLink({label, href, onClick}: { label: string, href: string, onClick: () => void }) {
+export interface Props {
+    label: string,
+    href: string,
+    onClick: () => void,
+}
+
+export function NavbarLink({label, href, onClick}: Props) {
     return <NavLink
         label={label}
         variant="filled"

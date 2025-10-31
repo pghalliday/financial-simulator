@@ -12,8 +12,8 @@ class RateValue(Value):
     __tablename__ = "rate_value"
 
     id: Mapped[UUID] = mapped_column(ForeignKey("value.id"), primary_key=True)
-    rate_id: Mapped[UUID] = mapped_column(ForeignKey("rate.id"))
+    rate_id: Mapped[UUID | None] = mapped_column(ForeignKey("rate.id"))
 
-    rate: Mapped[Rate] = relationship()
+    rate: Mapped[Rate | None] = relationship()
 
     __mapper_args__ = {"polymorphic_identity": "rate_value"}

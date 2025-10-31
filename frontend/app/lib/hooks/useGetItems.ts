@@ -3,12 +3,22 @@ import {useEffect, useState} from "react";
 import {callApi} from "~/lib/callApi";
 import {GET_ITEMS_ERROR_TITLE} from "~/strings";
 
+export interface Props<Get> {
+    getItemsApi: GetItemsApi<Get>
+    onBegin?: () => void
+    onEnd?: () => void
+    depth?: number
+    maxParents?: number
+}
+
 export function useGetItems<Get>(
-    getItemApi: GetItemsApi<Get>,
-    startGetting: () => void,
-    stopGetting: () => void,
-    depth: number = 0,
-    maxParents: number = 0,
+    {
+        getItemsApi,
+        onBegin,
+        onEnd,
+        depth = 0,
+        maxParents = 0,
+    }: Props<Get>
 ): {
     items: Get[],
     setItems: (items: Get[]) => void,
@@ -17,7 +27,7 @@ export function useGetItems<Get>(
 
     useEffect(() => {
         callApi({
-            api: () => getItemApi({
+            api: () => getItemsApi({
                 query: {
                     depth: depth,
                     max_parents: maxParents,
@@ -25,8 +35,8 @@ export function useGetItems<Get>(
             }),
             errorTitle: GET_ITEMS_ERROR_TITLE,
             onSuccess: setItems,
-            begin: startGetting,
-            end: stopGetting,
+            onBegin,
+            onEnd,
         })
     }, []);
 

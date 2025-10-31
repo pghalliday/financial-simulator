@@ -1,5 +1,5 @@
 import logging
-from typing import Optional, Literal
+from typing import Literal, Sequence
 from uuid import UUID
 
 from fastapi import APIRouter
@@ -14,26 +14,48 @@ from ..util.model_mapper import (
     ModelMapper,
     OrdinaryGetField,
     OrdinaryModelField,
+    ChildrenModelField,
+    ChildReference,
 )
+from ..util.model_mapper.fields.children.children_model_field import ChildrenModelFieldParams
 
 logger = logging.getLogger(__name__)
 
 class ScenarioPost(BaseModel):
     name: str
-    description: str
+    description: str | None = None
+    entities: Sequence[ChildReference]
 
 class ScenarioPatch(BaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
+    name: str | None = None
+    description: str | None = None
+    entities: Sequence[ChildReference] | None = None
+
+class ScenarioEntityGet(BaseModel):
+    id: UUID
+    type: Literal["individual_entity", "corporation_entity"]
+    name: str
+    description: str | None
 
 class ScenarioGet(BaseModel):
     id: UUID
     name: str
-    description: str
+    description: str | None
+    entities: Sequence[ScenarioEntityGet]
 
 router = APIRouter(
     prefix="/scenarios",
     tags=["scenarios"],
+)
+
+scenario_entity_get_mapper = GetMapper(
+    table_model=Entity,
+    get_model=ScenarioEntityGet,
+    fields={
+        "type": OrdinaryGetField(),
+        "name": OrdinaryGetField(),
+        "description": OrdinaryGetField(),
+    },
 )
 
 model_mapper = ModelMapper(
@@ -44,7 +66,11 @@ model_mapper = ModelMapper(
     fields={
         "name": OrdinaryModelField(),
         "description": OrdinaryModelField(),
-    }
+        "entities": ChildrenModelField(ChildrenModelFieldParams(
+            include_post_and_patch=True,
+            get_mapper=scenario_entity_get_mapper,
+        )),
+    },
 )
 
 Collection(
@@ -54,27 +80,11 @@ Collection(
     router=router,
 )
 
-class ScenarioEntityGet(BaseModel):
-    id: UUID
-    type: Literal["individual_entity", "corporation_entity"]
-    name: str
-    description: str
-
-related_get_mapper = GetMapper(
-    table_model=Entity,
-    get_model=ScenarioEntityGet,
-    fields={
-        "type": OrdinaryGetField(),
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
-)
-
 Relation(
     relation_route="entities",
     relation_field="entities",
     table_model=Scenario,
-    get_mapper=related_get_mapper,
+    get_mapper=scenario_entity_get_mapper,
 ).add_endpoints(
     router=router,
 )

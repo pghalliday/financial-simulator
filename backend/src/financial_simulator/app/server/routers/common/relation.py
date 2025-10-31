@@ -24,6 +24,7 @@ from financial_simulator.app.server.util.model_mapper import (
     RELATED_TABLE,
     GetMapperInterface,
 )
+from financial_simulator.app.server.util.model_mapper.types import TreeBehavior
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
@@ -64,8 +65,8 @@ class Relation(Generic[TABLE, RELATED_TABLE, GET]):
                 404: {"model": HTTPNotFoundError, "description": "Not found"},
             }
         )
-        async def get_related_items_route(item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> List[get_model]:
-            return [get_mapper.map(related_item, depth, max_parents) for related_item in getattr(
+        async def get_related_items_route(item_id: UUID, session: DBSessionDependency) -> List[get_model]:
+            return [get_mapper.map(related_item, TreeBehavior()) for related_item in getattr(
                 get_item(session, table_model, item_id),
                 relation_field
             )]
@@ -89,7 +90,7 @@ class Relation(Generic[TABLE, RELATED_TABLE, GET]):
             )
             getattr(item, relation_field).append(related_item)
             session.commit()
-            return get_mapper.map(related_item)
+            return get_mapper.map(related_item, TreeBehavior())
 
         @router.get(
             f"/{{item_id}}/{relation_route}/{{related_item_id}}",
@@ -97,14 +98,14 @@ class Relation(Generic[TABLE, RELATED_TABLE, GET]):
                 404: {"model": HTTPNotFoundError | HTTPRelatedItemNotFoundError, "description": "Not found"},
             },
         )
-        async def get_related_item_route(item_id: UUID, related_item_id: UUID, session: DBSessionDependency, depth: int = 0, max_parents: int = 0) -> get_model:
+        async def get_related_item_route(item_id: UUID, related_item_id: UUID, session: DBSessionDependency) -> get_model:
             return get_mapper.map(find_related_item(
                 table_model,
                 get_mapper.table_model,
                 relation_field,
                 get_item(session, table_model, item_id),
                 related_item_id,
-            ), depth, max_parents)
+            ), TreeBehavior())
 
         @router.delete(
             f"/{{item_id}}/{relation_route}/{{related_item_id}}",
@@ -123,4 +124,4 @@ class Relation(Generic[TABLE, RELATED_TABLE, GET]):
             )
             getattr(item, relation_field).remove(related_item)
             session.commit()
-            return get_mapper.map(related_item)
+            return get_mapper.map(related_item, TreeBehavior())

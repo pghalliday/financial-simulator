@@ -7,7 +7,6 @@ const types = scope({
         name: "string",
         "parent?": "ItemPageParams"
     }
-
 }).export()
 
 export const PAGE_PARAMS_SEARCH_KEY = "pageParams"

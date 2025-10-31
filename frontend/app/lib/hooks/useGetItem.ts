@@ -3,14 +3,25 @@ import {useEffect, useState} from "react";
 import {GET_ITEM_ERROR_TITLE} from "~/strings";
 import type {GetItemApi} from "~/lib/types";
 
-export function useGetItem<Get>(
+export interface Props<Get> {
     itemId: string,
     getItemApi: GetItemApi<Get>,
-    startGetting: () => void,
-    stopGetting: () => void,
-    depth: number = 0,
-    maxParents: number = 0,
-): { item: Get | undefined, setItem: (item: Get | undefined) => void } {
+    onBegin?: () => void,
+    onEnd?: () => void,
+    depth?: number,
+    maxParents?: number,
+}
+
+export function useGetItem<Get>(
+    {
+        itemId,
+        getItemApi,
+        onBegin,
+        onEnd,
+        depth = 0,
+        maxParents = 0,
+    }: Props<Get>
+): { item?: Get, setItem: (item?: Get) => void } {
     const [item, setItem] = useState<Get>()
 
     useEffect(() => {
@@ -26,8 +37,8 @@ export function useGetItem<Get>(
             }),
             errorTitle: GET_ITEM_ERROR_TITLE,
             onSuccess: setItem,
-            begin: startGetting,
-            end: stopGetting,
+            onBegin,
+            onEnd,
         });
     }, [itemId]);
 

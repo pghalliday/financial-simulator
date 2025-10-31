@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from typing import TypeVar, Generic, Optional
 from uuid import UUID
 
@@ -16,10 +17,13 @@ RELATED_GET = TypeVar('RELATED_GET', bound=BaseModel)
 RELATED_POST = TypeVar('RELATED_POST', bound=BaseModel)
 RELATED_PATCH = TypeVar('RELATED_PATCH', bound=BaseModel)
 
-class FieldRelation(BaseModel, Generic[TABLE]):
-    class Config:
-        frozen = True
+@dataclass(frozen=True)
+class TreeBehavior:
+    omit_children: bool = False
+    omit_parents: bool = False
 
+@dataclass(frozen=True)
+class FieldRelation(Generic[TABLE]):
     field: str
     model: type[TABLE]
 
@@ -28,8 +32,13 @@ class GetMapperInterface(ABC, Generic[TABLE, GET]):
     get_model: type[GET]
 
     @abstractmethod
-    def map(self, item: TABLE, depth: int = 0, max_parents: int = 0) -> GET:
+    def map(self, item: TABLE, tree_behavior: TreeBehavior) -> GET:
         raise NotImplementedError
+
+@dataclass(frozen=True)
+class ChildrenModelFieldParams(Generic[RELATED_TABLE, RELATED_GET]):
+    include_post_and_patch: bool = False
+    get_mapper: GetMapperInterface[RELATED_TABLE, RELATED_GET] | None = None
 
 class PostMapperInterface(ABC, Generic[TABLE, POST]):
     table_model: type[TABLE]
@@ -58,7 +67,7 @@ class ModelMapperInterface(ABC, Generic[TABLE, GET, POST, PATCH]):
     patch_mapper: PatchMapperInterface[TABLE, PATCH]
 
     @abstractmethod
-    def map_get(self, item: TABLE, depth: int = 0, max_parents: int = 0) -> GET:
+    def map_get(self, item: TABLE) -> GET:
         raise NotImplementedError
 
     @abstractmethod

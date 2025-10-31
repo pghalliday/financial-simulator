@@ -21,18 +21,18 @@ export interface CallApiParams<T> {
     api: () => Promise<APIResult<T>>
     errorTitle: string,
     onSuccess: (data: T) => void,
-    begin: () => void,
-    end: () => void,
+    onBegin?: () => void,
+    onEnd?: () => void,
 }
 
 export function callApi<T>({
                                api,
                                errorTitle,
                                onSuccess,
-                               begin,
-                               end,
+                               onBegin,
+                               onEnd,
                            }: CallApiParams<T>) {
-    begin()
+    onBegin && onBegin()
     api().then(({data, error, response}) => {
         if (data != undefined) {
             onSuccess(data)
@@ -41,5 +41,5 @@ export function callApi<T>({
         }
     }).catch(error => {
         notifyApiError(errorTitle, error)
-    }).finally(end)
+    }).finally(onEnd)
 }

@@ -14,6 +14,7 @@ from financial_simulator.app.server.util.model_mapper.types import (
     POST,
     PATCH,
     ModelMapperInterface,
+    TreeBehavior,
 )
 
 logger = logging.getLogger(__name__)
@@ -36,8 +37,8 @@ class ModelMapper(ModelMapperInterface[TABLE, GET, POST, PATCH]):
         self.post_mapper = PostMapper[TABLE, GET](table_model, get_model, {field: model_field.post_field for field, model_field in fields.items()})
         self.patch_mapper = PatchMapper[TABLE, GET](table_model, get_model, {field: model_field.patch_field for field, model_field in fields.items()})
 
-    def map_get(self, item: TABLE, depth: int = 0, max_parents: int = 0) -> GET:
-        return self.get_mapper.map(item, depth, max_parents)
+    def map_get(self, item: TABLE) -> GET:
+        return self.get_mapper.map(item, TreeBehavior())
 
     def map_post(self, session: Session, item_post: POST, item_id: Optional[UUID] = None) -> TABLE:
         return self.post_mapper.map(session, item_post, item_id)

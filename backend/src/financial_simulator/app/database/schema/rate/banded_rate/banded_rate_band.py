@@ -17,8 +17,8 @@ class BandedRateBand(BaseWithId):
     __tablename__ = "banded_rate_band"
 
     banded_rate_id: Mapped[UUID] = mapped_column(ForeignKey("banded_rate.id"))
-    lower_bound: Mapped[Decimal] = mapped_column()
-    size: Mapped[Optional[Decimal]] = mapped_column()
-    rate_id: Mapped[UUID] = mapped_column(ForeignKey("rate.id"))
+    lower_bound: Mapped[Decimal | None] = mapped_column()
+    size: Mapped[Decimal | None] = mapped_column()
+    rate_id: Mapped[UUID | None] = mapped_column(ForeignKey("rate.id"))
 
-    rate: Mapped[Rate] = relationship()
+    rate: Mapped[Optional[Rate]] = relationship()

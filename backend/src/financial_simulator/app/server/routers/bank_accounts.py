@@ -1,5 +1,4 @@
 import logging
-from typing import Optional
 from uuid import UUID
 
 from fastapi import APIRouter
@@ -23,43 +22,43 @@ logger = logging.getLogger(__name__)
 
 class BankAccountPost(BaseModel):
     name: str
-    description: str
-    asset_account_id: UUID
-    interest_income_account_id: UUID
-    interest_receivable_account_id: UUID
-    fee_expenses_account_id: UUID
-    fees_payable_account_id: UUID
-    fees_provider_id: Optional[UUID] = None
-    fee_payment_schedule_id: Optional[UUID] = None
-    rate_provider_id: Optional[UUID] = None
-    interest_payment_schedule_id: Optional[UUID] = None
+    description: str | None = None
+    asset_account_id: UUID | None = None
+    interest_income_account_id: UUID | None = None
+    interest_receivable_account_id: UUID | None = None
+    fee_expenses_account_id: UUID | None = None
+    fees_payable_account_id: UUID | None = None
+    fees_provider_id: UUID | None = None
+    fee_payment_schedule_id: UUID | None = None
+    rate_provider_id: UUID | None = None
+    interest_payment_schedule_id: UUID | None = None
 
 class BankAccountPatch(BaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
-    asset_account_id: Optional[UUID] = None
-    interest_income_account_id: Optional[UUID] = None
-    interest_receivable_account_id: Optional[UUID] = None
-    fee_expenses_account_id: Optional[UUID] = None
-    fees_payable_account_id: Optional[UUID] = None
-    fees_provider_id: Optional[UUID] = None
-    fee_payment_schedule_id: Optional[UUID] = None
-    rate_provider_id: Optional[UUID] = None
-    interest_payment_schedule_id: Optional[UUID] = None
+    name: str | None = None
+    description: str | None = None
+    asset_account_id: UUID | None = None
+    interest_income_account_id: UUID | None = None
+    interest_receivable_account_id: UUID | None = None
+    fee_expenses_account_id: UUID | None = None
+    fees_payable_account_id: UUID | None = None
+    fees_provider_id: UUID | None = None
+    fee_payment_schedule_id: UUID | None = None
+    rate_provider_id: UUID | None = None
+    interest_payment_schedule_id: UUID | None = None
 
 class BankAccountGet(BaseModel):
     id: UUID
     name: str
-    description: str
-    asset_account_id: UUID
-    interest_income_account_id: UUID
-    interest_receivable_account_id: UUID
-    fee_expenses_account_id: UUID
-    fees_payable_account_id: UUID
-    fees_provider_id: Optional[UUID]
-    fee_payment_schedule_id: Optional[UUID]
-    rate_provider_id: Optional[UUID]
-    interest_payment_schedule_id: Optional[UUID]
+    description: str | None
+    asset_account_id: UUID | None
+    interest_income_account_id: UUID | None
+    interest_receivable_account_id: UUID | None
+    fee_expenses_account_id: UUID | None
+    fees_payable_account_id: UUID | None
+    fees_provider_id: UUID | None
+    fee_payment_schedule_id: UUID | None
+    rate_provider_id: UUID | None
+    interest_payment_schedule_id: UUID | None
 
 router = APIRouter(
     prefix="/bank-accounts",
@@ -77,16 +76,16 @@ model_mapper = ModelMapper(
         "asset_account_id": RelatedModelField(
             FieldRelation(field="asset_account", model=LedgerAccount)
         ),
-        "interest_income_account_id": RelatedModelField(
+        "interest_income_account_id": OptionalRelatedModelField(
             FieldRelation(field="interest_income_account", model=LedgerAccount)
         ),
-        "interest_receivable_account_id": RelatedModelField(
+        "interest_receivable_account_id": OptionalRelatedModelField(
             FieldRelation(field="interest_receivable_account", model=LedgerAccount)
         ),
-        "fee_expenses_account_id": RelatedModelField(
+        "fee_expenses_account_id": OptionalRelatedModelField(
             FieldRelation(field="fee_expenses_account", model=LedgerAccount)
         ),
-        "fees_payable_account_id": RelatedModelField(
+        "fees_payable_account_id": OptionalRelatedModelField(
             FieldRelation(field="fees_payable_account", model=LedgerAccount)
         ),
         "fees_provider_id": OptionalRelatedModelField(

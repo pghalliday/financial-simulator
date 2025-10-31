@@ -3,13 +3,20 @@ import {callApi} from "~/lib/callApi";
 import {DELETE_ITEM_ERROR_TITLE} from "~/strings";
 import {useCallback, useState} from "react";
 
+export interface Props<Get> {
+    onSuccess: (deleted: Get) => void,
+    onDelete: DeleteItemApi<Get>,
+    onBegin?: () => void,
+    onEnd?: () => void,
+}
+
 export function useDeleteItem<Get extends IdItem>(
-    items: Get[],
-    setItems: (items: Get[]) => void,
-    deleteItemApi: DeleteItemApi<Get>,
-    startDeleting: () => void,
-    stopDeleting: () => void,
-    onDeleteSuccess: () => void,
+    {
+        onSuccess,
+        onDelete,
+        onBegin,
+        onEnd,
+    }: Props<Get>
 ): {
     setToDelete: (toDelete: Get) => void,
     deleteItem: () => void
@@ -19,21 +26,18 @@ export function useDeleteItem<Get extends IdItem>(
     const deleteItem = useCallback(() => {
         if (toDelete !== undefined) {
             callApi({
-                api: () => deleteItemApi({
+                api: () => onDelete({
                     path: {
                         item_id: toDelete.id,
                     },
                 }),
                 errorTitle: DELETE_ITEM_ERROR_TITLE,
-                onSuccess: (deleted) => {
-                    setItems(items.filter(item => item.id !== deleted.id))
-                    onDeleteSuccess()
-                },
-                begin: startDeleting,
-                end: stopDeleting,
+                onSuccess,
+                onBegin,
+                onEnd,
             });
         }
-    }, [items, toDelete])
+    }, [toDelete, onSuccess, onDelete, onBegin, onEnd])
 
     return {setToDelete, deleteItem}
 }
