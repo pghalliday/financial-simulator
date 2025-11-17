@@ -15,7 +15,6 @@ from ..util.model_mapper import (
     FieldRelation,
     OptionalRelatedModelField,
     OrdinaryModelField,
-    RelatedModelField,
 )
 
 logger = logging.getLogger(__name__)
@@ -73,7 +72,7 @@ model_mapper = ModelMapper(
     fields={
         "name": OrdinaryModelField(),
         "description": OrdinaryModelField(),
-        "asset_account_id": RelatedModelField(
+        "asset_account_id": OptionalRelatedModelField(
             FieldRelation(field="asset_account", model=LedgerAccount)
         ),
         "interest_income_account_id": OptionalRelatedModelField(

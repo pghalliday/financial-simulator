@@ -32,6 +32,7 @@ export function BankAccountPostForm({ledgerAccountTree, onAddLedgerAccount}: Ban
 
     return <>
         <BoundTextInput
+            autoFocus
             formName={BANK_ACCOUNT_POST_FORM_NAME}
             fieldName="name"
             label="Name"

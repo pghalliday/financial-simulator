@@ -44,5 +44,10 @@ export function Navbar({close}: Props) {
             label={LEDGER_ACCOUNTS_PAGE_DESCRIPTION}
             onClick={close}
         />
+        <NavbarLink
+            href="/playground"
+            label="Playground"
+            onClick={close}
+        />
     </AppShell.Navbar>
 }

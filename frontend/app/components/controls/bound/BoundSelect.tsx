@@ -1,7 +1,9 @@
 import {Select} from "@mantine/core";
 import {type FormKeys, type FormRegistry, useFormContext} from "~/lib/hooks/useFormContext";
+import type {Ref} from "react";
 
 interface Props<Form extends keyof FormRegistry> {
+    ref?: Ref<HTMLInputElement>
     formName: Form
     fieldName: FormKeys<Form>
     data: { value: string, label: string }[]
@@ -13,6 +15,7 @@ interface Props<Form extends keyof FormRegistry> {
 
 export function BoundSelect<Form extends keyof FormRegistry>(
     {
+        ref,
         formName,
         fieldName,
         label,
@@ -24,6 +27,7 @@ export function BoundSelect<Form extends keyof FormRegistry>(
 ) {
     const form = useFormContext(formName)
     return <Select
+        ref={ref}
         label={label}
         description={description}
         placeholder={placeholder}

@@ -11,4 +11,5 @@ export default [
     route(BANK_ACCOUNTS_HREF + '/:itemId', "./routes/BankAccount.tsx"),
     route(LEDGER_ACCOUNTS_HREF, "./routes/LedgerAccounts.tsx"),
     route(LEDGER_ACCOUNTS_HREF + '/:itemId', "./routes/LedgerAccount.tsx"),
+    route("/playground", "./routes/Playground.tsx"),
 ] satisfies RouteConfig;
