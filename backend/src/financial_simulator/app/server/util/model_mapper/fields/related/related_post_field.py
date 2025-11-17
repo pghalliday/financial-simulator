@@ -4,7 +4,7 @@ from financial_simulator.app.server.util import (
     get_related_item,
 )
 from financial_simulator.app.server.util.model_mapper.fields.post_field import PostField
-from financial_simulator.app.server.util.model_mapper.types import POST, TABLE, FieldRelation
+from financial_simulator.app.server.util.model_mapper.types import PostMapperInterface, POST, TABLE, FieldRelation
 
 
 class RelatedPostField(PostField[TABLE, POST]):
@@ -13,7 +13,7 @@ class RelatedPostField(PostField[TABLE, POST]):
     def __init__(self, field_relation: FieldRelation):
         self.__field_relation = field_relation
 
-    def map(self, field: str, session: Session, item: TABLE, model: type[TABLE], item_post: POST) -> None:
+    def map(self, field: str, session: Session, item: TABLE, post_mapper: PostMapperInterface[TABLE, POST], item_post: POST) -> None:
         setattr(item, self.__field_relation.field, get_related_item(
             session,
             self.__field_relation.model,

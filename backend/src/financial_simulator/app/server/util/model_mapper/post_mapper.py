@@ -25,5 +25,5 @@ class PostMapper(PostMapperInterface[TABLE, POST]):
             item.id = item_id
         for field, post_field in self.__fields.items():
             if post_field is not None:
-                post_field.map(field, session, item, self.table_model, item_post)
+                post_field.map(field, session, item, self, item_post)
         return item

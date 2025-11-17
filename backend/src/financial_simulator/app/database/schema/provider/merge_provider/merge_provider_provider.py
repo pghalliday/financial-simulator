@@ -14,3 +14,4 @@ class MergeProviderProvider(Base):
     provider_id: Mapped[UUID] = mapped_column(
         ForeignKey("provider.id"), primary_key=True
     )
+    position: Mapped[int] = mapped_column()

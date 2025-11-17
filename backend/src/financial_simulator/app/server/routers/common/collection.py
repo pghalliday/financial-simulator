@@ -17,7 +17,6 @@ from financial_simulator.app.server.util.model_mapper import (
     TABLE,
     GET,
     POST,
-    PATCH,
     ModelMapperInterface,
 )
 
@@ -25,14 +24,14 @@ DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
 logger = logging.getLogger(__name__)
 
-class Collection(Generic[TABLE, GET, POST, PATCH]):
-    __model_mapper: ModelMapperInterface[TABLE, GET, POST, PATCH]
+class Collection(Generic[TABLE, GET, POST]):
+    __model_mapper: ModelMapperInterface[TABLE, GET, POST]
     __order_by: Optional[InstrumentedAttribute[str]]
     __where: Optional[ColumnElement[bool]]
 
     def __init__(
             self,
-            model_mapper: ModelMapperInterface[TABLE, GET, POST, PATCH],
+            model_mapper: ModelMapperInterface[TABLE, GET, POST],
             order_by: Optional[InstrumentedAttribute[str]] = None,
             where: Optional[ColumnElement[bool]] = None
     ) -> None:
@@ -47,7 +46,6 @@ class Collection(Generic[TABLE, GET, POST, PATCH]):
         table_model = model_mapper.table_model
         get_model = model_mapper.get_model
         post_model = model_mapper.post_model
-        patch_model = model_mapper.patch_model
 
         if model_mapper.has_invalid_relation_error:
             invalid_relation_error = {
@@ -115,25 +113,6 @@ class Collection(Generic[TABLE, GET, POST, PATCH]):
             session.commit()
             return model_mapper.map_get(merged)
 
-        @router.patch(
-            "/{item_id}",
-            responses={
-                **invalid_relation_error,
-                404: {"model": HTTPNotFoundError, "description": "Not found"},
-                409: {
-                    "model": HTTPDatabaseIntegrityError,
-                    "description": "Database integrity error",
-                },
-            },
-        )
-        async def patch_item_route(
-                item_id: UUID, item_patch: patch_model, session: DBSessionDependency
-        ) -> get_model:
-            item = get_item(session, table_model, item_id)
-            model_mapper.map_patch(session, item, item_patch)
-            session.commit()
-            return model_mapper.map_get(item)
-
         @router.delete(
             "/{item_id}",
             responses={
@@ -144,6 +123,7 @@ class Collection(Generic[TABLE, GET, POST, PATCH]):
                 item_id: UUID, session: DBSessionDependency
         ) -> get_model:
             item = get_item(session, table_model, item_id)
+            ret = model_mapper.map_get(item)
             session.delete(item)
             session.commit()
-            return model_mapper.map_get(item)
+            return ret

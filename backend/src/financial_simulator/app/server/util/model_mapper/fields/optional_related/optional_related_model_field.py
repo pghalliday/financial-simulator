@@ -1,6 +1,4 @@
 from financial_simulator.app.server.util.model_mapper.fields.model_field import ModelField
-from financial_simulator.app.server.util.model_mapper.fields.optional_related.optional_related_patch_field import \
-    OptionalRelatedPatchField
 from financial_simulator.app.server.util.model_mapper.fields.optional_related.optional_related_post_field import \
     OptionalRelatedPostField
 from financial_simulator.app.server.util.model_mapper.fields.ordinary.ordinary_get_field import OrdinaryGetField
@@ -17,5 +15,4 @@ class OptionalRelatedModelField(ModelField[TABLE, GET, POST]):
         super().__init__(
             get_field=OrdinaryGetField[TABLE, GET](),
             post_field=OptionalRelatedPostField[TABLE, POST](field_relation),
-            patch_field=OptionalRelatedPatchField[TABLE](field_relation),
         )

@@ -2,9 +2,11 @@ from typing import List
 from uuid import UUID
 
 from sqlalchemy import ForeignKey
+from sqlalchemy.ext.orderinglist import ordering_list
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from financial_simulator.app.database.schema.provider.provider import Provider
+from .next_provider_provider import NextProviderProvider
+from ..provider import Provider
 
 
 class NextProvider(Provider):
@@ -15,6 +17,8 @@ class NextProvider(Provider):
     providers: Mapped[List[Provider]] = relationship(
         secondary="next_provider_provider",
         back_populates="next_providers",
+        order_by=NextProviderProvider.position,
+        collection_class=ordering_list("position"),
     )
 
     __mapper_args__ = {

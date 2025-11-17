@@ -122,6 +122,7 @@ class Relation(Generic[TABLE, RELATED_TABLE, GET]):
                 item,
                 related_item_id,
             )
+            ret = get_mapper.map(related_item, TreeBehavior())
             getattr(item, relation_field).remove(related_item)
             session.commit()
-            return get_mapper.map(related_item, TreeBehavior())
+            return ret

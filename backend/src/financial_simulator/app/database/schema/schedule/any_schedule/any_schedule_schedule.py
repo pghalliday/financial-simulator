@@ -14,3 +14,4 @@ class AnyScheduleSchedule(Base):
     schedule_id: Mapped[UUID] = mapped_column(
         ForeignKey("schedule.id"), primary_key=True
     )
+    position: Mapped[int] = mapped_column()

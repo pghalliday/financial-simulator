@@ -2,6 +2,7 @@ from typing import List
 from uuid import UUID
 
 from sqlalchemy import ForeignKey
+from sqlalchemy.ext.orderinglist import ordering_list
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..rate import Rate
@@ -14,6 +15,9 @@ class BandedRate(Rate):
     id: Mapped[UUID] = mapped_column(ForeignKey("rate.id"), primary_key=True)
 
     bands: Mapped[List[BandedRateBand]] = relationship(
+        order_by=BandedRateBand.position,
+        collection_class=ordering_list("position"),
+        back_populates="banded_rate",
         cascade="all, delete-orphan",
     )
 

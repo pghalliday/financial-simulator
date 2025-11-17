@@ -3,7 +3,7 @@ from typing import Generic
 
 from sqlalchemy.orm import Session
 
-from financial_simulator.app.server.util.model_mapper.types import POST, TABLE
+from financial_simulator.app.server.util.model_mapper.types import PostMapperInterface, POST, TABLE
 
 
 class PostField(ABC, Generic[TABLE, POST]):
@@ -12,5 +12,5 @@ class PostField(ABC, Generic[TABLE, POST]):
         raise NotImplementedError()
 
     @abstractmethod
-    def map(self, field: str, session: Session, item: TABLE, model: type[TABLE], item_post: POST) -> None:
+    def map(self, field: str, session: Session, item: TABLE, post_mapper: PostMapperInterface[TABLE, POST], item_post: POST) -> None:
         raise NotImplementedError()

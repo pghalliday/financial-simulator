@@ -14,22 +14,17 @@ from ..util.model_mapper import (
     ModelMapper,
     OrdinaryGetField,
     OrdinaryModelField,
-    ChildrenModelField,
-    ChildReference,
+    ManyToManyReference,
+    ManyToManyModelField,
+    ManyToManyModelFieldParams,
 )
-from ..util.model_mapper.fields.children.children_model_field import ChildrenModelFieldParams
 
 logger = logging.getLogger(__name__)
 
 class ScenarioPost(BaseModel):
     name: str
     description: str | None = None
-    entities: Sequence[ChildReference]
-
-class ScenarioPatch(BaseModel):
-    name: str | None = None
-    description: str | None = None
-    entities: Sequence[ChildReference] | None = None
+    entities: Sequence[ManyToManyReference]
 
 class ScenarioEntityGet(BaseModel):
     id: UUID
@@ -62,12 +57,11 @@ model_mapper = ModelMapper(
     table_model=Scenario,
     get_model=ScenarioGet,
     post_model=ScenarioPost,
-    patch_model=ScenarioPatch,
     fields={
         "name": OrdinaryModelField(),
         "description": OrdinaryModelField(),
-        "entities": ChildrenModelField(ChildrenModelFieldParams(
-            include_post_and_patch=True,
+        "entities": ManyToManyModelField(ManyToManyModelFieldParams(
+            include_post=True,
             get_mapper=scenario_entity_get_mapper,
         )),
     },

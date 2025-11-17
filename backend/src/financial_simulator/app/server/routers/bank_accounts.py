@@ -32,19 +32,6 @@ class BankAccountPost(BaseModel):
     rate_provider_id: UUID | None = None
     interest_payment_schedule_id: UUID | None = None
 
-class BankAccountPatch(BaseModel):
-    name: str | None = None
-    description: str | None = None
-    asset_account_id: UUID | None = None
-    interest_income_account_id: UUID | None = None
-    interest_receivable_account_id: UUID | None = None
-    fee_expenses_account_id: UUID | None = None
-    fees_payable_account_id: UUID | None = None
-    fees_provider_id: UUID | None = None
-    fee_payment_schedule_id: UUID | None = None
-    rate_provider_id: UUID | None = None
-    interest_payment_schedule_id: UUID | None = None
-
 class BankAccountGet(BaseModel):
     id: UUID
     name: str
@@ -68,7 +55,6 @@ model_mapper = ModelMapper(
     table_model=BankAccount,
     get_model=BankAccountGet,
     post_model=BankAccountPost,
-    patch_model=BankAccountPatch,
     fields={
         "name": OrdinaryModelField(),
         "description": OrdinaryModelField(),

@@ -20,7 +20,7 @@ class Schedule(BaseWithType):
     __tablename__ = "schedule"
 
     scheduled_providers: Mapped[List[ScheduledProvider]] = relationship(
-        back_populates="value",
+        back_populates="schedule",
         cascade="all, delete-orphan",
     )
 

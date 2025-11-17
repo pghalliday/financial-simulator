@@ -19,7 +19,6 @@ from ..util.model_mapper import (
     GetMapper,
     OrdinaryGetField,
 )
-from ..util.model_mapper.fields.children.children_model_field import ChildrenModelFieldParams
 
 logger = logging.getLogger(__name__)
 
@@ -27,12 +26,6 @@ class LedgerAccountPost(BaseModel):
     name: str
     description: str | None = None
     account_name: str
-    parent_id: UUID | None = None
-
-class LedgerAccountPatch(BaseModel):
-    name: str | None = None
-    description: str | None = None
-    account_name: str | None = None
     parent_id: UUID | None = None
 
 class LedgerAccountBankAccountGet(BaseModel):
@@ -72,7 +65,6 @@ model_mapper = ModelMapper(
     table_model=LedgerAccount,
     get_model=LedgerAccountGet,
     post_model=LedgerAccountPost,
-    patch_model=LedgerAccountPatch,
     fields={
         "name": OrdinaryModelField(),
         "description": OrdinaryModelField(),
@@ -82,11 +74,11 @@ model_mapper = ModelMapper(
         ),
         "sub_accounts": ChildrenModelField(),
         "parent": ParentModelField(),
-        "bank_account_asset_accounts": ChildrenModelField(ChildrenModelFieldParams(get_mapper=bank_account_get_mapper)),
-        "bank_account_interest_income_accounts": ChildrenModelField(ChildrenModelFieldParams(get_mapper=bank_account_get_mapper)),
-        "bank_account_interest_receivable_accounts": ChildrenModelField(ChildrenModelFieldParams(get_mapper=bank_account_get_mapper)),
-        "bank_account_fee_expenses_accounts": ChildrenModelField(ChildrenModelFieldParams(get_mapper=bank_account_get_mapper)),
-        "bank_account_fees_payable_accounts": ChildrenModelField(ChildrenModelFieldParams(get_mapper=bank_account_get_mapper)),
+        "bank_account_asset_accounts": ChildrenModelField(bank_account_get_mapper),
+        "bank_account_interest_income_accounts": ChildrenModelField(bank_account_get_mapper),
+        "bank_account_interest_receivable_accounts": ChildrenModelField(bank_account_get_mapper),
+        "bank_account_fee_expenses_accounts": ChildrenModelField(bank_account_get_mapper),
+        "bank_account_fees_payable_accounts": ChildrenModelField(bank_account_get_mapper),
     },
 )
 
