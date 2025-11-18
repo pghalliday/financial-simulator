@@ -19,12 +19,10 @@ class Rate(BaseWithType):
 
     banded_rate_bands: Mapped[List[BandedRateBand]] = relationship(
         back_populates="rate",
-        cascade="all, delete-orphan",
     )
 
     rate_values: Mapped[List[RateValue]] = relationship(
         back_populates="rate",
-        cascade="all, delete-orphan",
     )
 
     __mapper_args__ = {

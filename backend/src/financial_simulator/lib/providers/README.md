@@ -11,22 +11,25 @@ from datetime import date, timedelta
 
 from doc.src.financial_simulator.lib.providers import print_provided
 from financial_simulator.lib.providers import
-    NeverProvider,
-    AlwaysProvider,
-    ScheduledProvider,
-    NextProvider,
-    MergeProvider,
-    FunctionProvider,
-    MapProvider,
-    FlatMapProvider,
-    MergeMapProvider,
-    create_sequence_provider
+
+NeverProvider,
+AlwaysProvider,
+ScheduledProvider,
+NextProvider,
+MergeProvider,
+FunctionProvider,
+MapProvider,
+FlatMapProvider,
+MergeMapProvider,
+create_sequence_provider
 from financial_simulator.lib.schedules import
-    WeeklySchedule,
-    AnySchedule,
-    UntilSchedule
+
+WeeklySchedule,
+AnySchedule,
+UntilSchedule
 from financial_simulator.lib.util.format import
-    format_day
+
+format_day
 
 START_DATE = date.today()
 

@@ -9,6 +9,8 @@ import {
     ENTITIES_PAGE_DESCRIPTION,
     LEDGER_ACCOUNTS_HREF,
     LEDGER_ACCOUNTS_PAGE_DESCRIPTION,
+    RATES_HREF,
+    RATES_PAGE_DESCRIPTION,
     SCENARIOS_HREF,
     SCENARIOS_PAGE_DESCRIPTION
 } from "~/strings";
@@ -42,6 +44,11 @@ export function Navbar({close}: Props) {
         <NavbarLink
             href={LEDGER_ACCOUNTS_HREF}
             label={LEDGER_ACCOUNTS_PAGE_DESCRIPTION}
+            onClick={close}
+        />
+        <NavbarLink
+            href={RATES_HREF}
+            label={RATES_PAGE_DESCRIPTION}
             onClick={close}
         />
         <NavbarLink

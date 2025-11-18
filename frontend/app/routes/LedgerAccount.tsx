@@ -30,7 +30,6 @@ export default function LedgerAccount({params}: Route.ComponentProps) {
             getItemPageParams={getLedgerAccountPageParams}
             onBegin={startLoading}
             onEnd={stopLoading}
-            depth={-1}
         >
             <LedgerAccountPage/>
         </LedgerAccountProvider>

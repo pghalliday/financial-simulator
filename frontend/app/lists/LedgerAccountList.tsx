@@ -80,6 +80,7 @@ export function LedgerAccountList(
     const [addingItem, {open: startAddingItem, close: stopAddingItem}] = useDisclosure()
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [confirmDeleteDependents, setConfirmDeleteDependents] = useState<Impact>({})
+    const [confirmDeleteReferences, setConfirmDeleteReferences] = useState<Impact>({})
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
     const postItem = useListPost<LedgerAccountPost, LedgerAccountGet>({
@@ -120,24 +121,25 @@ export function LedgerAccountList(
         const subLedgerAccounts: LedgerAccountGet[] = []
         const bankAccounts: LedgerAccountBankAccountGet[] = []
 
-        function listDependents(subAccounts: LedgerAccountGet[]) {
-            for (const subAccount of subAccounts) {
+        function listDependents(account: LedgerAccountGet) {
+            bankAccounts.push(...account.bank_account_asset_accounts)
+            bankAccounts.push(...account.bank_account_interest_income_accounts)
+            bankAccounts.push(...account.bank_account_interest_receivable_accounts)
+            bankAccounts.push(...account.bank_account_fee_expenses_accounts)
+            bankAccounts.push(...account.bank_account_fees_payable_accounts)
+            for (const subAccount of account.sub_accounts) {
                 subLedgerAccounts.push(subAccount)
-                bankAccounts.push(...subAccount.bank_account_asset_accounts)
-                bankAccounts.push(...subAccount.bank_account_interest_income_accounts)
-                bankAccounts.push(...subAccount.bank_account_interest_receivable_accounts)
-                bankAccounts.push(...subAccount.bank_account_fee_expenses_accounts)
-                bankAccounts.push(...subAccount.bank_account_fees_payable_accounts)
-                listDependents(subAccount.sub_accounts)
+                listDependents(subAccount)
             }
         }
 
-        listDependents(item.sub_accounts)
+        listDependents(item)
         const dependents: Impact = {}
+        const references: Impact = {}
         if (bankAccounts.length > 0) {
-            dependents["Bank accounts"] = {}
+            references["Bank accounts"] = {}
             for (const bankAccount of bankAccounts) {
-                dependents["Bank accounts"][bankAccount.id] = bankAccount.name
+                references["Bank accounts"][bankAccount.id] = bankAccount.name
             }
         }
         if (subLedgerAccounts.length > 0) {
@@ -149,6 +151,7 @@ export function LedgerAccountList(
         setToDelete(item)
         setConfirmDeletePrompt(LEDGER_ACCOUNTS_CONFIRM_DELETE_ITEM_MODAL_PROMPT(item))
         setConfirmDeleteDependents(dependents)
+        setConfirmDeleteReferences(references)
         stack.open("confirm-delete")
     }, [setToDelete])
 
@@ -166,6 +169,7 @@ export function LedgerAccountList(
                 title={LEDGER_ACCOUNTS_CONFIRM_DELETE_ITEM_MODAL_TITLE}
                 prompt={confirmDeletePrompt}
                 dependents={confirmDeleteDependents}
+                references={confirmDeleteReferences}
                 onConfirm={deleteItem}
                 onCancel={() => stack.close("confirm-delete")}
             />

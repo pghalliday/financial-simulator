@@ -28,7 +28,6 @@ export default function Scenario({params}: Route.ComponentProps) {
             getItemPageParams={getScenarioPageParams}
             onBegin={startLoadingScenarios}
             onEnd={stopLoadingScenarios}
-            depth={1}
         >
             <EntitiesProvider
                 onBegin={startLoadingEntities}

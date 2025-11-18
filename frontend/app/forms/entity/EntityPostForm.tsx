@@ -8,7 +8,7 @@ import {useScenarios} from "~/providers/items_providers";
 import {BoundRelationSelect} from "~/components/controls/bound/BoundRelationSelect";
 import {BoundSelect} from "~/components/controls/bound/BoundSelect";
 
-export interface EntityPostFormProps {
+export interface Props {
     allowSelectType?: boolean,
 }
 
@@ -17,7 +17,7 @@ const TYPE_SELECT_DATA = Object.entries(ENTITY_TYPES).map(entry => ({
     label: entry[1],
 }))
 
-export function EntityPostForm({allowSelectType = false}: EntityPostFormProps) {
+export function EntityPostForm({allowSelectType = false}: Props) {
     const [scenarios] = useScenarios()
     const form = useEntityPostFormContext()
     return <>

@@ -8,8 +8,6 @@ export interface Props<Get> {
     getItemApi: GetItemApi<Get>,
     onBegin?: () => void,
     onEnd?: () => void,
-    depth?: number,
-    maxParents?: number,
 }
 
 export function useGetItem<Get>(
@@ -18,8 +16,6 @@ export function useGetItem<Get>(
         getItemApi,
         onBegin,
         onEnd,
-        depth = 0,
-        maxParents = 0,
     }: Props<Get>
 ): { item?: Get, setItem: (item?: Get) => void } {
     const [item, setItem] = useState<Get>()
@@ -30,10 +26,6 @@ export function useGetItem<Get>(
                 path: {
                     item_id: itemId,
                 },
-                query: {
-                    depth: depth,
-                    max_parents: maxParents,
-                }
             }),
             errorTitle: GET_ITEM_ERROR_TITLE,
             onSuccess: setItem,

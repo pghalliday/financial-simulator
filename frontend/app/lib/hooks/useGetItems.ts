@@ -7,8 +7,6 @@ export interface Props<Get> {
     getItemsApi: GetItemsApi<Get>
     onBegin?: () => void
     onEnd?: () => void
-    depth?: number
-    maxParents?: number
 }
 
 export function useGetItems<Get>(
@@ -16,8 +14,6 @@ export function useGetItems<Get>(
         getItemsApi,
         onBegin,
         onEnd,
-        depth = 0,
-        maxParents = 0,
     }: Props<Get>
 ): {
     items: Get[],
@@ -27,12 +23,7 @@ export function useGetItems<Get>(
 
     useEffect(() => {
         callApi({
-            api: () => getItemsApi({
-                query: {
-                    depth: depth,
-                    max_parents: maxParents,
-                }
-            }),
+            api: () => getItemsApi(),
             errorTitle: GET_ITEMS_ERROR_TITLE,
             onSuccess: setItems,
             onBegin,

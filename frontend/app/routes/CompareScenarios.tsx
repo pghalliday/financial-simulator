@@ -15,6 +15,7 @@ import Plot from "react-plotly.js";
 
 import {useStickyState} from "~/lib/hooks/useStickyState";
 import {Page} from "~/pages/common/Page";
+import {LoadingProvider} from "~/providers/LoadingProvider";
 
 function get_balance(account: DummyDayAccount, sub_account_path: string[]): number {
     if (sub_account_path.length === 0) {
@@ -122,61 +123,62 @@ export default function CompareScenarios() {
         }
     }
 
-    return <Page
-        pageParams={{
-            title: pageTitle,
-            description: pageDescription,
-            breadcrumbs: pageBreadcrumbs,
-        }}
-        loading={loading}
-    >
-        <LoadingOverlay
-            visible={loadingDummyDays}
-            zIndex={1000}
-            overlayProps={{blur: 2}}
-            loaderProps={{children: <Progress value={dummyDaysProgress} w={300}/>}}
-        />
-        <Stack>
-            <StickyItemMultiSelect
-                localStorageKey="compare-scenarios--selected-scenarios"
-                label="Scenarios"
-                placeholder="Select scenarios to compare"
-                items={scenarios}
-                onChange={setSelectedScenarios}
+    return <LoadingProvider loading={loading}>
+        <Page
+            pageParams={{
+                title: pageTitle,
+                description: pageDescription,
+                breadcrumbs: pageBreadcrumbs,
+            }}
+        >
+            <LoadingOverlay
+                visible={loadingDummyDays}
+                zIndex={1000}
+                overlayProps={{blur: 2}}
+                loaderProps={{children: <Progress value={dummyDaysProgress} w={300}/>}}
             />
-            <Group align="">
-                <NumberInput
-                    label="Start day"
-                    value={dummyDaysStart}
-                    onChange={setDummyDaysStart}
-                    min={0}
-                    allowDecimal={false}
-                    clampBehavior="strict"
+            <Stack>
+                <StickyItemMultiSelect
+                    localStorageKey="compare-scenarios--selected-scenarios"
+                    label="Scenarios"
+                    placeholder="Select scenarios to compare"
+                    items={scenarios}
+                    onChange={setSelectedScenarios}
                 />
-                <NumberInput
-                    label="End day"
-                    value={dummyDaysEnd}
-                    onChange={setDummyDaysEnd}
-                    min={0}
-                    allowDecimal={false}
-                    clampBehavior="strict"
-                    inputContainer={(children) => (
-                        <Group align="flex-start">
-                            {children}
-                            <Button onClick={getDummyDays}>Get dummy days!</Button>
-                        </Group>
-                    )}
+                <Group align="">
+                    <NumberInput
+                        label="Start day"
+                        value={dummyDaysStart}
+                        onChange={setDummyDaysStart}
+                        min={0}
+                        allowDecimal={false}
+                        clampBehavior="strict"
+                    />
+                    <NumberInput
+                        label="End day"
+                        value={dummyDaysEnd}
+                        onChange={setDummyDaysEnd}
+                        min={0}
+                        allowDecimal={false}
+                        clampBehavior="strict"
+                        inputContainer={(children) => (
+                            <Group align="flex-start">
+                                {children}
+                                <Button onClick={getDummyDays}>Get dummy days!</Button>
+                            </Group>
+                        )}
+                    />
+                </Group>
+                <Plot
+                    data={Object.keys(chart_entities).map(entity_name => ({
+                        x: chart_dates,
+                        y: chart_entities[entity_name],
+                        type: "scatter",
+                        name: entity_name,
+                    }))}
+                    layout={{width: 800, height: 600, title: {text: 'Current Account Balances'}}}
                 />
-            </Group>
-            <Plot
-                data={Object.keys(chart_entities).map(entity_name => ({
-                    x: chart_dates,
-                    y: chart_entities[entity_name],
-                    type: "scatter",
-                    name: entity_name,
-                }))}
-                layout={{width: 800, height: 600, title: {text: 'Current Account Balances'}}}
-            />
-        </Stack>
-    </Page>
+            </Stack>
+        </Page>
+    </LoadingProvider>
 }

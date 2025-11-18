@@ -31,14 +31,11 @@ router = APIRouter(
     tags=["rates"],
 )
 
-RateGet = Union[PeriodicRateGet, ContinuousRateGet, BandedRateGet]
-RatePost = Union[PeriodicRatePost, ContinuousRatePost, BandedRatePost]
-
 TypedCollection(
     table_model=Rate,
     order_by=Rate.name,
-    get_model=RateGet,
-    post_model=RatePost,
+    get_model=Union[PeriodicRateGet, ContinuousRateGet, BandedRateGet],
+    post_model=Union[PeriodicRatePost, ContinuousRatePost, BandedRatePost],
     model_mappers={
         "periodic_rate": periodic_rate_model_mapper,
         "continuous_rate": continuous_rate_model_mapper,

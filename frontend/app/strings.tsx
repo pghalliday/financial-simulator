@@ -1,6 +1,6 @@
 import {createSearchParams} from "react-router";
 import {type ItemPageParams, PAGE_PARAMS_SEARCH_KEY} from "./lib/hooks/useItemPageParams";
-import type {Breadcrumb, EntityGet} from "~/lib/types";
+import type {Breadcrumb, EntityGet, RateGet} from "~/lib/types";
 import type {BankAccountGet, LedgerAccountGet, ScenarioGet} from "~/client";
 
 function createItemSuffix(itemPageParams: ItemPageParams): string {
@@ -138,12 +138,32 @@ export const LEDGER_ACCOUNT_PAGE_TITLE = createItemPageTitleFunction(LEDGER_ACCO
 export const LEDGER_ACCOUNT_HREF = createItemHrefFunction(LEDGER_ACCOUNTS_HREF)
 export const LEDGER_ACCOUNT_BREADCRUMBS = createItemBreadcrumbsFunction(LEDGER_ACCOUNTS_BREADCRUMBS, LEDGER_ACCOUNT_HREF)
 
+export const RATES_PAGE_DESCRIPTION = 'Rates';
+export const RATES_PAGE_TITLE = PAGE_TITLE(RATES_PAGE_DESCRIPTION);
+export const RATES_HREF = '/rates';
+export const RATES_LABEL = 'rate';
+export const RATES_BREADCRUMBS = [
+    {
+        title: RATES_PAGE_DESCRIPTION,
+        href: RATES_HREF,
+    },
+];
+export const RATES_ADD_ITEM_MODAL_TITLE = ADD_ITEM_MODAL_TITLE(RATES_LABEL)
+export const RATES_CONFIRM_DELETE_ITEM_MODAL_TITLE = CONFIRM_DELETE_ITEM_MODAL_TITLE(RATES_LABEL)
+export const RATES_CONFIRM_DELETE_ITEM_MODAL_PROMPT = (item: RateGet) => CONFIRM_DELETE_ITEM_MODAL_PROMPT(RATES_LABEL)(item.name)
+
+export const RATE_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Rate")
+export const RATE_PAGE_TITLE = createItemPageTitleFunction(RATE_PAGE_DESCRIPTION);
+export const RATE_HREF = createItemHrefFunction(RATES_HREF)
+export const RATE_BREADCRUMBS = createItemBreadcrumbsFunction(RATES_BREADCRUMBS, RATE_HREF)
+export const RATE_TYPES: Record<RateGet["type"], string> = {
+    "continuous_rate": "Continuous",
+    "banded_rate": "Banded",
+    "periodic_rate": "Periodic",
+}
+
 export const GET_ITEMS_ERROR_TITLE = "Get Items Error"
 export const POST_ITEM_ERROR_TITLE = "Post Item Error"
 export const DELETE_ITEM_ERROR_TITLE = "Delete Item Error"
 export const GET_ITEM_ERROR_TITLE = "Get Item Error"
 export const PUT_ITEM_ERROR_TITLE = "Put Item Error"
-export const GET_RELATED_OPTIONS_ERROR_TITLE = "Get related options error";
-export const GET_RELATED_ITEMS_ERROR_TITLE = "Get related items error";
-export const POST_RELATED_ITEM_ERROR_TITLE = "Post related item error";
-export const DELETE_RELATED_ITEM_ERROR_TITLE = "Delete related item error";

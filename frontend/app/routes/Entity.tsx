@@ -17,19 +17,22 @@ export function getEntityPageParams(item: EntityGet): ItemPageParams {
 
 export default function Entity({params}: Route.ComponentProps) {
     const {itemId} = params
-    const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
-    return <LoadingProvider loading={loading}>
+    const [loadingEntity, {open: startLoadingEntity, close: stopLoadingEntity}] = useDisclosure()
+    const [loadingScenarios, {open: startLoadingScenarios, close: stopLoadingScenarios}] = useDisclosure()
+    return <LoadingProvider loading={loadingEntity || loadingScenarios}>
         <EntityProvider
             itemId={itemId}
             itemPageTitle={ENTITY_PAGE_TITLE}
             itemPageDescription={ENTITY_PAGE_DESCRIPTION}
             itemBreadcrumbs={ENTITY_BREADCRUMBS}
             getItemPageParams={getEntityPageParams}
-            onBegin={startLoading}
-            onEnd={stopLoading}
-            depth={1}
+            onBegin={startLoadingEntity}
+            onEnd={stopLoadingEntity}
         >
-            <ScenariosProvider>
+            <ScenariosProvider
+                onBegin={startLoadingScenarios}
+                onEnd={stopLoadingScenarios}
+            >
                 <EntityPage/>
             </ScenariosProvider>
         </EntityProvider>

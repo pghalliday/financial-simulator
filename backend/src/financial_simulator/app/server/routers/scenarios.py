@@ -8,7 +8,6 @@ from financial_simulator.app.database.schema import Scenario, Entity
 from pydantic import BaseModel
 
 from .common.collection import Collection
-from .common.relation import Relation
 from ..util.model_mapper import (
     GetMapper,
     ModelMapper,
@@ -70,15 +69,6 @@ model_mapper = ModelMapper(
 Collection(
     model_mapper=model_mapper,
     order_by=Scenario.name,
-).add_endpoints(
-    router=router,
-)
-
-Relation(
-    relation_route="entities",
-    relation_field="entities",
-    table_model=Scenario,
-    get_mapper=scenario_entity_get_mapper,
 ).add_endpoints(
     router=router,
 )

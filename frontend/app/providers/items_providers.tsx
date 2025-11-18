@@ -5,14 +5,13 @@ import {
     getItemsRouteBankAccountsGet,
     getItemsRouteEntitiesGet,
     getItemsRouteLedgerAccountsGet,
+    getItemsRouteRatesGet,
     getItemsRouteScenariosGet
 } from "~/client";
 
 interface ProviderProps {
     onBegin?: () => void
     onEnd?: () => void
-    depth?: number
-    maxParents?: number
 }
 
 type ContextData<Get> = [Get[], (items: Get[]) => void]
@@ -34,13 +33,11 @@ function createItemsProvider<Get>(
 ): [ProviderType, () => ContextData<Get>] {
     const Context = createContext<ContextData<Get> | undefined>(undefined);
 
-    function ItemsProvider({onBegin, onEnd, depth, maxParents, children}: PropsWithChildren<ProviderProps>) {
+    function ItemsProvider({onBegin, onEnd, children}: PropsWithChildren<ProviderProps>) {
         const {items, setItems} = useGetItems({
             getItemsApi,
             onBegin,
             onEnd,
-            depth,
-            maxParents,
         })
         return <Context.Provider value={[items, setItems]}>
             {children}
@@ -76,4 +73,9 @@ export const [BankAccountsProvider, useBankAccounts] = createItemsProvider({
 export const [LedgerAccountsProvider, useLedgerAccounts] = createItemsProvider({
     label: "LedgerAccounts",
     getItemsApi: getItemsRouteLedgerAccountsGet,
+})
+
+export const [RatesProvider, useRates] = createItemsProvider({
+    label: "Rates",
+    getItemsApi: getItemsRouteRatesGet,
 })

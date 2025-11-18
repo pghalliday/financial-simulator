@@ -26,12 +26,7 @@ export function useGetTree<Get extends {}>(
 
     useEffect(() => {
         callApi({
-            api: () => getItemsApi({
-                query: {
-                    depth: -1,
-                    max_parents: 0,
-                }
-            }),
+            api: () => getItemsApi(),
             errorTitle: GET_ITEMS_ERROR_TITLE,
             onSuccess: (items) => setTree(new TreeData(items, fields)),
             onBegin,

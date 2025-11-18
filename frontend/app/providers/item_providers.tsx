@@ -1,5 +1,5 @@
 import {createContext, type PropsWithChildren, type ReactElement, useContext, useState} from "react";
-import type {Breadcrumb, EntityGet, EntityPost, GetItemApi, IdItem, PutItemApi} from "~/lib/types";
+import type {Breadcrumb, EntityGet, EntityPost, GetItemApi, IdItem, PutItemApi, RateGet, RatePost} from "~/lib/types";
 import {useGetItem} from "~/lib/hooks/useGetItem";
 import {
     type BankAccountGet,
@@ -7,12 +7,14 @@ import {
     getItemRouteBankAccountsItemIdGet,
     getItemRouteEntitiesItemIdGet,
     getItemRouteLedgerAccountsItemIdGet,
+    getItemRouteRatesItemIdGet,
     getItemRouteScenariosItemIdGet,
     type LedgerAccountGet,
     type LedgerAccountPost,
     putItemRouteBankAccountsItemIdPut,
     putItemRouteEntitiesItemIdPut,
     putItemRouteLedgerAccountsItemIdPut,
+    putItemRouteRatesItemIdPut,
     putItemRouteScenariosItemIdPut,
     type ScenarioGet,
     type ScenarioPost
@@ -29,8 +31,6 @@ interface ProviderProps<Get> {
     getItemPageParams: (item: Get) => ItemPageParams,
     onBegin?: () => void
     onEnd?: () => void
-    depth?: number
-    maxParents?: number
 }
 
 interface ContextData<Post, Get> {
@@ -75,8 +75,6 @@ export function createItemProvider<Post, Get extends IdItem>(
             getItemPageParams,
             onBegin,
             onEnd,
-            depth,
-            maxParents,
             children,
         }: PropsWithChildren<ProviderProps<Get>>
     ) {
@@ -85,9 +83,6 @@ export function createItemProvider<Post, Get extends IdItem>(
             getItemApi: getItemApi,
             onBegin,
             onEnd,
-            depth,
-            maxParents,
-
         })
 
         const itemPageParams = useItemPageParams(itemId)
@@ -166,4 +161,10 @@ export const [LedgerAccountProvider, useLedgerAccount] = createItemProvider<Ledg
     label: "LedgerAccount",
     getItemApi: getItemRouteLedgerAccountsItemIdGet,
     putItemApi: putItemRouteLedgerAccountsItemIdPut,
+})
+
+export const [RateProvider, useRate] = createItemProvider<RatePost, RateGet>({
+    label: "Rate",
+    getItemApi: getItemRouteRatesItemIdGet,
+    putItemApi: putItemRouteRatesItemIdPut,
 })

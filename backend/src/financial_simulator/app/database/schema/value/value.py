@@ -18,12 +18,10 @@ class Value(BaseWithType):
 
     always_providers: Mapped[List[AlwaysProvider]] = relationship(
         back_populates="value",
-        cascade="all, delete-orphan",
     )
 
     scheduled_providers: Mapped[List[ScheduledProvider]] = relationship(
         back_populates="value",
-        cascade="all, delete-orphan",
     )
 
     __mapper_args__ = {
