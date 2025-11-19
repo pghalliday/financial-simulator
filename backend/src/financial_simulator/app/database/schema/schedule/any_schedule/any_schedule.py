@@ -14,11 +14,11 @@ class AnySchedule(Schedule):
 
     id: Mapped[UUID] = mapped_column(ForeignKey("schedule.id"), primary_key=True)
 
-    schedules: Mapped[List[Schedule]] = relationship(
-        secondary="any_schedule_schedule",
-        back_populates="any_schedules",
+    schedules: Mapped[List[AnyScheduleSchedule]] = relationship(
+        back_populates="any_schedule",
         order_by=AnyScheduleSchedule.position,
         collection_class=ordering_list("position"),
+        cascade="all, delete-orphan",
     )
 
     __mapper_args__ = {

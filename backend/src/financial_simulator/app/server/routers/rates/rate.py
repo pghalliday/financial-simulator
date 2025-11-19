@@ -65,5 +65,5 @@ rate_model_fields = {
     "name": OrdinaryModelField(),
     "description": OrdinaryModelField(),
     "banded_rate_bands": ChildrenModelField(rate_banded_rate_band_get_mapper),
-    "rate_values": ChildrenModelField(rate_value_get_mapper)
+    "rate_values": ChildrenModelField(rate_value_get_mapper),
 }

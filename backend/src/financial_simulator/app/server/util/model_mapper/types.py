@@ -6,7 +6,7 @@ from uuid import UUID
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from financial_simulator.app.database.schema import BaseWithId
+from financial_simulator.app.database.schema import BaseWithId, Base
 
 TABLE = TypeVar('TABLE', bound=BaseWithId)
 GET = TypeVar('GET', bound=BaseModel)
@@ -14,6 +14,8 @@ POST = TypeVar('POST', bound=BaseModel)
 RELATED_TABLE = TypeVar("RELATED_TABLE", bound=BaseWithId)
 RELATED_GET = TypeVar('RELATED_GET', bound=BaseModel)
 RELATED_POST = TypeVar('RELATED_POST', bound=BaseModel)
+ASSOCIATION_TABLE = TypeVar('ASSOCIATION_TABLE', bound=Base)
+
 
 @dataclass(frozen=True)
 class TreeBehavior:

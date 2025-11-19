@@ -7,23 +7,23 @@ from ..base import (
 )
 
 if TYPE_CHECKING:
-    from .merge_provider import MergeProvider
-    from .next_provider import NextProvider
+    from .merge_provider import MergeProviderProvider
+    from .next_provider import NextProviderProvider
 else:
-    MergeProvider = "MergeProvider"
-    NextProvider = "NextProvider"
+    MergeProviderProvider = "MergeProviderProvider"
+    NextProviderProvider = "NextProviderProvider"
 
 class Provider(BaseWithType):
     __tablename__ = "provider"
 
-    merge_providers: Mapped[List[MergeProvider]] = relationship(
-        secondary="merge_provider_provider",
-        back_populates="providers",
+    merge_providers: Mapped[List[MergeProviderProvider]] = relationship(
+        back_populates="provider",
+        cascade="all, delete-orphan",
     )
 
-    next_providers: Mapped[List[NextProvider]] = relationship(
-        secondary="next_provider_provider",
-        back_populates="providers",
+    next_providers: Mapped[List[NextProviderProvider]] = relationship(
+        back_populates="provider",
+        cascade="all, delete-orphan",
     )
 
     __mapper_args__ = {

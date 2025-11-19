@@ -5,6 +5,259 @@ export type ClientOptions = {
 };
 
 /**
+ * AllScheduleGet
+ */
+export type AllScheduleGet = {
+    /**
+     * Type
+     */
+    type: 'all_schedule';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    /**
+     * All Schedules
+     */
+    all_schedules: Array<ScheduleAllScheduleGet>;
+    /**
+     * Any Schedules
+     */
+    any_schedules: Array<ScheduleAnyScheduleGet>;
+    /**
+     * Schedules
+     */
+    schedules: Array<AllScheduleScheduleGet>;
+};
+
+/**
+ * AllSchedulePost
+ */
+export type AllSchedulePost = {
+    /**
+     * Type
+     */
+    type: 'all_schedule';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Schedules
+     */
+    schedules: Array<AssociationReference>;
+};
+
+/**
+ * AllScheduleScheduleGet
+ */
+export type AllScheduleScheduleGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Type
+     */
+    type: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * AlwaysProviderGet
+ */
+export type AlwaysProviderGet = {
+    /**
+     * Type
+     */
+    type: 'always_provider';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Merge Providers
+     */
+    merge_providers: Array<ProviderMergeProviderGet>;
+    /**
+     * Next Providers
+     */
+    next_providers: Array<ProviderNextProviderGet>;
+    /**
+     * Value Id
+     */
+    value_id: string | null;
+    value: AlwaysProviderValueGet | null;
+};
+
+/**
+ * AlwaysProviderPost
+ */
+export type AlwaysProviderPost = {
+    /**
+     * Type
+     */
+    type: 'always_provider';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Value Id
+     */
+    value_id?: string | null;
+};
+
+/**
+ * AlwaysProviderValueGet
+ */
+export type AlwaysProviderValueGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Type
+     */
+    type: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * AnyScheduleGet
+ */
+export type AnyScheduleGet = {
+    /**
+     * Type
+     */
+    type: 'any_schedule';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    /**
+     * All Schedules
+     */
+    all_schedules: Array<ScheduleAllScheduleGet>;
+    /**
+     * Any Schedules
+     */
+    any_schedules: Array<ScheduleAnyScheduleGet>;
+    /**
+     * Schedules
+     */
+    schedules: Array<AnyScheduleScheduleGet>;
+};
+
+/**
+ * AnySchedulePost
+ */
+export type AnySchedulePost = {
+    /**
+     * Type
+     */
+    type: 'any_schedule';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Schedules
+     */
+    schedules: Array<AssociationReference>;
+};
+
+/**
+ * AnyScheduleScheduleGet
+ */
+export type AnyScheduleScheduleGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Type
+     */
+    type: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * AssociationReference
+ */
+export type AssociationReference = {
+    /**
+     * Id
+     */
+    id: string;
+};
+
+/**
  * BandedRateBandGet
  */
 export type BandedRateBandGet = {
@@ -63,7 +316,7 @@ export type BandedRateGet = {
     /**
      * Rate Values
      */
-    rate_values: Array<RateValueGet>;
+    rate_values: Array<FinancialSimulatorAppServerRoutersRatesRateRateValueGet>;
     /**
      * Bands
      */
@@ -241,7 +494,7 @@ export type ContinuousRateGet = {
     /**
      * Rate Values
      */
-    rate_values: Array<RateValueGet>;
+    rate_values: Array<FinancialSimulatorAppServerRoutersRatesRateRateValueGet>;
     /**
      * Annual Rate
      */
@@ -319,6 +572,58 @@ export type CorporationEntityPost = {
 };
 
 /**
+ * DailyScheduleGet
+ */
+export type DailyScheduleGet = {
+    /**
+     * Type
+     */
+    type: 'daily_schedule';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    /**
+     * All Schedules
+     */
+    all_schedules: Array<ScheduleAllScheduleGet>;
+    /**
+     * Any Schedules
+     */
+    any_schedules: Array<ScheduleAnyScheduleGet>;
+};
+
+/**
+ * DailySchedulePost
+ */
+export type DailySchedulePost = {
+    /**
+     * Type
+     */
+    type: 'daily_schedule';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
  * DatabaseIntegrityError
  */
 export type DatabaseIntegrityError = {
@@ -330,6 +635,122 @@ export type DatabaseIntegrityError = {
      * Message
      */
     message: string;
+};
+
+/**
+ * DayScheduleGet
+ */
+export type DayScheduleGet = {
+    /**
+     * Type
+     */
+    type: 'day_schedule';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    /**
+     * All Schedules
+     */
+    all_schedules: Array<ScheduleAllScheduleGet>;
+    /**
+     * Any Schedules
+     */
+    any_schedules: Array<ScheduleAnyScheduleGet>;
+    /**
+     * Day
+     */
+    day: string | null;
+};
+
+/**
+ * DaySchedulePost
+ */
+export type DaySchedulePost = {
+    /**
+     * Type
+     */
+    type: 'day_schedule';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Day
+     */
+    day?: string | null;
+};
+
+/**
+ * DecimalValueGet
+ */
+export type DecimalValueGet = {
+    /**
+     * Type
+     */
+    type: 'decimal_value';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Always Providers
+     */
+    always_providers: Array<ValueAlwaysProviderGet>;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ValueScheduledProviderGet>;
+    /**
+     * Value
+     */
+    value: number | string | null;
+};
+
+/**
+ * DecimalValuePost
+ */
+export type DecimalValuePost = {
+    /**
+     * Type
+     */
+    type: 'decimal_value';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Value
+     */
+    value?: number | string | null;
 };
 
 /**
@@ -456,6 +877,66 @@ export type EntityScenarioGet = {
      * Description
      */
     description: string | null;
+};
+
+/**
+ * FromScheduleGet
+ */
+export type FromScheduleGet = {
+    /**
+     * Type
+     */
+    type: 'from_schedule';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    /**
+     * All Schedules
+     */
+    all_schedules: Array<ScheduleAllScheduleGet>;
+    /**
+     * Any Schedules
+     */
+    any_schedules: Array<ScheduleAnyScheduleGet>;
+    /**
+     * From Date
+     */
+    from_date: string | null;
+};
+
+/**
+ * FromSchedulePost
+ */
+export type FromSchedulePost = {
+    /**
+     * Type
+     */
+    type: 'from_schedule';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * From Date
+     */
+    from_date?: string | null;
 };
 
 /**
@@ -646,6 +1127,222 @@ export type ManyToManyReference = {
 };
 
 /**
+ * MergeProviderGet
+ */
+export type MergeProviderGet = {
+    /**
+     * Type
+     */
+    type: 'merge_provider';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Merge Providers
+     */
+    merge_providers: Array<ProviderMergeProviderGet>;
+    /**
+     * Next Providers
+     */
+    next_providers: Array<ProviderNextProviderGet>;
+    /**
+     * Providers
+     */
+    providers: Array<MergeProviderProviderGet>;
+};
+
+/**
+ * MergeProviderPost
+ */
+export type MergeProviderPost = {
+    /**
+     * Type
+     */
+    type: 'merge_provider';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Providers
+     */
+    providers: Array<AssociationReference>;
+};
+
+/**
+ * MergeProviderProviderGet
+ */
+export type MergeProviderProviderGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Type
+     */
+    type: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * MonthlyScheduleGet
+ */
+export type MonthlyScheduleGet = {
+    /**
+     * Type
+     */
+    type: 'monthly_schedule';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    /**
+     * All Schedules
+     */
+    all_schedules: Array<ScheduleAllScheduleGet>;
+    /**
+     * Any Schedules
+     */
+    any_schedules: Array<ScheduleAnyScheduleGet>;
+    /**
+     * Day
+     */
+    day: number | null;
+};
+
+/**
+ * MonthlySchedulePost
+ */
+export type MonthlySchedulePost = {
+    /**
+     * Type
+     */
+    type: 'monthly_schedule';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Day
+     */
+    day?: number | null;
+};
+
+/**
+ * NextProviderGet
+ */
+export type NextProviderGet = {
+    /**
+     * Type
+     */
+    type: 'next_provider';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Merge Providers
+     */
+    merge_providers: Array<ProviderMergeProviderGet>;
+    /**
+     * Next Providers
+     */
+    next_providers: Array<ProviderNextProviderGet>;
+    /**
+     * Providers
+     */
+    providers: Array<NextProviderProviderGet>;
+};
+
+/**
+ * NextProviderPost
+ */
+export type NextProviderPost = {
+    /**
+     * Type
+     */
+    type: 'next_provider';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Providers
+     */
+    providers: Array<AssociationReference>;
+};
+
+/**
+ * NextProviderProviderGet
+ */
+export type NextProviderProviderGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Type
+     */
+    type: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
  * NotFoundError
  */
 export type NotFoundError = {
@@ -686,7 +1383,7 @@ export type PeriodicRateGet = {
     /**
      * Rate Values
      */
-    rate_values: Array<RateValueGet>;
+    rate_values: Array<FinancialSimulatorAppServerRoutersRatesRateRateValueGet>;
     /**
      * Annual Rate
      */
@@ -724,6 +1421,110 @@ export type PeriodicRatePost = {
 };
 
 /**
+ * ProviderMergeProviderGet
+ */
+export type ProviderMergeProviderGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * ProviderNextProviderGet
+ */
+export type ProviderNextProviderGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * RangeScheduleGet
+ */
+export type RangeScheduleGet = {
+    /**
+     * Type
+     */
+    type: 'range_schedule';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    /**
+     * All Schedules
+     */
+    all_schedules: Array<ScheduleAllScheduleGet>;
+    /**
+     * Any Schedules
+     */
+    any_schedules: Array<ScheduleAnyScheduleGet>;
+    /**
+     * From Date
+     */
+    from_date: string | null;
+    /**
+     * Until Date
+     */
+    until_date: string | null;
+};
+
+/**
+ * RangeSchedulePost
+ */
+export type RangeSchedulePost = {
+    /**
+     * Type
+     */
+    type: 'range_schedule';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * From Date
+     */
+    from_date?: string | null;
+    /**
+     * Until Date
+     */
+    until_date?: string | null;
+};
+
+/**
  * RateBandedRateBandGet
  */
 export type RateBandedRateBandGet = {
@@ -742,13 +1543,39 @@ export type RateBandedRateBandGet = {
 };
 
 /**
- * RateValueGet
+ * RateValuePost
  */
-export type RateValueGet = {
+export type RateValuePost = {
+    /**
+     * Type
+     */
+    type: 'rate_value';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Rate Id
+     */
+    rate_id?: string | null;
+};
+
+/**
+ * RateValueRateGet
+ */
+export type RateValueRateGet = {
     /**
      * Id
      */
     id: string;
+    /**
+     * Type
+     */
+    type: string;
     /**
      * Name
      */
@@ -840,6 +1667,230 @@ export type ScenarioPost = {
 };
 
 /**
+ * ScheduleAllScheduleGet
+ */
+export type ScheduleAllScheduleGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * ScheduleAnyScheduleGet
+ */
+export type ScheduleAnyScheduleGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * ScheduleScheduledProviderGet
+ */
+export type ScheduleScheduledProviderGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * ScheduledProviderGet
+ */
+export type ScheduledProviderGet = {
+    /**
+     * Type
+     */
+    type: 'scheduled_provider';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Merge Providers
+     */
+    merge_providers: Array<ProviderMergeProviderGet>;
+    /**
+     * Next Providers
+     */
+    next_providers: Array<ProviderNextProviderGet>;
+    /**
+     * Value Id
+     */
+    value_id: string | null;
+    /**
+     * Schedule Id
+     */
+    schedule_id: string | null;
+    value: ScheduledProviderValueGet | null;
+    schedule: ScheduledProviderScheduleGet | null;
+};
+
+/**
+ * ScheduledProviderPost
+ */
+export type ScheduledProviderPost = {
+    /**
+     * Type
+     */
+    type: 'scheduled_provider';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Value Id
+     */
+    value_id?: string | null;
+    /**
+     * Schedule Id
+     */
+    schedule_id?: string | null;
+};
+
+/**
+ * ScheduledProviderScheduleGet
+ */
+export type ScheduledProviderScheduleGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Type
+     */
+    type: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * ScheduledProviderValueGet
+ */
+export type ScheduledProviderValueGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Type
+     */
+    type: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * UntilScheduleGet
+ */
+export type UntilScheduleGet = {
+    /**
+     * Type
+     */
+    type: 'until_schedule';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    /**
+     * All Schedules
+     */
+    all_schedules: Array<ScheduleAllScheduleGet>;
+    /**
+     * Any Schedules
+     */
+    any_schedules: Array<ScheduleAnyScheduleGet>;
+    /**
+     * Until Date
+     */
+    until_date: string | null;
+};
+
+/**
+ * UntilSchedulePost
+ */
+export type UntilSchedulePost = {
+    /**
+     * Type
+     */
+    type: 'until_schedule';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Until Date
+     */
+    until_date?: string | null;
+};
+
+/**
  * ValidationError
  */
 export type ValidationError = {
@@ -855,6 +1906,223 @@ export type ValidationError = {
      * Error Type
      */
     type: string;
+};
+
+/**
+ * ValueAlwaysProviderGet
+ */
+export type ValueAlwaysProviderGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * ValueScheduledProviderGet
+ */
+export type ValueScheduledProviderGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * WeeklyScheduleGet
+ */
+export type WeeklyScheduleGet = {
+    /**
+     * Type
+     */
+    type: 'weekly_schedule';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    /**
+     * All Schedules
+     */
+    all_schedules: Array<ScheduleAllScheduleGet>;
+    /**
+     * Any Schedules
+     */
+    any_schedules: Array<ScheduleAnyScheduleGet>;
+    /**
+     * Weekday
+     */
+    weekday: number | null;
+};
+
+/**
+ * WeeklySchedulePost
+ */
+export type WeeklySchedulePost = {
+    /**
+     * Type
+     */
+    type: 'weekly_schedule';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Weekday
+     */
+    weekday?: number | null;
+};
+
+/**
+ * YearlyScheduleGet
+ */
+export type YearlyScheduleGet = {
+    /**
+     * Type
+     */
+    type: 'yearly_schedule';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    /**
+     * All Schedules
+     */
+    all_schedules: Array<ScheduleAllScheduleGet>;
+    /**
+     * Any Schedules
+     */
+    any_schedules: Array<ScheduleAnyScheduleGet>;
+    /**
+     * Month
+     */
+    month: number | null;
+    /**
+     * Day
+     */
+    day: number | null;
+};
+
+/**
+ * YearlySchedulePost
+ */
+export type YearlySchedulePost = {
+    /**
+     * Type
+     */
+    type: 'yearly_schedule';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Month
+     */
+    month?: number | null;
+    /**
+     * Day
+     */
+    day?: number | null;
+};
+
+/**
+ * RateValueGet
+ */
+export type FinancialSimulatorAppServerRoutersRatesRateRateValueGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+};
+
+/**
+ * RateValueGet
+ */
+export type FinancialSimulatorAppServerRoutersValuesRateValueRateValueGet = {
+    /**
+     * Type
+     */
+    type: 'rate_value';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Always Providers
+     */
+    always_providers: Array<ValueAlwaysProviderGet>;
+    /**
+     * Scheduled Providers
+     */
+    scheduled_providers: Array<ValueScheduledProviderGet>;
+    /**
+     * Rate Id
+     */
+    rate_id: string | null;
+    rate: RateValueRateGet | null;
 };
 
 export type GetItemsRouteScenariosGetData = {
@@ -1650,6 +2918,507 @@ export type PutItemRouteRatesItemIdPutResponses = {
 };
 
 export type PutItemRouteRatesItemIdPutResponse = PutItemRouteRatesItemIdPutResponses[keyof PutItemRouteRatesItemIdPutResponses];
+
+export type GetItemsRouteValuesGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/values/';
+};
+
+export type GetItemsRouteValuesGetResponses = {
+    /**
+     * Response Get Items Route Values  Get
+     * Successful Response
+     */
+    200: Array<DecimalValueGet | FinancialSimulatorAppServerRoutersValuesRateValueRateValueGet>;
+};
+
+export type GetItemsRouteValuesGetResponse = GetItemsRouteValuesGetResponses[keyof GetItemsRouteValuesGetResponses];
+
+export type PostItemRouteValuesPostData = {
+    /**
+     * Item Post
+     */
+    body: DecimalValuePost | RateValuePost;
+    path?: never;
+    query?: never;
+    url: '/values/';
+};
+
+export type PostItemRouteValuesPostErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Database integrity error
+     */
+    409: HttpDatabaseIntegrityError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PostItemRouteValuesPostError = PostItemRouteValuesPostErrors[keyof PostItemRouteValuesPostErrors];
+
+export type PostItemRouteValuesPostResponses = {
+    /**
+     * Response Post Item Route Values  Post
+     * Successful Response
+     */
+    201: DecimalValueGet | FinancialSimulatorAppServerRoutersValuesRateValueRateValueGet;
+};
+
+export type PostItemRouteValuesPostResponse = PostItemRouteValuesPostResponses[keyof PostItemRouteValuesPostResponses];
+
+export type DeleteItemRouteValuesItemIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/values/{item_id}';
+};
+
+export type DeleteItemRouteValuesItemIdDeleteErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteItemRouteValuesItemIdDeleteError = DeleteItemRouteValuesItemIdDeleteErrors[keyof DeleteItemRouteValuesItemIdDeleteErrors];
+
+export type DeleteItemRouteValuesItemIdDeleteResponses = {
+    /**
+     * Response Delete Item Route Values  Item Id  Delete
+     * Successful Response
+     */
+    200: DecimalValueGet | FinancialSimulatorAppServerRoutersValuesRateValueRateValueGet;
+};
+
+export type DeleteItemRouteValuesItemIdDeleteResponse = DeleteItemRouteValuesItemIdDeleteResponses[keyof DeleteItemRouteValuesItemIdDeleteResponses];
+
+export type GetItemRouteValuesItemIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/values/{item_id}';
+};
+
+export type GetItemRouteValuesItemIdGetErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetItemRouteValuesItemIdGetError = GetItemRouteValuesItemIdGetErrors[keyof GetItemRouteValuesItemIdGetErrors];
+
+export type GetItemRouteValuesItemIdGetResponses = {
+    /**
+     * Response Get Item Route Values  Item Id  Get
+     * Successful Response
+     */
+    200: DecimalValueGet | FinancialSimulatorAppServerRoutersValuesRateValueRateValueGet;
+};
+
+export type GetItemRouteValuesItemIdGetResponse = GetItemRouteValuesItemIdGetResponses[keyof GetItemRouteValuesItemIdGetResponses];
+
+export type PutItemRouteValuesItemIdPutData = {
+    /**
+     * Item Post
+     */
+    body: DecimalValuePost | RateValuePost;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/values/{item_id}';
+};
+
+export type PutItemRouteValuesItemIdPutErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Response 409 Put Item Route Values  Item Id  Put
+     * Database error
+     */
+    409: HttpDatabaseIntegrityError | HttpChangeTypeError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PutItemRouteValuesItemIdPutError = PutItemRouteValuesItemIdPutErrors[keyof PutItemRouteValuesItemIdPutErrors];
+
+export type PutItemRouteValuesItemIdPutResponses = {
+    /**
+     * Response Put Item Route Values  Item Id  Put
+     * Successful Response
+     */
+    200: DecimalValueGet | FinancialSimulatorAppServerRoutersValuesRateValueRateValueGet;
+};
+
+export type PutItemRouteValuesItemIdPutResponse = PutItemRouteValuesItemIdPutResponses[keyof PutItemRouteValuesItemIdPutResponses];
+
+export type GetItemsRouteSchedulesGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/schedules/';
+};
+
+export type GetItemsRouteSchedulesGetResponses = {
+    /**
+     * Response Get Items Route Schedules  Get
+     * Successful Response
+     */
+    200: Array<DailyScheduleGet | DayScheduleGet | YearlyScheduleGet | MonthlyScheduleGet | WeeklyScheduleGet | FromScheduleGet | UntilScheduleGet | RangeScheduleGet | AllScheduleGet | AnyScheduleGet>;
+};
+
+export type GetItemsRouteSchedulesGetResponse = GetItemsRouteSchedulesGetResponses[keyof GetItemsRouteSchedulesGetResponses];
+
+export type PostItemRouteSchedulesPostData = {
+    /**
+     * Item Post
+     */
+    body: DailySchedulePost | DaySchedulePost | YearlySchedulePost | MonthlySchedulePost | WeeklySchedulePost | FromSchedulePost | UntilSchedulePost | RangeSchedulePost | AllSchedulePost | AnySchedulePost;
+    path?: never;
+    query?: never;
+    url: '/schedules/';
+};
+
+export type PostItemRouteSchedulesPostErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Database integrity error
+     */
+    409: HttpDatabaseIntegrityError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PostItemRouteSchedulesPostError = PostItemRouteSchedulesPostErrors[keyof PostItemRouteSchedulesPostErrors];
+
+export type PostItemRouteSchedulesPostResponses = {
+    /**
+     * Response Post Item Route Schedules  Post
+     * Successful Response
+     */
+    201: DailyScheduleGet | DayScheduleGet | YearlyScheduleGet | MonthlyScheduleGet | WeeklyScheduleGet | FromScheduleGet | UntilScheduleGet | RangeScheduleGet | AllScheduleGet | AnyScheduleGet;
+};
+
+export type PostItemRouteSchedulesPostResponse = PostItemRouteSchedulesPostResponses[keyof PostItemRouteSchedulesPostResponses];
+
+export type DeleteItemRouteSchedulesItemIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/schedules/{item_id}';
+};
+
+export type DeleteItemRouteSchedulesItemIdDeleteErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteItemRouteSchedulesItemIdDeleteError = DeleteItemRouteSchedulesItemIdDeleteErrors[keyof DeleteItemRouteSchedulesItemIdDeleteErrors];
+
+export type DeleteItemRouteSchedulesItemIdDeleteResponses = {
+    /**
+     * Response Delete Item Route Schedules  Item Id  Delete
+     * Successful Response
+     */
+    200: DailyScheduleGet | DayScheduleGet | YearlyScheduleGet | MonthlyScheduleGet | WeeklyScheduleGet | FromScheduleGet | UntilScheduleGet | RangeScheduleGet | AllScheduleGet | AnyScheduleGet;
+};
+
+export type DeleteItemRouteSchedulesItemIdDeleteResponse = DeleteItemRouteSchedulesItemIdDeleteResponses[keyof DeleteItemRouteSchedulesItemIdDeleteResponses];
+
+export type GetItemRouteSchedulesItemIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/schedules/{item_id}';
+};
+
+export type GetItemRouteSchedulesItemIdGetErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetItemRouteSchedulesItemIdGetError = GetItemRouteSchedulesItemIdGetErrors[keyof GetItemRouteSchedulesItemIdGetErrors];
+
+export type GetItemRouteSchedulesItemIdGetResponses = {
+    /**
+     * Response Get Item Route Schedules  Item Id  Get
+     * Successful Response
+     */
+    200: DailyScheduleGet | DayScheduleGet | YearlyScheduleGet | MonthlyScheduleGet | WeeklyScheduleGet | FromScheduleGet | UntilScheduleGet | RangeScheduleGet | AllScheduleGet | AnyScheduleGet;
+};
+
+export type GetItemRouteSchedulesItemIdGetResponse = GetItemRouteSchedulesItemIdGetResponses[keyof GetItemRouteSchedulesItemIdGetResponses];
+
+export type PutItemRouteSchedulesItemIdPutData = {
+    /**
+     * Item Post
+     */
+    body: DailySchedulePost | DaySchedulePost | YearlySchedulePost | MonthlySchedulePost | WeeklySchedulePost | FromSchedulePost | UntilSchedulePost | RangeSchedulePost | AllSchedulePost | AnySchedulePost;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/schedules/{item_id}';
+};
+
+export type PutItemRouteSchedulesItemIdPutErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Response 409 Put Item Route Schedules  Item Id  Put
+     * Database error
+     */
+    409: HttpDatabaseIntegrityError | HttpChangeTypeError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PutItemRouteSchedulesItemIdPutError = PutItemRouteSchedulesItemIdPutErrors[keyof PutItemRouteSchedulesItemIdPutErrors];
+
+export type PutItemRouteSchedulesItemIdPutResponses = {
+    /**
+     * Response Put Item Route Schedules  Item Id  Put
+     * Successful Response
+     */
+    200: DailyScheduleGet | DayScheduleGet | YearlyScheduleGet | MonthlyScheduleGet | WeeklyScheduleGet | FromScheduleGet | UntilScheduleGet | RangeScheduleGet | AllScheduleGet | AnyScheduleGet;
+};
+
+export type PutItemRouteSchedulesItemIdPutResponse = PutItemRouteSchedulesItemIdPutResponses[keyof PutItemRouteSchedulesItemIdPutResponses];
+
+export type GetItemsRouteProvidersGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/providers/';
+};
+
+export type GetItemsRouteProvidersGetResponses = {
+    /**
+     * Response Get Items Route Providers  Get
+     * Successful Response
+     */
+    200: Array<AlwaysProviderGet | ScheduledProviderGet | MergeProviderGet | NextProviderGet>;
+};
+
+export type GetItemsRouteProvidersGetResponse = GetItemsRouteProvidersGetResponses[keyof GetItemsRouteProvidersGetResponses];
+
+export type PostItemRouteProvidersPostData = {
+    /**
+     * Item Post
+     */
+    body: AlwaysProviderPost | ScheduledProviderPost | MergeProviderPost | NextProviderPost;
+    path?: never;
+    query?: never;
+    url: '/providers/';
+};
+
+export type PostItemRouteProvidersPostErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Database integrity error
+     */
+    409: HttpDatabaseIntegrityError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PostItemRouteProvidersPostError = PostItemRouteProvidersPostErrors[keyof PostItemRouteProvidersPostErrors];
+
+export type PostItemRouteProvidersPostResponses = {
+    /**
+     * Response Post Item Route Providers  Post
+     * Successful Response
+     */
+    201: AlwaysProviderGet | ScheduledProviderGet | MergeProviderGet | NextProviderGet;
+};
+
+export type PostItemRouteProvidersPostResponse = PostItemRouteProvidersPostResponses[keyof PostItemRouteProvidersPostResponses];
+
+export type DeleteItemRouteProvidersItemIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/providers/{item_id}';
+};
+
+export type DeleteItemRouteProvidersItemIdDeleteErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteItemRouteProvidersItemIdDeleteError = DeleteItemRouteProvidersItemIdDeleteErrors[keyof DeleteItemRouteProvidersItemIdDeleteErrors];
+
+export type DeleteItemRouteProvidersItemIdDeleteResponses = {
+    /**
+     * Response Delete Item Route Providers  Item Id  Delete
+     * Successful Response
+     */
+    200: AlwaysProviderGet | ScheduledProviderGet | MergeProviderGet | NextProviderGet;
+};
+
+export type DeleteItemRouteProvidersItemIdDeleteResponse = DeleteItemRouteProvidersItemIdDeleteResponses[keyof DeleteItemRouteProvidersItemIdDeleteResponses];
+
+export type GetItemRouteProvidersItemIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/providers/{item_id}';
+};
+
+export type GetItemRouteProvidersItemIdGetErrors = {
+    /**
+     * Not found
+     */
+    404: HttpNotFoundError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetItemRouteProvidersItemIdGetError = GetItemRouteProvidersItemIdGetErrors[keyof GetItemRouteProvidersItemIdGetErrors];
+
+export type GetItemRouteProvidersItemIdGetResponses = {
+    /**
+     * Response Get Item Route Providers  Item Id  Get
+     * Successful Response
+     */
+    200: AlwaysProviderGet | ScheduledProviderGet | MergeProviderGet | NextProviderGet;
+};
+
+export type GetItemRouteProvidersItemIdGetResponse = GetItemRouteProvidersItemIdGetResponses[keyof GetItemRouteProvidersItemIdGetResponses];
+
+export type PutItemRouteProvidersItemIdPutData = {
+    /**
+     * Item Post
+     */
+    body: AlwaysProviderPost | ScheduledProviderPost | MergeProviderPost | NextProviderPost;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: string;
+    };
+    query?: never;
+    url: '/providers/{item_id}';
+};
+
+export type PutItemRouteProvidersItemIdPutErrors = {
+    /**
+     * Relation invalid
+     */
+    400: HttpRelationInvalidError;
+    /**
+     * Response 409 Put Item Route Providers  Item Id  Put
+     * Database error
+     */
+    409: HttpDatabaseIntegrityError | HttpChangeTypeError;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PutItemRouteProvidersItemIdPutError = PutItemRouteProvidersItemIdPutErrors[keyof PutItemRouteProvidersItemIdPutErrors];
+
+export type PutItemRouteProvidersItemIdPutResponses = {
+    /**
+     * Response Put Item Route Providers  Item Id  Put
+     * Successful Response
+     */
+    200: AlwaysProviderGet | ScheduledProviderGet | MergeProviderGet | NextProviderGet;
+};
+
+export type PutItemRouteProvidersItemIdPutResponse = PutItemRouteProvidersItemIdPutResponses[keyof PutItemRouteProvidersItemIdPutResponses];
 
 export type GetDummyDaysGetData = {
     body?: never;

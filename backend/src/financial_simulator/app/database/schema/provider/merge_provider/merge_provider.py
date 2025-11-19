@@ -14,11 +14,11 @@ class MergeProvider(Provider):
 
     id: Mapped[UUID] = mapped_column(ForeignKey("provider.id"), primary_key=True)
 
-    providers: Mapped[List[Provider]] = relationship(
-        secondary="merge_provider_provider",
-        back_populates="merge_providers",
+    providers: Mapped[List[MergeProviderProvider]] = relationship(
+        back_populates="merge_provider",
         order_by=MergeProviderProvider.position,
         collection_class=ordering_list("position"),
+        cascade="all, delete-orphan",
     )
 
     __mapper_args__ = {

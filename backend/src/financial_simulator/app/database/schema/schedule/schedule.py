@@ -8,12 +8,12 @@ from ..base import (
 
 if TYPE_CHECKING:
     from ..provider import ScheduledProvider
-    from .all_schedule import AllSchedule
-    from .any_schedule import AnySchedule
+    from .all_schedule import AllScheduleSchedule
+    from .any_schedule import AnyScheduleSchedule
 else:
     ScheduledProvider = "ScheduledProvider"
-    AllSchedule = "AllSchedule"
-    AnySchedule = "AnySchedule"
+    AllScheduleSchedule = "AllScheduleSchedule"
+    AnyScheduleSchedule = "AnyScheduleSchedule"
 
 
 class Schedule(BaseWithType):
@@ -24,14 +24,14 @@ class Schedule(BaseWithType):
         cascade="all, delete-orphan",
     )
 
-    all_schedules: Mapped[List[AllSchedule]] = relationship(
-        secondary="all_schedule_schedule",
-        back_populates="schedules",
+    all_schedules: Mapped[List[AllScheduleSchedule]] = relationship(
+        back_populates="schedule",
+        cascade="all, delete-orphan",
     )
 
-    any_schedules: Mapped[List[AnySchedule]] = relationship(
-        secondary="any_schedule_schedule",
-        back_populates="schedules",
+    any_schedules: Mapped[List[AnyScheduleSchedule]] = relationship(
+        back_populates="schedule",
+        cascade="all, delete-orphan",
     )
 
     __mapper_args__ = {

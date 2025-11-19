@@ -7,6 +7,7 @@ from .optional_related import OptionalRelatedPostField, OptionalRelatedModelFiel
 from .children import ChildrenGetField, ChildrenPostField, ChildrenModelField
 from .parent import ParentGetField, ParentModelField
 from .many_to_many import ManyToManyReference, ManyToManyModelFieldParams, ManyToManyModelField, ManyToManyGetField, ManyToManyPostField
+from .association import AssociationReference, AssociationModelFieldParams, AssociationModelField, AssociationGetField, AssociationPostField
 
 __all__ = [
     "GetField",
@@ -29,4 +30,9 @@ __all__ = [
     "ManyToManyModelField",
     "ManyToManyModelFieldParams",
     "ManyToManyReference",
+    "AssociationGetField",
+    "AssociationPostField",
+    "AssociationModelField",
+    "AssociationModelFieldParams",
+    "AssociationReference",
 ]

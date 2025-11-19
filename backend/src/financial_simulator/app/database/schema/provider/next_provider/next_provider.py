@@ -14,11 +14,11 @@ class NextProvider(Provider):
 
     id: Mapped[UUID] = mapped_column(ForeignKey("provider.id"), primary_key=True)
 
-    providers: Mapped[List[Provider]] = relationship(
-        secondary="next_provider_provider",
-        back_populates="next_providers",
+    providers: Mapped[List[NextProviderProvider]] = relationship(
+        back_populates="next_provider",
         order_by=NextProviderProvider.position,
         collection_class=ordering_list("position"),
+        cascade="all, delete-orphan",
     )
 
     __mapper_args__ = {
