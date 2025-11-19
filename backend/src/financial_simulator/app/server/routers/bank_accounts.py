@@ -12,7 +12,6 @@ from pydantic import BaseModel
 from .common.collection import Collection
 from ..util.model_mapper import (
     ModelMapper,
-    FieldRelation,
     OptionalRelatedModelField,
     OrdinaryModelField,
 )
@@ -55,37 +54,20 @@ model_mapper = ModelMapper(
     table_model=BankAccount,
     get_model=BankAccountGet,
     post_model=BankAccountPost,
-    fields={
-        "name": OrdinaryModelField(),
-        "description": OrdinaryModelField(),
-        "asset_account_id": OptionalRelatedModelField(
-            FieldRelation(field="asset_account", model=LedgerAccount)
-        ),
-        "interest_income_account_id": OptionalRelatedModelField(
-            FieldRelation(field="interest_income_account", model=LedgerAccount)
-        ),
-        "interest_receivable_account_id": OptionalRelatedModelField(
-            FieldRelation(field="interest_receivable_account", model=LedgerAccount)
-        ),
-        "fee_expenses_account_id": OptionalRelatedModelField(
-            FieldRelation(field="fee_expenses_account", model=LedgerAccount)
-        ),
-        "fees_payable_account_id": OptionalRelatedModelField(
-            FieldRelation(field="fees_payable_account", model=LedgerAccount)
-        ),
-        "fees_provider_id": OptionalRelatedModelField(
-            FieldRelation(field="fees_provider", model=Provider)
-        ),
-        "fee_payment_schedule_id": OptionalRelatedModelField(
-            FieldRelation(field="fee_payment_schedule", model=Schedule)
-        ),
-        "rate_provider_id": OptionalRelatedModelField(
-            FieldRelation(field="rate_provider", model=Provider)
-        ),
-        "interest_payment_schedule_id": OptionalRelatedModelField(
-            FieldRelation(field="interest_payment_schedule", model=Schedule)
-        ),
-    },
+)
+(
+    model_mapper
+    .field("name", OrdinaryModelField())
+    .field("description", OrdinaryModelField())
+    .field("asset_account_id", OptionalRelatedModelField(field="asset_account", model=LedgerAccount))
+    .field("interest_income_account_id", OptionalRelatedModelField(field="interest_income_account", model=LedgerAccount))
+    .field("interest_receivable_account_id", OptionalRelatedModelField(field="interest_receivable_account", model=LedgerAccount))
+    .field("fee_expenses_account_id", OptionalRelatedModelField(field="fee_expenses_account", model=LedgerAccount))
+    .field("fees_payable_account_id", OptionalRelatedModelField(field="fees_payable_account", model=LedgerAccount))
+    .field("fees_provider_id", OptionalRelatedModelField(field="fees_provider", model=Provider))
+    .field("fee_payment_schedule_id", OptionalRelatedModelField(field="fee_payment_schedule", model=Schedule))
+    .field("rate_provider_id", OptionalRelatedModelField(field="rate_provider", model=Provider))
+    .field("interest_payment_schedule_id", OptionalRelatedModelField(field="interest_payment_schedule", model=Schedule))
 )
 
 Collection(

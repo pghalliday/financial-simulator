@@ -6,7 +6,7 @@ from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
 )
-from .value import ValueGet, ValuePost, value_model_fields
+from .value import ValueGet, ValuePost, add_value_model_fields
 
 DecimalValueType = Literal["decimal_value"]
 
@@ -21,16 +21,12 @@ class DecimalValueGet(ValueGet):
     value: Decimal | None
 
 
-decimal_value_model_mapper = ModelMapper[
-    DecimalValue,
-    DecimalValueGet,
-    DecimalValuePost,
-](
+decimal_value_model_mapper = ModelMapper(
     table_model=DecimalValue,
     get_model=DecimalValueGet,
     post_model=DecimalValuePost,
-    fields={
-        **value_model_fields,
-        "value": OrdinaryModelField(),
-    },
+)
+(
+    add_value_model_fields(decimal_value_model_mapper)
+    .field("value", OrdinaryModelField())
 )

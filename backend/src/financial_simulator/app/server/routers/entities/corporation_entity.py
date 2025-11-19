@@ -1,7 +1,7 @@
 from typing import Literal
 
 from financial_simulator.app.database.schema import CorporationEntity
-from financial_simulator.app.server.routers.entities.entity import EntityPost, EntityGet, entity_model_fields
+from financial_simulator.app.server.routers.entities.entity import EntityPost, EntityGet, add_entity_model_fields
 from financial_simulator.app.server.util.model_mapper import ModelMapper
 
 CorporationEntityType = Literal["corporation_entity"]
@@ -15,13 +15,9 @@ class CorporationEntityGet(EntityGet):
     type: CorporationEntityType
 
 
-corporation_model_mapper = ModelMapper[
-    CorporationEntity,
-    CorporationEntityGet,
-    CorporationEntityPost,
-](
+corporation_model_mapper = ModelMapper(
     table_model=CorporationEntity,
     get_model=CorporationEntityGet,
     post_model=CorporationEntityPost,
-    fields=entity_model_fields,
 )
+add_entity_model_fields(corporation_model_mapper)

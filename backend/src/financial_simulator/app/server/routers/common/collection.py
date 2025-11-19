@@ -17,7 +17,7 @@ from financial_simulator.app.server.util.model_mapper import (
     TABLE,
     GET,
     POST,
-    ModelMapperInterface,
+    ModelMapper,
 )
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
@@ -25,13 +25,13 @@ DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 logger = logging.getLogger(__name__)
 
 class Collection(Generic[TABLE, GET, POST]):
-    __model_mapper: ModelMapperInterface[TABLE, GET, POST]
+    __model_mapper: ModelMapper[TABLE, GET, POST]
     __order_by: Optional[InstrumentedAttribute[str]]
     __where: Optional[ColumnElement[bool]]
 
     def __init__(
             self,
-            model_mapper: ModelMapperInterface[TABLE, GET, POST],
+            model_mapper: ModelMapper[TABLE, GET, POST],
             order_by: Optional[InstrumentedAttribute[str]] = None,
             where: Optional[ColumnElement[bool]] = None
     ) -> None:
@@ -47,7 +47,7 @@ class Collection(Generic[TABLE, GET, POST]):
         get_model = model_mapper.get_model
         post_model = model_mapper.post_model
 
-        if model_mapper.has_invalid_relation_error:
+        if model_mapper.has_invalid_relation_error():
             invalid_relation_error = {
                 400: {"model": HTTPRelationInvalidError, "description": "Relation invalid"},
             }

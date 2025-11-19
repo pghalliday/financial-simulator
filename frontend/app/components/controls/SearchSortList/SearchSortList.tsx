@@ -2,7 +2,7 @@ import {ActionIcon, Anchor, Box, Center, Group, Table, Text, TextInput, Unstyled
 import {IconChevronDown, IconChevronUp, IconCirclePlus, IconSearch, IconSelector, IconTrash} from "@tabler/icons-react";
 import {Link} from "react-router"
 import classes from './SearchSortList.module.css';
-import {type ReactElement, type ReactNode, useEffect, useLayoutEffect, useRef, useState} from "react";
+import {type ChangeEvent, type ReactElement, type ReactNode, useEffect, useLayoutEffect, useRef, useState} from "react";
 
 import {getFieldOfType, type IdItem, type KeysOfType} from "~/lib/types";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
@@ -184,7 +184,7 @@ export function SearchSortList<Type extends IdItem>(
         }
     };
 
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {value} = event.currentTarget;
         setSearch(value);
     };

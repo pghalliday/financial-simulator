@@ -5,7 +5,7 @@ from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
 )
-from .schedule import ScheduleGet, SchedulePost, schedule_model_fields
+from .schedule import ScheduleGet, SchedulePost, add_schedule_model_fields
 
 WeeklyScheduleType = Literal["weekly_schedule"]
 
@@ -20,16 +20,12 @@ class WeeklyScheduleGet(ScheduleGet):
     weekday: int | None
 
 
-weekly_schedule_model_mapper = ModelMapper[
-    WeeklySchedule,
-    WeeklyScheduleGet,
-    WeeklySchedulePost,
-](
+weekly_schedule_model_mapper = ModelMapper(
     table_model=WeeklySchedule,
     get_model=WeeklyScheduleGet,
     post_model=WeeklySchedulePost,
-    fields={
-        **schedule_model_fields,
-        "weekday": OrdinaryModelField(),
-    },
+)
+(
+    add_schedule_model_fields(weekly_schedule_model_mapper)
+    .field("weekday", OrdinaryModelField())
 )

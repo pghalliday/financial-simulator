@@ -13,9 +13,9 @@ from financial_simulator.app.server.util.model_mapper import (
     GetMapper,
     OrdinaryGetField,
     AssociationReference,
-    AssociationModelField, AssociationModelFieldParams,
+    AssociationModelField,
 )
-from .provider import ProviderGet, ProviderPost, provider_model_fields
+from .provider import ProviderGet, ProviderPost, add_provider_model_fields
 
 NextProviderType = Literal["next_provider"]
 
@@ -39,29 +39,24 @@ class NextProviderGet(ProviderGet):
 next_provider_provider_get_mapper = GetMapper(
     table_model=Provider,
     get_model=NextProviderProviderGet,
-    fields={
-        "type": OrdinaryGetField(),
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    next_provider_provider_get_mapper
+    .field("type", OrdinaryGetField())
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
-next_provider_model_mapper = ModelMapper[
-    NextProvider,
-    NextProviderGet,
-    NextProviderPost,
-](
+next_provider_model_mapper = ModelMapper(
     table_model=NextProvider,
     get_model=NextProviderGet,
     post_model=NextProviderPost,
-    fields={
-        **provider_model_fields,
-        "providers": AssociationModelField(
-            association_field="provider",
-            params=AssociationModelFieldParams(
-                association_model=NextProviderProvider,
-                get_mapper=next_provider_provider_get_mapper,
-            ),
-        ),
-    },
+)
+(
+    add_provider_model_fields(next_provider_model_mapper)
+    .field("providers", AssociationModelField(
+        association_field="provider",
+        association_model=NextProviderProvider,
+        get_mapper=next_provider_provider_get_mapper,
+    ))
 )

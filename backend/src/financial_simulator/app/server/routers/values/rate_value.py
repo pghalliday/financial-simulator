@@ -7,12 +7,11 @@ from financial_simulator.app.database.schema import RateValue, Rate
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OptionalRelatedModelField,
-    FieldRelation,
     GetMapper,
     OrdinaryGetField,
     ParentModelField,
 )
-from .value import ValueGet, ValuePost, value_model_fields
+from .value import ValueGet, ValuePost, add_value_model_fields
 
 RateValueType = Literal["rate_value"]
 
@@ -38,27 +37,22 @@ class RateValueGet(ValueGet):
 rate_value_rate_get_mapper = GetMapper(
     table_model=Rate,
     get_model=RateValueRateGet,
-    fields={
-        "type": OrdinaryGetField(),
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    rate_value_rate_get_mapper
+    .field("type", OrdinaryGetField())
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
 
-rate_value_model_mapper = ModelMapper[
-    RateValue,
-    RateValueGet,
-    RateValuePost,
-](
+rate_value_model_mapper = ModelMapper(
     table_model=RateValue,
     get_model=RateValueGet,
     post_model=RateValuePost,
-    fields={
-        **value_model_fields,
-        "rate_id": OptionalRelatedModelField(
-            FieldRelation(field="rate", model=Rate)
-        ),
-        "rate": ParentModelField(rate_value_rate_get_mapper)
-    },
+)
+(
+    add_value_model_fields(rate_value_model_mapper)
+    .field("rate_id", OptionalRelatedModelField(field="rate", model=Rate))
+    .field("rate", ParentModelField(rate_value_rate_get_mapper))
 )

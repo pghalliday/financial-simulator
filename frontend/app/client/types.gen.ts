@@ -1071,7 +1071,7 @@ export type LedgerAccountGet = {
      * Sub Accounts
      */
     sub_accounts: Array<LedgerAccountGet>;
-    parent: LedgerAccountGet | null;
+    parent: LedgerAccountParentGet | null;
     /**
      * Bank Account Asset Accounts
      */
@@ -1092,6 +1092,33 @@ export type LedgerAccountGet = {
      * Bank Account Fees Payable Accounts
      */
     bank_account_fees_payable_accounts: Array<LedgerAccountBankAccountGet>;
+};
+
+/**
+ * LedgerAccountParentGet
+ */
+export type LedgerAccountParentGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
+    /**
+     * Account Name
+     */
+    account_name: string;
+    /**
+     * Parent Id
+     */
+    parent_id: string | null;
+    parent: LedgerAccountParentGet | null;
 };
 
 /**

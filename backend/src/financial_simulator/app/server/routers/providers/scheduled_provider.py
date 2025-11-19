@@ -11,12 +11,11 @@ from financial_simulator.app.database.schema import (
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OptionalRelatedModelField,
-    FieldRelation,
     ParentModelField,
     GetMapper,
     OrdinaryGetField,
 )
-from .provider import ProviderGet, ProviderPost, provider_model_fields
+from .provider import ProviderGet, ProviderPost, add_provider_model_fields
 
 ScheduledProviderType = Literal["scheduled_provider"]
 
@@ -50,40 +49,38 @@ class ScheduledProviderGet(ProviderGet):
 scheduled_provider_value_get_mapper = GetMapper(
     table_model=Value,
     get_model=ScheduledProviderValueGet,
-    fields={
-        "type": OrdinaryGetField(),
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    scheduled_provider_value_get_mapper
+    .field("type", OrdinaryGetField())
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
 scheduled_provider_schedule_get_mapper = GetMapper(
     table_model=Schedule,
     get_model=ScheduledProviderScheduleGet,
-    fields={
-        "type": OrdinaryGetField(),
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    scheduled_provider_schedule_get_mapper
+    .field("type", OrdinaryGetField())
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
-scheduled_provider_model_mapper = ModelMapper[
-    ScheduledProvider,
-    ScheduledProviderGet,
-    ScheduledProviderPost,
-](
+scheduled_provider_model_mapper = ModelMapper(
     table_model=ScheduledProvider,
     get_model=ScheduledProviderGet,
     post_model=ScheduledProviderPost,
-    fields={
-        **provider_model_fields,
-        "value_id": OptionalRelatedModelField(
-            FieldRelation(field="value", model=Value)
-        ),
-        "schedule_id": OptionalRelatedModelField(
-            FieldRelation(field="schedule", model=Schedule)
-        ),
-        "value": ParentModelField(scheduled_provider_value_get_mapper),
-        "schedule": ParentModelField(scheduled_provider_schedule_get_mapper),
-    },
+)
+(
+    add_provider_model_fields(scheduled_provider_model_mapper)
+    .field("value_id", OptionalRelatedModelField(
+        field="value", model=Value
+    ))
+    .field("schedule_id", OptionalRelatedModelField(
+        field="schedule", model=Schedule
+    ))
+    .field("value", ParentModelField(scheduled_provider_value_get_mapper))
+    .field("schedule", ParentModelField(scheduled_provider_schedule_get_mapper))
 )

@@ -8,7 +8,7 @@ from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
 )
-from .schedule import ScheduleGet, SchedulePost, schedule_model_fields
+from .schedule import ScheduleGet, SchedulePost, add_schedule_model_fields
 
 RangeScheduleType = Literal["range_schedule"]
 
@@ -25,17 +25,13 @@ class RangeScheduleGet(ScheduleGet):
     until_date: date | None
 
 
-range_schedule_model_mapper = ModelMapper[
-    RangeSchedule,
-    RangeScheduleGet,
-    RangeSchedulePost,
-](
+range_schedule_model_mapper = ModelMapper(
     table_model=RangeSchedule,
     get_model=RangeScheduleGet,
     post_model=RangeSchedulePost,
-    fields={
-        **schedule_model_fields,
-        "from_date": OrdinaryModelField(),
-        "until_date": OrdinaryModelField(),
-    },
+)
+(
+    add_schedule_model_fields(range_schedule_model_mapper)
+    .field("from_date", OrdinaryModelField())
+    .field("until_date", OrdinaryModelField())
 )

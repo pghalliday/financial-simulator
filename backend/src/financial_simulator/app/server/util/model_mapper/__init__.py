@@ -18,17 +18,15 @@ from .fields import (
     ParentGetField,
     ParentModelField,
     ManyToManyReference,
-    ManyToManyModelFieldParams,
     ManyToManyGetField,
     ManyToManyModelField,
     ManyToManyPostField,
     AssociationGetField,
     AssociationReference,
     AssociationModelField,
-    AssociationModelFieldParams,
     AssociationPostField,
 )
-from .types import (
+from .type_vars import (
     TABLE,
     GET,
     POST,
@@ -36,10 +34,6 @@ from .types import (
     RELATED_GET,
     RELATED_POST,
     ASSOCIATION_TABLE,
-    ModelMapperInterface,
-    GetMapperInterface,
-    PostMapperInterface,
-    FieldRelation,
 )
 
 __all__ = [
@@ -62,14 +56,12 @@ __all__ = [
     "ParentGetField",
     "ParentModelField",
     "ManyToManyReference",
-    "ManyToManyModelFieldParams",
     "ManyToManyGetField",
     "ManyToManyModelField",
     "ManyToManyPostField",
     "AssociationGetField",
     "AssociationReference",
     "AssociationModelField",
-    "AssociationModelFieldParams",
     "AssociationPostField",
     "TABLE",
     "GET",
@@ -77,8 +69,5 @@ __all__ = [
     "RELATED_TABLE",
     "RELATED_GET",
     "RELATED_POST",
-    "ModelMapperInterface",
-    "GetMapperInterface",
-    "PostMapperInterface",
-    "FieldRelation",
+    "ASSOCIATION_TABLE",
 ]

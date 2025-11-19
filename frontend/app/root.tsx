@@ -13,8 +13,9 @@ import {Shell} from "~/components/layout/Shell";
 import {HeaderDataProvider} from "~/providers/HeaderDataProvider";
 import {ApiError} from "~/ApiError";
 import {Notifications} from "@mantine/notifications";
+import type {ReactNode} from "react";
 
-export function Layout({children}: { children: React.ReactNode }) {
+export function Layout({children}: { children: ReactNode }) {
     return (
         <html lang="en" {...mantineHtmlProps}>
         <head>

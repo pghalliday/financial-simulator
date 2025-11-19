@@ -26,9 +26,7 @@ from financial_simulator.app.server.errors import (
     HTTPRelationInvalidError,
 )
 from financial_simulator.app.server.util import get_item
-from financial_simulator.app.server.util.model_mapper import (
-    ModelMapperInterface,
-)
+from financial_simulator.app.server.util.model_mapper import ModelMapper
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
@@ -45,7 +43,7 @@ class TypedCollection(Generic[TABLE, GET, POST]):
     __table_model: type[TABLE]
     __get_model: type[GET]
     __post_model: type[POST]
-    __model_mappers: Mapping[str, ModelMapperInterface[TABLE, GET, POST]]
+    __model_mappers: Mapping[str, ModelMapper[TABLE, GET, POST]]
     __order_by: Optional[InstrumentedAttribute[str]]
     __where: Optional[ColumnElement[bool]]
 
@@ -54,7 +52,7 @@ class TypedCollection(Generic[TABLE, GET, POST]):
             table_model: type[TABLE],
             get_model: type[GET],
             post_model: type[POST],
-            model_mappers: Mapping[str, ModelMapperInterface[TABLE, GET, POST]],
+            model_mappers: Mapping[str, ModelMapper[TABLE, GET, POST]],
             order_by: Optional[InstrumentedAttribute[str]] = None,
             where: Optional[ColumnElement[bool]] = None
     ) -> None:
@@ -73,7 +71,7 @@ class TypedCollection(Generic[TABLE, GET, POST]):
         order_by = self.__order_by
         where = self.__where
 
-        if any(model_mapper.has_invalid_relation_error for model_mapper in model_mappers.values()):
+        if any(model_mapper.has_invalid_relation_error() for model_mapper in model_mappers.values()):
             invalid_relation_error = {
                 400: {"model": HTTPRelationInvalidError, "description": "Relation invalid"},
             }

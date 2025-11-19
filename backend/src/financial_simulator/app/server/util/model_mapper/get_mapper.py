@@ -1,30 +1,33 @@
 import logging
-from typing import Mapping
+from typing import Self, Dict, Generic
 
-
-from financial_simulator.app.server.util.model_mapper.fields.get_field import GetField
-from financial_simulator.app.server.util.model_mapper.types import (
+from .fields.get_field import GetField
+from .type_vars import (
     TABLE,
     GET,
-    GetMapperInterface,
-    TreeBehavior,
 )
 
 logger = logging.getLogger(__name__)
 
-class GetMapper(GetMapperInterface[TABLE, GET]):
-    __fields: Mapping[str, GetField[TABLE, GET] | None]
+class GetMapper(Generic[TABLE, GET]):
+    table_model: type[TABLE]
+    get_model: type[GET]
+    __fields: Dict[str, GetField[TABLE, GET]]
 
-    def __init__(self, table_model: type[TABLE], get_model: type[GET], fields: Mapping[str, GetField[TABLE, GET]]) -> None:
+    def __init__(self, table_model: type[TABLE], get_model: type[GET]) -> None:
         self.table_model = table_model
         self.get_model = get_model
-        self.__fields = fields
+        self.__fields = {}
 
-    def map(self, item: TABLE, tree_behavior: TreeBehavior) -> GET:
+    def field(self, name: str, get_field: GetField[TABLE, GET]) -> Self:
+        self.__fields[name] = get_field
+        return self
+
+    def map(self, item: TABLE) -> GET:
         return self.get_model(
             id=item.id,
             **{
-                field: get_field.map(field, item, self, tree_behavior)
+                field: get_field.map(field, item)
                 for field, get_field
                 in self.__fields.items()
                 if get_field is not None

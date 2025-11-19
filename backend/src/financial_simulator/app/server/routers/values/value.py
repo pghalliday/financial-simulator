@@ -12,7 +12,7 @@ from financial_simulator.app.server.util.model_mapper import (
     GetMapper,
     OrdinaryGetField,
     OrdinaryModelField,
-    ChildrenModelField,
+    ChildrenModelField, ModelMapper,
 )
 
 
@@ -44,25 +44,29 @@ class ValueGet(typed_collection.TypedBaseModel):
 value_always_provider_get_mapper = GetMapper(
     table_model=AlwaysProvider,
     get_model=ValueAlwaysProviderGet,
-    fields={
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    value_always_provider_get_mapper
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
 value_scheduled_provider_get_mapper = GetMapper(
     table_model=ScheduledProvider,
     get_model=ValueScheduledProviderGet,
-    fields={
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    value_scheduled_provider_get_mapper
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
-value_model_fields = {
-    "type": OrdinaryModelField(),
-    "name": OrdinaryModelField(),
-    "description": OrdinaryModelField(),
-    "always_providers": ChildrenModelField(value_always_provider_get_mapper),
-    "scheduled_providers": ChildrenModelField(value_scheduled_provider_get_mapper),
-}
+def add_value_model_fields(model_mapper: ModelMapper) -> ModelMapper:
+    return (
+        model_mapper
+        .field("type", OrdinaryModelField())
+        .field("name", OrdinaryModelField())
+        .field("description", OrdinaryModelField())
+        .field("always_providers", ChildrenModelField(value_always_provider_get_mapper))
+        .field("scheduled_providers", ChildrenModelField(value_scheduled_provider_get_mapper))
+    )

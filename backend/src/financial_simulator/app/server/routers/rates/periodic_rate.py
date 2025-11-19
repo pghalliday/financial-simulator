@@ -2,7 +2,7 @@ from decimal import Decimal
 from typing import Literal
 
 from financial_simulator.app.database.schema import PeriodicRate
-from financial_simulator.app.server.routers.rates.rate import RatePost, RateGet, rate_model_fields
+from financial_simulator.app.server.routers.rates.rate import RatePost, RateGet, add_rate_model_fields
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
@@ -23,17 +23,13 @@ class PeriodicRateGet(RateGet):
     period_count: int | None
 
 
-periodic_rate_model_mapper = ModelMapper[
-    PeriodicRate,
-    PeriodicRateGet,
-    PeriodicRatePost,
-](
+periodic_rate_model_mapper = ModelMapper(
     table_model=PeriodicRate,
     get_model=PeriodicRateGet,
     post_model=PeriodicRatePost,
-    fields={
-        **rate_model_fields,
-        "annual_rate": OrdinaryModelField(),
-        "period_count": OrdinaryModelField(),
-    },
+)
+(
+    add_rate_model_fields(periodic_rate_model_mapper)
+    .field("annual_rate", OrdinaryModelField())
+    .field("period_count", OrdinaryModelField())
 )

@@ -1,9 +1,9 @@
-from typing import Generic, Optional
+from typing import Generic
 
 
-from financial_simulator.app.server.util.model_mapper.fields.get_field import GetField
-from financial_simulator.app.server.util.model_mapper.fields.post_field import PostField
-from financial_simulator.app.server.util.model_mapper.types import (
+from .get_field import GetField
+from .post_field import PostField
+from ..type_vars import (
     POST,
     TABLE,
     GET,
@@ -11,13 +11,13 @@ from financial_simulator.app.server.util.model_mapper.types import (
 
 
 class ModelField(Generic[TABLE, GET, POST]):
-    get_field: Optional[GetField[TABLE, GET]]
-    post_field: Optional[PostField[TABLE, POST]]
+    get_field: GetField[TABLE, GET]
+    post_field: PostField[TABLE, POST] | None
 
     def __init__(
             self,
-            get_field: Optional[GetField[TABLE, GET]]=None,
-            post_field: Optional[PostField[TABLE, POST]]=None,
+            get_field: GetField[TABLE, GET],
+            post_field: PostField[TABLE, POST] | None = None,
     ):
         self.get_field = get_field
         self.post_field = post_field

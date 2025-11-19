@@ -5,7 +5,11 @@ from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
 )
-from .schedule import ScheduleGet, SchedulePost, schedule_model_fields
+from .schedule import (
+    ScheduleGet,
+    SchedulePost,
+    add_schedule_model_fields,
+)
 
 MonthlyScheduleType = Literal["monthly_schedule"]
 
@@ -20,16 +24,12 @@ class MonthlyScheduleGet(ScheduleGet):
     day: int | None
 
 
-monthly_schedule_model_mapper = ModelMapper[
-    MonthlySchedule,
-    MonthlyScheduleGet,
-    MonthlySchedulePost,
-](
+monthly_schedule_model_mapper = ModelMapper(
     table_model=MonthlySchedule,
     get_model=MonthlyScheduleGet,
     post_model=MonthlySchedulePost,
-    fields={
-        **schedule_model_fields,
-        "day": OrdinaryModelField(),
-    },
+)
+(
+    add_schedule_model_fields(monthly_schedule_model_mapper)
+    .field("day", OrdinaryModelField())
 )

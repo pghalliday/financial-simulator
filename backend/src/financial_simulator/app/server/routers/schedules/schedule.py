@@ -14,8 +14,7 @@ from financial_simulator.app.server.util.model_mapper import (
     OrdinaryGetField,
     OrdinaryModelField,
     ChildrenModelField,
-    AssociationModelField,
-    AssociationModelFieldParams,
+    AssociationModelField, ModelMapper,
 )
 
 
@@ -54,45 +53,46 @@ class ScheduleGet(typed_collection.TypedBaseModel):
 schedule_scheduled_provider_get_mapper = GetMapper(
     table_model=ScheduledProvider,
     get_model=ScheduleScheduledProviderGet,
-    fields={
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    schedule_scheduled_provider_get_mapper
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
 schedule_all_schedule_get_mapper = GetMapper(
     table_model=AllSchedule,
     get_model=ScheduleAllScheduleGet,
-    fields={
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    schedule_all_schedule_get_mapper
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
 schedule_any_schedule_get_mapper = GetMapper(
     table_model=AnySchedule,
     get_model=ScheduleAnyScheduleGet,
-    fields={
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    schedule_any_schedule_get_mapper
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
-schedule_model_fields = {
-    "type": OrdinaryModelField(),
-    "name": OrdinaryModelField(),
-    "description": OrdinaryModelField(),
-    "scheduled_providers": ChildrenModelField(schedule_scheduled_provider_get_mapper),
-    "all_schedules": AssociationModelField(
-        association_field="all_schedule",
-        params=AssociationModelFieldParams(
+def add_schedule_model_fields(model_mapper: ModelMapper) -> ModelMapper:
+    return (
+        model_mapper
+        .field("type", OrdinaryModelField())
+        .field("name", OrdinaryModelField())
+        .field("description", OrdinaryModelField())
+        .field("scheduled_providers", ChildrenModelField(schedule_scheduled_provider_get_mapper))
+        .field("all_schedules", AssociationModelField(
+            association_field="all_schedule",
             get_mapper=schedule_all_schedule_get_mapper,
-        )
-    ),
-    "any_schedules": AssociationModelField(
-        association_field="any_schedule",
-        params=AssociationModelFieldParams(
+        ))
+        .field("any_schedules", AssociationModelField(
+            association_field="any_schedule",
             get_mapper=schedule_any_schedule_get_mapper,
-        ),
-    ),
-}
+        ))
+    )

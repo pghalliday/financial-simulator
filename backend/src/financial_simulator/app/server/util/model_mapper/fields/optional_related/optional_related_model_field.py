@@ -1,18 +1,16 @@
-from financial_simulator.app.server.util.model_mapper.fields.model_field import ModelField
-from financial_simulator.app.server.util.model_mapper.fields.optional_related.optional_related_post_field import \
-    OptionalRelatedPostField
-from financial_simulator.app.server.util.model_mapper.fields.ordinary.ordinary_get_field import OrdinaryGetField
-from financial_simulator.app.server.util.model_mapper.types import (
+from ..model_field import ModelField
+from .optional_related_post_field import OptionalRelatedPostField
+from ..ordinary import OrdinaryGetField
+from ...type_vars import (
     TABLE,
     POST,
     GET,
-    FieldRelation,
 )
 
 
 class OptionalRelatedModelField(ModelField[TABLE, GET, POST]):
-    def __init__(self, field_relation: FieldRelation) -> None:
+    def __init__(self, field: str, model: type[TABLE]) -> None:
         super().__init__(
             get_field=OrdinaryGetField[TABLE, GET](),
-            post_field=OptionalRelatedPostField[TABLE, POST](field_relation),
+            post_field=OptionalRelatedPostField[TABLE, POST](field, model),
         )

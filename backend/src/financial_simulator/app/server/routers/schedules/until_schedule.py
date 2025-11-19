@@ -8,7 +8,7 @@ from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
 )
-from .schedule import ScheduleGet, SchedulePost, schedule_model_fields
+from .schedule import ScheduleGet, SchedulePost, add_schedule_model_fields
 
 UntilScheduleType = Literal["until_schedule"]
 
@@ -23,16 +23,12 @@ class UntilScheduleGet(ScheduleGet):
     until_date: date | None
 
 
-until_schedule_model_mapper = ModelMapper[
-    UntilSchedule,
-    UntilScheduleGet,
-    UntilSchedulePost,
-](
+until_schedule_model_mapper = ModelMapper(
     table_model=UntilSchedule,
     get_model=UntilScheduleGet,
     post_model=UntilSchedulePost,
-    fields={
-        **schedule_model_fields,
-        "until_date": OrdinaryModelField(),
-    },
+)
+(
+    add_schedule_model_fields(until_schedule_model_mapper)
+    .field("until_date", OrdinaryModelField())
 )

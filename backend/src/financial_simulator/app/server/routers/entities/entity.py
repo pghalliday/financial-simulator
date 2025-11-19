@@ -10,8 +10,7 @@ from financial_simulator.app.server.util.model_mapper import (
     OrdinaryGetField,
     OrdinaryModelField,
     ManyToManyModelField,
-    ManyToManyModelFieldParams,
-    ManyToManyReference,
+    ManyToManyReference, ModelMapper,
 )
 
 
@@ -37,20 +36,21 @@ class EntityGet(typed_collection.TypedBaseModel):
 entity_scenario_get_mapper = GetMapper(
     table_model=Scenario,
     get_model=EntityScenarioGet,
-    fields={
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    entity_scenario_get_mapper
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
-entity_model_fields = {
-    "type": OrdinaryModelField(),
-    "name": OrdinaryModelField(),
-    "description": OrdinaryModelField(),
-    "scenarios": ManyToManyModelField(
-        ManyToManyModelFieldParams(
+def add_entity_model_fields(model_mapper: ModelMapper) -> ModelMapper:
+    return (
+        model_mapper
+        .field("type", OrdinaryModelField())
+        .field("name", OrdinaryModelField())
+        .field("description", OrdinaryModelField())
+        .field("scenarios", ManyToManyModelField(
             include_post=True,
             get_mapper=entity_scenario_get_mapper,
-        )
-    ),
-}
+        ))
+    )

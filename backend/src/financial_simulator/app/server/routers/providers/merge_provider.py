@@ -13,9 +13,9 @@ from financial_simulator.app.server.util.model_mapper import (
     GetMapper,
     OrdinaryGetField,
     AssociationReference,
-    AssociationModelField, AssociationModelFieldParams,
+    AssociationModelField,
 )
-from .provider import ProviderGet, ProviderPost, provider_model_fields
+from .provider import ProviderGet, ProviderPost, add_provider_model_fields
 
 MergeProviderType = Literal["merge_provider"]
 
@@ -39,29 +39,24 @@ class MergeProviderGet(ProviderGet):
 merge_provider_provider_get_mapper = GetMapper(
     table_model=Provider,
     get_model=MergeProviderProviderGet,
-    fields={
-        "type": OrdinaryGetField(),
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    merge_provider_provider_get_mapper
+    .field("type", OrdinaryGetField())
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
-merge_provider_model_mapper = ModelMapper[
-    MergeProvider,
-    MergeProviderGet,
-    MergeProviderPost,
-](
+merge_provider_model_mapper = ModelMapper(
     table_model=MergeProvider,
     get_model=MergeProviderGet,
     post_model=MergeProviderPost,
-    fields={
-        **provider_model_fields,
-        "providers": AssociationModelField(
-            association_field="provider",
-            params=AssociationModelFieldParams(
-                association_model=MergeProviderProvider,
-                get_mapper=merge_provider_provider_get_mapper,
-            ),
-        ),
-    },
+)
+(
+    add_provider_model_fields(merge_provider_model_mapper)
+    .field("providers", AssociationModelField(
+        association_field="provider",
+        association_model=MergeProviderProvider,
+        get_mapper=merge_provider_provider_get_mapper,
+    ))
 )

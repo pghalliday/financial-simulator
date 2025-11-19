@@ -13,6 +13,7 @@ import {
     deleteItemRouteLedgerAccountsItemIdDelete,
     type LedgerAccountBankAccountGet,
     type LedgerAccountGet,
+    type LedgerAccountParentGet,
     type LedgerAccountPost,
     postItemRouteLedgerAccountsPost
 } from "~/client";
@@ -62,7 +63,7 @@ const DEFAULT_SORT_BY: SortBy<LedgerAccountGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<LedgerAccountGet>[] = ["account_name", "name", "description"]
 
 export interface Props {
-    parent?: LedgerAccountGet
+    parent?: LedgerAccountParentGet
     ledgerAccounts?: LedgerAccountGet[]
     onChange?: (items: LedgerAccountGet[]) => void
 }

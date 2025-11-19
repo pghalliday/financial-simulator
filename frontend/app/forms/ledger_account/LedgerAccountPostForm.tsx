@@ -1,4 +1,4 @@
-import type {LedgerAccountGet} from "~/client";
+import type {LedgerAccountParentGet} from "~/client";
 import {Title} from "@mantine/core";
 import {BoundTextInput} from "~/components/controls/bound/BoundTextInput";
 import {LEDGER_ACCOUNT_POST_FORM_NAME} from "~/forms/ledger_account/LedgerAccountPostFormContext";
@@ -6,7 +6,7 @@ import {LEDGER_ACCOUNT_POST_FORM_NAME} from "~/forms/ledger_account/LedgerAccoun
 export function LedgerAccountPostForm({
                                           parent,
                                       }: {
-    parent?: LedgerAccountGet | null,
+    parent?: LedgerAccountParentGet | null,
 }) {
     const parentIndicator = parent === undefined ? "" : parent === null ? "Top level account" : `Parent: ${parent.name}`
     return <>

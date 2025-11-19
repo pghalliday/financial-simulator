@@ -1,7 +1,7 @@
-from financial_simulator.app.server.util.model_mapper.fields.model_field import ModelField
-from financial_simulator.app.server.util.model_mapper.fields.ordinary.ordinary_get_field import OrdinaryGetField
-from financial_simulator.app.server.util.model_mapper.fields.ordinary.ordinary_post_field import OrdinaryPostField
-from financial_simulator.app.server.util.model_mapper.types import (
+from ..model_field import ModelField
+from .ordinary_get_field import OrdinaryGetField
+from .ordinary_post_field import OrdinaryPostField
+from ...type_vars import (
     POST,
     TABLE,
     GET,

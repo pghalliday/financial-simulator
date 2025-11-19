@@ -1,24 +1,25 @@
 from sqlalchemy.orm import Session
 
 from financial_simulator.app.server.util import get_optional_related_item
-from financial_simulator.app.server.util.model_mapper.fields.post_field import PostField
-from financial_simulator.app.server.util.model_mapper.types import PostMapperInterface, POST, TABLE, FieldRelation
+from ..post_field import PostField
+from ...type_vars import POST, TABLE
 
 
 class OptionalRelatedPostField(PostField[TABLE, POST]):
-    __field_relation: FieldRelation
+    __field: str
+    __model: type[TABLE]
 
-    def __init__(self, field_relation: FieldRelation):
-        self.__field_relation = field_relation
+    def __init__(self, field: str, model: type[TABLE]):
+        self.__field = field
+        self.__model = model
 
-    def map(self, field: str, session: Session, item: TABLE, post_mapper: PostMapperInterface[TABLE, POST], item_post: POST) -> None:
-        setattr(item, self.__field_relation.field, get_optional_related_item(
+    def map(self, field: str, session: Session, item: TABLE, item_post: POST) -> None:
+        setattr(item, self.__field, get_optional_related_item(
             session,
-            self.__field_relation.model,
-            self.__field_relation.field,
+            self.__model,
+            self.__field,
             getattr(item_post, field)
         ))
 
     def has_invalid_relation_error(self) -> bool:
         return True
-

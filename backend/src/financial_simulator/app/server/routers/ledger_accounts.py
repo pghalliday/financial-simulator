@@ -13,11 +13,11 @@ from ..util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
     OptionalRelatedModelField,
-    FieldRelation,
     ChildrenModelField,
     ParentModelField,
     GetMapper,
     OrdinaryGetField,
+    ParentGetField,
 )
 
 logger = logging.getLogger(__name__)
@@ -33,6 +33,14 @@ class LedgerAccountBankAccountGet(BaseModel):
     name: str
     description: str | None = None
 
+class LedgerAccountParentGet(BaseModel):
+    id: UUID
+    name: str
+    description: str | None
+    account_name: str
+    parent_id: UUID | None
+    parent: LedgerAccountParentGet | None
+
 class LedgerAccountGet(BaseModel):
     id: UUID
     name: str
@@ -40,7 +48,7 @@ class LedgerAccountGet(BaseModel):
     account_name: str
     parent_id: UUID | None
     sub_accounts: List[LedgerAccountGet]
-    parent: LedgerAccountGet | None
+    parent: LedgerAccountParentGet | None
     bank_account_asset_accounts: List[LedgerAccountBankAccountGet]
     bank_account_interest_income_accounts: List[LedgerAccountBankAccountGet]
     bank_account_interest_receivable_accounts: List[LedgerAccountBankAccountGet]
@@ -52,37 +60,46 @@ router = APIRouter(
     tags=["ledger-accounts"],
 )
 
-bank_account_get_mapper = GetMapper(
+ledger_account_bank_account_get_mapper = GetMapper(
     table_model=BankAccount,
     get_model=LedgerAccountBankAccountGet,
-    fields={
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(ledger_account_bank_account_get_mapper
+ .field("name", OrdinaryGetField())
+ .field("description", OrdinaryGetField()))
+
+ledger_account_parent_get_mapper = GetMapper(
+    table_model=LedgerAccount,
+    get_model=LedgerAccountParentGet,
+)
+(
+    ledger_account_parent_get_mapper
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
+    .field("account_name", OrdinaryGetField())
+    .field("parent_id", OrdinaryGetField())
+    .field("parent", ParentGetField(ledger_account_parent_get_mapper))
 )
 
 model_mapper = ModelMapper(
     table_model=LedgerAccount,
     get_model=LedgerAccountGet,
     post_model=LedgerAccountPost,
-    fields={
-        "name": OrdinaryModelField(),
-        "description": OrdinaryModelField(),
-        "account_name": OrdinaryModelField(),
-        "parent_id": OptionalRelatedModelField(
-            FieldRelation(field="parent", model=LedgerAccount)
-        ),
-        "sub_accounts": ChildrenModelField(),
-        "parent": ParentModelField(),
-        "bank_account_asset_accounts": ChildrenModelField(bank_account_get_mapper),
-        "bank_account_interest_income_accounts": ChildrenModelField(bank_account_get_mapper),
-        "bank_account_interest_receivable_accounts": ChildrenModelField(bank_account_get_mapper),
-        "bank_account_fee_expenses_accounts": ChildrenModelField(bank_account_get_mapper),
-        "bank_account_fees_payable_accounts": ChildrenModelField(bank_account_get_mapper),
-    },
 )
-
-where = LedgerAccount.parent_id == None
+(
+    model_mapper
+    .field("name", OrdinaryModelField())
+    .field("description", OrdinaryModelField())
+    .field("account_name", OrdinaryModelField())
+    .field("parent_id", OptionalRelatedModelField(field="parent", model=LedgerAccount))
+    .field("sub_accounts", ChildrenModelField(model_mapper.get_mapper))
+    .field("parent", ParentModelField(ledger_account_parent_get_mapper))
+    .field("bank_account_asset_accounts", ChildrenModelField(ledger_account_bank_account_get_mapper))
+    .field("bank_account_interest_income_accounts", ChildrenModelField(ledger_account_bank_account_get_mapper))
+    .field("bank_account_interest_receivable_accounts", ChildrenModelField(ledger_account_bank_account_get_mapper))
+    .field("bank_account_fee_expenses_accounts", ChildrenModelField(ledger_account_bank_account_get_mapper))
+    .field("bank_account_fees_payable_accounts", ChildrenModelField(ledger_account_bank_account_get_mapper))
+)
 
 Collection(
     model_mapper=model_mapper,

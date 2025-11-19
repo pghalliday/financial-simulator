@@ -8,9 +8,8 @@ from financial_simulator.app.server.routers.common import typed_collection
 from financial_simulator.app.server.util.model_mapper import (
     OrdinaryModelField,
     AssociationModelField,
-    AssociationModelFieldParams,
     OrdinaryGetField,
-    GetMapper,
+    GetMapper, ModelMapper,
 )
 
 
@@ -41,35 +40,35 @@ class ProviderGet(typed_collection.TypedBaseModel):
 provider_merge_provider_get_mapper = GetMapper(
     table_model=MergeProvider,
     get_model=ProviderMergeProviderGet,
-    fields={
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    provider_merge_provider_get_mapper
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
 provider_next_provider_get_mapper = GetMapper(
     table_model=NextProvider,
     get_model=ProviderNextProviderGet,
-    fields={
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    provider_next_provider_get_mapper
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
-provider_model_fields = {
-    "type": OrdinaryModelField(),
-    "name": OrdinaryModelField(),
-    "description": OrdinaryModelField(),
-    "merge_providers": AssociationModelField(
-        association_field="merge_provider",
-        params=AssociationModelFieldParams(
+def add_provider_model_fields(model_mapper: ModelMapper) -> ModelMapper:
+    return (
+        model_mapper
+        .field("type", OrdinaryModelField())
+        .field("name", OrdinaryModelField())
+        .field("description", OrdinaryModelField())
+        .field("merge_providers", AssociationModelField(
+            association_field="merge_provider",
             get_mapper=provider_merge_provider_get_mapper,
-        ),
-    ),
-    "next_providers": AssociationModelField(
-        association_field="next_provider",
-        params=AssociationModelFieldParams(
+        ))
+        .field("next_providers", AssociationModelField(
+            association_field="next_provider",
             get_mapper=provider_next_provider_get_mapper,
-        ),
-    ),
-}
+        ))
+    )

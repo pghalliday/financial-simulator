@@ -7,12 +7,11 @@ from financial_simulator.app.database.schema import AlwaysProvider, Value
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OptionalRelatedModelField,
-    FieldRelation,
     ParentModelField,
     GetMapper,
     OrdinaryGetField,
 )
-from .provider import ProviderGet, ProviderPost, provider_model_fields
+from .provider import ProviderGet, ProviderPost, add_provider_model_fields
 
 AlwaysProviderType = Literal["always_provider"]
 
@@ -37,26 +36,23 @@ class AlwaysProviderGet(ProviderGet):
 always_provider_value_get_mapper = GetMapper(
     table_model=Value,
     get_model=AlwaysProviderValueGet,
-    fields={
-        "type": OrdinaryGetField(),
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+)
+(
+    always_provider_value_get_mapper
+    .field("type", OrdinaryGetField())
+    .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
-always_provider_model_mapper = ModelMapper[
-    AlwaysProvider,
-    AlwaysProviderGet,
-    AlwaysProviderPost,
-](
+always_provider_model_mapper = ModelMapper(
     table_model=AlwaysProvider,
     get_model=AlwaysProviderGet,
     post_model=AlwaysProviderPost,
-    fields={
-        **provider_model_fields,
-        "value_id": OptionalRelatedModelField(
-            FieldRelation(field="value", model=Value)
-        ),
-        "value": ParentModelField(always_provider_value_get_mapper),
-    },
+)
+(
+    add_provider_model_fields(always_provider_model_mapper)
+    .field("value_id", OptionalRelatedModelField(
+        field="value", model=Value
+    ))
+    .field("value", ParentModelField(always_provider_value_get_mapper))
 )

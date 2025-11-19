@@ -3,28 +3,27 @@ from typing import Generic
 
 from sqlalchemy.orm import Session
 
-from financial_simulator.app.server.util.model_mapper.fields.post_field import PostField
-from financial_simulator.app.server.util.model_mapper.types import (
+from ...post_mapper import PostMapper
+from ..post_field import PostField
+from ...type_vars import (
     TABLE,
     POST,
     RELATED_TABLE,
     RELATED_POST,
-    PostMapperInterface,
 )
 
 logger = logging.getLogger(__name__)
 
 
 class ChildrenPostField(PostField[TABLE, POST], Generic[TABLE, POST, RELATED_TABLE, RELATED_POST]):
-    __post_mapper: PostMapperInterface[RELATED_TABLE, RELATED_POST] | None
+    __post_mapper: PostMapper[RELATED_TABLE, RELATED_POST]
 
-    def __init__(self, post_mapper: PostMapperInterface[RELATED_TABLE, RELATED_POST] | None = None) -> None:
+    def __init__(self, post_mapper: PostMapper[RELATED_TABLE, RELATED_POST]) -> None:
         self.__post_mapper = post_mapper
 
-    def map(self, field: str, session: Session, item: TABLE, post_mapper: PostMapperInterface[TABLE, POST], item_post: POST) -> None:
-        post_mapper = self.__post_mapper or post_mapper
+    def map(self, field: str, session: Session, item: TABLE, item_post: POST) -> None:
         setattr(item, field, [
-            post_mapper.map(
+            self.__post_mapper.map(
                 session,
                 child_item_post,
             )

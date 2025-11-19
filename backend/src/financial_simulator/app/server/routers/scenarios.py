@@ -15,7 +15,6 @@ from ..util.model_mapper import (
     OrdinaryModelField,
     ManyToManyReference,
     ManyToManyModelField,
-    ManyToManyModelFieldParams,
 )
 
 logger = logging.getLogger(__name__)
@@ -44,26 +43,26 @@ router = APIRouter(
 
 scenario_entity_get_mapper = GetMapper(
     table_model=Entity,
-    get_model=ScenarioEntityGet,
-    fields={
-        "type": OrdinaryGetField(),
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    },
+    get_model=ScenarioEntityGet
 )
+(scenario_entity_get_mapper
+ .field("type", OrdinaryGetField())
+ .field("name", OrdinaryGetField())
+ .field("description", OrdinaryGetField()))
 
 model_mapper = ModelMapper(
     table_model=Scenario,
     get_model=ScenarioGet,
-    post_model=ScenarioPost,
-    fields={
-        "name": OrdinaryModelField(),
-        "description": OrdinaryModelField(),
-        "entities": ManyToManyModelField(ManyToManyModelFieldParams(
-            include_post=True,
-            get_mapper=scenario_entity_get_mapper,
-        )),
-    },
+    post_model=ScenarioPost
+)
+(
+    model_mapper
+    .field("name", OrdinaryModelField())
+    .field("description", OrdinaryModelField())
+    .field("entities", ManyToManyModelField(
+        include_post=True,
+        get_mapper=scenario_entity_get_mapper,
+    ))
 )
 
 Collection(

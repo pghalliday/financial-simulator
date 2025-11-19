@@ -13,10 +13,13 @@ from financial_simulator.app.server.util.model_mapper import (
     GetMapper,
     OrdinaryGetField,
     AssociationModelField,
-    AssociationModelFieldParams,
     AssociationReference,
 )
-from .schedule import ScheduleGet, SchedulePost, schedule_model_fields
+from .schedule import (
+    ScheduleGet,
+    SchedulePost,
+    add_schedule_model_fields,
+)
 
 AnyScheduleType = Literal["any_schedule"]
 
@@ -41,30 +44,25 @@ class AnyScheduleGet(ScheduleGet):
 any_schedule_schedule_get_mapper = GetMapper(
     table_model=Schedule,
     get_model=AnyScheduleScheduleGet,
-    fields={
-        "type": OrdinaryGetField(),
-        "name": OrdinaryGetField(),
-        "description": OrdinaryGetField(),
-    }
+)
+(
+    any_schedule_schedule_get_mapper
+    .field("type", OrdinaryGetField())
+    .field("id", OrdinaryGetField())
+    .field("name", OrdinaryGetField())
 )
 
 
-any_schedule_model_mapper = ModelMapper[
-    AnySchedule,
-    AnyScheduleGet,
-    AnySchedulePost,
-](
+any_schedule_model_mapper = ModelMapper(
     table_model=AnySchedule,
     get_model=AnyScheduleGet,
     post_model=AnySchedulePost,
-    fields={
-        **schedule_model_fields,
-        "schedules": AssociationModelField(
-            association_field="schedule",
-            params=AssociationModelFieldParams(
-                association_model=AnyScheduleSchedule,
-                get_mapper=any_schedule_schedule_get_mapper,
-            ),
-        ),
-    },
+)
+(
+    add_schedule_model_fields(any_schedule_model_mapper)
+    .field("schedules", AssociationModelField(
+        association_field="schedule",
+        association_model=AnyScheduleSchedule,
+        get_mapper=any_schedule_schedule_get_mapper,
+    ))
 )
