@@ -17,7 +17,7 @@ import {
     type LedgerAccountPost,
     postItemRouteBankAccountsPost,
     postItemRouteLedgerAccountsPost
-} from "~/client";
+} from "../../client";
 import {getBankAccountPageParams} from "~/routes/BankAccount";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
@@ -29,9 +29,8 @@ import {useTreePost} from "~/lib/hooks/useTreePost";
 import {useListDelete} from "~/lib/hooks/useListDelete";
 import type {TreeData} from "~/lib/TreeData";
 import {Modal, useModalsStack} from "@mantine/core";
-import {useFormContext} from "~/lib/hooks/useFormContext";
-import {BANK_ACCOUNT_POST_FORM_NAME} from "~/forms/bank_account/BankAccountPostFormContext";
-import {LEDGER_ACCOUNT_POST_FORM_NAME} from "~/forms/ledger_account/LedgerAccountPostFormContext";
+import {useBankAccountPostFormContext} from "~/forms/bank_account/BankAccountPostFormContext";
+import {useLedgerAccountPostFormContext} from "~/forms/ledger_account/LedgerAccountPostFormContext";
 
 const NAME_COLUMN: Column<BankAccountGet> = {
     heading: "Name",
@@ -75,8 +74,8 @@ export function BankAccountList(
     }: Props
 ) {
     const stack = useModalsStack(["add-bank-account", "add-ledger-account", "confirm-delete"])
-    const bankAccountPostForm = useFormContext(BANK_ACCOUNT_POST_FORM_NAME)
-    const ledgerAccountPostForm = useFormContext(LEDGER_ACCOUNT_POST_FORM_NAME)
+    const bankAccountPostForm = useBankAccountPostFormContext()
+    const ledgerAccountPostForm = useLedgerAccountPostFormContext()
     const [addingBankAccount, {open: startAddingBankAccount, close: stopAddingBankAccount}] = useDisclosure()
     const [addingLedgerAccount, {open: startAddingLedgerAccount, close: stopAddingLedgerAccount}] = useDisclosure()
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)

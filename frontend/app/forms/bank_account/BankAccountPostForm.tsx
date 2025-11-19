@@ -1,4 +1,4 @@
-import {type LedgerAccountGet, type LedgerAccountPost} from "~/client";
+import {type LedgerAccountGet, type LedgerAccountPost} from "../../../client";
 import {useCallback} from "react";
 import {BANK_ACCOUNT_POST_FORM_NAME} from "~/forms/bank_account/BankAccountPostFormContext";
 import type {TreeData} from "~/lib/TreeData";

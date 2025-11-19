@@ -16,7 +16,7 @@ import {
     type LedgerAccountParentGet,
     type LedgerAccountPost,
     postItemRouteLedgerAccountsPost
-} from "~/client";
+} from "../../client";
 import {getLedgerAccountPageParams} from "~/routes/LedgerAccount";
 import {type ReactElement, useCallback, useState} from "react";
 import {ConfirmDeleteModal, type Impact} from "~/modals/ConfirmDeleteModal/ConfirmDeleteModal";
@@ -25,8 +25,7 @@ import {useDisclosure} from "@mantine/hooks";
 import {AddLedgerAccountModal} from "~/modals/AddItemModal/AddLedgerAccountModal";
 import {useListDelete} from "~/lib/hooks/useListDelete";
 import {Modal, useModalsStack} from "@mantine/core";
-import {useFormContext} from "~/lib/hooks/useFormContext";
-import {LEDGER_ACCOUNT_POST_FORM_NAME} from "~/forms/ledger_account/LedgerAccountPostFormContext";
+import {useLedgerAccountPostFormContext} from "~/forms/ledger_account/LedgerAccountPostFormContext";
 
 const ACCOUNT_NAME_COLUMN: Column<LedgerAccountGet> = {
     heading: "Account name",
@@ -77,7 +76,7 @@ export function LedgerAccountList(
     }: Props
 ) {
     const stack = useModalsStack(["add-ledger-account", "confirm-delete"])
-    const form = useFormContext(LEDGER_ACCOUNT_POST_FORM_NAME)
+    const form = useLedgerAccountPostFormContext()
     const [addingItem, {open: startAddingItem, close: stopAddingItem}] = useDisclosure()
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [confirmDeleteDependents, setConfirmDeleteDependents] = useState<Impact>({})

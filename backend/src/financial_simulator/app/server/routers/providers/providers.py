@@ -4,7 +4,7 @@ from typing import Union
 from fastapi import APIRouter
 
 from financial_simulator.app.database.schema import (
-    Value,
+    Provider,
 )
 
 from financial_simulator.app.server.routers.common.typed_collection import TypedCollection
@@ -33,8 +33,8 @@ router = APIRouter(
 )
 
 TypedCollection(
-    table_model=Value,
-    order_by=Value.name,
+    table_model=Provider,
+    order_by=Provider.name,
     get_model=Union[
         AlwaysProviderGet, ScheduledProviderGet, MergeProviderGet, NextProviderGet
     ],

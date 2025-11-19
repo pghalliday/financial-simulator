@@ -4,7 +4,7 @@ import type {
     IndividualEntityPost,
     LedgerAccountPost,
     ScenarioPost
-} from "~/client";
+} from "../../client";
 
 export function isValidScenarioPost(post: Partial<ScenarioPost>): post is ScenarioPost {
     return (

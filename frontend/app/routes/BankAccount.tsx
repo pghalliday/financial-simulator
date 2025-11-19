@@ -1,6 +1,6 @@
 import type {Route} from "./+types/BankAccount";
 import {BANK_ACCOUNT_BREADCRUMBS, BANK_ACCOUNT_PAGE_DESCRIPTION, BANK_ACCOUNT_PAGE_TITLE} from "~/strings";
-import {type BankAccountGet} from "~/client";
+import {type BankAccountGet} from "../../client";
 import {useDisclosure} from "@mantine/hooks";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
 import {BankAccountProvider} from "~/providers/item_providers";

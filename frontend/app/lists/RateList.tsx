@@ -10,7 +10,7 @@ import {
     SearchSortList,
     type SortBy
 } from "~/components/controls/SearchSortList/SearchSortList";
-import {type ContinuousRatePost, deleteItemRouteRatesItemIdDelete, postItemRouteRatesPost} from "~/client";
+import {type ContinuousRatePost, deleteItemRouteRatesItemIdDelete, postItemRouteRatesPost} from "../../client";
 import type {RateGet, RatePost} from "~/lib/types";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
@@ -18,8 +18,7 @@ import {useListPost} from "~/lib/hooks/useListPost";
 import {ConfirmDeleteModal} from "~/modals/ConfirmDeleteModal/ConfirmDeleteModal";
 import {useListDelete} from "~/lib/hooks/useListDelete";
 import {Modal, useModalsStack} from "@mantine/core";
-import {useFormContext} from "~/lib/hooks/useFormContext";
-import {RATE_POST_FORM_NAME} from "~/forms/rate/RatePostFormContext";
+import {useRatePostFormContext} from "~/forms/rate/RatePostFormContext";
 import {AddRateModal} from "~/modals/AddItemModal/AddRateModal";
 import {getRatePageParams} from "~/routes/Rate";
 
@@ -70,7 +69,7 @@ export function RateList(
     }: Props
 ) {
     const stack = useModalsStack(["add-rate", "confirm-delete"])
-    const form = useFormContext(RATE_POST_FORM_NAME)
+    const form = useRatePostFormContext()
     const [addingItem, {open: startAddingItem, close: stopAddingItem}] = useDisclosure()
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()

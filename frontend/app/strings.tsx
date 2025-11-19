@@ -1,7 +1,7 @@
 import {createSearchParams} from "react-router";
 import {type ItemPageParams, PAGE_PARAMS_SEARCH_KEY} from "./lib/hooks/useItemPageParams";
-import type {Breadcrumb, EntityGet, RateGet} from "~/lib/types";
-import type {BankAccountGet, LedgerAccountGet, ScenarioGet} from "~/client";
+import type {Breadcrumb, EntityGet, ProviderGet, RateGet, ScheduleGet, ValueGet} from "~/lib/types";
+import type {BankAccountGet, LedgerAccountGet, ScenarioGet} from "../client";
 
 function createItemSuffix(itemPageParams: ItemPageParams): string {
     const names: string[] = []
@@ -96,8 +96,8 @@ export const ENTITY_PAGE_TITLE = createItemPageTitleFunction(ENTITY_PAGE_DESCRIP
 export const ENTITY_HREF = createItemHrefFunction(ENTITIES_HREF)
 export const ENTITY_BREADCRUMBS = createItemBreadcrumbsFunction(ENTITIES_BREADCRUMBS, ENTITY_HREF)
 export const ENTITY_TYPES: Record<EntityGet["type"], string> = {
-    "individual_entity": "Individual",
-    "corporation_entity": "Corporation",
+    individual_entity: "Individual",
+    corporation_entity: "Corporation",
 }
 
 export const BANK_ACCOUNTS_PAGE_DESCRIPTION = 'Bank accounts';
@@ -157,9 +157,88 @@ export const RATE_PAGE_TITLE = createItemPageTitleFunction(RATE_PAGE_DESCRIPTION
 export const RATE_HREF = createItemHrefFunction(RATES_HREF)
 export const RATE_BREADCRUMBS = createItemBreadcrumbsFunction(RATES_BREADCRUMBS, RATE_HREF)
 export const RATE_TYPES: Record<RateGet["type"], string> = {
-    "continuous_rate": "Continuous",
-    "banded_rate": "Banded",
-    "periodic_rate": "Periodic",
+    continuous_rate: "Continuous",
+    banded_rate: "Banded",
+    periodic_rate: "Periodic",
+}
+
+export const VALUES_PAGE_DESCRIPTION = 'Values';
+export const VALUES_PAGE_TITLE = PAGE_TITLE(VALUES_PAGE_DESCRIPTION);
+export const VALUES_HREF = '/values';
+export const VALUES_LABEL = 'value';
+export const VALUES_BREADCRUMBS = [
+    {
+        title: VALUES_PAGE_DESCRIPTION,
+        href: VALUES_HREF,
+    },
+];
+export const VALUES_ADD_ITEM_MODAL_TITLE = ADD_ITEM_MODAL_TITLE(VALUES_LABEL)
+export const VALUES_CONFIRM_DELETE_ITEM_MODAL_TITLE = CONFIRM_DELETE_ITEM_MODAL_TITLE(VALUES_LABEL)
+export const VALUES_CONFIRM_DELETE_ITEM_MODAL_PROMPT = (item: ValueGet) => CONFIRM_DELETE_ITEM_MODAL_PROMPT(VALUES_LABEL)(item.name)
+
+export const VALUE_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Value")
+export const VALUE_PAGE_TITLE = createItemPageTitleFunction(VALUE_PAGE_DESCRIPTION);
+export const VALUE_HREF = createItemHrefFunction(VALUES_HREF)
+export const VALUE_BREADCRUMBS = createItemBreadcrumbsFunction(VALUES_BREADCRUMBS, VALUE_HREF)
+export const VALUE_TYPES: Record<ValueGet["type"], string> = {
+    decimal_value: "Decimal",
+    rate_value: "Rate",
+}
+
+export const SCHEDULES_PAGE_DESCRIPTION = 'Schedules';
+export const SCHEDULES_PAGE_TITLE = PAGE_TITLE(SCHEDULES_PAGE_DESCRIPTION);
+export const SCHEDULES_HREF = '/schedules';
+export const SCHEDULES_LABEL = 'schedule';
+export const SCHEDULES_BREADCRUMBS = [
+    {
+        title: SCHEDULES_PAGE_DESCRIPTION,
+        href: SCHEDULES_HREF,
+    },
+];
+export const SCHEDULES_ADD_ITEM_MODAL_TITLE = ADD_ITEM_MODAL_TITLE(SCHEDULES_LABEL)
+export const SCHEDULES_CONFIRM_DELETE_ITEM_MODAL_TITLE = CONFIRM_DELETE_ITEM_MODAL_TITLE(SCHEDULES_LABEL)
+export const SCHEDULES_CONFIRM_DELETE_ITEM_MODAL_PROMPT = (item: ScheduleGet) => CONFIRM_DELETE_ITEM_MODAL_PROMPT(SCHEDULES_LABEL)(item.name)
+
+export const SCHEDULE_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Schedule")
+export const SCHEDULE_PAGE_TITLE = createItemPageTitleFunction(SCHEDULE_PAGE_DESCRIPTION);
+export const SCHEDULE_HREF = createItemHrefFunction(SCHEDULES_HREF)
+export const SCHEDULE_BREADCRUMBS = createItemBreadcrumbsFunction(SCHEDULES_BREADCRUMBS, SCHEDULE_HREF)
+export const SCHEDULE_TYPES: Record<ScheduleGet["type"], string> = {
+    daily_schedule: "Daily",
+    day_schedule: "Day",
+    all_schedule: "All",
+    any_schedule: "Any",
+    from_schedule: "From",
+    monthly_schedule: "Monthly",
+    range_schedule: "Range",
+    until_schedule: "Until",
+    weekly_schedule: "Weekly",
+    yearly_schedule: "Yearly",
+}
+
+export const PROVIDERS_PAGE_DESCRIPTION = 'Providers';
+export const PROVIDERS_PAGE_TITLE = PAGE_TITLE(PROVIDERS_PAGE_DESCRIPTION);
+export const PROVIDERS_HREF = '/providers';
+export const PROVIDERS_LABEL = 'provider';
+export const PROVIDERS_BREADCRUMBS = [
+    {
+        title: PROVIDERS_PAGE_DESCRIPTION,
+        href: PROVIDERS_HREF,
+    },
+];
+export const PROVIDERS_ADD_ITEM_MODAL_TITLE = ADD_ITEM_MODAL_TITLE(PROVIDERS_LABEL)
+export const PROVIDERS_CONFIRM_DELETE_ITEM_MODAL_TITLE = CONFIRM_DELETE_ITEM_MODAL_TITLE(PROVIDERS_LABEL)
+export const PROVIDERS_CONFIRM_DELETE_ITEM_MODAL_PROMPT = (item: ProviderGet) => CONFIRM_DELETE_ITEM_MODAL_PROMPT(PROVIDERS_LABEL)(item.name)
+
+export const PROVIDER_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Provider")
+export const PROVIDER_PAGE_TITLE = createItemPageTitleFunction(PROVIDER_PAGE_DESCRIPTION);
+export const PROVIDER_HREF = createItemHrefFunction(PROVIDERS_HREF)
+export const PROVIDER_BREADCRUMBS = createItemBreadcrumbsFunction(PROVIDERS_BREADCRUMBS, PROVIDER_HREF)
+export const PROVIDER_TYPES: Record<ProviderGet["type"], string> = {
+    always_provider: "Always",
+    scheduled_provider: "Scheduled",
+    merge_provider: "Merge",
+    next_provider: "Next",
 }
 
 export const GET_ITEMS_ERROR_TITLE = "Get Items Error"

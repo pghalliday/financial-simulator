@@ -1,7 +1,12 @@
 import {ScrollArea, Stack, Text} from "@mantine/core";
 import {notifications} from "@mantine/notifications";
 import type {ReactNode} from "react";
-import type {HttpChangeTypeError, HttpDatabaseIntegrityError, HttpNotFoundError, HttpValidationError,} from "~/client";
+import type {
+    HttpChangeTypeError,
+    HttpDatabaseIntegrityError,
+    HttpNotFoundError,
+    HttpValidationError,
+} from "../../client";
 
 const SCROLL_AREA_HEIGHT = 100;
 const SCROLL_AREA_1_LINE_HEIGHT = 30;

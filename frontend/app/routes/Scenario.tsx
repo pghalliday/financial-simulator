@@ -2,7 +2,7 @@ import type {Route} from "./+types/Scenario";
 import {useDisclosure} from "@mantine/hooks";
 import {ScenarioProvider} from "~/providers/item_providers";
 import ScenarioPage from "~/pages/ScenarioPage/ScenarioPage";
-import type {ScenarioGet} from "~/client";
+import type {ScenarioGet} from "../../client";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
 import {SCENARIO_BREADCRUMBS, SCENARIO_PAGE_DESCRIPTION, SCENARIO_PAGE_TITLE} from "~/strings";
 import {LoadingProvider} from "~/providers/LoadingProvider";

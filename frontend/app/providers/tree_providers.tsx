@@ -1,6 +1,6 @@
 import {createContext, type PropsWithChildren, type ReactElement, useContext} from "react";
 import type {GetItemsApi} from "~/lib/types";
-import {getItemsRouteLedgerAccountsGet, type LedgerAccountGet} from "~/client";
+import {getItemsRouteLedgerAccountsGet, type LedgerAccountGet} from "../../client";
 import type {TreeData, TreeNodeFields} from "~/lib/TreeData";
 import {useGetTree} from "~/lib/hooks/useGetTree";
 

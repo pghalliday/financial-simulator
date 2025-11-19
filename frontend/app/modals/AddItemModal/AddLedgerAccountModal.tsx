@@ -2,7 +2,7 @@ import {LEDGER_ACCOUNT_POST_FORM_NAME,} from "~/forms/ledger_account/LedgerAccou
 import {AddItemModal} from "~/modals/AddItemModal/AddItemModal";
 import {LEDGER_ACCOUNTS_ADD_ITEM_MODAL_TITLE} from "~/strings";
 import {LedgerAccountPostForm} from "~/forms/ledger_account/LedgerAccountPostForm";
-import {type LedgerAccountPost} from "~/client";
+import {type LedgerAccountPost} from "../../../client";
 
 interface Props {
     opened: boolean

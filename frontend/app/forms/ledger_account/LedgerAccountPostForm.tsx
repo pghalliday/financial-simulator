@@ -1,4 +1,4 @@
-import type {LedgerAccountParentGet} from "~/client";
+import type {LedgerAccountParentGet} from "../../../client";
 import {Title} from "@mantine/core";
 import {BoundTextInput} from "~/components/controls/bound/BoundTextInput";
 import {LEDGER_ACCOUNT_POST_FORM_NAME} from "~/forms/ledger_account/LedgerAccountPostFormContext";

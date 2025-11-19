@@ -5,9 +5,12 @@ import {
     getItemsRouteBankAccountsGet,
     getItemsRouteEntitiesGet,
     getItemsRouteLedgerAccountsGet,
+    getItemsRouteProvidersGet,
     getItemsRouteRatesGet,
-    getItemsRouteScenariosGet
-} from "~/client";
+    getItemsRouteScenariosGet,
+    getItemsRouteSchedulesGet,
+    getItemsRouteValuesGet
+} from "../../client";
 
 interface ProviderProps {
     onBegin?: () => void
@@ -78,4 +81,19 @@ export const [LedgerAccountsProvider, useLedgerAccounts] = createItemsProvider({
 export const [RatesProvider, useRates] = createItemsProvider({
     label: "Rates",
     getItemsApi: getItemsRouteRatesGet,
+})
+
+export const [ValuesProvider, useValues] = createItemsProvider({
+    label: "Values",
+    getItemsApi: getItemsRouteValuesGet,
+})
+
+export const [SchedulesProvider, useSchedules] = createItemsProvider({
+    label: "Schedules",
+    getItemsApi: getItemsRouteSchedulesGet,
+})
+
+export const [ProvidersProvider, useProviders] = createItemsProvider({
+    label: "Providers",
+    getItemsApi: getItemsRouteProvidersGet,
 })

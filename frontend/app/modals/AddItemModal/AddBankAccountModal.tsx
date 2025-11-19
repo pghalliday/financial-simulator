@@ -1,6 +1,6 @@
 import {AddItemModal} from "~/modals/AddItemModal/AddItemModal";
 import {BANK_ACCOUNTS_ADD_ITEM_MODAL_TITLE} from "~/strings";
-import type {BankAccountPost, LedgerAccountGet, LedgerAccountPost} from "~/client";
+import type {BankAccountPost, LedgerAccountGet, LedgerAccountPost} from "../../../client";
 import {BANK_ACCOUNT_POST_FORM_NAME} from "~/forms/bank_account/BankAccountPostFormContext";
 import {BankAccountPostForm} from "~/forms/bank_account/BankAccountPostForm";
 import type {TreeData} from "~/lib/TreeData";

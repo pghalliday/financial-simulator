@@ -10,7 +10,7 @@ import {
     SearchSortList,
     type SortBy
 } from "~/components/controls/SearchSortList/SearchSortList";
-import {deleteItemRouteEntitiesItemIdDelete, type IndividualEntityPost, postItemRouteEntitiesPost} from "~/client";
+import {deleteItemRouteEntitiesItemIdDelete, type IndividualEntityPost, postItemRouteEntitiesPost} from "../../client";
 import type {EntityGet, EntityPost} from "~/lib/types";
 import {getEntityPageParams} from "~/routes/Entity";
 import {type ReactElement, useCallback, useState} from "react";
@@ -20,8 +20,7 @@ import {ConfirmDeleteModal} from "~/modals/ConfirmDeleteModal/ConfirmDeleteModal
 import {AddEntityModal} from "~/modals/AddItemModal/AddEntityModal";
 import {useListDelete} from "~/lib/hooks/useListDelete";
 import {Modal, useModalsStack} from "@mantine/core";
-import {useFormContext} from "~/lib/hooks/useFormContext";
-import {ENTITY_POST_FORM_NAME} from "~/forms/entity/EntityPostFormContext";
+import {useEntityPostFormContext} from "~/forms/entity/EntityPostFormContext";
 
 const NAME_COLUMN: Column<EntityGet> = {
     heading: "Name",
@@ -70,7 +69,7 @@ export function EntityList(
     }: Props
 ) {
     const stack = useModalsStack(["add-entity", "confirm-delete"])
-    const form = useFormContext(ENTITY_POST_FORM_NAME)
+    const form = useEntityPostFormContext()
     const [addingItem, {open: startAddingItem, close: stopAddingItem}] = useDisclosure()
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()

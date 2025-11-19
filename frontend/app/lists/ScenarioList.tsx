@@ -14,7 +14,7 @@ import {
     postItemRouteScenariosPost,
     type ScenarioGet,
     type ScenarioPost
-} from "~/client";
+} from "../../client";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useListPost} from "~/lib/hooks/useListPost";
@@ -24,8 +24,7 @@ import {useListDelete} from "~/lib/hooks/useListDelete";
 
 import {getScenarioPageParams} from "~/routes/Scenario";
 import {Modal, useModalsStack} from "@mantine/core";
-import {useFormContext} from "~/lib/hooks/useFormContext";
-import {SCENARIO_POST_FORM_NAME} from "~/forms/scenario/ScenarioPostFormContext";
+import {useScenarioPostFormContext} from "~/forms/scenario/ScenarioPostFormContext";
 
 const NAME_COLUMN: Column<ScenarioGet> = {
     heading: "Name",
@@ -64,7 +63,7 @@ export function ScenarioList(
     }: Props
 ) {
     const stack = useModalsStack(["add-scenario", "confirm-delete"])
-    const form = useFormContext(SCENARIO_POST_FORM_NAME)
+    const form = useScenarioPostFormContext()
     const [addingItem, {open: startAddingItem, close: stopAddingItem}] = useDisclosure()
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()

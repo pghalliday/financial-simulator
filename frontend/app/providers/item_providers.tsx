@@ -1,5 +1,20 @@
 import {createContext, type PropsWithChildren, type ReactElement, useContext, useState} from "react";
-import type {Breadcrumb, EntityGet, EntityPost, GetItemApi, IdItem, PutItemApi, RateGet, RatePost} from "~/lib/types";
+import type {
+    Breadcrumb,
+    EntityGet,
+    EntityPost,
+    GetItemApi,
+    IdItem,
+    ProviderGet,
+    ProviderPost,
+    PutItemApi,
+    RateGet,
+    RatePost,
+    ScheduleGet,
+    SchedulePost,
+    ValueGet,
+    ValuePost
+} from "~/lib/types";
 import {useGetItem} from "~/lib/hooks/useGetItem";
 import {
     type BankAccountGet,
@@ -7,18 +22,24 @@ import {
     getItemRouteBankAccountsItemIdGet,
     getItemRouteEntitiesItemIdGet,
     getItemRouteLedgerAccountsItemIdGet,
+    getItemRouteProvidersItemIdGet,
     getItemRouteRatesItemIdGet,
     getItemRouteScenariosItemIdGet,
+    getItemRouteSchedulesItemIdGet,
+    getItemRouteValuesItemIdGet,
     type LedgerAccountGet,
     type LedgerAccountPost,
     putItemRouteBankAccountsItemIdPut,
     putItemRouteEntitiesItemIdPut,
     putItemRouteLedgerAccountsItemIdPut,
+    putItemRouteProvidersItemIdPut,
     putItemRouteRatesItemIdPut,
     putItemRouteScenariosItemIdPut,
+    putItemRouteSchedulesItemIdPut,
+    putItemRouteValuesItemIdPut,
     type ScenarioGet,
     type ScenarioPost
-} from "~/client";
+} from "../../client";
 import {usePutItem} from "~/lib/hooks/usePutItem";
 import {type ItemPageParams, useItemPageParams} from "~/lib/hooks/useItemPageParams";
 import type {PageParams} from "~/pages/common/PageMetaData";
@@ -167,4 +188,22 @@ export const [RateProvider, useRate] = createItemProvider<RatePost, RateGet>({
     label: "Rate",
     getItemApi: getItemRouteRatesItemIdGet,
     putItemApi: putItemRouteRatesItemIdPut,
+})
+
+export const [ValueProvider, useValue] = createItemProvider<ValuePost, ValueGet>({
+    label: "Value",
+    getItemApi: getItemRouteValuesItemIdGet,
+    putItemApi: putItemRouteValuesItemIdPut,
+})
+
+export const [ScheduleProvider, useSchedule] = createItemProvider<SchedulePost, ScheduleGet>({
+    label: "Schedule",
+    getItemApi: getItemRouteSchedulesItemIdGet,
+    putItemApi: putItemRouteSchedulesItemIdPut,
+})
+
+export const [ProviderProvider, useProvider] = createItemProvider<ProviderPost, ProviderGet>({
+    label: "Provider",
+    getItemApi: getItemRouteProvidersItemIdGet,
+    putItemApi: putItemRouteProvidersItemIdPut,
 })

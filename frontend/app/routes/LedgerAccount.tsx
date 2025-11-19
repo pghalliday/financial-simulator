@@ -1,7 +1,7 @@
 import type {Route} from "./+types/Scenario";
 import {useDisclosure} from "@mantine/hooks";
 import {LedgerAccountProvider} from "~/providers/item_providers";
-import type {LedgerAccountParentGet} from "~/client";
+import type {LedgerAccountParentGet} from "../../client";
 import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
 import {LEDGER_ACCOUNT_BREADCRUMBS, LEDGER_ACCOUNT_PAGE_DESCRIPTION, LEDGER_ACCOUNT_PAGE_TITLE} from "~/strings";
 import LedgerAccountPage from "~/pages/LedgerAccountPage/LedgerAccountPage";

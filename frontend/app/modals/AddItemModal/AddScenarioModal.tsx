@@ -1,7 +1,7 @@
 import {AddItemModal} from "~/modals/AddItemModal/AddItemModal";
 import {SCENARIO_POST_FORM_NAME} from "~/forms/scenario/ScenarioPostFormContext";
 import {ScenarioPostForm} from "~/forms/scenario/ScenarioPostForm";
-import type {ScenarioPost} from "~/client";
+import type {ScenarioPost} from "../../../client";
 import {SCENARIOS_ADD_ITEM_MODAL_TITLE} from "~/strings";
 
 interface Props {

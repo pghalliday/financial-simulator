@@ -29,7 +29,7 @@ class RateBandedRateBandGet(BaseModel):
     size: Decimal | None
 
 
-class RateValueGet(BaseModel):
+class RateRateValueGet(BaseModel):
     id: UUID
     name: str
     description: str | None
@@ -40,7 +40,7 @@ class RateGet(typed_collection.TypedBaseModel):
     name: str
     description: str | None
     banded_rate_bands: Sequence[RateBandedRateBandGet]
-    rate_values: Sequence[RateValueGet]
+    rate_values: Sequence[RateRateValueGet]
 
 
 rate_banded_rate_band_get_mapper = GetMapper(
@@ -55,7 +55,7 @@ rate_banded_rate_band_get_mapper = GetMapper(
 
 rate_value_get_mapper = GetMapper(
     table_model=RateValue,
-    get_model=RateValueGet,
+    get_model=RateRateValueGet,
 )
 (
     rate_value_get_mapper

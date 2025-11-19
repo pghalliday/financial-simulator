@@ -48,8 +48,8 @@ any_schedule_schedule_get_mapper = GetMapper(
 (
     any_schedule_schedule_get_mapper
     .field("type", OrdinaryGetField())
-    .field("id", OrdinaryGetField())
     .field("name", OrdinaryGetField())
+    .field("description", OrdinaryGetField())
 )
 
 

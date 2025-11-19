@@ -7,7 +7,7 @@ import {
     getDummyDaysGet,
     getItemsRouteScenariosGet,
     type ScenarioGet
-} from "~/client";
+} from "../../client";
 import {useDisclosure} from "@mantine/hooks";
 import {StickyItemMultiSelect} from "~/components/controls/unbound/StickyItemMultiSelect";
 import {callApi} from "~/lib/callApi";
