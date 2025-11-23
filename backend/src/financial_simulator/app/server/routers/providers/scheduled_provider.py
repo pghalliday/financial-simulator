@@ -1,72 +1,41 @@
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel
-
 from financial_simulator.app.database.schema import (
     Value,
     ScheduledProvider,
     Schedule,
 )
+from financial_simulator.app.database.schema.provider.provider_type import ProviderType
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OptionalRelatedModelField,
     ParentModelField,
-    GetMapper,
-    OrdinaryGetField,
 )
 from .provider import ProviderGet, ProviderPost, add_provider_model_fields
-
-ScheduledProviderType = Literal["scheduled_provider"]
+from financial_simulator.app.server.routers.schedules.schedule_dependent import (
+    ScheduleDependentGet,
+    schedule_dependent_get_mapper,
+)
+from financial_simulator.app.server.routers.values.value_dependent import (
+    ValueDependentGet,
+    value_dependent_get_mapper,
+)
 
 
 class ScheduledProviderPost(ProviderPost):
-    type: ScheduledProviderType
+    type: Literal[ProviderType.SCHEDULED]
     value_id: UUID | None = None
     schedule_id: UUID | None = None
 
 
-class ScheduledProviderValueGet(BaseModel):
-    id: UUID
-    type: str
-    name: str
-    description: str | None
-
-class ScheduledProviderScheduleGet(BaseModel):
-    id: UUID
-    type: str
-    name: str
-    description: str | None
-
 class ScheduledProviderGet(ProviderGet):
-    type: ScheduledProviderType
+    type: Literal[ProviderType.SCHEDULED]
     value_id: UUID | None
     schedule_id: UUID | None
-    value: ScheduledProviderValueGet | None
-    schedule: ScheduledProviderScheduleGet | None
+    value: ValueDependentGet | None
+    schedule: ScheduleDependentGet | None
 
-
-scheduled_provider_value_get_mapper = GetMapper(
-    table_model=Value,
-    get_model=ScheduledProviderValueGet,
-)
-(
-    scheduled_provider_value_get_mapper
-    .field("type", OrdinaryGetField())
-    .field("name", OrdinaryGetField())
-    .field("description", OrdinaryGetField())
-)
-
-scheduled_provider_schedule_get_mapper = GetMapper(
-    table_model=Schedule,
-    get_model=ScheduledProviderScheduleGet,
-)
-(
-    scheduled_provider_schedule_get_mapper
-    .field("type", OrdinaryGetField())
-    .field("name", OrdinaryGetField())
-    .field("description", OrdinaryGetField())
-)
 
 scheduled_provider_model_mapper = ModelMapper(
     table_model=ScheduledProvider,
@@ -81,6 +50,6 @@ scheduled_provider_model_mapper = ModelMapper(
     .field("schedule_id", OptionalRelatedModelField(
         field="schedule", model=Schedule
     ))
-    .field("value", ParentModelField(scheduled_provider_value_get_mapper))
-    .field("schedule", ParentModelField(scheduled_provider_schedule_get_mapper))
+    .field("value", ParentModelField(value_dependent_get_mapper))
+    .field("schedule", ParentModelField(schedule_dependent_get_mapper))
 )

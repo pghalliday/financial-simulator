@@ -1,47 +1,31 @@
 from typing import Sequence
 from uuid import UUID
 
-from pydantic import BaseModel
-
-from financial_simulator.app.database.schema import Scenario
-from financial_simulator.app.server.routers.common import typed_collection
+from financial_simulator.app.database.schema.entity.entity_type import EntityType
+from financial_simulator.app.server.routers.common.dependent import (
+    DependentGet,
+)
+from financial_simulator.app.server.routers.common.typed_collection import TypedBaseModel
+from financial_simulator.app.server.routers.scenarios.scenario_dependent import scenario_dependent_get_mapper
 from financial_simulator.app.server.util.model_mapper import (
-    GetMapper,
-    OrdinaryGetField,
     OrdinaryModelField,
     ManyToManyModelField,
     ManyToManyReference, ModelMapper,
 )
 
 
-class EntityPost(typed_collection.TypedBaseModel):
+class EntityPost(TypedBaseModel[EntityType]):
     name: str
     description: str | None = None
     scenarios: Sequence[ManyToManyReference]
 
 
-class EntityScenarioGet(BaseModel):
+class EntityGet(TypedBaseModel[EntityType]):
     id: UUID
     name: str
     description: str | None
+    scenarios: Sequence[DependentGet]
 
-
-class EntityGet(typed_collection.TypedBaseModel):
-    id: UUID
-    name: str
-    description: str | None
-    scenarios: Sequence[EntityScenarioGet]
-
-
-entity_scenario_get_mapper = GetMapper(
-    table_model=Scenario,
-    get_model=EntityScenarioGet,
-)
-(
-    entity_scenario_get_mapper
-    .field("name", OrdinaryGetField())
-    .field("description", OrdinaryGetField())
-)
 
 def add_entity_model_fields(model_mapper: ModelMapper) -> ModelMapper:
     return (
@@ -51,6 +35,6 @@ def add_entity_model_fields(model_mapper: ModelMapper) -> ModelMapper:
         .field("description", OrdinaryModelField())
         .field("scenarios", ManyToManyModelField(
             include_post=True,
-            get_mapper=entity_scenario_get_mapper,
+            get_mapper=scenario_dependent_get_mapper,
         ))
     )

@@ -7,10 +7,11 @@ from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from ..schedule import Schedule
 from .all_schedule_schedule import AllScheduleSchedule
+from ..schedule_type import ScheduleType
 
 
 class AllSchedule(Schedule):
-    __tablename__ = "all_schedule"
+    __tablename__ = ScheduleType.ALL
 
     id: Mapped[UUID] = mapped_column(ForeignKey("schedule.id"), primary_key=True)
 
@@ -22,5 +23,5 @@ class AllSchedule(Schedule):
     )
 
     __mapper_args__ = {
-        "polymorphic_identity": "all_schedule",
+        "polymorphic_identity": ScheduleType.ALL,
     }

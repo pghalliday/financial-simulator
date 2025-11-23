@@ -2,22 +2,20 @@ from datetime import date
 from typing import Literal
 
 from financial_simulator.app.database.schema import FromSchedule
+from financial_simulator.app.database.schema.schedule.schedule_type import ScheduleType
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
 )
 from .schedule import ScheduleGet, SchedulePost, add_schedule_model_fields
 
-FromScheduleType = Literal["from_schedule"]
-
-
 class FromSchedulePost(SchedulePost):
-    type: FromScheduleType
+    type: Literal[ScheduleType.FROM]
     from_date: date | None = None
 
 
 class FromScheduleGet(ScheduleGet):
-    type: FromScheduleType
+    type: Literal[ScheduleType.FROM]
     from_date: date | None
 
 

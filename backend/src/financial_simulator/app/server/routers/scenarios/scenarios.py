@@ -1,17 +1,19 @@
 import logging
-from typing import Literal, Sequence
+from typing import Sequence
 from uuid import UUID
 
 from fastapi import APIRouter
 
-from financial_simulator.app.database.schema import Scenario, Entity
+from financial_simulator.app.database.schema import Scenario
 from pydantic import BaseModel
 
-from .common.collection import Collection
-from ..util.model_mapper import (
-    GetMapper,
+from financial_simulator.app.server.routers.common.collection import Collection
+from financial_simulator.app.server.routers.entities.entity_dependent import (
+    EntityDependentGet,
+    entity_dependent_get_mapper,
+)
+from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
-    OrdinaryGetField,
     OrdinaryModelField,
     ManyToManyReference,
     ManyToManyModelField,
@@ -24,31 +26,17 @@ class ScenarioPost(BaseModel):
     description: str | None = None
     entities: Sequence[ManyToManyReference]
 
-class ScenarioEntityGet(BaseModel):
-    id: UUID
-    type: Literal["individual_entity", "corporation_entity"]
-    name: str
-    description: str | None
-
 class ScenarioGet(BaseModel):
     id: UUID
     name: str
     description: str | None
-    entities: Sequence[ScenarioEntityGet]
+    entities: Sequence[EntityDependentGet]
+
 
 router = APIRouter(
     prefix="/scenarios",
     tags=["scenarios"],
 )
-
-scenario_entity_get_mapper = GetMapper(
-    table_model=Entity,
-    get_model=ScenarioEntityGet
-)
-(scenario_entity_get_mapper
- .field("type", OrdinaryGetField())
- .field("name", OrdinaryGetField())
- .field("description", OrdinaryGetField()))
 
 model_mapper = ModelMapper(
     table_model=Scenario,
@@ -61,7 +49,7 @@ model_mapper = ModelMapper(
     .field("description", OrdinaryModelField())
     .field("entities", ManyToManyModelField(
         include_post=True,
-        get_mapper=scenario_entity_get_mapper,
+        get_mapper=entity_dependent_get_mapper,
     ))
 )
 

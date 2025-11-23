@@ -6,6 +6,7 @@ from fastapi import APIRouter
 from financial_simulator.app.database.schema import (
     Entity,
 )
+from financial_simulator.app.database.schema.entity.entity_type import EntityType
 
 from financial_simulator.app.server.routers.common.typed_collection import TypedCollection
 from .corporation_entity import CorporationEntityPost, CorporationEntityGet, corporation_model_mapper
@@ -24,8 +25,8 @@ TypedCollection(
     get_model=Union[IndividualEntityGet, CorporationEntityGet],
     post_model=Union[IndividualEntityPost, CorporationEntityPost],
     model_mappers={
-        "individual_entity": individual_model_mapper,
-        "corporation_entity": corporation_model_mapper,
+        EntityType.INDIVIDUAL: individual_model_mapper,
+        EntityType.CORPORATION: corporation_model_mapper,
     },
 ).add_endpoints(
     router=router,

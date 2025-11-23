@@ -1,48 +1,30 @@
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel
-
 from financial_simulator.app.database.schema import AlwaysProvider, Value
+from financial_simulator.app.database.schema.provider.provider_type import ProviderType
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OptionalRelatedModelField,
     ParentModelField,
-    GetMapper,
-    OrdinaryGetField,
 )
 from .provider import ProviderGet, ProviderPost, add_provider_model_fields
-
-AlwaysProviderType = Literal["always_provider"]
+from financial_simulator.app.server.routers.values.value_dependent import (
+    ValueDependentGet,
+    value_dependent_get_mapper,
+)
 
 
 class AlwaysProviderPost(ProviderPost):
-    type: AlwaysProviderType
+    type: Literal[ProviderType.ALWAYS]
     value_id: UUID | None = None
 
 
-class AlwaysProviderValueGet(BaseModel):
-    id: UUID
-    type: str
-    name: str
-    description: str | None
-
 class AlwaysProviderGet(ProviderGet):
-    type: AlwaysProviderType
+    type: Literal[ProviderType.ALWAYS]
     value_id: UUID | None
-    value: AlwaysProviderValueGet | None
+    value: ValueDependentGet | None
 
-
-always_provider_value_get_mapper = GetMapper(
-    table_model=Value,
-    get_model=AlwaysProviderValueGet,
-)
-(
-    always_provider_value_get_mapper
-    .field("type", OrdinaryGetField())
-    .field("name", OrdinaryGetField())
-    .field("description", OrdinaryGetField())
-)
 
 always_provider_model_mapper = ModelMapper(
     table_model=AlwaysProvider,
@@ -54,5 +36,5 @@ always_provider_model_mapper = ModelMapper(
     .field("value_id", OptionalRelatedModelField(
         field="value", model=Value
     ))
-    .field("value", ParentModelField(always_provider_value_get_mapper))
+    .field("value", ParentModelField(value_dependent_get_mapper))
 )

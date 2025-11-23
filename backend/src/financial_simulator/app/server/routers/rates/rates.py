@@ -6,6 +6,7 @@ from fastapi import APIRouter
 from financial_simulator.app.database.schema import (
     Rate,
 )
+from financial_simulator.app.database.schema.rate.rate_type import RateType
 
 from financial_simulator.app.server.routers.common.typed_collection import TypedCollection
 from .banded_rate import (
@@ -37,9 +38,9 @@ TypedCollection(
     get_model=Union[PeriodicRateGet, ContinuousRateGet, BandedRateGet],
     post_model=Union[PeriodicRatePost, ContinuousRatePost, BandedRatePost],
     model_mappers={
-        "periodic_rate": periodic_rate_model_mapper,
-        "continuous_rate": continuous_rate_model_mapper,
-        "banded_rate": banded_rate_model_mapper,
+        RateType.PERIODIC: periodic_rate_model_mapper,
+        RateType.CONTINUOUS: continuous_rate_model_mapper,
+        RateType.BANDED: banded_rate_model_mapper,
     },
 ).add_endpoints(
     router=router,

@@ -5,6 +5,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..entity import Entity
+from ..entity_type import EntityType
 
 if TYPE_CHECKING:
     from ...bank_account import BankAccount
@@ -13,7 +14,7 @@ else:
 
 
 class IndividualEntity(Entity):
-    __tablename__ = "individual_entity"
+    __tablename__ = EntityType.INDIVIDUAL
 
     id: Mapped[UUID] = mapped_column(ForeignKey("entity.id"), primary_key=True)
 
@@ -22,6 +23,6 @@ class IndividualEntity(Entity):
         back_populates="individual_entities",
     )
 
-    __mapper_args__ = {"polymorphic_identity": "individual_entity"}
+    __mapper_args__ = {"polymorphic_identity": EntityType.INDIVIDUAL}
 
 

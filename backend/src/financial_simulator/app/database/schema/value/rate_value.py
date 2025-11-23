@@ -3,13 +3,14 @@ from uuid import UUID
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from .value_type import ValueType
 from ..rate import Rate
 
 from .value import Value
 
 
 class RateValue(Value):
-    __tablename__ = "rate_value"
+    __tablename__ = ValueType.RATE
 
     id: Mapped[UUID] = mapped_column(ForeignKey("value.id"), primary_key=True)
     rate_id: Mapped[UUID | None] = mapped_column(ForeignKey("rate.id"))
@@ -18,4 +19,4 @@ class RateValue(Value):
         back_populates="rate_values",
     )
 
-    __mapper_args__ = {"polymorphic_identity": "rate_value"}
+    __mapper_args__ = {"polymorphic_identity": ValueType.RATE}

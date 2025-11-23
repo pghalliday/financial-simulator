@@ -7,10 +7,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .merge_provider_provider import MergeProviderProvider
 from ..provider import Provider
+from ..provider_type import ProviderType
 
 
 class MergeProvider(Provider):
-    __tablename__ = "merge_provider"
+    __tablename__ = ProviderType.MERGE
 
     id: Mapped[UUID] = mapped_column(ForeignKey("provider.id"), primary_key=True)
 
@@ -22,5 +23,5 @@ class MergeProvider(Provider):
     )
 
     __mapper_args__ = {
-        "polymorphic_identity": "merge_provider",
+        "polymorphic_identity": ProviderType.MERGE,
     }

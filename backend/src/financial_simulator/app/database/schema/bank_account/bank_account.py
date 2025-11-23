@@ -63,15 +63,19 @@ class BankAccount(BaseWithNameAndDescription):
         foreign_keys="BankAccount.fees_payable_account_id",
     )
     fees_provider: Mapped[Provider | None] = relationship(
+        back_populates="bank_account_fees_providers",
         foreign_keys="BankAccount.fees_provider_id"
     )
     fee_payment_schedule: Mapped[Schedule | None] = relationship(
+        back_populates="bank_account_fee_payment_schedules",
         foreign_keys="BankAccount.fee_payment_schedule_id"
     )
     rate_provider: Mapped[Provider | None] = relationship(
+        back_populates="bank_account_rate_providers",
         foreign_keys="BankAccount.rate_provider_id"
     )
     interest_payment_schedule: Mapped[Schedule | None] = relationship(
+        back_populates="bank_account_interest_payment_schedules",
         foreign_keys="BankAccount.interest_payment_schedule_id"
     )
 

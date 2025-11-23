@@ -1,52 +1,30 @@
 from typing import Literal, Sequence
-from uuid import UUID
-
-from pydantic import BaseModel
 
 from financial_simulator.app.database.schema import (
     AllSchedule,
-    Schedule,
     AllScheduleSchedule,
 )
+from financial_simulator.app.database.schema.schedule.schedule_type import ScheduleType
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
-    GetMapper,
-    OrdinaryGetField,
     AssociationModelField,
     AssociationReference,
 )
 from .schedule import ScheduleGet, SchedulePost, add_schedule_model_fields
-
-AllScheduleType = Literal["all_schedule"]
+from financial_simulator.app.server.routers.schedules.schedule_dependent import (
+    ScheduleDependentGet,
+    schedule_dependent_get_mapper,
+)
 
 
 class AllSchedulePost(SchedulePost):
-    type: AllScheduleType
+    type: Literal[ScheduleType.ALL]
     schedules: Sequence[AssociationReference]
 
 
-class AllScheduleScheduleGet(BaseModel):
-    id: UUID
-    type: str
-    name: str
-    description: str | None
-
-
 class AllScheduleGet(ScheduleGet):
-    type: AllScheduleType
-    schedules: Sequence[AllScheduleScheduleGet]
-
-
-all_schedule_schedule_get_mapper = GetMapper(
-    table_model=Schedule,
-    get_model=AllScheduleScheduleGet,
-)
-(
-    all_schedule_schedule_get_mapper
-    .field("type", OrdinaryGetField())
-    .field("name", OrdinaryGetField())
-    .field("description", OrdinaryGetField())
-)
+    type: Literal[ScheduleType.ALL]
+    schedules: Sequence[ScheduleDependentGet]
 
 
 all_schedule_model_mapper = ModelMapper(
@@ -59,6 +37,6 @@ all_schedule_model_mapper = ModelMapper(
     .field("schedules", AssociationModelField(
         association_field="schedule",
         association_model=AllScheduleSchedule,
-        get_mapper=all_schedule_schedule_get_mapper,
+        get_mapper=schedule_dependent_get_mapper,
     ))
 )

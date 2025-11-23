@@ -13,7 +13,6 @@ else:
     BankAccount = "BankAccount"
 
 
-
 class LedgerAccount(BaseWithNameAndDescription):
     __tablename__ = "ledger_account"
 

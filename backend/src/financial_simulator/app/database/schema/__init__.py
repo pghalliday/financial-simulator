@@ -1,5 +1,5 @@
 from .bank_account import BankAccount
-from .base import Base, BaseWithId, BaseWithNameAndDescription, BaseWithType
+from .base import Base, BaseWithId, BaseWithNameAndDescription
 from .entity import CorporationEntity, Entity, IndividualEntity, CorporationEntityBankAccount, IndividualEntityBankAccount
 from .ledger_account import LedgerAccount
 from .provider import Provider, AlwaysProvider, ScheduledProvider, MergeProvider, MergeProviderProvider, NextProvider, NextProviderProvider
@@ -12,7 +12,6 @@ __all__ = [
     "Base",
     "BaseWithId",
     "BaseWithNameAndDescription",
-    "BaseWithType",
     "Scenario",
     "Entity",
     "ScenarioEntity",

@@ -4,13 +4,14 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .schedule import Schedule
+from .schedule_type import ScheduleType
 
 
 class DailySchedule(Schedule):
-    __tablename__ = "daily_schedule"
+    __tablename__ = ScheduleType.DAILY
 
     id: Mapped[UUID] = mapped_column(ForeignKey("schedule.id"), primary_key=True)
 
     __mapper_args__ = {
-        "polymorphic_identity": "daily_schedule",
+        "polymorphic_identity": ScheduleType.DAILY,
     }

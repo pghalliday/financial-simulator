@@ -6,6 +6,7 @@ from fastapi import APIRouter
 from financial_simulator.app.database.schema import (
     Provider,
 )
+from financial_simulator.app.database.schema.provider.provider_type import ProviderType
 
 from financial_simulator.app.server.routers.common.typed_collection import TypedCollection
 from .always_provider import (
@@ -42,10 +43,10 @@ TypedCollection(
         AlwaysProviderPost, ScheduledProviderPost, MergeProviderPost, NextProviderPost
     ],
     model_mappers={
-        "always_provider": always_provider_model_mapper,
-        "schedule_provider": scheduled_provider_model_mapper,
-        "merge_provider": merge_provider_model_mapper,
-        "next_provider": next_provider_model_mapper,
+        ProviderType.ALWAYS: always_provider_model_mapper,
+        ProviderType.SCHEDULED: scheduled_provider_model_mapper,
+        ProviderType.MERGE: merge_provider_model_mapper,
+        ProviderType.NEXT: next_provider_model_mapper,
     },
 ).add_endpoints(
     router=router,

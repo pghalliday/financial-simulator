@@ -2,22 +2,20 @@ from datetime import date
 from typing import Literal
 
 from financial_simulator.app.database.schema import DaySchedule
+from financial_simulator.app.database.schema.schedule.schedule_type import ScheduleType
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
 )
 from .schedule import ScheduleGet, SchedulePost, add_schedule_model_fields
 
-DayScheduleType = Literal["day_schedule"]
-
-
 class DaySchedulePost(SchedulePost):
-    type: DayScheduleType
+    type: Literal[ScheduleType.DAY]
     day: date | None = None
 
 
 class DayScheduleGet(ScheduleGet):
-    type: DayScheduleType
+    type: Literal[ScheduleType.DAY]
     day: date | None
 
 

@@ -1,6 +1,7 @@
 from typing import Literal
 
 from financial_simulator.app.database.schema import MonthlySchedule
+from financial_simulator.app.database.schema.schedule.schedule_type import ScheduleType
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
@@ -11,16 +12,13 @@ from .schedule import (
     add_schedule_model_fields,
 )
 
-MonthlyScheduleType = Literal["monthly_schedule"]
-
-
 class MonthlySchedulePost(SchedulePost):
-    type: MonthlyScheduleType
+    type: Literal[ScheduleType.MONTHLY]
     day: int | None = None
 
 
 class MonthlyScheduleGet(ScheduleGet):
-    type: MonthlyScheduleType
+    type: Literal[ScheduleType.MONTHLY]
     day: int | None
 
 

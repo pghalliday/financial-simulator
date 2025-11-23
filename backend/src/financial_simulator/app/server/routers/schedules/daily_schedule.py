@@ -1,20 +1,18 @@
 from typing import Literal
 
 from financial_simulator.app.database.schema import DailySchedule
+from financial_simulator.app.database.schema.schedule.schedule_type import ScheduleType
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
 )
 from .schedule import ScheduleGet, SchedulePost, add_schedule_model_fields
 
-DailyScheduleType = Literal["daily_schedule"]
-
-
 class DailySchedulePost(SchedulePost):
-    type: DailyScheduleType
+    type: Literal[ScheduleType.DAILY]
 
 
 class DailyScheduleGet(ScheduleGet):
-    type: DailyScheduleType
+    type: Literal[ScheduleType.DAILY]
 
 
 daily_schedule_model_mapper = ModelMapper(

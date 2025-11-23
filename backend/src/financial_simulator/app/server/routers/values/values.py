@@ -6,6 +6,7 @@ from fastapi import APIRouter
 from financial_simulator.app.database.schema import (
     Value,
 )
+from financial_simulator.app.database.schema.value.value_type import ValueType
 
 from financial_simulator.app.server.routers.common.typed_collection import TypedCollection
 from .rate_value import (
@@ -32,8 +33,8 @@ TypedCollection(
     get_model=Union[DecimalValueGet, RateValueGet],
     post_model=Union[DecimalValuePost, RateValuePost],
     model_mappers={
-        "decimal_value": decimal_value_model_mapper,
-        "rate_value": rate_value_model_mapper,
+        ValueType.DECIMAL: decimal_value_model_mapper,
+        ValueType.RATE: rate_value_model_mapper,
     },
 ).add_endpoints(
     router=router,

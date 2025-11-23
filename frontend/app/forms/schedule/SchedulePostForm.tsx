@@ -12,6 +12,7 @@ import {UntilSchedulePostForm} from "~/forms/schedule/UntilSchedulePostForm";
 import {WeeklySchedulePostForm} from "~/forms/schedule/WeeklySchedulePostForm";
 import {MonthlySchedulePostForm} from "~/forms/schedule/MonthlySchedulePostForm";
 import {YearlySchedulePostForm} from "~/forms/schedule/YearlySchedulePostForm";
+import {RangeSchedulePostForm} from "~/forms/schedule/RangeSchedulePostForm";
 
 export interface Props {
     allowSelectType?: boolean,
@@ -67,6 +68,8 @@ export function SchedulePostForm({allowSelectType = false}: Props) {
                     return <FromSchedulePostForm/>
                 case "until_schedule":
                     return <UntilSchedulePostForm/>
+                case "range_schedule":
+                    return <RangeSchedulePostForm/>
                 case "weekly_schedule":
                     return <WeeklySchedulePostForm/>
                 case "monthly_schedule":

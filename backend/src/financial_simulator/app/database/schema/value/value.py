@@ -1,7 +1,9 @@
 from typing import List, TYPE_CHECKING
 
 from sqlalchemy.orm import Mapped, relationship
+from sqlalchemy.testing.schema import mapped_column
 
+from .value_type import ValueType
 from ..base import (
     BaseWithType,
 )
@@ -16,6 +18,8 @@ else:
 class Value(BaseWithType):
     __tablename__ = "value"
 
+    type: Mapped[ValueType] = mapped_column()
+
     always_providers: Mapped[List[AlwaysProvider]] = relationship(
         back_populates="value",
     )
@@ -25,6 +29,5 @@ class Value(BaseWithType):
     )
 
     __mapper_args__ = {
-        "polymorphic_identity": "value",
         "polymorphic_on": "type",
     }

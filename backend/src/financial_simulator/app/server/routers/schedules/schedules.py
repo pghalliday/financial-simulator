@@ -6,6 +6,7 @@ from fastapi import APIRouter
 from financial_simulator.app.database.schema import (
     Schedule,
 )
+from financial_simulator.app.database.schema.schedule.schedule_type import ScheduleType
 
 from financial_simulator.app.server.routers.common.typed_collection import TypedCollection
 from .all_schedule import AllScheduleGet, AllSchedulePost, all_schedule_model_mapper
@@ -86,16 +87,16 @@ TypedCollection(
         AnySchedulePost,
     ],
     model_mappers={
-        "daily_schedule": daily_schedule_model_mapper,
-        "day_schedule": day_schedule_model_mapper,
-        "yearly_schedule": yearly_schedule_model_mapper,
-        "monthly_schedule": monthly_schedule_model_mapper,
-        "weekly_schedule": weekly_schedule_model_mapper,
-        "from_schedule": from_schedule_model_mapper,
-        "until_schedule": until_schedule_model_mapper,
-        "range_schedule": range_schedule_model_mapper,
-        "all_schedule": all_schedule_model_mapper,
-        "any_schedule": any_schedule_model_mapper,
+        ScheduleType.DAILY: daily_schedule_model_mapper,
+        ScheduleType.DAY: day_schedule_model_mapper,
+        ScheduleType.YEARLY: yearly_schedule_model_mapper,
+        ScheduleType.MONTHLY: monthly_schedule_model_mapper,
+        ScheduleType.WEEKLY: weekly_schedule_model_mapper,
+        ScheduleType.FROM: from_schedule_model_mapper,
+        ScheduleType.UNTIL: until_schedule_model_mapper,
+        ScheduleType.RANGE: range_schedule_model_mapper,
+        ScheduleType.ALL: all_schedule_model_mapper,
+        ScheduleType.ANY: any_schedule_model_mapper,
     },
 ).add_endpoints(
     router=router,

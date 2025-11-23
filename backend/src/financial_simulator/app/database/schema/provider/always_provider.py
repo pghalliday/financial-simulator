@@ -5,11 +5,12 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .provider import Provider
+from .provider_type import ProviderType
 from ..value import Value
 
 
 class AlwaysProvider(Provider):
-    __tablename__ = "always_provider"
+    __tablename__ = ProviderType.ALWAYS
 
     id: Mapped[UUID] = mapped_column(ForeignKey("provider.id"), primary_key=True)
     value_id: Mapped[UUID | None] = mapped_column(ForeignKey("value.id"))
@@ -19,5 +20,5 @@ class AlwaysProvider(Provider):
     )
 
     __mapper_args__ = {
-        "polymorphic_identity": "always_provider",
+        "polymorphic_identity": ProviderType.ALWAYS,
     }

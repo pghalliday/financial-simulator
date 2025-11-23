@@ -1,4 +1,5 @@
 import logging
+from enum import StrEnum
 from typing import (
     TypeVar,
     Annotated,
@@ -16,7 +17,7 @@ from pydantic import BaseModel
 from sqlalchemy import select, ColumnElement
 from sqlalchemy.orm import Session, InstrumentedAttribute
 
-from financial_simulator.app.database.schema import BaseWithType
+from financial_simulator.app.database.schema.base import BaseWithType
 from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
     HTTPNotFoundError,
@@ -32,8 +33,11 @@ DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
 logger = logging.getLogger(__name__)
 
-class TypedBaseModel(BaseModel):
-    type: str
+TYPE = TypeVar("TYPE", bound=StrEnum)
+
+class TypedBaseModel(BaseModel, Generic[TYPE]):
+    type: TYPE
+
 
 TABLE = TypeVar("TABLE", bound=BaseWithType)
 GET = TypeVar("GET", bound=TypedBaseModel)

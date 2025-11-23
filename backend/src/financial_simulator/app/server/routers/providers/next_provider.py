@@ -1,51 +1,31 @@
 from typing import Literal, Sequence
-from uuid import UUID
-
-from pydantic import BaseModel
 
 from financial_simulator.app.database.schema import (
-    Provider,
     NextProvider,
     NextProviderProvider,
 )
+from financial_simulator.app.database.schema.provider.provider_type import ProviderType
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
-    GetMapper,
-    OrdinaryGetField,
     AssociationReference,
     AssociationModelField,
 )
 from .provider import ProviderGet, ProviderPost, add_provider_model_fields
-
-NextProviderType = Literal["next_provider"]
+from financial_simulator.app.server.routers.providers.provider_dependent import (
+    ProviderDependentGet,
+    provider_dependent_get_mapper,
+)
 
 
 class NextProviderPost(ProviderPost):
-    type: NextProviderType
+    type: Literal[ProviderType.NEXT]
     providers: Sequence[AssociationReference]
 
 
-class NextProviderProviderGet(BaseModel):
-    id: UUID
-    type: str
-    name: str
-    description: str | None
-
 class NextProviderGet(ProviderGet):
-    type: NextProviderType
-    providers: Sequence[NextProviderProviderGet]
+    type: Literal[ProviderType.NEXT]
+    providers: Sequence[ProviderDependentGet]
 
-
-next_provider_provider_get_mapper = GetMapper(
-    table_model=Provider,
-    get_model=NextProviderProviderGet,
-)
-(
-    next_provider_provider_get_mapper
-    .field("type", OrdinaryGetField())
-    .field("name", OrdinaryGetField())
-    .field("description", OrdinaryGetField())
-)
 
 next_provider_model_mapper = ModelMapper(
     table_model=NextProvider,
@@ -57,6 +37,6 @@ next_provider_model_mapper = ModelMapper(
     .field("providers", AssociationModelField(
         association_field="provider",
         association_model=NextProviderProvider,
-        get_mapper=next_provider_provider_get_mapper,
+        get_mapper=provider_dependent_get_mapper,
     ))
 )

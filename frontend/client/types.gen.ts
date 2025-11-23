@@ -27,19 +27,27 @@ export type AllScheduleGet = {
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * All Schedules
      */
-    all_schedules: Array<ScheduleAllScheduleGet>;
+    all_schedules: Array<ScheduleDependentGet>;
     /**
      * Any Schedules
      */
-    any_schedules: Array<ScheduleAnyScheduleGet>;
+    any_schedules: Array<ScheduleDependentGet>;
+    /**
+     * Bank Account Fee Payment Schedules
+     */
+    bank_account_fee_payment_schedules: Array<DependentGet>;
+    /**
+     * Bank Account Interest Payment Schedules
+     */
+    bank_account_interest_payment_schedules: Array<DependentGet>;
     /**
      * Schedules
      */
-    schedules: Array<AllScheduleScheduleGet>;
+    schedules: Array<ScheduleDependentGet>;
 };
 
 /**
@@ -65,28 +73,6 @@ export type AllSchedulePost = {
 };
 
 /**
- * AllScheduleScheduleGet
- */
-export type AllScheduleScheduleGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Type
-     */
-    type: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
-};
-
-/**
  * AlwaysProviderGet
  */
 export type AlwaysProviderGet = {
@@ -109,16 +95,24 @@ export type AlwaysProviderGet = {
     /**
      * Merge Providers
      */
-    merge_providers: Array<ProviderMergeProviderGet>;
+    merge_providers: Array<ProviderDependentGet>;
     /**
      * Next Providers
      */
-    next_providers: Array<ProviderNextProviderGet>;
+    next_providers: Array<ProviderDependentGet>;
+    /**
+     * Bank Account Fees Providers
+     */
+    bank_account_fees_providers: Array<DependentGet>;
+    /**
+     * Bank Account Rate Providers
+     */
+    bank_account_rate_providers: Array<DependentGet>;
     /**
      * Value Id
      */
     value_id: string | null;
-    value: AlwaysProviderValueGet | null;
+    value: ValueDependentGet | null;
 };
 
 /**
@@ -144,28 +138,6 @@ export type AlwaysProviderPost = {
 };
 
 /**
- * AlwaysProviderValueGet
- */
-export type AlwaysProviderValueGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Type
-     */
-    type: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
-};
-
-/**
  * AnyScheduleGet
  */
 export type AnyScheduleGet = {
@@ -188,19 +160,27 @@ export type AnyScheduleGet = {
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * All Schedules
      */
-    all_schedules: Array<ScheduleAllScheduleGet>;
+    all_schedules: Array<ScheduleDependentGet>;
     /**
      * Any Schedules
      */
-    any_schedules: Array<ScheduleAnyScheduleGet>;
+    any_schedules: Array<ScheduleDependentGet>;
+    /**
+     * Bank Account Fee Payment Schedules
+     */
+    bank_account_fee_payment_schedules: Array<DependentGet>;
+    /**
+     * Bank Account Interest Payment Schedules
+     */
+    bank_account_interest_payment_schedules: Array<DependentGet>;
     /**
      * Schedules
      */
-    schedules: Array<AnyScheduleScheduleGet>;
+    schedules: Array<ScheduleDependentGet>;
 };
 
 /**
@@ -223,28 +203,6 @@ export type AnySchedulePost = {
      * Schedules
      */
     schedules: Array<AssociationReference>;
-};
-
-/**
- * AnyScheduleScheduleGet
- */
-export type AnyScheduleScheduleGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Type
-     */
-    type: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
 };
 
 /**
@@ -273,6 +231,7 @@ export type BandedRateBandGet = {
      * Rate Id
      */
     rate_id: string | null;
+    rate: RateDependentGet | null;
 };
 
 /**
@@ -316,7 +275,7 @@ export type BandedRateGet = {
     /**
      * Rate Values
      */
-    rate_values: Array<RateRateValueGet>;
+    rate_values: Array<ValueDependentGet>;
     /**
      * Bands
      */
@@ -365,38 +324,55 @@ export type BankAccountGet = {
      * Asset Account Id
      */
     asset_account_id: string | null;
+    asset_account: DependentGet | null;
     /**
      * Interest Income Account Id
      */
     interest_income_account_id: string | null;
+    interest_income_account: DependentGet | null;
     /**
      * Interest Receivable Account Id
      */
     interest_receivable_account_id: string | null;
+    interest_receivable_account: DependentGet | null;
     /**
      * Fee Expenses Account Id
      */
     fee_expenses_account_id: string | null;
+    fee_expenses_account: DependentGet | null;
     /**
      * Fees Payable Account Id
      */
     fees_payable_account_id: string | null;
+    fees_payable_account: DependentGet | null;
     /**
      * Fees Provider Id
      */
     fees_provider_id: string | null;
+    fees_provider: ProviderDependentGet | null;
     /**
      * Fee Payment Schedule Id
      */
     fee_payment_schedule_id: string | null;
+    fee_payment_schedule: ScheduleDependentGet | null;
     /**
      * Rate Provider Id
      */
     rate_provider_id: string | null;
+    rate_provider: ProviderDependentGet | null;
     /**
      * Interest Payment Schedule Id
      */
     interest_payment_schedule_id: string | null;
+    interest_payment_schedule: ScheduleDependentGet | null;
+    /**
+     * Individual Entities
+     */
+    individual_entities: Array<EntityDependentGet>;
+    /**
+     * Corporation Entities
+     */
+    corporation_entities: Array<EntityDependentGet>;
 };
 
 /**
@@ -494,7 +470,7 @@ export type ContinuousRateGet = {
     /**
      * Rate Values
      */
-    rate_values: Array<RateRateValueGet>;
+    rate_values: Array<ValueDependentGet>;
     /**
      * Annual Rate
      */
@@ -546,7 +522,11 @@ export type CorporationEntityGet = {
     /**
      * Scenarios
      */
-    scenarios: Array<EntityScenarioGet>;
+    scenarios: Array<DependentGet>;
+    /**
+     * Bank Accounts
+     */
+    bank_accounts: Array<DependentGet>;
 };
 
 /**
@@ -569,6 +549,10 @@ export type CorporationEntityPost = {
      * Scenarios
      */
     scenarios: Array<ManyToManyReference>;
+    /**
+     * Bank Accounts
+     */
+    bank_accounts: Array<ManyToManyReference>;
 };
 
 /**
@@ -594,15 +578,23 @@ export type DailyScheduleGet = {
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * All Schedules
      */
-    all_schedules: Array<ScheduleAllScheduleGet>;
+    all_schedules: Array<ScheduleDependentGet>;
     /**
      * Any Schedules
      */
-    any_schedules: Array<ScheduleAnyScheduleGet>;
+    any_schedules: Array<ScheduleDependentGet>;
+    /**
+     * Bank Account Fee Payment Schedules
+     */
+    bank_account_fee_payment_schedules: Array<DependentGet>;
+    /**
+     * Bank Account Interest Payment Schedules
+     */
+    bank_account_interest_payment_schedules: Array<DependentGet>;
 };
 
 /**
@@ -660,15 +652,23 @@ export type DayScheduleGet = {
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * All Schedules
      */
-    all_schedules: Array<ScheduleAllScheduleGet>;
+    all_schedules: Array<ScheduleDependentGet>;
     /**
      * Any Schedules
      */
-    any_schedules: Array<ScheduleAnyScheduleGet>;
+    any_schedules: Array<ScheduleDependentGet>;
+    /**
+     * Bank Account Fee Payment Schedules
+     */
+    bank_account_fee_payment_schedules: Array<DependentGet>;
+    /**
+     * Bank Account Interest Payment Schedules
+     */
+    bank_account_interest_payment_schedules: Array<DependentGet>;
     /**
      * Day
      */
@@ -720,11 +720,11 @@ export type DecimalValueGet = {
     /**
      * Always Providers
      */
-    always_providers: Array<ValueAlwaysProviderGet>;
+    always_providers: Array<ProviderDependentGet>;
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ValueScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * Value
      */
@@ -751,6 +751,24 @@ export type DecimalValuePost = {
      * Value
      */
     value?: number | string | null;
+};
+
+/**
+ * DependentGet
+ */
+export type DependentGet = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string | null;
 };
 
 /**
@@ -862,13 +880,14 @@ export type DummyDayEvent = ({
 } & DummyDayErrorEvent);
 
 /**
- * EntityScenarioGet
+ * EntityDependentGet
  */
-export type EntityScenarioGet = {
+export type EntityDependentGet = {
     /**
      * Id
      */
     id: string;
+    type: EntityType;
     /**
      * Name
      */
@@ -878,6 +897,11 @@ export type EntityScenarioGet = {
      */
     description: string | null;
 };
+
+/**
+ * EntityType
+ */
+export type EntityType = 'individual_entity' | 'corporation_entity';
 
 /**
  * FromScheduleGet
@@ -902,15 +926,23 @@ export type FromScheduleGet = {
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * All Schedules
      */
-    all_schedules: Array<ScheduleAllScheduleGet>;
+    all_schedules: Array<ScheduleDependentGet>;
     /**
      * Any Schedules
      */
-    any_schedules: Array<ScheduleAnyScheduleGet>;
+    any_schedules: Array<ScheduleDependentGet>;
+    /**
+     * Bank Account Fee Payment Schedules
+     */
+    bank_account_fee_payment_schedules: Array<DependentGet>;
+    /**
+     * Bank Account Interest Payment Schedules
+     */
+    bank_account_interest_payment_schedules: Array<DependentGet>;
     /**
      * From Date
      */
@@ -1000,7 +1032,11 @@ export type IndividualEntityGet = {
     /**
      * Scenarios
      */
-    scenarios: Array<EntityScenarioGet>;
+    scenarios: Array<DependentGet>;
+    /**
+     * Bank Accounts
+     */
+    bank_accounts: Array<DependentGet>;
 };
 
 /**
@@ -1023,24 +1059,10 @@ export type IndividualEntityPost = {
      * Scenarios
      */
     scenarios: Array<ManyToManyReference>;
-};
-
-/**
- * LedgerAccountBankAccountGet
- */
-export type LedgerAccountBankAccountGet = {
     /**
-     * Id
+     * Bank Accounts
      */
-    id: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description?: string | null;
+    bank_accounts: Array<ManyToManyReference>;
 };
 
 /**
@@ -1075,23 +1097,23 @@ export type LedgerAccountGet = {
     /**
      * Bank Account Asset Accounts
      */
-    bank_account_asset_accounts: Array<LedgerAccountBankAccountGet>;
+    bank_account_asset_accounts: Array<DependentGet>;
     /**
      * Bank Account Interest Income Accounts
      */
-    bank_account_interest_income_accounts: Array<LedgerAccountBankAccountGet>;
+    bank_account_interest_income_accounts: Array<DependentGet>;
     /**
      * Bank Account Interest Receivable Accounts
      */
-    bank_account_interest_receivable_accounts: Array<LedgerAccountBankAccountGet>;
+    bank_account_interest_receivable_accounts: Array<DependentGet>;
     /**
      * Bank Account Fee Expenses Accounts
      */
-    bank_account_fee_expenses_accounts: Array<LedgerAccountBankAccountGet>;
+    bank_account_fee_expenses_accounts: Array<DependentGet>;
     /**
      * Bank Account Fees Payable Accounts
      */
-    bank_account_fees_payable_accounts: Array<LedgerAccountBankAccountGet>;
+    bank_account_fees_payable_accounts: Array<DependentGet>;
 };
 
 /**
@@ -1176,15 +1198,23 @@ export type MergeProviderGet = {
     /**
      * Merge Providers
      */
-    merge_providers: Array<ProviderMergeProviderGet>;
+    merge_providers: Array<ProviderDependentGet>;
     /**
      * Next Providers
      */
-    next_providers: Array<ProviderNextProviderGet>;
+    next_providers: Array<ProviderDependentGet>;
+    /**
+     * Bank Account Fees Providers
+     */
+    bank_account_fees_providers: Array<DependentGet>;
+    /**
+     * Bank Account Rate Providers
+     */
+    bank_account_rate_providers: Array<DependentGet>;
     /**
      * Providers
      */
-    providers: Array<MergeProviderProviderGet>;
+    providers: Array<ProviderDependentGet>;
 };
 
 /**
@@ -1210,28 +1240,6 @@ export type MergeProviderPost = {
 };
 
 /**
- * MergeProviderProviderGet
- */
-export type MergeProviderProviderGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Type
-     */
-    type: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
-};
-
-/**
  * MonthlyScheduleGet
  */
 export type MonthlyScheduleGet = {
@@ -1254,15 +1262,23 @@ export type MonthlyScheduleGet = {
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * All Schedules
      */
-    all_schedules: Array<ScheduleAllScheduleGet>;
+    all_schedules: Array<ScheduleDependentGet>;
     /**
      * Any Schedules
      */
-    any_schedules: Array<ScheduleAnyScheduleGet>;
+    any_schedules: Array<ScheduleDependentGet>;
+    /**
+     * Bank Account Fee Payment Schedules
+     */
+    bank_account_fee_payment_schedules: Array<DependentGet>;
+    /**
+     * Bank Account Interest Payment Schedules
+     */
+    bank_account_interest_payment_schedules: Array<DependentGet>;
     /**
      * Day
      */
@@ -1314,15 +1330,23 @@ export type NextProviderGet = {
     /**
      * Merge Providers
      */
-    merge_providers: Array<ProviderMergeProviderGet>;
+    merge_providers: Array<ProviderDependentGet>;
     /**
      * Next Providers
      */
-    next_providers: Array<ProviderNextProviderGet>;
+    next_providers: Array<ProviderDependentGet>;
+    /**
+     * Bank Account Fees Providers
+     */
+    bank_account_fees_providers: Array<DependentGet>;
+    /**
+     * Bank Account Rate Providers
+     */
+    bank_account_rate_providers: Array<DependentGet>;
     /**
      * Providers
      */
-    providers: Array<NextProviderProviderGet>;
+    providers: Array<ProviderDependentGet>;
 };
 
 /**
@@ -1345,28 +1369,6 @@ export type NextProviderPost = {
      * Providers
      */
     providers: Array<AssociationReference>;
-};
-
-/**
- * NextProviderProviderGet
- */
-export type NextProviderProviderGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Type
-     */
-    type: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
 };
 
 /**
@@ -1410,7 +1412,7 @@ export type PeriodicRateGet = {
     /**
      * Rate Values
      */
-    rate_values: Array<RateRateValueGet>;
+    rate_values: Array<ValueDependentGet>;
     /**
      * Annual Rate
      */
@@ -1448,13 +1450,14 @@ export type PeriodicRatePost = {
 };
 
 /**
- * ProviderMergeProviderGet
+ * ProviderDependentGet
  */
-export type ProviderMergeProviderGet = {
+export type ProviderDependentGet = {
     /**
      * Id
      */
     id: string;
+    type: ProviderType;
     /**
      * Name
      */
@@ -1466,22 +1469,9 @@ export type ProviderMergeProviderGet = {
 };
 
 /**
- * ProviderNextProviderGet
+ * ProviderType
  */
-export type ProviderNextProviderGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
-};
+export type ProviderType = 'always_provider' | 'scheduled_provider' | 'merge_provider' | 'next_provider';
 
 /**
  * RangeScheduleGet
@@ -1506,15 +1496,23 @@ export type RangeScheduleGet = {
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * All Schedules
      */
-    all_schedules: Array<ScheduleAllScheduleGet>;
+    all_schedules: Array<ScheduleDependentGet>;
     /**
      * Any Schedules
      */
-    any_schedules: Array<ScheduleAnyScheduleGet>;
+    any_schedules: Array<ScheduleDependentGet>;
+    /**
+     * Bank Account Fee Payment Schedules
+     */
+    bank_account_fee_payment_schedules: Array<DependentGet>;
+    /**
+     * Bank Account Interest Payment Schedules
+     */
+    bank_account_interest_payment_schedules: Array<DependentGet>;
     /**
      * From Date
      */
@@ -1563,6 +1561,7 @@ export type RateBandedRateBandGet = {
      * Banded Rate Id
      */
     banded_rate_id: string;
+    banded_rate: RateDependentGet;
     /**
      * Size
      */
@@ -1570,13 +1569,14 @@ export type RateBandedRateBandGet = {
 };
 
 /**
- * RateRateValueGet
+ * RateDependentGet
  */
-export type RateRateValueGet = {
+export type RateDependentGet = {
     /**
      * Id
      */
     id: string;
+    type: RateType;
     /**
      * Name
      */
@@ -1586,6 +1586,11 @@ export type RateRateValueGet = {
      */
     description: string | null;
 };
+
+/**
+ * RateType
+ */
+export type RateType = 'periodic_rate' | 'continuous_rate' | 'banded_rate';
 
 /**
  * RateValueGet
@@ -1610,16 +1615,16 @@ export type RateValueGet = {
     /**
      * Always Providers
      */
-    always_providers: Array<ValueAlwaysProviderGet>;
+    always_providers: Array<ProviderDependentGet>;
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ValueScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * Rate Id
      */
     rate_id: string | null;
-    rate: RateValueRateGet | null;
+    rate: RateDependentGet | null;
 };
 
 /**
@@ -1645,28 +1650,6 @@ export type RateValuePost = {
 };
 
 /**
- * RateValueRateGet
- */
-export type RateValueRateGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Type
-     */
-    type: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
-};
-
-/**
  * RelationInvalidError
  */
 export type RelationInvalidError = {
@@ -1682,28 +1665,6 @@ export type RelationInvalidError = {
      * Id
      */
     id: string;
-};
-
-/**
- * ScenarioEntityGet
- */
-export type ScenarioEntityGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Type
-     */
-    type: 'individual_entity' | 'corporation_entity';
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
 };
 
 /**
@@ -1725,7 +1686,7 @@ export type ScenarioGet = {
     /**
      * Entities
      */
-    entities: Array<ScenarioEntityGet>;
+    entities: Array<EntityDependentGet>;
 };
 
 /**
@@ -1747,13 +1708,14 @@ export type ScenarioPost = {
 };
 
 /**
- * ScheduleAllScheduleGet
+ * ScheduleDependentGet
  */
-export type ScheduleAllScheduleGet = {
+export type ScheduleDependentGet = {
     /**
      * Id
      */
     id: string;
+    type: ScheduleType;
     /**
      * Name
      */
@@ -1765,40 +1727,9 @@ export type ScheduleAllScheduleGet = {
 };
 
 /**
- * ScheduleAnyScheduleGet
+ * ScheduleType
  */
-export type ScheduleAnyScheduleGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
-};
-
-/**
- * ScheduleScheduledProviderGet
- */
-export type ScheduleScheduledProviderGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
-};
+export type ScheduleType = 'daily_schedule' | 'day_schedule' | 'from_schedule' | 'monthly_schedule' | 'range_schedule' | 'until_schedule' | 'weekly_schedule' | 'yearly_schedule' | 'all_schedule' | 'any_schedule';
 
 /**
  * ScheduledProviderGet
@@ -1823,11 +1754,19 @@ export type ScheduledProviderGet = {
     /**
      * Merge Providers
      */
-    merge_providers: Array<ProviderMergeProviderGet>;
+    merge_providers: Array<ProviderDependentGet>;
     /**
      * Next Providers
      */
-    next_providers: Array<ProviderNextProviderGet>;
+    next_providers: Array<ProviderDependentGet>;
+    /**
+     * Bank Account Fees Providers
+     */
+    bank_account_fees_providers: Array<DependentGet>;
+    /**
+     * Bank Account Rate Providers
+     */
+    bank_account_rate_providers: Array<DependentGet>;
     /**
      * Value Id
      */
@@ -1836,8 +1775,8 @@ export type ScheduledProviderGet = {
      * Schedule Id
      */
     schedule_id: string | null;
-    value: ScheduledProviderValueGet | null;
-    schedule: ScheduledProviderScheduleGet | null;
+    value: ValueDependentGet | null;
+    schedule: ScheduleDependentGet | null;
 };
 
 /**
@@ -1867,50 +1806,6 @@ export type ScheduledProviderPost = {
 };
 
 /**
- * ScheduledProviderScheduleGet
- */
-export type ScheduledProviderScheduleGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Type
-     */
-    type: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
-};
-
-/**
- * ScheduledProviderValueGet
- */
-export type ScheduledProviderValueGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Type
-     */
-    type: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
-};
-
-/**
  * UntilScheduleGet
  */
 export type UntilScheduleGet = {
@@ -1933,15 +1828,23 @@ export type UntilScheduleGet = {
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * All Schedules
      */
-    all_schedules: Array<ScheduleAllScheduleGet>;
+    all_schedules: Array<ScheduleDependentGet>;
     /**
      * Any Schedules
      */
-    any_schedules: Array<ScheduleAnyScheduleGet>;
+    any_schedules: Array<ScheduleDependentGet>;
+    /**
+     * Bank Account Fee Payment Schedules
+     */
+    bank_account_fee_payment_schedules: Array<DependentGet>;
+    /**
+     * Bank Account Interest Payment Schedules
+     */
+    bank_account_interest_payment_schedules: Array<DependentGet>;
     /**
      * Until Date
      */
@@ -1989,13 +1892,14 @@ export type ValidationError = {
 };
 
 /**
- * ValueAlwaysProviderGet
+ * ValueDependentGet
  */
-export type ValueAlwaysProviderGet = {
+export type ValueDependentGet = {
     /**
      * Id
      */
     id: string;
+    type: ValueType;
     /**
      * Name
      */
@@ -2007,22 +1911,9 @@ export type ValueAlwaysProviderGet = {
 };
 
 /**
- * ValueScheduledProviderGet
+ * ValueType
  */
-export type ValueScheduledProviderGet = {
-    /**
-     * Id
-     */
-    id: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Description
-     */
-    description: string | null;
-};
+export type ValueType = 'decimal_value' | 'rate_value';
 
 /**
  * WeeklyScheduleGet
@@ -2047,15 +1938,23 @@ export type WeeklyScheduleGet = {
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * All Schedules
      */
-    all_schedules: Array<ScheduleAllScheduleGet>;
+    all_schedules: Array<ScheduleDependentGet>;
     /**
      * Any Schedules
      */
-    any_schedules: Array<ScheduleAnyScheduleGet>;
+    any_schedules: Array<ScheduleDependentGet>;
+    /**
+     * Bank Account Fee Payment Schedules
+     */
+    bank_account_fee_payment_schedules: Array<DependentGet>;
+    /**
+     * Bank Account Interest Payment Schedules
+     */
+    bank_account_interest_payment_schedules: Array<DependentGet>;
     /**
      * Weekday
      */
@@ -2107,15 +2006,23 @@ export type YearlyScheduleGet = {
     /**
      * Scheduled Providers
      */
-    scheduled_providers: Array<ScheduleScheduledProviderGet>;
+    scheduled_providers: Array<ProviderDependentGet>;
     /**
      * All Schedules
      */
-    all_schedules: Array<ScheduleAllScheduleGet>;
+    all_schedules: Array<ScheduleDependentGet>;
     /**
      * Any Schedules
      */
-    any_schedules: Array<ScheduleAnyScheduleGet>;
+    any_schedules: Array<ScheduleDependentGet>;
+    /**
+     * Bank Account Fee Payment Schedules
+     */
+    bank_account_fee_payment_schedules: Array<DependentGet>;
+    /**
+     * Bank Account Interest Payment Schedules
+     */
+    bank_account_interest_payment_schedules: Array<DependentGet>;
     /**
      * Month
      */

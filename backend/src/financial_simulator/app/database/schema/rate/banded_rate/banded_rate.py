@@ -7,10 +7,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..rate import Rate
 from .banded_rate_band import BandedRateBand
+from ..rate_type import RateType
 
 
 class BandedRate(Rate):
-    __tablename__ = "banded_rate"
+    __tablename__ = RateType.BANDED
 
     id: Mapped[UUID] = mapped_column(ForeignKey("rate.id"), primary_key=True)
 
@@ -21,4 +22,4 @@ class BandedRate(Rate):
         cascade="all, delete-orphan",
     )
 
-    __mapper_args__ = {"polymorphic_identity": "banded_rate"}
+    __mapper_args__ = {"polymorphic_identity": RateType.BANDED}

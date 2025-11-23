@@ -5,12 +5,13 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .rate import Rate
+from .rate_type import RateType
 
 
 class ContinuousRate(Rate):
-    __tablename__ = "continuous_rate"
+    __tablename__ = RateType.CONTINUOUS
 
     id: Mapped[UUID] = mapped_column(ForeignKey("rate.id"), primary_key=True)
     annual_rate: Mapped[Decimal | None] = mapped_column()
 
-    __mapper_args__ = {"polymorphic_identity": "continuous_rate"}
+    __mapper_args__ = {"polymorphic_identity": RateType.CONTINUOUS}

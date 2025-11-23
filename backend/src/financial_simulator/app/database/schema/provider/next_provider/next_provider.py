@@ -7,10 +7,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .next_provider_provider import NextProviderProvider
 from ..provider import Provider
+from ..provider_type import ProviderType
 
 
 class NextProvider(Provider):
-    __tablename__ = "next_provider"
+    __tablename__ = ProviderType.NEXT
 
     id: Mapped[UUID] = mapped_column(ForeignKey("provider.id"), primary_key=True)
 
@@ -22,5 +23,5 @@ class NextProvider(Provider):
     )
 
     __mapper_args__ = {
-        "polymorphic_identity": "next_provider",
+        "polymorphic_identity": ProviderType.NEXT,
     }

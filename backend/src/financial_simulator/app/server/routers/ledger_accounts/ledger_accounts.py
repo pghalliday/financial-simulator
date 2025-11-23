@@ -5,11 +5,14 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from financial_simulator.app.database.schema import LedgerAccount, BankAccount
+from financial_simulator.app.database.schema import LedgerAccount
 from pydantic import BaseModel
 
-from .common.collection import Collection
-from ..util.model_mapper import (
+from financial_simulator.app.server.routers.bank_accounts.bank_account_dependent import \
+    bank_account_dependent_get_mapper
+from financial_simulator.app.server.routers.common.collection import Collection
+from financial_simulator.app.server.routers.common.dependent import DependentGet
+from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
     OptionalRelatedModelField,
@@ -28,11 +31,6 @@ class LedgerAccountPost(BaseModel):
     account_name: str
     parent_id: UUID | None = None
 
-class LedgerAccountBankAccountGet(BaseModel):
-    id: UUID
-    name: str
-    description: str | None = None
-
 class LedgerAccountParentGet(BaseModel):
     id: UUID
     name: str
@@ -49,24 +47,16 @@ class LedgerAccountGet(BaseModel):
     parent_id: UUID | None
     sub_accounts: List[LedgerAccountGet]
     parent: LedgerAccountParentGet | None
-    bank_account_asset_accounts: List[LedgerAccountBankAccountGet]
-    bank_account_interest_income_accounts: List[LedgerAccountBankAccountGet]
-    bank_account_interest_receivable_accounts: List[LedgerAccountBankAccountGet]
-    bank_account_fee_expenses_accounts: List[LedgerAccountBankAccountGet]
-    bank_account_fees_payable_accounts: List[LedgerAccountBankAccountGet]
+    bank_account_asset_accounts: List[DependentGet]
+    bank_account_interest_income_accounts: List[DependentGet]
+    bank_account_interest_receivable_accounts: List[DependentGet]
+    bank_account_fee_expenses_accounts: List[DependentGet]
+    bank_account_fees_payable_accounts: List[DependentGet]
 
 router = APIRouter(
     prefix="/ledger-accounts",
     tags=["ledger-accounts"],
 )
-
-ledger_account_bank_account_get_mapper = GetMapper(
-    table_model=BankAccount,
-    get_model=LedgerAccountBankAccountGet,
-)
-(ledger_account_bank_account_get_mapper
- .field("name", OrdinaryGetField())
- .field("description", OrdinaryGetField()))
 
 ledger_account_parent_get_mapper = GetMapper(
     table_model=LedgerAccount,
@@ -94,11 +84,11 @@ model_mapper = ModelMapper(
     .field("parent_id", OptionalRelatedModelField(field="parent", model=LedgerAccount))
     .field("sub_accounts", ChildrenModelField(model_mapper.get_mapper))
     .field("parent", ParentModelField(ledger_account_parent_get_mapper))
-    .field("bank_account_asset_accounts", ChildrenModelField(ledger_account_bank_account_get_mapper))
-    .field("bank_account_interest_income_accounts", ChildrenModelField(ledger_account_bank_account_get_mapper))
-    .field("bank_account_interest_receivable_accounts", ChildrenModelField(ledger_account_bank_account_get_mapper))
-    .field("bank_account_fee_expenses_accounts", ChildrenModelField(ledger_account_bank_account_get_mapper))
-    .field("bank_account_fees_payable_accounts", ChildrenModelField(ledger_account_bank_account_get_mapper))
+    .field("bank_account_asset_accounts", ChildrenModelField(bank_account_dependent_get_mapper))
+    .field("bank_account_interest_income_accounts", ChildrenModelField(bank_account_dependent_get_mapper))
+    .field("bank_account_interest_receivable_accounts", ChildrenModelField(bank_account_dependent_get_mapper))
+    .field("bank_account_fee_expenses_accounts", ChildrenModelField(bank_account_dependent_get_mapper))
+    .field("bank_account_fees_payable_accounts", ChildrenModelField(bank_account_dependent_get_mapper))
 )
 
 Collection(

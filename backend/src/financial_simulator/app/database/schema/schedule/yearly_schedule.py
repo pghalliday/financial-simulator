@@ -4,15 +4,16 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .schedule import Schedule
+from .schedule_type import ScheduleType
 
 
 class YearlySchedule(Schedule):
-    __tablename__ = "yearly_schedule"
+    __tablename__ = ScheduleType.YEARLY
 
     id: Mapped[UUID] = mapped_column(ForeignKey("schedule.id"), primary_key=True)
     month: Mapped[int | None] = mapped_column()
     day: Mapped[int | None] = mapped_column()
 
     __mapper_args__ = {
-        "polymorphic_identity": "yearly_schedule",
+        "polymorphic_identity": ScheduleType.YEARLY,
     }
