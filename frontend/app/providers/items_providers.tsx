@@ -3,13 +3,13 @@ import {useGetItems} from "~/lib/hooks/useGetItems";
 import type {GetItemsApi} from "~/lib/types";
 import {
     getItemsRouteBankAccountsGet,
+    getItemsRouteDecimalProvidersGet,
     getItemsRouteEntitiesGet,
     getItemsRouteLedgerAccountsGet,
-    getItemsRouteProvidersGet,
+    getItemsRouteRateProvidersGet,
     getItemsRouteRatesGet,
     getItemsRouteScenariosGet,
     getItemsRouteSchedulesGet,
-    getItemsRouteValuesGet
 } from "../../client";
 
 interface ProviderProps {
@@ -83,17 +83,17 @@ export const [RatesProvider, useRates] = createItemsProvider({
     getItemsApi: getItemsRouteRatesGet,
 })
 
-export const [ValuesProvider, useValues] = createItemsProvider({
-    label: "Values",
-    getItemsApi: getItemsRouteValuesGet,
-})
-
 export const [SchedulesProvider, useSchedules] = createItemsProvider({
     label: "Schedules",
     getItemsApi: getItemsRouteSchedulesGet,
 })
 
-export const [ProvidersProvider, useProviders] = createItemsProvider({
-    label: "Providers",
-    getItemsApi: getItemsRouteProvidersGet,
+export const [DecimalProvidersProvider, useDecimalProviders] = createItemsProvider({
+    label: "DecimalProviders",
+    getItemsApi: getItemsRouteDecimalProvidersGet,
+})
+
+export const [RateProvidersProvider, useRateProviders] = createItemsProvider({
+    label: "RateProviders",
+    getItemsApi: getItemsRouteRateProvidersGet,
 })

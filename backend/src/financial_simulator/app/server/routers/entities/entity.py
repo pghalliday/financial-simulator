@@ -1,7 +1,7 @@
 from typing import Sequence
 from uuid import UUID
 
-from financial_simulator.app.database.schema.entity.entity_type import EntityType
+from financial_simulator.app.database.schema import EntityType
 from financial_simulator.app.server.util.dependent import (
     DependentGet,
 )

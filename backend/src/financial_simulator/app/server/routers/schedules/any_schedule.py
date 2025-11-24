@@ -3,8 +3,8 @@ from typing import Literal, Sequence
 from financial_simulator.app.database.schema import (
     AnySchedule,
     AnyScheduleSchedule,
+    ScheduleType,
 )
-from financial_simulator.app.database.schema.schedule.schedule_type import ScheduleType
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     AssociationModelField,

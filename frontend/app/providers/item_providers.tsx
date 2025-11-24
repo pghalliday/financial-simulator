@@ -1,42 +1,42 @@
 import {createContext, type PropsWithChildren, type ReactElement, useContext, useState} from "react";
 import type {
     Breadcrumb,
+    DecimalProviderGet,
+    DecimalProviderPost,
     EntityGet,
     EntityPost,
     GetItemApi,
     IdItem,
-    ProviderGet,
-    ProviderPost,
     PutItemApi,
     RateGet,
     RatePost,
+    RateProviderGet,
+    RateProviderPost,
     ScheduleGet,
     SchedulePost,
-    ValueGet,
-    ValuePost
 } from "~/lib/types";
 import {useGetItem} from "~/lib/hooks/useGetItem";
 import {
     type BankAccountGet,
     type BankAccountPost,
     getItemRouteBankAccountsItemIdGet,
+    getItemRouteDecimalProvidersItemIdGet,
     getItemRouteEntitiesItemIdGet,
     getItemRouteLedgerAccountsItemIdGet,
-    getItemRouteProvidersItemIdGet,
+    getItemRouteRateProvidersItemIdGet,
     getItemRouteRatesItemIdGet,
     getItemRouteScenariosItemIdGet,
     getItemRouteSchedulesItemIdGet,
-    getItemRouteValuesItemIdGet,
     type LedgerAccountGet,
     type LedgerAccountPost,
     putItemRouteBankAccountsItemIdPut,
+    putItemRouteDecimalProvidersItemIdPut,
     putItemRouteEntitiesItemIdPut,
     putItemRouteLedgerAccountsItemIdPut,
-    putItemRouteProvidersItemIdPut,
+    putItemRouteRateProvidersItemIdPut,
     putItemRouteRatesItemIdPut,
     putItemRouteScenariosItemIdPut,
     putItemRouteSchedulesItemIdPut,
-    putItemRouteValuesItemIdPut,
     type ScenarioGet,
     type ScenarioPost
 } from "../../client";
@@ -190,20 +190,20 @@ export const [RateProvider, useRate] = createItemProvider<RatePost, RateGet>({
     putItemApi: putItemRouteRatesItemIdPut,
 })
 
-export const [ValueProvider, useValue] = createItemProvider<ValuePost, ValueGet>({
-    label: "Value",
-    getItemApi: getItemRouteValuesItemIdGet,
-    putItemApi: putItemRouteValuesItemIdPut,
-})
-
 export const [ScheduleProvider, useSchedule] = createItemProvider<SchedulePost, ScheduleGet>({
     label: "Schedule",
     getItemApi: getItemRouteSchedulesItemIdGet,
     putItemApi: putItemRouteSchedulesItemIdPut,
 })
 
-export const [ProviderProvider, useProvider] = createItemProvider<ProviderPost, ProviderGet>({
-    label: "Provider",
-    getItemApi: getItemRouteProvidersItemIdGet,
-    putItemApi: putItemRouteProvidersItemIdPut,
+export const [DecimalProviderProvider, useDecimalProvider] = createItemProvider<DecimalProviderPost, DecimalProviderGet>({
+    label: "DecimalProvider",
+    getItemApi: getItemRouteDecimalProvidersItemIdGet,
+    putItemApi: putItemRouteDecimalProvidersItemIdPut,
+})
+
+export const [RateProviderProvider, useRateProvider] = createItemProvider<RateProviderPost, RateProviderGet>({
+    label: "RateProvider",
+    getItemApi: getItemRouteRateProvidersItemIdGet,
+    putItemApi: putItemRouteRateProvidersItemIdPut,
 })

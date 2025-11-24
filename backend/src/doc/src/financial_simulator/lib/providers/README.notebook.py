@@ -16,8 +16,8 @@
 # # Providers
 #
 # A collection of Provider implementations that will take the current date and provide values
-# valid for that date. If the provider has not completed, it will return a new provider for use
-# in the next call and a sequence of values. If the provider has completed then it will return
+# valid for that date. If the rate_provider has not completed, it will return a new rate_provider for use
+# in the next call and a sequence of values. If the rate_provider has completed then it will return
 # `None`.
 
 # %%
@@ -51,7 +51,7 @@ print(f"Start Date: {format_day(START_DATE)}")
 # %% [markdown]
 # ## NeverProvider
 #
-# This is a trivial provider that always provides an empty sequence.
+# This is a trivial rate_provider that always provides an empty sequence.
 
 # %%
 print_provided(
@@ -61,7 +61,7 @@ print_provided(
 # %% [markdown]
 # ## AlwaysProvider
 #
-# This is a trivial provider that always provides a single value sequence.
+# This is a trivial rate_provider that always provides a single value sequence.
 
 # %%
 print_provided(
@@ -73,7 +73,7 @@ print_provided(
 # %% [markdown]
 # ## ScheduledProvider
 #
-# This provider provides a single value sequence according to the specified schedule. If not scheduled it
+# This rate_provider provides a single value sequence according to the specified schedule. If not scheduled it
 # provides an empty sequence.
 
 # %%
@@ -88,7 +88,7 @@ print_provided(
 # %% [markdown]
 # ## FunctionProvider
 #
-# This provider uses the specified function to map the current date to an instance of `Provided`.
+# This rate_provider uses the specified function to map the current date to an instance of `Provided`.
 
 # %%
 print_provided(
@@ -100,7 +100,7 @@ print_provided(
 # %% [markdown]
 # ## NextProvider
 #
-# This provider takes a sequence of providers and provides the values from the first provider that provides
+# This rate_provider takes a sequence of providers and provides the values from the first rate_provider that provides
 # a non-empty sequence of values.
 
 # %%
@@ -119,7 +119,7 @@ print_provided(
 # %% [markdown]
 # ## MergeProvider
 #
-# This provider takes a sequence of providers and provides a corresponding sequence of the merged values provided
+# This rate_provider takes a sequence of providers and provides a corresponding sequence of the merged values provided
 # by those providers.
 
 # %%
@@ -153,7 +153,7 @@ print_provided(
 # %% [markdown]
 # ## MapProvider
 #
-# This provider uses the specified transform function to transform the values provided by the specified provider
+# This rate_provider uses the specified transform function to transform the values provided by the specified rate_provider
 
 # %%
 print_provided(
@@ -171,8 +171,8 @@ print_provided(
 # %% [markdown]
 # ## FlatMapProvider
 #
-# This provider, like the `MapProvider`, uses the specified transform function to transform the values provided
-# by the specified provider. However, in this case the transform function should return a sequence and these
+# This rate_provider, like the `MapProvider`, uses the specified transform function to transform the values provided
+# by the specified rate_provider. However, in this case the transform function should return a sequence and these
 # sequences will be flattened in the resulting `Provided` instance.
 
 # %%
@@ -191,8 +191,8 @@ print_provided(
 # %% [markdown]
 # ## MergeMapProvider
 #
-# This provider, like the `MapProvider`, uses the specified transform function to transform the values provided
-# by the specified provider. However, in this case, the transform function should return a new `Provider` instance.
+# This rate_provider, like the `MapProvider`, uses the specified transform function to transform the values provided
+# by the specified rate_provider. However, in this case, the transform function should return a new `Provider` instance.
 # The values from these providers will be merged in future resulting `Provided` instances.
 
 # %%

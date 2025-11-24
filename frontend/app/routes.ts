@@ -1,13 +1,13 @@
 import {index, route, type RouteConfig} from "@react-router/dev/routes";
 import {
     BANK_ACCOUNTS_HREF,
+    DECIMAL_PROVIDERS_HREF,
     ENTITIES_HREF,
     LEDGER_ACCOUNTS_HREF,
-    PROVIDERS_HREF,
+    RATE_PROVIDERS_HREF,
     RATES_HREF,
     SCENARIOS_HREF,
     SCHEDULES_HREF,
-    VALUES_HREF
 } from "./strings";
 
 export default [
@@ -22,11 +22,11 @@ export default [
     route(LEDGER_ACCOUNTS_HREF + '/:itemId', "./routes/LedgerAccount.tsx"),
     route(RATES_HREF, "./routes/Rates.tsx"),
     route(RATES_HREF + '/:itemId', "./routes/Rate.tsx"),
-    route(VALUES_HREF, "./routes/Values.tsx"),
-    route(VALUES_HREF + '/:itemId', "./routes/Value.tsx"),
     route(SCHEDULES_HREF, "./routes/Schedules.tsx"),
     route(SCHEDULES_HREF + '/:itemId', "./routes/Schedule.tsx"),
-    route(PROVIDERS_HREF, "./routes/Providers.tsx"),
-    route(PROVIDERS_HREF + '/:itemId', "./routes/Provider.tsx"),
+    route(DECIMAL_PROVIDERS_HREF, "./routes/DecimalProviders.tsx"),
+    route(DECIMAL_PROVIDERS_HREF + '/:itemId', "./routes/DecimalProvider.tsx"),
+    route(RATE_PROVIDERS_HREF, "./routes/RateProviders.tsx"),
+    route(RATE_PROVIDERS_HREF + '/:itemId', "./routes/RateProvider.tsx"),
     route("/playground", "./routes/Playground.tsx"),
 ] satisfies RouteConfig;

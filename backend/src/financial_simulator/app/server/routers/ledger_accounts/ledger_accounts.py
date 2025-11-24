@@ -1,9 +1,11 @@
 from __future__ import annotations
 import logging
-from typing import List
+from typing import List, Union
 from uuid import UUID
 
 from fastapi import APIRouter
+from sqlalchemy import ColumnElement
+from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import LedgerAccount
 from pydantic import BaseModel
@@ -22,6 +24,7 @@ from financial_simulator.app.server.util.model_mapper import (
     OrdinaryGetField,
     ParentGetField,
 )
+from financial_simulator.app.server.util.query_params import DefaultQueryParams
 
 logger = logging.getLogger(__name__)
 
@@ -91,10 +94,16 @@ model_mapper = ModelMapper(
     .field("bank_account_fees_payable_accounts", ChildrenModelField(bank_account_dependent_get_mapper))
 )
 
+class LedgerAccountQueryParams(DefaultQueryParams):
+    def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
+        return LedgerAccount.name
+
+    def query_where(self) -> Union[ColumnElement[bool], None]:
+        return LedgerAccount.parent_id == None
+
 Collection(
     model_mapper=model_mapper,
-    order_by=LedgerAccount.name,
-    where=LedgerAccount.parent_id == None,
+    query_params_class=LedgerAccountQueryParams,
 ).add_endpoints(
     router=router,
 )

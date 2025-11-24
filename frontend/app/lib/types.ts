@@ -1,52 +1,15 @@
 import type {APIResult} from "~/lib/callApi";
 import type {
-    AllScheduleGet,
-    AllSchedulePost,
-    AlwaysProviderGet,
-    AlwaysProviderPost,
-    AnyScheduleGet,
-    AnySchedulePost,
-    BandedRateGet,
-    BandedRatePost,
-    ContinuousRateGet,
-    ContinuousRatePost,
-    CorporationEntityGet,
-    CorporationEntityPost,
-    DailyScheduleGet,
-    DailySchedulePost,
-    DayScheduleGet,
-    DaySchedulePost,
-    DecimalValueGet,
-    DecimalValuePost,
-    FromScheduleGet,
-    FromSchedulePost,
-    GetItemRouteEntitiesItemIdGetResponse, GetItemRouteEntitiesItemIdGetResponses,
-    GetItemRouteProvidersItemIdGetData, GetItemRouteProvidersItemIdGetResponse, GetItemRouteRatesItemIdGetResponse,
+    GetItemRouteDecimalProvidersItemIdGetResponse,
+    GetItemRouteEntitiesItemIdGetResponse,
+    GetItemRouteRateProvidersItemIdGetResponse,
+    GetItemRouteRatesItemIdGetResponse,
     GetItemRouteSchedulesItemIdGetResponse,
-    GetItemRouteValuesItemIdGetResponse,
-    IndividualEntityGet,
-    IndividualEntityPost,
-    MergeProviderGet,
-    MergeProviderPost,
-    MonthlyScheduleGet,
-    MonthlySchedulePost,
-    NextProviderGet,
-    NextProviderPost,
-    PeriodicRateGet,
-    PeriodicRatePost, PostItemRouteEntitiesPostData, PostItemRouteProvidersPostData, PostItemRouteRatesPostData,
-    PostItemRouteSchedulesPostData, PostItemRouteValuesPostData,
-    RangeScheduleGet,
-    RangeSchedulePost,
-    RateValueGet,
-    RateValuePost,
-    ScheduledProviderGet,
-    ScheduledProviderPost,
-    UntilScheduleGet,
-    UntilSchedulePost,
-    WeeklyScheduleGet,
-    WeeklySchedulePost,
-    YearlyScheduleGet,
-    YearlySchedulePost
+    PostItemRouteDecimalProvidersPostData,
+    PostItemRouteEntitiesPostData,
+    PostItemRouteRateProvidersPostData,
+    PostItemRouteRatesPostData,
+    PostItemRouteSchedulesPostData
 } from "../../client";
 
 export type KeysOfType<Type, ValueType> = keyof { [P in keyof Type as Type[P] extends ValueType ? P : never]: Type[P] }
@@ -99,11 +62,11 @@ export type EntityPost = PostItemRouteEntitiesPostData["body"]
 export type RateGet = GetItemRouteRatesItemIdGetResponse
 export type RatePost = PostItemRouteRatesPostData["body"]
 
-export type ValueGet = GetItemRouteValuesItemIdGetResponse
-export type ValuePost = PostItemRouteValuesPostData["body"]
-
 export type ScheduleGet = GetItemRouteSchedulesItemIdGetResponse
 export type SchedulePost = PostItemRouteSchedulesPostData["body"]
 
-export type ProviderGet = GetItemRouteProvidersItemIdGetResponse
-export type ProviderPost = PostItemRouteProvidersPostData["body"]
+export type DecimalProviderGet = GetItemRouteDecimalProvidersItemIdGetResponse
+export type DecimalProviderPost = PostItemRouteDecimalProvidersPostData["body"]
+
+export type RateProviderGet = GetItemRouteRateProvidersItemIdGetResponse
+export type RateProviderPost = PostItemRouteRateProvidersPostData["body"]

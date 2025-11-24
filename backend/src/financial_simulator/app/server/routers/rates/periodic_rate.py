@@ -1,8 +1,7 @@
 from decimal import Decimal
 from typing import Literal
 
-from financial_simulator.app.database.schema import PeriodicRate
-from financial_simulator.app.database.schema.rate.rate_type import RateType
+from financial_simulator.app.database.schema import PeriodicRate, RateType
 from financial_simulator.app.server.routers.rates.rate import RatePost, RateGet, add_rate_model_fields
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,

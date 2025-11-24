@@ -9,9 +9,15 @@ import {
     useBankAccountPostFormContext
 } from "~/forms/bank_account/BankAccountPostFormContext";
 import {RATE_POST_FORM_NAME, useRatePostFormContext} from "~/forms/rate/RatePostFormContext";
-import {useValuePostFormContext, VALUE_POST_FORM_NAME} from "~/forms/value/ValuePostFormContext";
 import {SCHEDULE_POST_FORM_NAME, useSchedulePostFormContext} from "~/forms/schedule/SchedulePostFormContext";
-import {PROVIDER_POST_FORM_NAME, useProviderPostFormContext} from "~/forms/provider/ProviderPostFormContext";
+import {
+    DECIMAL_PROVIDER_POST_FORM_NAME,
+    useDecimalProviderPostFormContext
+} from "~/forms/decimal_provider/DecimalProviderPostFormContext";
+import {
+    RATE_PROVIDER_POST_FORM_NAME,
+    useRateProviderPostFormContext
+} from "~/forms/rate_provider/RateProviderPostFormContext";
 
 export const FORM_REGISTRY = {
     [ENTITY_POST_FORM_NAME]: useEntityPostFormContext,
@@ -19,7 +25,7 @@ export const FORM_REGISTRY = {
     [LEDGER_ACCOUNT_POST_FORM_NAME]: useLedgerAccountPostFormContext,
     [BANK_ACCOUNT_POST_FORM_NAME]: useBankAccountPostFormContext,
     [RATE_POST_FORM_NAME]: useRatePostFormContext,
-    [VALUE_POST_FORM_NAME]: useValuePostFormContext,
     [SCHEDULE_POST_FORM_NAME]: useSchedulePostFormContext,
-    [PROVIDER_POST_FORM_NAME]: useProviderPostFormContext,
+    [DECIMAL_PROVIDER_POST_FORM_NAME]: useDecimalProviderPostFormContext,
+    [RATE_PROVIDER_POST_FORM_NAME]: useRateProviderPostFormContext,
 }

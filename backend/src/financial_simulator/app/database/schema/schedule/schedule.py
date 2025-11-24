@@ -9,12 +9,14 @@ from ..base import (
 )
 
 if TYPE_CHECKING:
-    from ..provider import ScheduledProvider
+    from ..rate_provider import ScheduledRateProvider
+    from ..decimal_provider import ScheduledDecimalProvider
     from .all_schedule import AllScheduleSchedule
     from .any_schedule import AnyScheduleSchedule
     from ..bank_account import BankAccount
 else:
-    ScheduledProvider = "ScheduledProvider"
+    ScheduledRateProvider = "ScheduledRateProvider"
+    ScheduledDecimalProvider = "ScheduledDecimalProvider"
     AllScheduleSchedule = "AllScheduleSchedule"
     AnyScheduleSchedule = "AnyScheduleSchedule"
     BankAccount = "BankAccount"
@@ -25,7 +27,12 @@ class Schedule(BaseWithType):
 
     type: Mapped[ScheduleType] = mapped_column()
 
-    scheduled_providers: Mapped[List[ScheduledProvider]] = relationship(
+    scheduled_decimal_providers: Mapped[List[ScheduledDecimalProvider]] = relationship(
+        back_populates="schedule",
+        cascade="all, delete-orphan",
+    )
+
+    scheduled_rate_providers: Mapped[List[ScheduledRateProvider]] = relationship(
         back_populates="schedule",
         cascade="all, delete-orphan",
     )

@@ -6,15 +6,18 @@ import type {
   DeleteItemRouteBankAccountsItemIdDeleteData,
   DeleteItemRouteBankAccountsItemIdDeleteErrors,
   DeleteItemRouteBankAccountsItemIdDeleteResponses,
+  DeleteItemRouteDecimalProvidersItemIdDeleteData,
+  DeleteItemRouteDecimalProvidersItemIdDeleteErrors,
+  DeleteItemRouteDecimalProvidersItemIdDeleteResponses,
   DeleteItemRouteEntitiesItemIdDeleteData,
   DeleteItemRouteEntitiesItemIdDeleteErrors,
   DeleteItemRouteEntitiesItemIdDeleteResponses,
   DeleteItemRouteLedgerAccountsItemIdDeleteData,
   DeleteItemRouteLedgerAccountsItemIdDeleteErrors,
   DeleteItemRouteLedgerAccountsItemIdDeleteResponses,
-  DeleteItemRouteProvidersItemIdDeleteData,
-  DeleteItemRouteProvidersItemIdDeleteErrors,
-  DeleteItemRouteProvidersItemIdDeleteResponses,
+  DeleteItemRouteRateProvidersItemIdDeleteData,
+  DeleteItemRouteRateProvidersItemIdDeleteErrors,
+  DeleteItemRouteRateProvidersItemIdDeleteResponses,
   DeleteItemRouteRatesItemIdDeleteData,
   DeleteItemRouteRatesItemIdDeleteErrors,
   DeleteItemRouteRatesItemIdDeleteResponses,
@@ -24,24 +27,24 @@ import type {
   DeleteItemRouteSchedulesItemIdDeleteData,
   DeleteItemRouteSchedulesItemIdDeleteErrors,
   DeleteItemRouteSchedulesItemIdDeleteResponses,
-  DeleteItemRouteValuesItemIdDeleteData,
-  DeleteItemRouteValuesItemIdDeleteErrors,
-  DeleteItemRouteValuesItemIdDeleteResponses,
   GetDummyDaysGetData,
   GetDummyDaysGetErrors,
   GetDummyDaysGetResponses,
   GetItemRouteBankAccountsItemIdGetData,
   GetItemRouteBankAccountsItemIdGetErrors,
   GetItemRouteBankAccountsItemIdGetResponses,
+  GetItemRouteDecimalProvidersItemIdGetData,
+  GetItemRouteDecimalProvidersItemIdGetErrors,
+  GetItemRouteDecimalProvidersItemIdGetResponses,
   GetItemRouteEntitiesItemIdGetData,
   GetItemRouteEntitiesItemIdGetErrors,
   GetItemRouteEntitiesItemIdGetResponses,
   GetItemRouteLedgerAccountsItemIdGetData,
   GetItemRouteLedgerAccountsItemIdGetErrors,
   GetItemRouteLedgerAccountsItemIdGetResponses,
-  GetItemRouteProvidersItemIdGetData,
-  GetItemRouteProvidersItemIdGetErrors,
-  GetItemRouteProvidersItemIdGetResponses,
+  GetItemRouteRateProvidersItemIdGetData,
+  GetItemRouteRateProvidersItemIdGetErrors,
+  GetItemRouteRateProvidersItemIdGetResponses,
   GetItemRouteRatesItemIdGetData,
   GetItemRouteRatesItemIdGetErrors,
   GetItemRouteRatesItemIdGetResponses,
@@ -51,37 +54,37 @@ import type {
   GetItemRouteSchedulesItemIdGetData,
   GetItemRouteSchedulesItemIdGetErrors,
   GetItemRouteSchedulesItemIdGetResponses,
-  GetItemRouteValuesItemIdGetData,
-  GetItemRouteValuesItemIdGetErrors,
-  GetItemRouteValuesItemIdGetResponses,
   GetItemsRouteBankAccountsGetData,
   GetItemsRouteBankAccountsGetResponses,
+  GetItemsRouteDecimalProvidersGetData,
+  GetItemsRouteDecimalProvidersGetResponses,
   GetItemsRouteEntitiesGetData,
   GetItemsRouteEntitiesGetResponses,
   GetItemsRouteLedgerAccountsGetData,
   GetItemsRouteLedgerAccountsGetResponses,
-  GetItemsRouteProvidersGetData,
-  GetItemsRouteProvidersGetResponses,
+  GetItemsRouteRateProvidersGetData,
+  GetItemsRouteRateProvidersGetResponses,
   GetItemsRouteRatesGetData,
   GetItemsRouteRatesGetResponses,
   GetItemsRouteScenariosGetData,
   GetItemsRouteScenariosGetResponses,
   GetItemsRouteSchedulesGetData,
   GetItemsRouteSchedulesGetResponses,
-  GetItemsRouteValuesGetData,
-  GetItemsRouteValuesGetResponses,
   PostItemRouteBankAccountsPostData,
   PostItemRouteBankAccountsPostErrors,
   PostItemRouteBankAccountsPostResponses,
+  PostItemRouteDecimalProvidersPostData,
+  PostItemRouteDecimalProvidersPostErrors,
+  PostItemRouteDecimalProvidersPostResponses,
   PostItemRouteEntitiesPostData,
   PostItemRouteEntitiesPostErrors,
   PostItemRouteEntitiesPostResponses,
   PostItemRouteLedgerAccountsPostData,
   PostItemRouteLedgerAccountsPostErrors,
   PostItemRouteLedgerAccountsPostResponses,
-  PostItemRouteProvidersPostData,
-  PostItemRouteProvidersPostErrors,
-  PostItemRouteProvidersPostResponses,
+  PostItemRouteRateProvidersPostData,
+  PostItemRouteRateProvidersPostErrors,
+  PostItemRouteRateProvidersPostResponses,
   PostItemRouteRatesPostData,
   PostItemRouteRatesPostErrors,
   PostItemRouteRatesPostResponses,
@@ -91,21 +94,21 @@ import type {
   PostItemRouteSchedulesPostData,
   PostItemRouteSchedulesPostErrors,
   PostItemRouteSchedulesPostResponses,
-  PostItemRouteValuesPostData,
-  PostItemRouteValuesPostErrors,
-  PostItemRouteValuesPostResponses,
   PutItemRouteBankAccountsItemIdPutData,
   PutItemRouteBankAccountsItemIdPutErrors,
   PutItemRouteBankAccountsItemIdPutResponses,
+  PutItemRouteDecimalProvidersItemIdPutData,
+  PutItemRouteDecimalProvidersItemIdPutErrors,
+  PutItemRouteDecimalProvidersItemIdPutResponses,
   PutItemRouteEntitiesItemIdPutData,
   PutItemRouteEntitiesItemIdPutErrors,
   PutItemRouteEntitiesItemIdPutResponses,
   PutItemRouteLedgerAccountsItemIdPutData,
   PutItemRouteLedgerAccountsItemIdPutErrors,
   PutItemRouteLedgerAccountsItemIdPutResponses,
-  PutItemRouteProvidersItemIdPutData,
-  PutItemRouteProvidersItemIdPutErrors,
-  PutItemRouteProvidersItemIdPutResponses,
+  PutItemRouteRateProvidersItemIdPutData,
+  PutItemRouteRateProvidersItemIdPutErrors,
+  PutItemRouteRateProvidersItemIdPutResponses,
   PutItemRouteRatesItemIdPutData,
   PutItemRouteRatesItemIdPutErrors,
   PutItemRouteRatesItemIdPutResponses,
@@ -115,9 +118,6 @@ import type {
   PutItemRouteSchedulesItemIdPutData,
   PutItemRouteSchedulesItemIdPutErrors,
   PutItemRouteSchedulesItemIdPutResponses,
-  PutItemRouteValuesItemIdPutData,
-  PutItemRouteValuesItemIdPutErrors,
-  PutItemRouteValuesItemIdPutResponses,
 } from "./types.gen";
 
 export type Options<
@@ -620,100 +620,6 @@ export const putItemRouteRatesItemIdPut = <
 /**
  * Get Items Route
  */
-export const getItemsRouteValuesGet = <ThrowOnError extends boolean = false>(
-  options?: Options<GetItemsRouteValuesGetData, ThrowOnError>,
-) => {
-  return (options?.client ?? client).get<
-    GetItemsRouteValuesGetResponses,
-    unknown,
-    ThrowOnError
-  >({
-    url: "/values/",
-    ...options,
-  });
-};
-
-/**
- * Post Item Route
- */
-export const postItemRouteValuesPost = <ThrowOnError extends boolean = false>(
-  options: Options<PostItemRouteValuesPostData, ThrowOnError>,
-) => {
-  return (options.client ?? client).post<
-    PostItemRouteValuesPostResponses,
-    PostItemRouteValuesPostErrors,
-    ThrowOnError
-  >({
-    url: "/values/",
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
-  });
-};
-
-/**
- * Delete Item Route
- */
-export const deleteItemRouteValuesItemIdDelete = <
-  ThrowOnError extends boolean = false,
->(
-  options: Options<DeleteItemRouteValuesItemIdDeleteData, ThrowOnError>,
-) => {
-  return (options.client ?? client).delete<
-    DeleteItemRouteValuesItemIdDeleteResponses,
-    DeleteItemRouteValuesItemIdDeleteErrors,
-    ThrowOnError
-  >({
-    url: "/values/{item_id}",
-    ...options,
-  });
-};
-
-/**
- * Get Item Route
- */
-export const getItemRouteValuesItemIdGet = <
-  ThrowOnError extends boolean = false,
->(
-  options: Options<GetItemRouteValuesItemIdGetData, ThrowOnError>,
-) => {
-  return (options.client ?? client).get<
-    GetItemRouteValuesItemIdGetResponses,
-    GetItemRouteValuesItemIdGetErrors,
-    ThrowOnError
-  >({
-    url: "/values/{item_id}",
-    ...options,
-  });
-};
-
-/**
- * Put Item Route
- */
-export const putItemRouteValuesItemIdPut = <
-  ThrowOnError extends boolean = false,
->(
-  options: Options<PutItemRouteValuesItemIdPutData, ThrowOnError>,
-) => {
-  return (options.client ?? client).put<
-    PutItemRouteValuesItemIdPutResponses,
-    PutItemRouteValuesItemIdPutErrors,
-    ThrowOnError
-  >({
-    url: "/values/{item_id}",
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
-  });
-};
-
-/**
- * Get Items Route
- */
 export const getItemsRouteSchedulesGet = <ThrowOnError extends boolean = false>(
   options?: Options<GetItemsRouteSchedulesGetData, ThrowOnError>,
 ) => {
@@ -810,15 +716,17 @@ export const putItemRouteSchedulesItemIdPut = <
 /**
  * Get Items Route
  */
-export const getItemsRouteProvidersGet = <ThrowOnError extends boolean = false>(
-  options?: Options<GetItemsRouteProvidersGetData, ThrowOnError>,
+export const getItemsRouteRateProvidersGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteRateProvidersGetData, ThrowOnError>,
 ) => {
   return (options?.client ?? client).get<
-    GetItemsRouteProvidersGetResponses,
+    GetItemsRouteRateProvidersGetResponses,
     unknown,
     ThrowOnError
   >({
-    url: "/providers/",
+    url: "/rate-providers/",
     ...options,
   });
 };
@@ -826,17 +734,17 @@ export const getItemsRouteProvidersGet = <ThrowOnError extends boolean = false>(
 /**
  * Post Item Route
  */
-export const postItemRouteProvidersPost = <
+export const postItemRouteRateProvidersPost = <
   ThrowOnError extends boolean = false,
 >(
-  options: Options<PostItemRouteProvidersPostData, ThrowOnError>,
+  options: Options<PostItemRouteRateProvidersPostData, ThrowOnError>,
 ) => {
   return (options.client ?? client).post<
-    PostItemRouteProvidersPostResponses,
-    PostItemRouteProvidersPostErrors,
+    PostItemRouteRateProvidersPostResponses,
+    PostItemRouteRateProvidersPostErrors,
     ThrowOnError
   >({
-    url: "/providers/",
+    url: "/rate-providers/",
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -848,17 +756,17 @@ export const postItemRouteProvidersPost = <
 /**
  * Delete Item Route
  */
-export const deleteItemRouteProvidersItemIdDelete = <
+export const deleteItemRouteRateProvidersItemIdDelete = <
   ThrowOnError extends boolean = false,
 >(
-  options: Options<DeleteItemRouteProvidersItemIdDeleteData, ThrowOnError>,
+  options: Options<DeleteItemRouteRateProvidersItemIdDeleteData, ThrowOnError>,
 ) => {
   return (options.client ?? client).delete<
-    DeleteItemRouteProvidersItemIdDeleteResponses,
-    DeleteItemRouteProvidersItemIdDeleteErrors,
+    DeleteItemRouteRateProvidersItemIdDeleteResponses,
+    DeleteItemRouteRateProvidersItemIdDeleteErrors,
     ThrowOnError
   >({
-    url: "/providers/{item_id}",
+    url: "/rate-providers/{item_id}",
     ...options,
   });
 };
@@ -866,17 +774,17 @@ export const deleteItemRouteProvidersItemIdDelete = <
 /**
  * Get Item Route
  */
-export const getItemRouteProvidersItemIdGet = <
+export const getItemRouteRateProvidersItemIdGet = <
   ThrowOnError extends boolean = false,
 >(
-  options: Options<GetItemRouteProvidersItemIdGetData, ThrowOnError>,
+  options: Options<GetItemRouteRateProvidersItemIdGetData, ThrowOnError>,
 ) => {
   return (options.client ?? client).get<
-    GetItemRouteProvidersItemIdGetResponses,
-    GetItemRouteProvidersItemIdGetErrors,
+    GetItemRouteRateProvidersItemIdGetResponses,
+    GetItemRouteRateProvidersItemIdGetErrors,
     ThrowOnError
   >({
-    url: "/providers/{item_id}",
+    url: "/rate-providers/{item_id}",
     ...options,
   });
 };
@@ -884,17 +792,118 @@ export const getItemRouteProvidersItemIdGet = <
 /**
  * Put Item Route
  */
-export const putItemRouteProvidersItemIdPut = <
+export const putItemRouteRateProvidersItemIdPut = <
   ThrowOnError extends boolean = false,
 >(
-  options: Options<PutItemRouteProvidersItemIdPutData, ThrowOnError>,
+  options: Options<PutItemRouteRateProvidersItemIdPutData, ThrowOnError>,
 ) => {
   return (options.client ?? client).put<
-    PutItemRouteProvidersItemIdPutResponses,
-    PutItemRouteProvidersItemIdPutErrors,
+    PutItemRouteRateProvidersItemIdPutResponses,
+    PutItemRouteRateProvidersItemIdPutErrors,
     ThrowOnError
   >({
-    url: "/providers/{item_id}",
+    url: "/rate-providers/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteDecimalProvidersGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteDecimalProvidersGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteDecimalProvidersGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/decimal-providers/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteDecimalProvidersPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteDecimalProvidersPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteDecimalProvidersPostResponses,
+    PostItemRouteDecimalProvidersPostErrors,
+    ThrowOnError
+  >({
+    url: "/decimal-providers/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteDecimalProvidersItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteDecimalProvidersItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteDecimalProvidersItemIdDeleteResponses,
+    DeleteItemRouteDecimalProvidersItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/decimal-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteDecimalProvidersItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteDecimalProvidersItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteDecimalProvidersItemIdGetResponses,
+    GetItemRouteDecimalProvidersItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/decimal-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteDecimalProvidersItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteDecimalProvidersItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteDecimalProvidersItemIdPutResponses,
+    PutItemRouteDecimalProvidersItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/decimal-providers/{item_id}",
     ...options,
     headers: {
       "Content-Type": "application/json",

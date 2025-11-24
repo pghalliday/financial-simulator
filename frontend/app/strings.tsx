@@ -1,15 +1,15 @@
 import {createSearchParams} from "react-router";
 import {type ItemPageParams, PAGE_PARAMS_SEARCH_KEY} from "./lib/hooks/useItemPageParams";
-import type {Breadcrumb, EntityGet, ProviderGet, RateGet, ScheduleGet, ValueGet} from "~/lib/types";
+import type {Breadcrumb, DecimalProviderGet, EntityGet, RateGet, RateProviderGet, ScheduleGet} from "~/lib/types";
 import type {
     BankAccountGet,
+    DecimalProviderType,
     EntityType,
     LedgerAccountGet,
-    ProviderType,
+    RateProviderType,
     RateType,
     ScenarioGet,
     ScheduleType,
-    ValueType
 } from "../client";
 
 function createItemSuffix(itemPageParams: ItemPageParams): string {
@@ -56,12 +56,12 @@ export const PAGE_TITLE = (suffix: string) => `${APP_NAME} - ${suffix}`;
 export const ADD_ITEM_MODAL_TITLE = (label: string) => `Add ${label}`
 export const CONFIRM_DELETE_ITEM_MODAL_TITLE = (label: string) => `Confirm delete ${label}`
 export const CONFIRM_DELETE_ITEM_MODAL_PROMPT = (label: string) => (name: string) => (
-    <p>
+    <>
         Are you sure you want to delete {label}:
         <ul>
             <li><b>{name}</b></li>
         </ul>
-    </p>
+    </>
 )
 
 export const COMPARE_SCENARIOS_PAGE_DESCRIPTION = 'Compare scenarios';
@@ -171,29 +171,6 @@ export const RATE_TYPES: Record<RateType, string> = {
     periodic_rate: "Periodic",
 }
 
-export const VALUES_PAGE_DESCRIPTION = 'Values';
-export const VALUES_PAGE_TITLE = PAGE_TITLE(VALUES_PAGE_DESCRIPTION);
-export const VALUES_HREF = '/values';
-export const VALUES_LABEL = 'value';
-export const VALUES_BREADCRUMBS = [
-    {
-        title: VALUES_PAGE_DESCRIPTION,
-        href: VALUES_HREF,
-    },
-];
-export const VALUES_ADD_ITEM_MODAL_TITLE = ADD_ITEM_MODAL_TITLE(VALUES_LABEL)
-export const VALUES_CONFIRM_DELETE_ITEM_MODAL_TITLE = CONFIRM_DELETE_ITEM_MODAL_TITLE(VALUES_LABEL)
-export const VALUES_CONFIRM_DELETE_ITEM_MODAL_PROMPT = (item: ValueGet) => CONFIRM_DELETE_ITEM_MODAL_PROMPT(VALUES_LABEL)(item.name)
-
-export const VALUE_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Value")
-export const VALUE_PAGE_TITLE = createItemPageTitleFunction(VALUE_PAGE_DESCRIPTION);
-export const VALUE_HREF = createItemHrefFunction(VALUES_HREF)
-export const VALUE_BREADCRUMBS = createItemBreadcrumbsFunction(VALUES_BREADCRUMBS, VALUE_HREF)
-export const VALUE_TYPES: Record<ValueType, string> = {
-    decimal_value: "Decimal",
-    rate_value: "Rate",
-}
-
 export const SCHEDULES_PAGE_DESCRIPTION = 'Schedules';
 export const SCHEDULES_PAGE_TITLE = PAGE_TITLE(SCHEDULES_PAGE_DESCRIPTION);
 export const SCHEDULES_HREF = '/schedules';
@@ -225,29 +202,52 @@ export const SCHEDULE_TYPES: Record<ScheduleType, string> = {
     yearly_schedule: "Yearly",
 }
 
-export const PROVIDERS_PAGE_DESCRIPTION = 'Providers';
-export const PROVIDERS_PAGE_TITLE = PAGE_TITLE(PROVIDERS_PAGE_DESCRIPTION);
-export const PROVIDERS_HREF = '/providers';
-export const PROVIDERS_LABEL = 'provider';
-export const PROVIDERS_BREADCRUMBS = [
+export const DECIMAL_PROVIDERS_PAGE_DESCRIPTION = 'Decimal providers';
+export const DECIMAL_PROVIDERS_PAGE_TITLE = PAGE_TITLE(DECIMAL_PROVIDERS_PAGE_DESCRIPTION);
+export const DECIMAL_PROVIDERS_HREF = '/decimal-providers';
+export const DECIMAL_PROVIDERS_LABEL = 'decimal provider';
+export const DECIMAL_PROVIDERS_BREADCRUMBS = [
     {
-        title: PROVIDERS_PAGE_DESCRIPTION,
-        href: PROVIDERS_HREF,
+        title: DECIMAL_PROVIDERS_PAGE_DESCRIPTION,
+        href: DECIMAL_PROVIDERS_HREF,
     },
 ];
-export const PROVIDERS_ADD_ITEM_MODAL_TITLE = ADD_ITEM_MODAL_TITLE(PROVIDERS_LABEL)
-export const PROVIDERS_CONFIRM_DELETE_ITEM_MODAL_TITLE = CONFIRM_DELETE_ITEM_MODAL_TITLE(PROVIDERS_LABEL)
-export const PROVIDERS_CONFIRM_DELETE_ITEM_MODAL_PROMPT = (item: ProviderGet) => CONFIRM_DELETE_ITEM_MODAL_PROMPT(PROVIDERS_LABEL)(item.name)
+export const DECIMAL_PROVIDERS_ADD_ITEM_MODAL_TITLE = ADD_ITEM_MODAL_TITLE(DECIMAL_PROVIDERS_LABEL)
+export const DECIMAL_PROVIDERS_CONFIRM_DELETE_ITEM_MODAL_TITLE = CONFIRM_DELETE_ITEM_MODAL_TITLE(DECIMAL_PROVIDERS_LABEL)
+export const DECIMAL_PROVIDERS_CONFIRM_DELETE_ITEM_MODAL_PROMPT = (item: DecimalProviderGet) => CONFIRM_DELETE_ITEM_MODAL_PROMPT(DECIMAL_PROVIDERS_LABEL)(item.name)
 
-export const PROVIDER_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Provider")
-export const PROVIDER_PAGE_TITLE = createItemPageTitleFunction(PROVIDER_PAGE_DESCRIPTION);
-export const PROVIDER_HREF = createItemHrefFunction(PROVIDERS_HREF)
-export const PROVIDER_BREADCRUMBS = createItemBreadcrumbsFunction(PROVIDERS_BREADCRUMBS, PROVIDER_HREF)
-export const PROVIDER_TYPES: Record<ProviderType, string> = {
-    always_provider: "Always",
-    scheduled_provider: "Scheduled",
-    merge_provider: "Merge",
-    next_provider: "Next",
+export const DECIMAL_PROVIDER_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Decimal Provider")
+export const DECIMAL_PROVIDER_PAGE_TITLE = createItemPageTitleFunction(DECIMAL_PROVIDER_PAGE_DESCRIPTION);
+export const DECIMAL_PROVIDER_HREF = createItemHrefFunction(DECIMAL_PROVIDERS_HREF)
+export const DECIMAL_PROVIDER_BREADCRUMBS = createItemBreadcrumbsFunction(DECIMAL_PROVIDERS_BREADCRUMBS, DECIMAL_PROVIDER_HREF)
+export const DECIMAL_PROVIDER_TYPES: Record<DecimalProviderType, string> = {
+    scheduled_decimal_provider: "Scheduled",
+    merge_decimal_provider: "Merge",
+    next_decimal_provider: "Next",
+}
+
+export const RATE_PROVIDERS_PAGE_DESCRIPTION = 'Rate providers';
+export const RATE_PROVIDERS_PAGE_TITLE = PAGE_TITLE(RATE_PROVIDERS_PAGE_DESCRIPTION);
+export const RATE_PROVIDERS_HREF = '/rate-providers';
+export const RATE_PROVIDERS_LABEL = 'rate provider';
+export const RATE_PROVIDERS_BREADCRUMBS = [
+    {
+        title: RATE_PROVIDERS_PAGE_DESCRIPTION,
+        href: RATE_PROVIDERS_HREF,
+    },
+];
+export const RATE_PROVIDERS_ADD_ITEM_MODAL_TITLE = ADD_ITEM_MODAL_TITLE(RATE_PROVIDERS_LABEL)
+export const RATE_PROVIDERS_CONFIRM_DELETE_ITEM_MODAL_TITLE = CONFIRM_DELETE_ITEM_MODAL_TITLE(RATE_PROVIDERS_LABEL)
+export const RATE_PROVIDERS_CONFIRM_DELETE_ITEM_MODAL_PROMPT = (item: RateProviderGet) => CONFIRM_DELETE_ITEM_MODAL_PROMPT(RATE_PROVIDERS_LABEL)(item.name)
+
+export const RATE_PROVIDER_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Rate Provider")
+export const RATE_PROVIDER_PAGE_TITLE = createItemPageTitleFunction(RATE_PROVIDER_PAGE_DESCRIPTION);
+export const RATE_PROVIDER_HREF = createItemHrefFunction(RATE_PROVIDERS_HREF)
+export const RATE_PROVIDER_BREADCRUMBS = createItemBreadcrumbsFunction(RATE_PROVIDERS_BREADCRUMBS, RATE_PROVIDER_HREF)
+export const RATE_PROVIDER_TYPES: Record<RateProviderType, string> = {
+    scheduled_rate_provider: "Scheduled",
+    merge_rate_provider: "Merge",
+    next_rate_provider: "Next",
 }
 
 export const GET_ITEMS_ERROR_TITLE = "Get Items Error"

@@ -1,3 +1,4 @@
+from .schedule_type import ScheduleType
 from .schedule import Schedule
 from .any_schedule import AnySchedule, AnyScheduleSchedule
 from .all_schedule import AllSchedule, AllScheduleSchedule
@@ -11,6 +12,7 @@ from .weekly_schedule import WeeklySchedule
 from .yearly_schedule import YearlySchedule
 
 __all__ = [
+    "ScheduleType",
     "Schedule",
     "AnySchedule",
     "AnyScheduleSchedule",

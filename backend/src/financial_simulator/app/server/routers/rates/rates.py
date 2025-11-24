@@ -2,11 +2,12 @@ import logging
 from typing import Union
 
 from fastapi import APIRouter
+from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import (
+    RateType,
     Rate,
 )
-from financial_simulator.app.database.schema.rate.rate_type import RateType
 
 from financial_simulator.app.server.util.typed_collection import TypedCollection
 from .banded_rate import (
@@ -24,6 +25,7 @@ from .periodic_rate import (
     PeriodicRateGet,
     PeriodicRatePost,
 )
+from ...util.query_params import DefaultQueryParams
 
 logger = logging.getLogger(__name__)
 
@@ -32,9 +34,13 @@ router = APIRouter(
     tags=["rates"],
 )
 
+class RateQueryParams(DefaultQueryParams):
+    def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
+        return Rate.name
+
 TypedCollection(
     table_model=Rate,
-    order_by=Rate.name,
+    query_params_class=RateQueryParams,
     get_model=Union[PeriodicRateGet, ContinuousRateGet, BandedRateGet],
     post_model=Union[PeriodicRatePost, ContinuousRatePost, BandedRatePost],
     model_mappers={

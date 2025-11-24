@@ -1,8 +1,7 @@
 from decimal import Decimal
 from typing import Literal
 
-from financial_simulator.app.database.schema import ContinuousRate
-from financial_simulator.app.database.schema.rate.rate_type import RateType
+from financial_simulator.app.database.schema import ContinuousRate, RateType
 from financial_simulator.app.server.routers.rates.rate import (
     RatePost,
     RateGet,

@@ -1,7 +1,6 @@
 from typing import Literal, Sequence
 
-from financial_simulator.app.database.schema import CorporationEntity
-from financial_simulator.app.database.schema.entity.entity_type import EntityType
+from financial_simulator.app.database.schema import CorporationEntity, EntityType
 from financial_simulator.app.server.routers.bank_accounts.bank_account_dependent import \
     bank_account_dependent_get_mapper
 from financial_simulator.app.server.util.dependent import DependentGet

@@ -17,7 +17,7 @@ class MergeMapProvider(Generic[T, U], Provider[T]):
     def get(self, current_date: date) -> Tuple[Self, Sequence[T]] | None:
         sub_providers = tuple(self.sub_providers)
         provider = self.provider
-        # Get new sub providers if our provider has not completed
+        # Get new sub providers if our rate_provider has not completed
         if provider is not None:
             # first, get the provided sequence of U
             provided = provider.get(current_date)
@@ -39,7 +39,7 @@ class MergeMapProvider(Generic[T, U], Provider[T]):
             )
             if sub_provided is not None
         )
-        # if the provider and sub providers have all completed, then we have completed
+        # if the rate_provider and sub providers have all completed, then we have completed
         if provider is None and not sub_provided:
             return None
         sub_providers, sequences = zip(*sub_provided) if sub_provided else ((), ())

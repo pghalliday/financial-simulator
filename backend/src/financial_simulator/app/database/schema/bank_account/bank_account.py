@@ -5,7 +5,8 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..base import BaseWithNameAndDescription
-from ..provider import Provider
+from ..decimal_provider import DecimalProvider
+from ..rate_provider import RateProvider
 from ..schedule import Schedule
 
 if TYPE_CHECKING:
@@ -35,9 +36,9 @@ class BankAccount(BaseWithNameAndDescription):
     fees_payable_account_id: Mapped[UUID | None] = mapped_column(
         ForeignKey("ledger_account.id")
     )
-    fees_provider_id: Mapped[UUID | None] = mapped_column(ForeignKey("provider.id"))
+    fees_provider_id: Mapped[UUID | None] = mapped_column(ForeignKey("decimal_provider.id"))
     fee_payment_schedule_id: Mapped[UUID | None] = mapped_column(ForeignKey("schedule.id"))
-    rate_provider_id: Mapped[UUID | None] = mapped_column(ForeignKey("provider.id"))
+    rate_provider_id: Mapped[UUID | None] = mapped_column(ForeignKey("rate_provider.id"))
     interest_payment_schedule_id: Mapped[UUID | None] = mapped_column(
         ForeignKey("schedule.id")
     )
@@ -62,7 +63,7 @@ class BankAccount(BaseWithNameAndDescription):
         back_populates="bank_account_fees_payable_accounts",
         foreign_keys="BankAccount.fees_payable_account_id",
     )
-    fees_provider: Mapped[Provider | None] = relationship(
+    fees_provider: Mapped[DecimalProvider | None] = relationship(
         back_populates="bank_account_fees_providers",
         foreign_keys="BankAccount.fees_provider_id"
     )
@@ -70,7 +71,7 @@ class BankAccount(BaseWithNameAndDescription):
         back_populates="bank_account_fee_payment_schedules",
         foreign_keys="BankAccount.fee_payment_schedule_id"
     )
-    rate_provider: Mapped[Provider | None] = relationship(
+    rate_provider: Mapped[RateProvider | None] = relationship(
         back_populates="bank_account_rate_providers",
         foreign_keys="BankAccount.rate_provider_id"
     )

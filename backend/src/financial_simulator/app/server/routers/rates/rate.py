@@ -7,12 +7,12 @@ from pydantic import BaseModel
 from financial_simulator.app.database.schema import (
     BandedRateBand,
 )
-from financial_simulator.app.database.schema.rate.rate_type import RateType
+from financial_simulator.app.database.schema import RateType
+from financial_simulator.app.server.routers.rate_providers.rate_provider_dependent import RateProviderDependentGet, \
+    rate_provider_dependent_get_mapper
 from financial_simulator.app.server.util.typed_collection import TypedBaseModel
 from financial_simulator.app.server.routers.rates.rate_dependent import RateDependentGet, \
     rate_dependent_get_mapper
-from financial_simulator.app.server.routers.values.value_dependent import ValueDependentGet, \
-    value_dependent_get_mapper
 from financial_simulator.app.server.util.model_mapper import (
     GetMapper,
     OrdinaryGetField,
@@ -40,7 +40,7 @@ class RateGet(TypedBaseModel[RateType]):
     name: str
     description: str | None
     banded_rate_bands: Sequence[RateBandedRateBandGet]
-    rate_values: Sequence[ValueDependentGet]
+    scheduled_rate_providers: Sequence[RateProviderDependentGet]
 
 
 rate_banded_rate_band_get_mapper = GetMapper(
@@ -61,5 +61,5 @@ def add_rate_model_fields(model_mapper: ModelMapper) -> ModelMapper:
         .field("name", OrdinaryModelField())
         .field("description", OrdinaryModelField())
         .field("banded_rate_bands", ChildrenModelField(rate_banded_rate_band_get_mapper))
-        .field("rate_values", ChildrenModelField(value_dependent_get_mapper))
+        .field("scheduled_rate_providers", ChildrenModelField(rate_provider_dependent_get_mapper))
     )

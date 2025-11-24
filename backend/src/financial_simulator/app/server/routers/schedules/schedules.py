@@ -2,11 +2,12 @@ import logging
 from typing import Union
 
 from fastapi import APIRouter
+from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import (
+    ScheduleType,
     Schedule,
 )
-from financial_simulator.app.database.schema.schedule.schedule_type import ScheduleType
 
 from financial_simulator.app.server.util.typed_collection import TypedCollection
 from .all_schedule import AllScheduleGet, AllSchedulePost, all_schedule_model_mapper
@@ -51,6 +52,7 @@ from .yearly_schedule import (
     YearlySchedulePost,
     yearly_schedule_model_mapper,
 )
+from ...util.query_params import DefaultQueryParams
 
 logger = logging.getLogger(__name__)
 
@@ -59,9 +61,13 @@ router = APIRouter(
     tags=["schedules"],
 )
 
+class ScheduleQueryParams(DefaultQueryParams):
+    def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
+        return Schedule.name
+
 TypedCollection(
     table_model=Schedule,
-    order_by=Schedule.name,
+    query_params_class=ScheduleQueryParams,
     get_model=Union[
         DailyScheduleGet,
         DayScheduleGet,

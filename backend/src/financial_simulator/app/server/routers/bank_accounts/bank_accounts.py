@@ -1,23 +1,31 @@
 import logging
-from typing import Sequence
+from typing import Sequence, Union
 from uuid import UUID
 
 from fastapi import APIRouter
+from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import (
     LedgerAccount,
-    BankAccount, Provider, Schedule,
+    BankAccount,
+    Schedule,
+    DecimalProvider,
+    RateProvider,
 )
 from pydantic import BaseModel
 
+from financial_simulator.app.server.routers.decimal_providers.decimal_provider_dependent import (
+    DecimalProviderDependentGet,
+    decimal_provider_dependent_get_mapper,
+)
+from financial_simulator.app.server.routers.rate_providers.rate_provider_dependent import RateProviderDependentGet, \
+    rate_provider_dependent_get_mapper
 from financial_simulator.app.server.util.collection import Collection
 from financial_simulator.app.server.util.dependent import DependentGet
 from financial_simulator.app.server.routers.entities.entity_dependent import EntityDependentGet, \
     entity_dependent_get_mapper
 from financial_simulator.app.server.routers.ledger_accounts.ledger_account_dependent import \
     ledger_account_dependent_get_mapper
-from financial_simulator.app.server.routers.providers.provider_dependent import ProviderDependentGet, \
-    provider_dependent_get_mapper
 from financial_simulator.app.server.routers.schedules.schedule_dependent import ScheduleDependentGet, \
     schedule_dependent_get_mapper
 from financial_simulator.app.server.util.model_mapper import (
@@ -27,6 +35,7 @@ from financial_simulator.app.server.util.model_mapper import (
     ParentModelField,
     ManyToManyModelField,
 )
+from financial_simulator.app.server.util.query_params import DefaultQueryParams
 
 logger = logging.getLogger(__name__)
 
@@ -58,11 +67,11 @@ class BankAccountGet(BaseModel):
     fees_payable_account_id: UUID | None
     fees_payable_account: DependentGet | None
     fees_provider_id: UUID | None
-    fees_provider: ProviderDependentGet | None
+    fees_provider: DecimalProviderDependentGet | None
     fee_payment_schedule_id: UUID | None
     fee_payment_schedule: ScheduleDependentGet | None
     rate_provider_id: UUID | None
-    rate_provider: ProviderDependentGet | None
+    rate_provider: RateProviderDependentGet | None
     interest_payment_schedule_id: UUID | None
     interest_payment_schedule: ScheduleDependentGet | None
     individual_entities: Sequence[EntityDependentGet]
@@ -119,9 +128,9 @@ model_mapper = ModelMapper(
     )
     .field(
         "fees_provider_id",
-        OptionalRelatedModelField(field="fees_provider", model=Provider),
+        OptionalRelatedModelField(field="fees_provider", model=DecimalProvider),
     )
-    .field("fees_provider", ParentModelField(provider_dependent_get_mapper))
+    .field("fees_provider", ParentModelField(decimal_provider_dependent_get_mapper))
     .field(
         "fee_payment_schedule_id",
         OptionalRelatedModelField(field="fee_payment_schedule", model=Schedule),
@@ -129,9 +138,9 @@ model_mapper = ModelMapper(
     .field("fee_payment_schedule", ParentModelField(schedule_dependent_get_mapper))
     .field(
         "rate_provider_id",
-        OptionalRelatedModelField(field="rate_provider", model=Provider),
+        OptionalRelatedModelField(field="rate_provider", model=RateProvider),
     )
-    .field("rate_provider", ParentModelField(provider_dependent_get_mapper))
+    .field("rate_provider", ParentModelField(rate_provider_dependent_get_mapper))
     .field(
         "interest_payment_schedule_id",
         OptionalRelatedModelField(field="interest_payment_schedule", model=Schedule),
@@ -150,8 +159,12 @@ model_mapper = ModelMapper(
     )
 )
 
+class BankAccountQueryParams(DefaultQueryParams):
+    def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
+        return BankAccount.name
+
 Collection(
-    order_by=BankAccount.name,
+    query_params_class=BankAccountQueryParams,
     model_mapper=model_mapper,
 ).add_endpoints(
     router=router,

@@ -4,8 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
-from financial_simulator.app.database.schema import BandedRate, BandedRateBand, Rate
-from financial_simulator.app.database.schema.rate.rate_type import RateType
+from financial_simulator.app.database.schema import BandedRate, BandedRateBand, Rate, RateType
 from .rate import RatePost, RateGet, add_rate_model_fields
 from financial_simulator.app.server.routers.rates.rate_dependent import (
     RateDependentGet,
@@ -61,6 +60,6 @@ banded_rate_model_mapper = ModelMapper(
     add_rate_model_fields(banded_rate_model_mapper)
     .field("bands", ChildrenModelField(
         banded_rate_band_model_mapper.get_mapper,
-        banded_rate_band_model_mapper.post_model,
+        banded_rate_band_model_mapper.post_mapper,
     ))
 )

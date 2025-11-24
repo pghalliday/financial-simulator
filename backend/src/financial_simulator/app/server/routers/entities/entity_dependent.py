@@ -1,5 +1,4 @@
-from financial_simulator.app.database.schema import Entity
-from financial_simulator.app.database.schema.entity.entity_type import EntityType
+from financial_simulator.app.database.schema import Entity, EntityType
 from financial_simulator.app.server.util.typed_dependent import TypedDependentGet, create_typed_dependent_get_mapper
 
 

@@ -1,4 +1,4 @@
-import {Blockquote, Button, Group, List, LoadingOverlay, Modal, Space, Stack, Text, Title} from "@mantine/core";
+import {Blockquote, Button, Group, List, LoadingOverlay, Modal, Space, Stack, Text} from "@mantine/core";
 import {IconAlertHexagon, IconAlertTriangle} from "@tabler/icons-react";
 import type {ReactElement} from "react";
 
@@ -91,7 +91,7 @@ export function ConfirmDeleteModal(
         opened={opened}
         onClose={onClose}
         stackId={stackId}
-        title={<Title order={4}>{title}</Title>}
+        title={title}
     >
         <LoadingOverlay
             visible={working}

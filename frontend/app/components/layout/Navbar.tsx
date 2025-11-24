@@ -5,20 +5,20 @@ import {
     BANK_ACCOUNTS_PAGE_DESCRIPTION,
     COMPARE_SCENARIOS_HREF,
     COMPARE_SCENARIOS_PAGE_DESCRIPTION,
+    DECIMAL_PROVIDERS_HREF,
+    DECIMAL_PROVIDERS_PAGE_DESCRIPTION,
     ENTITIES_HREF,
     ENTITIES_PAGE_DESCRIPTION,
     LEDGER_ACCOUNTS_HREF,
     LEDGER_ACCOUNTS_PAGE_DESCRIPTION,
-    PROVIDERS_HREF,
-    PROVIDERS_PAGE_DESCRIPTION,
+    RATE_PROVIDERS_HREF,
+    RATE_PROVIDERS_PAGE_DESCRIPTION,
     RATES_HREF,
     RATES_PAGE_DESCRIPTION,
     SCENARIOS_HREF,
     SCENARIOS_PAGE_DESCRIPTION,
     SCHEDULES_HREF,
     SCHEDULES_PAGE_DESCRIPTION,
-    VALUES_HREF,
-    VALUES_PAGE_DESCRIPTION
 } from "~/strings";
 
 interface Props {
@@ -58,18 +58,18 @@ export function Navbar({close}: Props) {
             onClick={close}
         />
         <NavbarLink
-            href={VALUES_HREF}
-            label={VALUES_PAGE_DESCRIPTION}
-            onClick={close}
-        />
-        <NavbarLink
             href={SCHEDULES_HREF}
             label={SCHEDULES_PAGE_DESCRIPTION}
             onClick={close}
         />
         <NavbarLink
-            href={PROVIDERS_HREF}
-            label={PROVIDERS_PAGE_DESCRIPTION}
+            href={DECIMAL_PROVIDERS_HREF}
+            label={DECIMAL_PROVIDERS_PAGE_DESCRIPTION}
+            onClick={close}
+        />
+        <NavbarLink
+            href={RATE_PROVIDERS_HREF}
+            label={RATE_PROVIDERS_PAGE_DESCRIPTION}
             onClick={close}
         />
         <NavbarLink

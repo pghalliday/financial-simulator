@@ -25,9 +25,13 @@ export type AllScheduleGet = {
    */
   description: string | null;
   /**
-   * Scheduled Providers
+   * Scheduled Decimal Providers
    */
-  scheduled_providers: Array<ProviderDependentGet>;
+  scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
+  /**
+   * Scheduled Rate Providers
+   */
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * All Schedules
    */
@@ -73,71 +77,6 @@ export type AllSchedulePost = {
 };
 
 /**
- * AlwaysProviderGet
- */
-export type AlwaysProviderGet = {
-  /**
-   * Type
-   */
-  type: "always_provider";
-  /**
-   * Id
-   */
-  id: string;
-  /**
-   * Name
-   */
-  name: string;
-  /**
-   * Description
-   */
-  description: string | null;
-  /**
-   * Merge Providers
-   */
-  merge_providers: Array<ProviderDependentGet>;
-  /**
-   * Next Providers
-   */
-  next_providers: Array<ProviderDependentGet>;
-  /**
-   * Bank Account Fees Providers
-   */
-  bank_account_fees_providers: Array<DependentGet>;
-  /**
-   * Bank Account Rate Providers
-   */
-  bank_account_rate_providers: Array<DependentGet>;
-  /**
-   * Value Id
-   */
-  value_id: string | null;
-  value: ValueDependentGet | null;
-};
-
-/**
- * AlwaysProviderPost
- */
-export type AlwaysProviderPost = {
-  /**
-   * Type
-   */
-  type: "always_provider";
-  /**
-   * Name
-   */
-  name: string;
-  /**
-   * Description
-   */
-  description?: string | null;
-  /**
-   * Value Id
-   */
-  value_id?: string | null;
-};
-
-/**
  * AnyScheduleGet
  */
 export type AnyScheduleGet = {
@@ -158,9 +97,13 @@ export type AnyScheduleGet = {
    */
   description: string | null;
   /**
-   * Scheduled Providers
+   * Scheduled Decimal Providers
    */
-  scheduled_providers: Array<ProviderDependentGet>;
+  scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
+  /**
+   * Scheduled Rate Providers
+   */
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * All Schedules
    */
@@ -273,9 +216,9 @@ export type BandedRateGet = {
    */
   banded_rate_bands: Array<RateBandedRateBandGet>;
   /**
-   * Rate Values
+   * Scheduled Rate Providers
    */
-  rate_values: Array<ValueDependentGet>;
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * Bands
    */
@@ -349,7 +292,7 @@ export type BankAccountGet = {
    * Fees Provider Id
    */
   fees_provider_id: string | null;
-  fees_provider: ProviderDependentGet | null;
+  fees_provider: DecimalProviderDependentGet | null;
   /**
    * Fee Payment Schedule Id
    */
@@ -359,7 +302,7 @@ export type BankAccountGet = {
    * Rate Provider Id
    */
   rate_provider_id: string | null;
-  rate_provider: ProviderDependentGet | null;
+  rate_provider: RateProviderDependentGet | null;
   /**
    * Interest Payment Schedule Id
    */
@@ -468,9 +411,9 @@ export type ContinuousRateGet = {
    */
   banded_rate_bands: Array<RateBandedRateBandGet>;
   /**
-   * Rate Values
+   * Scheduled Rate Providers
    */
-  rate_values: Array<ValueDependentGet>;
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * Annual Rate
    */
@@ -576,9 +519,13 @@ export type DailyScheduleGet = {
    */
   description: string | null;
   /**
-   * Scheduled Providers
+   * Scheduled Decimal Providers
    */
-  scheduled_providers: Array<ProviderDependentGet>;
+  scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
+  /**
+   * Scheduled Rate Providers
+   */
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * All Schedules
    */
@@ -650,9 +597,13 @@ export type DayScheduleGet = {
    */
   description: string | null;
   /**
-   * Scheduled Providers
+   * Scheduled Decimal Providers
    */
-  scheduled_providers: Array<ProviderDependentGet>;
+  scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
+  /**
+   * Scheduled Rate Providers
+   */
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * All Schedules
    */
@@ -698,17 +649,14 @@ export type DaySchedulePost = {
 };
 
 /**
- * DecimalValueGet
+ * DecimalProviderDependentGet
  */
-export type DecimalValueGet = {
-  /**
-   * Type
-   */
-  type: "decimal_value";
+export type DecimalProviderDependentGet = {
   /**
    * Id
    */
   id: string;
+  type: DecimalProviderType;
   /**
    * Name
    */
@@ -717,41 +665,22 @@ export type DecimalValueGet = {
    * Description
    */
   description: string | null;
-  /**
-   * Always Providers
-   */
-  always_providers: Array<ProviderDependentGet>;
-  /**
-   * Scheduled Providers
-   */
-  scheduled_providers: Array<ProviderDependentGet>;
-  /**
-   * Value
-   */
-  value: number | string | null;
 };
 
 /**
- * DecimalValuePost
+ * DecimalProviderType
  */
-export type DecimalValuePost = {
-  /**
-   * Type
-   */
-  type: "decimal_value";
-  /**
-   * Name
-   */
-  name: string;
-  /**
-   * Description
-   */
-  description?: string | null;
-  /**
-   * Value
-   */
-  value?: number | string | null;
-};
+export const DecimalProviderType = {
+  SCHEDULED_DECIMAL_PROVIDER: "scheduled_decimal_provider",
+  MERGE_DECIMAL_PROVIDER: "merge_decimal_provider",
+  NEXT_DECIMAL_PROVIDER: "next_decimal_provider",
+} as const;
+
+/**
+ * DecimalProviderType
+ */
+export type DecimalProviderType =
+  (typeof DecimalProviderType)[keyof typeof DecimalProviderType];
 
 /**
  * DependentGet
@@ -935,9 +864,13 @@ export type FromScheduleGet = {
    */
   description: string | null;
   /**
-   * Scheduled Providers
+   * Scheduled Decimal Providers
    */
-  scheduled_providers: Array<ProviderDependentGet>;
+  scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
+  /**
+   * Scheduled Rate Providers
+   */
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * All Schedules
    */
@@ -1187,13 +1120,13 @@ export type ManyToManyReference = {
 };
 
 /**
- * MergeProviderGet
+ * MergeDecimalProviderGet
  */
-export type MergeProviderGet = {
+export type MergeDecimalProviderGet = {
   /**
    * Type
    */
-  type: "merge_provider";
+  type: "merge_decimal_provider";
   /**
    * Id
    */
@@ -1207,35 +1140,31 @@ export type MergeProviderGet = {
    */
   description: string | null;
   /**
-   * Merge Providers
+   * Merge Decimal Providers
    */
-  merge_providers: Array<ProviderDependentGet>;
+  merge_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Next Providers
+   * Next Decimal Providers
    */
-  next_providers: Array<ProviderDependentGet>;
+  next_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
    * Bank Account Fees Providers
    */
   bank_account_fees_providers: Array<DependentGet>;
   /**
-   * Bank Account Rate Providers
+   * Decimal Providers
    */
-  bank_account_rate_providers: Array<DependentGet>;
-  /**
-   * Providers
-   */
-  providers: Array<ProviderDependentGet>;
+  decimal_providers: Array<DecimalProviderDependentGet>;
 };
 
 /**
- * MergeProviderPost
+ * MergeDecimalProviderPost
  */
-export type MergeProviderPost = {
+export type MergeDecimalProviderPost = {
   /**
    * Type
    */
-  type: "merge_provider";
+  type: "merge_decimal_provider";
   /**
    * Name
    */
@@ -1245,9 +1174,69 @@ export type MergeProviderPost = {
    */
   description?: string | null;
   /**
-   * Providers
+   * Decimal Providers
    */
-  providers: Array<AssociationReference>;
+  decimal_providers: Array<AssociationReference>;
+};
+
+/**
+ * MergeRateProviderGet
+ */
+export type MergeRateProviderGet = {
+  /**
+   * Type
+   */
+  type: "merge_rate_provider";
+  /**
+   * Id
+   */
+  id: string;
+  /**
+   * Name
+   */
+  name: string;
+  /**
+   * Description
+   */
+  description: string | null;
+  /**
+   * Merge Rate Providers
+   */
+  merge_rate_providers: Array<RateProviderDependentGet>;
+  /**
+   * Next Rate Providers
+   */
+  next_rate_providers: Array<RateProviderDependentGet>;
+  /**
+   * Bank Account Rate Providers
+   */
+  bank_account_rate_providers: Array<DependentGet>;
+  /**
+   * Rate Providers
+   */
+  rate_providers: Array<RateProviderDependentGet>;
+};
+
+/**
+ * MergeRateProviderPost
+ */
+export type MergeRateProviderPost = {
+  /**
+   * Type
+   */
+  type: "merge_rate_provider";
+  /**
+   * Name
+   */
+  name: string;
+  /**
+   * Description
+   */
+  description?: string | null;
+  /**
+   * Rate Providers
+   */
+  rate_providers: Array<AssociationReference>;
 };
 
 /**
@@ -1271,9 +1260,13 @@ export type MonthlyScheduleGet = {
    */
   description: string | null;
   /**
-   * Scheduled Providers
+   * Scheduled Decimal Providers
    */
-  scheduled_providers: Array<ProviderDependentGet>;
+  scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
+  /**
+   * Scheduled Rate Providers
+   */
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * All Schedules
    */
@@ -1319,13 +1312,13 @@ export type MonthlySchedulePost = {
 };
 
 /**
- * NextProviderGet
+ * NextDecimalProviderGet
  */
-export type NextProviderGet = {
+export type NextDecimalProviderGet = {
   /**
    * Type
    */
-  type: "next_provider";
+  type: "next_decimal_provider";
   /**
    * Id
    */
@@ -1339,35 +1332,31 @@ export type NextProviderGet = {
    */
   description: string | null;
   /**
-   * Merge Providers
+   * Merge Decimal Providers
    */
-  merge_providers: Array<ProviderDependentGet>;
+  merge_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Next Providers
+   * Next Decimal Providers
    */
-  next_providers: Array<ProviderDependentGet>;
+  next_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
    * Bank Account Fees Providers
    */
   bank_account_fees_providers: Array<DependentGet>;
   /**
-   * Bank Account Rate Providers
+   * Decimal Providers
    */
-  bank_account_rate_providers: Array<DependentGet>;
-  /**
-   * Providers
-   */
-  providers: Array<ProviderDependentGet>;
+  decimal_providers: Array<DecimalProviderDependentGet>;
 };
 
 /**
- * NextProviderPost
+ * NextDecimalProviderPost
  */
-export type NextProviderPost = {
+export type NextDecimalProviderPost = {
   /**
    * Type
    */
-  type: "next_provider";
+  type: "next_decimal_provider";
   /**
    * Name
    */
@@ -1377,9 +1366,69 @@ export type NextProviderPost = {
    */
   description?: string | null;
   /**
-   * Providers
+   * Decimal Providers
    */
-  providers: Array<AssociationReference>;
+  decimal_providers: Array<AssociationReference>;
+};
+
+/**
+ * NextRateProviderGet
+ */
+export type NextRateProviderGet = {
+  /**
+   * Type
+   */
+  type: "next_rate_provider";
+  /**
+   * Id
+   */
+  id: string;
+  /**
+   * Name
+   */
+  name: string;
+  /**
+   * Description
+   */
+  description: string | null;
+  /**
+   * Merge Rate Providers
+   */
+  merge_rate_providers: Array<RateProviderDependentGet>;
+  /**
+   * Next Rate Providers
+   */
+  next_rate_providers: Array<RateProviderDependentGet>;
+  /**
+   * Bank Account Rate Providers
+   */
+  bank_account_rate_providers: Array<DependentGet>;
+  /**
+   * Rate Providers
+   */
+  rate_providers: Array<RateProviderDependentGet>;
+};
+
+/**
+ * NextRateProviderPost
+ */
+export type NextRateProviderPost = {
+  /**
+   * Type
+   */
+  type: "next_rate_provider";
+  /**
+   * Name
+   */
+  name: string;
+  /**
+   * Description
+   */
+  description?: string | null;
+  /**
+   * Rate Providers
+   */
+  rate_providers: Array<AssociationReference>;
 };
 
 /**
@@ -1421,9 +1470,9 @@ export type PeriodicRateGet = {
    */
   banded_rate_bands: Array<RateBandedRateBandGet>;
   /**
-   * Rate Values
+   * Scheduled Rate Providers
    */
-  rate_values: Array<ValueDependentGet>;
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * Annual Rate
    */
@@ -1461,40 +1510,6 @@ export type PeriodicRatePost = {
 };
 
 /**
- * ProviderDependentGet
- */
-export type ProviderDependentGet = {
-  /**
-   * Id
-   */
-  id: string;
-  type: ProviderType;
-  /**
-   * Name
-   */
-  name: string;
-  /**
-   * Description
-   */
-  description: string | null;
-};
-
-/**
- * ProviderType
- */
-export const ProviderType = {
-  ALWAYS_PROVIDER: "always_provider",
-  SCHEDULED_PROVIDER: "scheduled_provider",
-  MERGE_PROVIDER: "merge_provider",
-  NEXT_PROVIDER: "next_provider",
-} as const;
-
-/**
- * ProviderType
- */
-export type ProviderType = (typeof ProviderType)[keyof typeof ProviderType];
-
-/**
  * RangeScheduleGet
  */
 export type RangeScheduleGet = {
@@ -1515,9 +1530,13 @@ export type RangeScheduleGet = {
    */
   description: string | null;
   /**
-   * Scheduled Providers
+   * Scheduled Decimal Providers
    */
-  scheduled_providers: Array<ProviderDependentGet>;
+  scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
+  /**
+   * Scheduled Rate Providers
+   */
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * All Schedules
    */
@@ -1609,6 +1628,40 @@ export type RateDependentGet = {
 };
 
 /**
+ * RateProviderDependentGet
+ */
+export type RateProviderDependentGet = {
+  /**
+   * Id
+   */
+  id: string;
+  type: RateProviderType;
+  /**
+   * Name
+   */
+  name: string;
+  /**
+   * Description
+   */
+  description: string | null;
+};
+
+/**
+ * RateProviderType
+ */
+export const RateProviderType = {
+  SCHEDULED_RATE_PROVIDER: "scheduled_rate_provider",
+  MERGE_RATE_PROVIDER: "merge_rate_provider",
+  NEXT_RATE_PROVIDER: "next_rate_provider",
+} as const;
+
+/**
+ * RateProviderType
+ */
+export type RateProviderType =
+  (typeof RateProviderType)[keyof typeof RateProviderType];
+
+/**
  * RateType
  */
 export const RateType = {
@@ -1621,63 +1674,6 @@ export const RateType = {
  * RateType
  */
 export type RateType = (typeof RateType)[keyof typeof RateType];
-
-/**
- * RateValueGet
- */
-export type RateValueGet = {
-  /**
-   * Type
-   */
-  type: "rate_value";
-  /**
-   * Id
-   */
-  id: string;
-  /**
-   * Name
-   */
-  name: string;
-  /**
-   * Description
-   */
-  description: string | null;
-  /**
-   * Always Providers
-   */
-  always_providers: Array<ProviderDependentGet>;
-  /**
-   * Scheduled Providers
-   */
-  scheduled_providers: Array<ProviderDependentGet>;
-  /**
-   * Rate Id
-   */
-  rate_id: string | null;
-  rate: RateDependentGet | null;
-};
-
-/**
- * RateValuePost
- */
-export type RateValuePost = {
-  /**
-   * Type
-   */
-  type: "rate_value";
-  /**
-   * Name
-   */
-  name: string;
-  /**
-   * Description
-   */
-  description?: string | null;
-  /**
-   * Rate Id
-   */
-  rate_id?: string | null;
-};
 
 /**
  * RelationInvalidError
@@ -1778,13 +1774,13 @@ export const ScheduleType = {
 export type ScheduleType = (typeof ScheduleType)[keyof typeof ScheduleType];
 
 /**
- * ScheduledProviderGet
+ * ScheduledDecimalProviderGet
  */
-export type ScheduledProviderGet = {
+export type ScheduledDecimalProviderGet = {
   /**
    * Type
    */
-  type: "scheduled_provider";
+  type: "scheduled_decimal_provider";
   /**
    * Id
    */
@@ -1798,41 +1794,36 @@ export type ScheduledProviderGet = {
    */
   description: string | null;
   /**
-   * Merge Providers
+   * Merge Decimal Providers
    */
-  merge_providers: Array<ProviderDependentGet>;
+  merge_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Next Providers
+   * Next Decimal Providers
    */
-  next_providers: Array<ProviderDependentGet>;
+  next_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
    * Bank Account Fees Providers
    */
   bank_account_fees_providers: Array<DependentGet>;
   /**
-   * Bank Account Rate Providers
+   * Value
    */
-  bank_account_rate_providers: Array<DependentGet>;
-  /**
-   * Value Id
-   */
-  value_id: string | null;
+  value: number | string | null;
   /**
    * Schedule Id
    */
   schedule_id: string | null;
-  value: ValueDependentGet | null;
   schedule: ScheduleDependentGet | null;
 };
 
 /**
- * ScheduledProviderPost
+ * ScheduledDecimalProviderPost
  */
-export type ScheduledProviderPost = {
+export type ScheduledDecimalProviderPost = {
   /**
    * Type
    */
-  type: "scheduled_provider";
+  type: "scheduled_decimal_provider";
   /**
    * Name
    */
@@ -1842,9 +1833,79 @@ export type ScheduledProviderPost = {
    */
   description?: string | null;
   /**
-   * Value Id
+   * Value
    */
-  value_id?: string | null;
+  value?: number | string | null;
+  /**
+   * Schedule Id
+   */
+  schedule_id?: string | null;
+};
+
+/**
+ * ScheduledRateProviderGet
+ */
+export type ScheduledRateProviderGet = {
+  /**
+   * Type
+   */
+  type: "scheduled_rate_provider";
+  /**
+   * Id
+   */
+  id: string;
+  /**
+   * Name
+   */
+  name: string;
+  /**
+   * Description
+   */
+  description: string | null;
+  /**
+   * Merge Rate Providers
+   */
+  merge_rate_providers: Array<RateProviderDependentGet>;
+  /**
+   * Next Rate Providers
+   */
+  next_rate_providers: Array<RateProviderDependentGet>;
+  /**
+   * Bank Account Rate Providers
+   */
+  bank_account_rate_providers: Array<DependentGet>;
+  /**
+   * Rate Id
+   */
+  rate_id: string | null;
+  /**
+   * Schedule Id
+   */
+  schedule_id: string | null;
+  rate: RateDependentGet | null;
+  schedule: ScheduleDependentGet | null;
+};
+
+/**
+ * ScheduledRateProviderPost
+ */
+export type ScheduledRateProviderPost = {
+  /**
+   * Type
+   */
+  type: "scheduled_rate_provider";
+  /**
+   * Name
+   */
+  name: string;
+  /**
+   * Description
+   */
+  description?: string | null;
+  /**
+   * Rate Id
+   */
+  rate_id?: string | null;
   /**
    * Schedule Id
    */
@@ -1872,9 +1933,13 @@ export type UntilScheduleGet = {
    */
   description: string | null;
   /**
-   * Scheduled Providers
+   * Scheduled Decimal Providers
    */
-  scheduled_providers: Array<ProviderDependentGet>;
+  scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
+  /**
+   * Scheduled Rate Providers
+   */
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * All Schedules
    */
@@ -1938,38 +2003,6 @@ export type ValidationError = {
 };
 
 /**
- * ValueDependentGet
- */
-export type ValueDependentGet = {
-  /**
-   * Id
-   */
-  id: string;
-  type: ValueType;
-  /**
-   * Name
-   */
-  name: string;
-  /**
-   * Description
-   */
-  description: string | null;
-};
-
-/**
- * ValueType
- */
-export const ValueType = {
-  DECIMAL_VALUE: "decimal_value",
-  RATE_VALUE: "rate_value",
-} as const;
-
-/**
- * ValueType
- */
-export type ValueType = (typeof ValueType)[keyof typeof ValueType];
-
-/**
  * WeeklyScheduleGet
  */
 export type WeeklyScheduleGet = {
@@ -1990,9 +2023,13 @@ export type WeeklyScheduleGet = {
    */
   description: string | null;
   /**
-   * Scheduled Providers
+   * Scheduled Decimal Providers
    */
-  scheduled_providers: Array<ProviderDependentGet>;
+  scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
+  /**
+   * Scheduled Rate Providers
+   */
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * All Schedules
    */
@@ -2058,9 +2095,13 @@ export type YearlyScheduleGet = {
    */
   description: string | null;
   /**
-   * Scheduled Providers
+   * Scheduled Decimal Providers
    */
-  scheduled_providers: Array<ProviderDependentGet>;
+  scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
+  /**
+   * Scheduled Rate Providers
+   */
+  scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
    * All Schedules
    */
@@ -2952,182 +2993,6 @@ export type PutItemRouteRatesItemIdPutResponses = {
 export type PutItemRouteRatesItemIdPutResponse =
   PutItemRouteRatesItemIdPutResponses[keyof PutItemRouteRatesItemIdPutResponses];
 
-export type GetItemsRouteValuesGetData = {
-  body?: never;
-  path?: never;
-  query?: never;
-  url: "/values/";
-};
-
-export type GetItemsRouteValuesGetResponses = {
-  /**
-   * Response Get Items Route Values  Get
-   * Successful Response
-   */
-  200: Array<DecimalValueGet | RateValueGet>;
-};
-
-export type GetItemsRouteValuesGetResponse =
-  GetItemsRouteValuesGetResponses[keyof GetItemsRouteValuesGetResponses];
-
-export type PostItemRouteValuesPostData = {
-  /**
-   * Item Post
-   */
-  body: DecimalValuePost | RateValuePost;
-  path?: never;
-  query?: never;
-  url: "/values/";
-};
-
-export type PostItemRouteValuesPostErrors = {
-  /**
-   * Relation invalid
-   */
-  400: HttpRelationInvalidError;
-  /**
-   * Database integrity error
-   */
-  409: HttpDatabaseIntegrityError;
-  /**
-   * Validation Error
-   */
-  422: HttpValidationError;
-};
-
-export type PostItemRouteValuesPostError =
-  PostItemRouteValuesPostErrors[keyof PostItemRouteValuesPostErrors];
-
-export type PostItemRouteValuesPostResponses = {
-  /**
-   * Response Post Item Route Values  Post
-   * Successful Response
-   */
-  201: DecimalValueGet | RateValueGet;
-};
-
-export type PostItemRouteValuesPostResponse =
-  PostItemRouteValuesPostResponses[keyof PostItemRouteValuesPostResponses];
-
-export type DeleteItemRouteValuesItemIdDeleteData = {
-  body?: never;
-  path: {
-    /**
-     * Item Id
-     */
-    item_id: string;
-  };
-  query?: never;
-  url: "/values/{item_id}";
-};
-
-export type DeleteItemRouteValuesItemIdDeleteErrors = {
-  /**
-   * Not found
-   */
-  404: HttpNotFoundError;
-  /**
-   * Validation Error
-   */
-  422: HttpValidationError;
-};
-
-export type DeleteItemRouteValuesItemIdDeleteError =
-  DeleteItemRouteValuesItemIdDeleteErrors[keyof DeleteItemRouteValuesItemIdDeleteErrors];
-
-export type DeleteItemRouteValuesItemIdDeleteResponses = {
-  /**
-   * Response Delete Item Route Values  Item Id  Delete
-   * Successful Response
-   */
-  200: DecimalValueGet | RateValueGet;
-};
-
-export type DeleteItemRouteValuesItemIdDeleteResponse =
-  DeleteItemRouteValuesItemIdDeleteResponses[keyof DeleteItemRouteValuesItemIdDeleteResponses];
-
-export type GetItemRouteValuesItemIdGetData = {
-  body?: never;
-  path: {
-    /**
-     * Item Id
-     */
-    item_id: string;
-  };
-  query?: never;
-  url: "/values/{item_id}";
-};
-
-export type GetItemRouteValuesItemIdGetErrors = {
-  /**
-   * Not found
-   */
-  404: HttpNotFoundError;
-  /**
-   * Validation Error
-   */
-  422: HttpValidationError;
-};
-
-export type GetItemRouteValuesItemIdGetError =
-  GetItemRouteValuesItemIdGetErrors[keyof GetItemRouteValuesItemIdGetErrors];
-
-export type GetItemRouteValuesItemIdGetResponses = {
-  /**
-   * Response Get Item Route Values  Item Id  Get
-   * Successful Response
-   */
-  200: DecimalValueGet | RateValueGet;
-};
-
-export type GetItemRouteValuesItemIdGetResponse =
-  GetItemRouteValuesItemIdGetResponses[keyof GetItemRouteValuesItemIdGetResponses];
-
-export type PutItemRouteValuesItemIdPutData = {
-  /**
-   * Item Post
-   */
-  body: DecimalValuePost | RateValuePost;
-  path: {
-    /**
-     * Item Id
-     */
-    item_id: string;
-  };
-  query?: never;
-  url: "/values/{item_id}";
-};
-
-export type PutItemRouteValuesItemIdPutErrors = {
-  /**
-   * Relation invalid
-   */
-  400: HttpRelationInvalidError;
-  /**
-   * Response 409 Put Item Route Values  Item Id  Put
-   * Database error
-   */
-  409: HttpDatabaseIntegrityError | HttpChangeTypeError;
-  /**
-   * Validation Error
-   */
-  422: HttpValidationError;
-};
-
-export type PutItemRouteValuesItemIdPutError =
-  PutItemRouteValuesItemIdPutErrors[keyof PutItemRouteValuesItemIdPutErrors];
-
-export type PutItemRouteValuesItemIdPutResponses = {
-  /**
-   * Response Put Item Route Values  Item Id  Put
-   * Successful Response
-   */
-  200: DecimalValueGet | RateValueGet;
-};
-
-export type PutItemRouteValuesItemIdPutResponse =
-  PutItemRouteValuesItemIdPutResponses[keyof PutItemRouteValuesItemIdPutResponses];
-
 export type GetItemsRouteSchedulesGetData = {
   body?: never;
   path?: never;
@@ -3375,44 +3240,40 @@ export type PutItemRouteSchedulesItemIdPutResponses = {
 export type PutItemRouteSchedulesItemIdPutResponse =
   PutItemRouteSchedulesItemIdPutResponses[keyof PutItemRouteSchedulesItemIdPutResponses];
 
-export type GetItemsRouteProvidersGetData = {
+export type GetItemsRouteRateProvidersGetData = {
   body?: never;
   path?: never;
   query?: never;
-  url: "/providers/";
+  url: "/rate-providers/";
 };
 
-export type GetItemsRouteProvidersGetResponses = {
+export type GetItemsRouteRateProvidersGetResponses = {
   /**
-   * Response Get Items Route Providers  Get
+   * Response Get Items Route Rate Providers  Get
    * Successful Response
    */
   200: Array<
-    | AlwaysProviderGet
-    | ScheduledProviderGet
-    | MergeProviderGet
-    | NextProviderGet
+    ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet
   >;
 };
 
-export type GetItemsRouteProvidersGetResponse =
-  GetItemsRouteProvidersGetResponses[keyof GetItemsRouteProvidersGetResponses];
+export type GetItemsRouteRateProvidersGetResponse =
+  GetItemsRouteRateProvidersGetResponses[keyof GetItemsRouteRateProvidersGetResponses];
 
-export type PostItemRouteProvidersPostData = {
+export type PostItemRouteRateProvidersPostData = {
   /**
    * Item Post
    */
   body:
-    | AlwaysProviderPost
-    | ScheduledProviderPost
-    | MergeProviderPost
-    | NextProviderPost;
+    | ScheduledRateProviderPost
+    | MergeRateProviderPost
+    | NextRateProviderPost;
   path?: never;
   query?: never;
-  url: "/providers/";
+  url: "/rate-providers/";
 };
 
-export type PostItemRouteProvidersPostErrors = {
+export type PostItemRouteRateProvidersPostErrors = {
   /**
    * Relation invalid
    */
@@ -3427,25 +3288,21 @@ export type PostItemRouteProvidersPostErrors = {
   422: HttpValidationError;
 };
 
-export type PostItemRouteProvidersPostError =
-  PostItemRouteProvidersPostErrors[keyof PostItemRouteProvidersPostErrors];
+export type PostItemRouteRateProvidersPostError =
+  PostItemRouteRateProvidersPostErrors[keyof PostItemRouteRateProvidersPostErrors];
 
-export type PostItemRouteProvidersPostResponses = {
+export type PostItemRouteRateProvidersPostResponses = {
   /**
-   * Response Post Item Route Providers  Post
+   * Response Post Item Route Rate Providers  Post
    * Successful Response
    */
-  201:
-    | AlwaysProviderGet
-    | ScheduledProviderGet
-    | MergeProviderGet
-    | NextProviderGet;
+  201: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
 };
 
-export type PostItemRouteProvidersPostResponse =
-  PostItemRouteProvidersPostResponses[keyof PostItemRouteProvidersPostResponses];
+export type PostItemRouteRateProvidersPostResponse =
+  PostItemRouteRateProvidersPostResponses[keyof PostItemRouteRateProvidersPostResponses];
 
-export type DeleteItemRouteProvidersItemIdDeleteData = {
+export type DeleteItemRouteRateProvidersItemIdDeleteData = {
   body?: never;
   path: {
     /**
@@ -3454,10 +3311,10 @@ export type DeleteItemRouteProvidersItemIdDeleteData = {
     item_id: string;
   };
   query?: never;
-  url: "/providers/{item_id}";
+  url: "/rate-providers/{item_id}";
 };
 
-export type DeleteItemRouteProvidersItemIdDeleteErrors = {
+export type DeleteItemRouteRateProvidersItemIdDeleteErrors = {
   /**
    * Not found
    */
@@ -3468,25 +3325,21 @@ export type DeleteItemRouteProvidersItemIdDeleteErrors = {
   422: HttpValidationError;
 };
 
-export type DeleteItemRouteProvidersItemIdDeleteError =
-  DeleteItemRouteProvidersItemIdDeleteErrors[keyof DeleteItemRouteProvidersItemIdDeleteErrors];
+export type DeleteItemRouteRateProvidersItemIdDeleteError =
+  DeleteItemRouteRateProvidersItemIdDeleteErrors[keyof DeleteItemRouteRateProvidersItemIdDeleteErrors];
 
-export type DeleteItemRouteProvidersItemIdDeleteResponses = {
+export type DeleteItemRouteRateProvidersItemIdDeleteResponses = {
   /**
-   * Response Delete Item Route Providers  Item Id  Delete
+   * Response Delete Item Route Rate Providers  Item Id  Delete
    * Successful Response
    */
-  200:
-    | AlwaysProviderGet
-    | ScheduledProviderGet
-    | MergeProviderGet
-    | NextProviderGet;
+  200: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
 };
 
-export type DeleteItemRouteProvidersItemIdDeleteResponse =
-  DeleteItemRouteProvidersItemIdDeleteResponses[keyof DeleteItemRouteProvidersItemIdDeleteResponses];
+export type DeleteItemRouteRateProvidersItemIdDeleteResponse =
+  DeleteItemRouteRateProvidersItemIdDeleteResponses[keyof DeleteItemRouteRateProvidersItemIdDeleteResponses];
 
-export type GetItemRouteProvidersItemIdGetData = {
+export type GetItemRouteRateProvidersItemIdGetData = {
   body?: never;
   path: {
     /**
@@ -3495,10 +3348,10 @@ export type GetItemRouteProvidersItemIdGetData = {
     item_id: string;
   };
   query?: never;
-  url: "/providers/{item_id}";
+  url: "/rate-providers/{item_id}";
 };
 
-export type GetItemRouteProvidersItemIdGetErrors = {
+export type GetItemRouteRateProvidersItemIdGetErrors = {
   /**
    * Not found
    */
@@ -3509,33 +3362,28 @@ export type GetItemRouteProvidersItemIdGetErrors = {
   422: HttpValidationError;
 };
 
-export type GetItemRouteProvidersItemIdGetError =
-  GetItemRouteProvidersItemIdGetErrors[keyof GetItemRouteProvidersItemIdGetErrors];
+export type GetItemRouteRateProvidersItemIdGetError =
+  GetItemRouteRateProvidersItemIdGetErrors[keyof GetItemRouteRateProvidersItemIdGetErrors];
 
-export type GetItemRouteProvidersItemIdGetResponses = {
+export type GetItemRouteRateProvidersItemIdGetResponses = {
   /**
-   * Response Get Item Route Providers  Item Id  Get
+   * Response Get Item Route Rate Providers  Item Id  Get
    * Successful Response
    */
-  200:
-    | AlwaysProviderGet
-    | ScheduledProviderGet
-    | MergeProviderGet
-    | NextProviderGet;
+  200: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
 };
 
-export type GetItemRouteProvidersItemIdGetResponse =
-  GetItemRouteProvidersItemIdGetResponses[keyof GetItemRouteProvidersItemIdGetResponses];
+export type GetItemRouteRateProvidersItemIdGetResponse =
+  GetItemRouteRateProvidersItemIdGetResponses[keyof GetItemRouteRateProvidersItemIdGetResponses];
 
-export type PutItemRouteProvidersItemIdPutData = {
+export type PutItemRouteRateProvidersItemIdPutData = {
   /**
    * Item Post
    */
   body:
-    | AlwaysProviderPost
-    | ScheduledProviderPost
-    | MergeProviderPost
-    | NextProviderPost;
+    | ScheduledRateProviderPost
+    | MergeRateProviderPost
+    | NextRateProviderPost;
   path: {
     /**
      * Item Id
@@ -3543,16 +3391,16 @@ export type PutItemRouteProvidersItemIdPutData = {
     item_id: string;
   };
   query?: never;
-  url: "/providers/{item_id}";
+  url: "/rate-providers/{item_id}";
 };
 
-export type PutItemRouteProvidersItemIdPutErrors = {
+export type PutItemRouteRateProvidersItemIdPutErrors = {
   /**
    * Relation invalid
    */
   400: HttpRelationInvalidError;
   /**
-   * Response 409 Put Item Route Providers  Item Id  Put
+   * Response 409 Put Item Route Rate Providers  Item Id  Put
    * Database error
    */
   409: HttpDatabaseIntegrityError | HttpChangeTypeError;
@@ -3562,23 +3410,217 @@ export type PutItemRouteProvidersItemIdPutErrors = {
   422: HttpValidationError;
 };
 
-export type PutItemRouteProvidersItemIdPutError =
-  PutItemRouteProvidersItemIdPutErrors[keyof PutItemRouteProvidersItemIdPutErrors];
+export type PutItemRouteRateProvidersItemIdPutError =
+  PutItemRouteRateProvidersItemIdPutErrors[keyof PutItemRouteRateProvidersItemIdPutErrors];
 
-export type PutItemRouteProvidersItemIdPutResponses = {
+export type PutItemRouteRateProvidersItemIdPutResponses = {
   /**
-   * Response Put Item Route Providers  Item Id  Put
+   * Response Put Item Route Rate Providers  Item Id  Put
+   * Successful Response
+   */
+  200: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
+};
+
+export type PutItemRouteRateProvidersItemIdPutResponse =
+  PutItemRouteRateProvidersItemIdPutResponses[keyof PutItemRouteRateProvidersItemIdPutResponses];
+
+export type GetItemsRouteDecimalProvidersGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/decimal-providers/";
+};
+
+export type GetItemsRouteDecimalProvidersGetResponses = {
+  /**
+   * Response Get Items Route Decimal Providers  Get
+   * Successful Response
+   */
+  200: Array<
+    | ScheduledDecimalProviderGet
+    | MergeDecimalProviderGet
+    | NextDecimalProviderGet
+  >;
+};
+
+export type GetItemsRouteDecimalProvidersGetResponse =
+  GetItemsRouteDecimalProvidersGetResponses[keyof GetItemsRouteDecimalProvidersGetResponses];
+
+export type PostItemRouteDecimalProvidersPostData = {
+  /**
+   * Item Post
+   */
+  body:
+    | ScheduledDecimalProviderPost
+    | MergeDecimalProviderPost
+    | NextDecimalProviderPost;
+  path?: never;
+  query?: never;
+  url: "/decimal-providers/";
+};
+
+export type PostItemRouteDecimalProvidersPostErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteDecimalProvidersPostError =
+  PostItemRouteDecimalProvidersPostErrors[keyof PostItemRouteDecimalProvidersPostErrors];
+
+export type PostItemRouteDecimalProvidersPostResponses = {
+  /**
+   * Response Post Item Route Decimal Providers  Post
+   * Successful Response
+   */
+  201:
+    | ScheduledDecimalProviderGet
+    | MergeDecimalProviderGet
+    | NextDecimalProviderGet;
+};
+
+export type PostItemRouteDecimalProvidersPostResponse =
+  PostItemRouteDecimalProvidersPostResponses[keyof PostItemRouteDecimalProvidersPostResponses];
+
+export type DeleteItemRouteDecimalProvidersItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/decimal-providers/{item_id}";
+};
+
+export type DeleteItemRouteDecimalProvidersItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteDecimalProvidersItemIdDeleteError =
+  DeleteItemRouteDecimalProvidersItemIdDeleteErrors[keyof DeleteItemRouteDecimalProvidersItemIdDeleteErrors];
+
+export type DeleteItemRouteDecimalProvidersItemIdDeleteResponses = {
+  /**
+   * Response Delete Item Route Decimal Providers  Item Id  Delete
    * Successful Response
    */
   200:
-    | AlwaysProviderGet
-    | ScheduledProviderGet
-    | MergeProviderGet
-    | NextProviderGet;
+    | ScheduledDecimalProviderGet
+    | MergeDecimalProviderGet
+    | NextDecimalProviderGet;
 };
 
-export type PutItemRouteProvidersItemIdPutResponse =
-  PutItemRouteProvidersItemIdPutResponses[keyof PutItemRouteProvidersItemIdPutResponses];
+export type DeleteItemRouteDecimalProvidersItemIdDeleteResponse =
+  DeleteItemRouteDecimalProvidersItemIdDeleteResponses[keyof DeleteItemRouteDecimalProvidersItemIdDeleteResponses];
+
+export type GetItemRouteDecimalProvidersItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/decimal-providers/{item_id}";
+};
+
+export type GetItemRouteDecimalProvidersItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteDecimalProvidersItemIdGetError =
+  GetItemRouteDecimalProvidersItemIdGetErrors[keyof GetItemRouteDecimalProvidersItemIdGetErrors];
+
+export type GetItemRouteDecimalProvidersItemIdGetResponses = {
+  /**
+   * Response Get Item Route Decimal Providers  Item Id  Get
+   * Successful Response
+   */
+  200:
+    | ScheduledDecimalProviderGet
+    | MergeDecimalProviderGet
+    | NextDecimalProviderGet;
+};
+
+export type GetItemRouteDecimalProvidersItemIdGetResponse =
+  GetItemRouteDecimalProvidersItemIdGetResponses[keyof GetItemRouteDecimalProvidersItemIdGetResponses];
+
+export type PutItemRouteDecimalProvidersItemIdPutData = {
+  /**
+   * Item Post
+   */
+  body:
+    | ScheduledDecimalProviderPost
+    | MergeDecimalProviderPost
+    | NextDecimalProviderPost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/decimal-providers/{item_id}";
+};
+
+export type PutItemRouteDecimalProvidersItemIdPutErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Response 409 Put Item Route Decimal Providers  Item Id  Put
+   * Database error
+   */
+  409: HttpDatabaseIntegrityError | HttpChangeTypeError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteDecimalProvidersItemIdPutError =
+  PutItemRouteDecimalProvidersItemIdPutErrors[keyof PutItemRouteDecimalProvidersItemIdPutErrors];
+
+export type PutItemRouteDecimalProvidersItemIdPutResponses = {
+  /**
+   * Response Put Item Route Decimal Providers  Item Id  Put
+   * Successful Response
+   */
+  200:
+    | ScheduledDecimalProviderGet
+    | MergeDecimalProviderGet
+    | NextDecimalProviderGet;
+};
+
+export type PutItemRouteDecimalProvidersItemIdPutResponse =
+  PutItemRouteDecimalProvidersItemIdPutResponses[keyof PutItemRouteDecimalProvidersItemIdPutResponses];
 
 export type GetDummyDaysGetData = {
   body?: never;

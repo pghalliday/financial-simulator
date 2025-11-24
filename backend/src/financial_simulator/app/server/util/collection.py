@@ -1,10 +1,10 @@
 import logging
-from typing import Annotated, Optional, List, Generic
+from typing import Annotated, List, Generic
 from uuid import UUID
 
-from fastapi import APIRouter, Depends
-from sqlalchemy import select, ColumnElement
-from sqlalchemy.orm import Session, InstrumentedAttribute
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from financial_simulator.app.server.dependencies import get_db_session
 from financial_simulator.app.server.errors import (
@@ -19,30 +19,30 @@ from financial_simulator.app.server.util.model_mapper import (
     POST,
     ModelMapper,
 )
+from financial_simulator.app.server.util.query_params import (
+    QUERY_PARAMS,
+    DefaultQueryParams,
+)
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
 logger = logging.getLogger(__name__)
 
-class Collection(Generic[TABLE, GET, POST]):
+class Collection(Generic[TABLE, GET, POST, QUERY_PARAMS]):
     __model_mapper: ModelMapper[TABLE, GET, POST]
-    __order_by: Optional[InstrumentedAttribute[str]]
-    __where: Optional[ColumnElement[bool]]
+    __query_params_class: type[QUERY_PARAMS]
 
     def __init__(
             self,
             model_mapper: ModelMapper[TABLE, GET, POST],
-            order_by: Optional[InstrumentedAttribute[str]] = None,
-            where: Optional[ColumnElement[bool]] = None
+            query_params_class: type[QUERY_PARAMS] = DefaultQueryParams,
     ) -> None:
         self.__model_mapper = model_mapper
-        self.__order_by = order_by
-        self.__where = where
+        self.__query_params_class = query_params_class
 
     def add_endpoints(self, router: APIRouter):
         model_mapper = self.__model_mapper
-        order_by = self.__order_by
-        where = self.__where
+        query_params_class = self.__query_params_class
         table_model = model_mapper.table_model
         get_model = model_mapper.get_model
         post_model = model_mapper.post_model
@@ -57,12 +57,20 @@ class Collection(Generic[TABLE, GET, POST]):
         @router.get(
             "/",
         )
-        async def get_items_route(session: DBSessionDependency) -> List[get_model]:
+        async def get_items_route(session: DBSessionDependency, query_params: Annotated[query_params_class, Query()]) -> List[get_model]:
             query = select(table_model)
-            if where is not None:
-                query = query.where(where)
+            limit = query_params.query_limit()
+            offset = query_params.query_offset()
+            order_by = query_params.query_order_by()
+            where = query_params.query_where()
+            if limit is not None:
+                query = query.limit(limit)
+            if offset is not None:
+                query = query.limit(offset)
             if order_by is not None:
                 query = query.order_by(order_by)
+            if where is not None:
+                query = query.where(where)
             items = session.scalars(query)
             return [model_mapper.map_get(item) for item in items]
 

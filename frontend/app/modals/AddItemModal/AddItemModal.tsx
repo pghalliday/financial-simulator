@@ -1,4 +1,4 @@
-import {Button, Group, LoadingOverlay, Modal, Space, Title} from "@mantine/core";
+import {Button, Group, LoadingOverlay, Modal, Space} from "@mantine/core";
 import {type PropsWithChildren} from "react";
 import {type FormRegistry, type FormValues, useFormContext} from "~/lib/hooks/useFormContext";
 
@@ -32,7 +32,7 @@ export function AddItemModal<Form extends keyof FormRegistry>(
         opened={opened}
         onClose={onClose}
         stackId={stackId}
-        title={<Title order={4}>{title}</Title>}
+        title={title}
     >
         <LoadingOverlay
             visible={working}

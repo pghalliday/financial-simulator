@@ -1,8 +1,9 @@
 import logging
-from typing import Sequence
+from typing import Sequence, Union
 from uuid import UUID
 
 from fastapi import APIRouter
+from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import Scenario
 from pydantic import BaseModel
@@ -18,6 +19,7 @@ from financial_simulator.app.server.util.model_mapper import (
     ManyToManyReference,
     ManyToManyModelField,
 )
+from financial_simulator.app.server.util.query_params import DefaultQueryParams
 
 logger = logging.getLogger(__name__)
 
@@ -53,9 +55,13 @@ model_mapper = ModelMapper(
     ))
 )
 
+class ScenarioQueryParams(DefaultQueryParams):
+    def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
+        return Scenario.name
+
 Collection(
     model_mapper=model_mapper,
-    order_by=Scenario.name,
+    query_params_class=ScenarioQueryParams,
 ).add_endpoints(
     router=router,
 )

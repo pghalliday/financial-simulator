@@ -15,9 +15,9 @@ from .routers import (
     ledger_accounts,
     bank_accounts,
     rates,
-    values,
     schedules,
-    providers,
+    rate_providers,
+    decimal_providers,
 )
 from .server import LOG_LEVEL_ENV_VAR
 
@@ -49,7 +49,7 @@ app.include_router(entities.router)
 app.include_router(bank_accounts.router)
 app.include_router(ledger_accounts.router)
 app.include_router(rates.router)
-app.include_router(values.router)
 app.include_router(schedules.router)
-app.include_router(providers.router)
+app.include_router(rate_providers.router)
+app.include_router(decimal_providers.router)
 app.include_router(dummy_days.router)

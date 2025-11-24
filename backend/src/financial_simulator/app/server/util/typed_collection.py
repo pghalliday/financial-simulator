@@ -5,17 +5,16 @@ from typing import (
     Annotated,
     Mapping,
     Union,
-    Optional,
     Generic,
     List,
 )
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
-from sqlalchemy import select, ColumnElement
-from sqlalchemy.orm import Session, InstrumentedAttribute
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from financial_simulator.app.database.schema.base import BaseWithType
 from financial_simulator.app.server.dependencies import get_db_session
@@ -28,6 +27,10 @@ from financial_simulator.app.server.errors import (
 )
 from financial_simulator.app.server.util import get_item
 from financial_simulator.app.server.util.model_mapper import ModelMapper
+from financial_simulator.app.server.util.query_params import (
+    QUERY_PARAMS,
+    DefaultQueryParams,
+)
 
 DBSessionDependency = Annotated[Session, Depends(get_db_session)]
 
@@ -43,37 +46,33 @@ TABLE = TypeVar("TABLE", bound=BaseWithType)
 GET = TypeVar("GET", bound=TypedBaseModel)
 POST = TypeVar("POST", bound=TypedBaseModel)
 
-class TypedCollection(Generic[TABLE, GET, POST]):
+class TypedCollection(Generic[TABLE, GET, POST, QUERY_PARAMS]):
     __table_model: type[TABLE]
     __get_model: type[GET]
     __post_model: type[POST]
     __model_mappers: Mapping[str, ModelMapper[TABLE, GET, POST]]
-    __order_by: Optional[InstrumentedAttribute[str]]
-    __where: Optional[ColumnElement[bool]]
+    __query_params_class: type[QUERY_PARAMS]
 
     def __init__(
-            self,
-            table_model: type[TABLE],
-            get_model: type[GET],
-            post_model: type[POST],
-            model_mappers: Mapping[str, ModelMapper[TABLE, GET, POST]],
-            order_by: Optional[InstrumentedAttribute[str]] = None,
-            where: Optional[ColumnElement[bool]] = None
+        self,
+        table_model: type[TABLE],
+        get_model: type[GET],
+        post_model: type[POST],
+        model_mappers: Mapping[str, ModelMapper[TABLE, GET, POST]],
+        query_params_class: type[QUERY_PARAMS] = DefaultQueryParams,
     ) -> None:
         self.__table_model = table_model
         self.__get_model = get_model
         self.__post_model = post_model
         self.__model_mappers = model_mappers
-        self.__order_by = order_by
-        self.__where = where
+        self.__query_params_class = query_params_class
 
     def add_endpoints(self, router: APIRouter):
         table_model = self.__table_model
         get_model = self.__get_model
         post_model = self.__post_model
         model_mappers = self.__model_mappers
-        order_by = self.__order_by
-        where = self.__where
+        query_params_class = self.__query_params_class
 
         if any(model_mapper.has_invalid_relation_error() for model_mapper in model_mappers.values()):
             invalid_relation_error = {
@@ -85,12 +84,20 @@ class TypedCollection(Generic[TABLE, GET, POST]):
         @router.get(
             "/",
         )
-        async def get_items_route(session: DBSessionDependency) -> List[get_model]:
+        async def get_items_route(session: DBSessionDependency, query_params: Annotated[query_params_class, Query()]) -> List[get_model]:
             query = select(table_model)
-            if where is not None:
-                query = query.where(where)
+            limit = query_params.query_limit()
+            offset = query_params.query_offset()
+            order_by = query_params.query_order_by()
+            where = query_params.query_where()
+            if limit is not None:
+                query = query.limit(limit)
+            if offset is not None:
+                query = query.limit(offset)
             if order_by is not None:
                 query = query.order_by(order_by)
+            if where is not None:
+                query = query.where(where)
             items = session.scalars(query)
             return [model_mappers[item.type].map_get(item) for item in items]
 
