@@ -10,8 +10,8 @@ from financial_simulator.app.database.schema import (
 )
 from pydantic import BaseModel
 
-from financial_simulator.app.server.routers.common.collection import Collection
-from financial_simulator.app.server.routers.common.dependent import DependentGet
+from financial_simulator.app.server.util.collection import Collection
+from financial_simulator.app.server.util.dependent import DependentGet
 from financial_simulator.app.server.routers.entities.entity_dependent import EntityDependentGet, \
     entity_dependent_get_mapper
 from financial_simulator.app.server.routers.ledger_accounts.ledger_account_dependent import \

@@ -3,7 +3,7 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
-from financial_simulator.app.server.routers.common.typed_collection import TYPE
+from financial_simulator.app.server.util.typed_collection import TYPE
 from financial_simulator.app.server.util.model_mapper import (
     GetMapper,
     TABLE,

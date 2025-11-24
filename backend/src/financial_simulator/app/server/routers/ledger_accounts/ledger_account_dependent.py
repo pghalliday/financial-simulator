@@ -1,5 +1,5 @@
 from financial_simulator.app.database.schema import LedgerAccount
-from financial_simulator.app.server.routers.common.dependent import create_dependent_get_mapper
+from financial_simulator.app.server.util.dependent import create_dependent_get_mapper
 
 ledger_account_dependent_get_mapper = create_dependent_get_mapper(LedgerAccount)
 

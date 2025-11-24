@@ -1,6 +1,6 @@
 from financial_simulator.app.database.schema import Value
 from financial_simulator.app.database.schema.value.value_type import ValueType
-from financial_simulator.app.server.routers.common.typed_dependent.typed_dependent import TypedDependentGet, create_typed_dependent_get_mapper
+from financial_simulator.app.server.util.typed_dependent import TypedDependentGet, create_typed_dependent_get_mapper
 
 
 class ValueDependentGet(TypedDependentGet[ValueType]):

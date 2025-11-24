@@ -8,7 +8,7 @@ from financial_simulator.app.database.schema import (
 )
 from financial_simulator.app.database.schema.schedule.schedule_type import ScheduleType
 
-from financial_simulator.app.server.routers.common.typed_collection import TypedCollection
+from financial_simulator.app.server.util.typed_collection import TypedCollection
 from .all_schedule import AllScheduleGet, AllSchedulePost, all_schedule_model_mapper
 from .any_schedule import AnyScheduleGet, AnySchedulePost, any_schedule_model_mapper
 from .daily_schedule import (

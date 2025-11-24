@@ -20,6 +20,10 @@ import type {
     DecimalValuePost,
     FromScheduleGet,
     FromSchedulePost,
+    GetItemRouteEntitiesItemIdGetResponse, GetItemRouteEntitiesItemIdGetResponses,
+    GetItemRouteProvidersItemIdGetData, GetItemRouteProvidersItemIdGetResponse, GetItemRouteRatesItemIdGetResponse,
+    GetItemRouteSchedulesItemIdGetResponse,
+    GetItemRouteValuesItemIdGetResponse,
     IndividualEntityGet,
     IndividualEntityPost,
     MergeProviderGet,
@@ -29,7 +33,8 @@ import type {
     NextProviderGet,
     NextProviderPost,
     PeriodicRateGet,
-    PeriodicRatePost,
+    PeriodicRatePost, PostItemRouteEntitiesPostData, PostItemRouteProvidersPostData, PostItemRouteRatesPostData,
+    PostItemRouteSchedulesPostData, PostItemRouteValuesPostData,
     RangeScheduleGet,
     RangeSchedulePost,
     RateValueGet,
@@ -88,37 +93,17 @@ export type DeleteItemApi<Get> = (options: {
     },
 }) => Promise<APIResult<Get>>
 
-export type EntityGet = IndividualEntityGet | CorporationEntityGet
-export type EntityPost = IndividualEntityPost | CorporationEntityPost
+export type EntityGet = GetItemRouteEntitiesItemIdGetResponse
+export type EntityPost = PostItemRouteEntitiesPostData["body"]
 
-export type RateGet = PeriodicRateGet | ContinuousRateGet | BandedRateGet
-export type RatePost = PeriodicRatePost | ContinuousRatePost | BandedRatePost
+export type RateGet = GetItemRouteRatesItemIdGetResponse
+export type RatePost = PostItemRouteRatesPostData["body"]
 
-export type ValueGet = DecimalValueGet | RateValueGet
-export type ValuePost = DecimalValuePost | RateValuePost
+export type ValueGet = GetItemRouteValuesItemIdGetResponse
+export type ValuePost = PostItemRouteValuesPostData["body"]
 
-export type ScheduleGet =
-    DailyScheduleGet
-    | DayScheduleGet
-    | WeeklyScheduleGet
-    | MonthlyScheduleGet
-    | YearlyScheduleGet
-    | FromScheduleGet
-    | UntilScheduleGet
-    | RangeScheduleGet
-    | AllScheduleGet
-    | AnyScheduleGet
-export type SchedulePost =
-    DailySchedulePost
-    | DaySchedulePost
-    | WeeklySchedulePost
-    | MonthlySchedulePost
-    | YearlySchedulePost
-    | FromSchedulePost
-    | UntilSchedulePost
-    | RangeSchedulePost
-    | AllSchedulePost
-    | AnySchedulePost
+export type ScheduleGet = GetItemRouteSchedulesItemIdGetResponse
+export type SchedulePost = PostItemRouteSchedulesPostData["body"]
 
-export type ProviderGet = AlwaysProviderGet | ScheduledProviderGet | MergeProviderGet | NextProviderGet
-export type ProviderPost = AlwaysProviderPost | ScheduledProviderPost | MergeProviderPost | NextProviderPost
+export type ProviderGet = GetItemRouteProvidersItemIdGetResponse
+export type ProviderPost = PostItemRouteProvidersPostData["body"]

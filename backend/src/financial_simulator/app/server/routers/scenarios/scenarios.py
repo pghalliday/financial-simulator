@@ -7,7 +7,7 @@ from fastapi import APIRouter
 from financial_simulator.app.database.schema import Scenario
 from pydantic import BaseModel
 
-from financial_simulator.app.server.routers.common.collection import Collection
+from financial_simulator.app.server.util.collection import Collection
 from financial_simulator.app.server.routers.entities.entity_dependent import (
     EntityDependentGet,
     entity_dependent_get_mapper,

@@ -2,10 +2,10 @@ from typing import Sequence
 from uuid import UUID
 
 from financial_simulator.app.database.schema.entity.entity_type import EntityType
-from financial_simulator.app.server.routers.common.dependent import (
+from financial_simulator.app.server.util.dependent import (
     DependentGet,
 )
-from financial_simulator.app.server.routers.common.typed_collection import TypedBaseModel
+from financial_simulator.app.server.util.typed_collection import TypedBaseModel
 from financial_simulator.app.server.routers.scenarios.scenario_dependent import scenario_dependent_get_mapper
 from financial_simulator.app.server.util.model_mapper import (
     OrdinaryModelField,

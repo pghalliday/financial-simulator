@@ -2,7 +2,7 @@ from typing import Sequence
 from uuid import UUID
 
 from financial_simulator.app.database.schema.value.value_type import ValueType
-from financial_simulator.app.server.routers.common.typed_collection import TypedBaseModel
+from financial_simulator.app.server.util.typed_collection import TypedBaseModel
 from financial_simulator.app.server.routers.providers.provider_dependent import ProviderDependentGet, \
     provider_dependent_get_mapper
 from financial_simulator.app.server.util.model_mapper import (

@@ -4,8 +4,8 @@ from uuid import UUID
 from financial_simulator.app.database.schema.schedule.schedule_type import ScheduleType
 from financial_simulator.app.server.routers.bank_accounts.bank_account_dependent import \
     bank_account_dependent_get_mapper
-from financial_simulator.app.server.routers.common.dependent import DependentGet
-from financial_simulator.app.server.routers.common.typed_collection import TypedBaseModel
+from financial_simulator.app.server.util.dependent import DependentGet
+from financial_simulator.app.server.util.typed_collection import TypedBaseModel
 from financial_simulator.app.server.routers.providers.provider_dependent import ProviderDependentGet, \
     provider_dependent_get_mapper
 from financial_simulator.app.server.routers.schedules.schedule_dependent import ScheduleDependentGet, \

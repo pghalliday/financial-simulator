@@ -8,7 +8,7 @@ from financial_simulator.app.database.schema import (
     BandedRateBand,
 )
 from financial_simulator.app.database.schema.rate.rate_type import RateType
-from financial_simulator.app.server.routers.common.typed_collection import TypedBaseModel
+from financial_simulator.app.server.util.typed_collection import TypedBaseModel
 from financial_simulator.app.server.routers.rates.rate_dependent import RateDependentGet, \
     rate_dependent_get_mapper
 from financial_simulator.app.server.routers.values.value_dependent import ValueDependentGet, \

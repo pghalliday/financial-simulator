@@ -10,8 +10,8 @@ from pydantic import BaseModel
 
 from financial_simulator.app.server.routers.bank_accounts.bank_account_dependent import \
     bank_account_dependent_get_mapper
-from financial_simulator.app.server.routers.common.collection import Collection
-from financial_simulator.app.server.routers.common.dependent import DependentGet
+from financial_simulator.app.server.util.collection import Collection
+from financial_simulator.app.server.util.dependent import DependentGet
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,

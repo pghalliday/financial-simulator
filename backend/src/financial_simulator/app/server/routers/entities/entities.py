@@ -8,7 +8,7 @@ from financial_simulator.app.database.schema import (
 )
 from financial_simulator.app.database.schema.entity.entity_type import EntityType
 
-from financial_simulator.app.server.routers.common.typed_collection import TypedCollection
+from financial_simulator.app.server.util.typed_collection import TypedCollection
 from .corporation_entity import CorporationEntityPost, CorporationEntityGet, corporation_model_mapper
 from .individual_entity import IndividualEntityPost, IndividualEntityGet, individual_model_mapper
 
