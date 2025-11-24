@@ -1,7 +1,16 @@
 import {createSearchParams} from "react-router";
 import {type ItemPageParams, PAGE_PARAMS_SEARCH_KEY} from "./lib/hooks/useItemPageParams";
 import type {Breadcrumb, EntityGet, ProviderGet, RateGet, ScheduleGet, ValueGet} from "~/lib/types";
-import type {BankAccountGet, LedgerAccountGet, ScenarioGet} from "../client";
+import type {
+    BankAccountGet,
+    EntityType,
+    LedgerAccountGet,
+    ProviderType,
+    RateType,
+    ScenarioGet,
+    ScheduleType,
+    ValueType
+} from "../client";
 
 function createItemSuffix(itemPageParams: ItemPageParams): string {
     const names: string[] = []
@@ -95,7 +104,7 @@ export const ENTITY_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Entity
 export const ENTITY_PAGE_TITLE = createItemPageTitleFunction(ENTITY_PAGE_DESCRIPTION);
 export const ENTITY_HREF = createItemHrefFunction(ENTITIES_HREF)
 export const ENTITY_BREADCRUMBS = createItemBreadcrumbsFunction(ENTITIES_BREADCRUMBS, ENTITY_HREF)
-export const ENTITY_TYPES: Record<EntityGet["type"], string> = {
+export const ENTITY_TYPES: Record<EntityType, string> = {
     individual_entity: "Individual",
     corporation_entity: "Corporation",
 }
@@ -156,7 +165,7 @@ export const RATE_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Rate")
 export const RATE_PAGE_TITLE = createItemPageTitleFunction(RATE_PAGE_DESCRIPTION);
 export const RATE_HREF = createItemHrefFunction(RATES_HREF)
 export const RATE_BREADCRUMBS = createItemBreadcrumbsFunction(RATES_BREADCRUMBS, RATE_HREF)
-export const RATE_TYPES: Record<RateGet["type"], string> = {
+export const RATE_TYPES: Record<RateType, string> = {
     continuous_rate: "Continuous",
     banded_rate: "Banded",
     periodic_rate: "Periodic",
@@ -180,7 +189,7 @@ export const VALUE_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Value")
 export const VALUE_PAGE_TITLE = createItemPageTitleFunction(VALUE_PAGE_DESCRIPTION);
 export const VALUE_HREF = createItemHrefFunction(VALUES_HREF)
 export const VALUE_BREADCRUMBS = createItemBreadcrumbsFunction(VALUES_BREADCRUMBS, VALUE_HREF)
-export const VALUE_TYPES: Record<ValueGet["type"], string> = {
+export const VALUE_TYPES: Record<ValueType, string> = {
     decimal_value: "Decimal",
     rate_value: "Rate",
 }
@@ -203,7 +212,7 @@ export const SCHEDULE_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Sche
 export const SCHEDULE_PAGE_TITLE = createItemPageTitleFunction(SCHEDULE_PAGE_DESCRIPTION);
 export const SCHEDULE_HREF = createItemHrefFunction(SCHEDULES_HREF)
 export const SCHEDULE_BREADCRUMBS = createItemBreadcrumbsFunction(SCHEDULES_BREADCRUMBS, SCHEDULE_HREF)
-export const SCHEDULE_TYPES: Record<ScheduleGet["type"], string> = {
+export const SCHEDULE_TYPES: Record<ScheduleType, string> = {
     daily_schedule: "Daily",
     day_schedule: "Day",
     all_schedule: "All",
@@ -234,7 +243,7 @@ export const PROVIDER_PAGE_DESCRIPTION = createItemPageDescriptionFunction("Prov
 export const PROVIDER_PAGE_TITLE = createItemPageTitleFunction(PROVIDER_PAGE_DESCRIPTION);
 export const PROVIDER_HREF = createItemHrefFunction(PROVIDERS_HREF)
 export const PROVIDER_BREADCRUMBS = createItemBreadcrumbsFunction(PROVIDERS_BREADCRUMBS, PROVIDER_HREF)
-export const PROVIDER_TYPES: Record<ProviderGet["type"], string> = {
+export const PROVIDER_TYPES: Record<ProviderType, string> = {
     always_provider: "Always",
     scheduled_provider: "Scheduled",
     merge_provider: "Merge",
