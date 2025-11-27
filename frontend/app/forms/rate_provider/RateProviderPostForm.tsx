@@ -1,7 +1,7 @@
 import {Title} from "@mantine/core";
 import {RATE_PROVIDER_TYPES} from "~/strings";
 import {BoundTextInput} from "~/components/controls/bound/BoundTextInput";
-import {BoundSelect} from "~/components/controls/bound/BoundSelect";
+import {BoundSelect, type BoundSelectOption} from "~/components/controls/bound/BoundSelect";
 import {
     RATE_PROVIDER_POST_FORM_NAME,
     useRateProviderPostFormContext
@@ -14,7 +14,7 @@ export interface Props {
     allowSelectType?: boolean,
 }
 
-const TYPE_SELECT_DATA = Object.entries(RATE_PROVIDER_TYPES).map(entry => ({
+const TYPE_SELECT_DATA: BoundSelectOption[] = Object.entries(RATE_PROVIDER_TYPES).map(entry => ({
     value: entry[0],
     label: entry[1],
 }))

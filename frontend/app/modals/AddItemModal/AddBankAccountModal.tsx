@@ -38,6 +38,9 @@ export function AddBankAccountModal(
         onSubmit={onSubmit}
         onCancel={onCancel}
     >
-        <BankAccountPostForm ledgerAccountTree={ledgerAccountTree} onAddLedgerAccount={onAddLedgerAccount}/>
+        <BankAccountPostForm
+            ledgerAccountTree={ledgerAccountTree}
+            onAddLedgerAccount={onAddLedgerAccount}
+        />
     </AddItemModal>
 }

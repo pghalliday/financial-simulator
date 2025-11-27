@@ -2,7 +2,9 @@ import {TextInput} from "@mantine/core";
 import {type FormKeys, type FormRegistry, useFormContext} from "~/lib/hooks/useFormContext";
 import type {Ref} from "react";
 
-interface Props<Form extends keyof FormRegistry> {
+interface Props<
+    Form extends keyof FormRegistry,
+> {
     ref?: Ref<HTMLInputElement>
     formName: Form
     fieldName: FormKeys<Form>
@@ -13,7 +15,9 @@ interface Props<Form extends keyof FormRegistry> {
     autoFocus?: boolean
 }
 
-export function BoundTextInput<Form extends keyof FormRegistry>(
+export function BoundTextInput<
+    Form extends keyof FormRegistry,
+>(
     {
         ref,
         formName,

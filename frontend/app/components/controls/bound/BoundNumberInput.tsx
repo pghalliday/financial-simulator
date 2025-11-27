@@ -1,24 +1,23 @@
-import {Select} from "@mantine/core";
+import {NumberInput} from "@mantine/core";
 import {type FormKeys, type FormRegistry, useFormContext} from "~/lib/hooks/useFormContext";
 import type {Ref} from "react";
 
-export interface BoundSelectOption {
-    value: string,
-    label: string,
-}
-
-interface Props<Form extends keyof FormRegistry> {
+interface Props<
+    Form extends keyof FormRegistry,
+> {
     ref?: Ref<HTMLInputElement>
     formName: Form
     fieldName: FormKeys<Form>
-    data: BoundSelectOption[]
     label?: string
     description?: string
     placeholder?: string
     required?: boolean
+    autoFocus?: boolean
 }
 
-export function BoundSelect<Form extends keyof FormRegistry>(
+export function BoundNumberInput<
+    Form extends keyof FormRegistry,
+>(
     {
         ref,
         formName,
@@ -26,18 +25,19 @@ export function BoundSelect<Form extends keyof FormRegistry>(
         label,
         description,
         placeholder,
-        data,
         required = false,
+        autoFocus,
     }: Props<Form>
 ) {
     const form = useFormContext(formName)
-    return <Select
+    return <NumberInput
+        data-autofocus={autoFocus}
         ref={ref}
         label={label}
         description={description}
         placeholder={placeholder}
-        data={data}
         required={required}
+        size="sm"
         key={form.key(fieldName)}
         {...form.getInputProps(fieldName)}
     />

@@ -7,6 +7,7 @@ import {BankAccountProvider} from "~/providers/item_providers";
 import {LedgerAccountTreeProvider} from "~/providers/tree_providers";
 import BankAccountPage from "~/pages/BankAccountPage/BankAccountPage";
 import {LoadingProvider} from "~/providers/LoadingProvider";
+import {DecimalProvidersProvider, RateProvidersProvider, SchedulesProvider} from "~/providers/items_providers";
 
 
 export function getBankAccountPageParams(item: BankAccountGet): ItemPageParams {
@@ -21,10 +22,28 @@ export default function BankAccount({params}: Route.ComponentProps) {
     const [loadingBankAccount, {open: startLoadingBankAccount, close: stopLoadingBankAccount}] = useDisclosure()
     const [loadingLedgerAccounts, {
         open: startLoadingLedgerAccounts,
-        close: stopLoadingLedgerAccounts
+        close: stopLoadingLedgerAccounts,
+    }] = useDisclosure()
+    const [loadingDecimalProviders, {
+        open: startLoadingDecimalProviders,
+        close: stopLoadingDecimalProviders,
+    }] = useDisclosure()
+    const [loadingRateProviders, {
+        open: startLoadingRateProviders,
+        close: stopLoadingRateProviders,
+    }] = useDisclosure()
+    const [loadingSchedules, {
+        open: startLoadingSchedules,
+        close: stopLoadingSchedules,
     }] = useDisclosure()
 
-    return <LoadingProvider loading={loadingBankAccount || loadingLedgerAccounts}>
+    return <LoadingProvider loading={
+        loadingBankAccount ||
+        loadingLedgerAccounts ||
+        loadingDecimalProviders ||
+        loadingRateProviders ||
+        loadingSchedules
+    }>
         <BankAccountProvider
             itemId={itemId}
             itemPageTitle={BANK_ACCOUNT_PAGE_TITLE}
@@ -38,7 +57,22 @@ export default function BankAccount({params}: Route.ComponentProps) {
                 onBegin={startLoadingLedgerAccounts}
                 onEnd={stopLoadingLedgerAccounts}
             >
-                <BankAccountPage/>
+                <DecimalProvidersProvider
+                    onBegin={startLoadingDecimalProviders}
+                    onEnd={stopLoadingDecimalProviders}
+                >
+                    <RateProvidersProvider
+                        onBegin={startLoadingRateProviders}
+                        onEnd={stopLoadingRateProviders}
+                    >
+                        <SchedulesProvider
+                            onBegin={startLoadingSchedules}
+                            onEnd={stopLoadingSchedules}
+                        >
+                            <BankAccountPage/>
+                        </SchedulesProvider>
+                    </RateProvidersProvider>
+                </DecimalProvidersProvider>
             </LedgerAccountTreeProvider>
         </BankAccountProvider>
     </LoadingProvider>

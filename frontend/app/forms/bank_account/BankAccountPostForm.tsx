@@ -4,6 +4,8 @@ import {BANK_ACCOUNT_POST_FORM_NAME} from "~/forms/bank_account/BankAccountPostF
 import type {TreeData} from "~/lib/TreeData";
 import {BoundTextInput} from "~/components/controls/bound/BoundTextInput";
 import {BoundTreeSelect} from "~/components/controls/bound/BoundTreeSelect";
+import {BoundSelect} from "~/components/controls/bound/BoundSelect";
+import {useDecimalProviders, useRateProviders, useSchedules} from "~/providers/items_providers";
 
 interface BankAccountPostFormProps {
     ledgerAccountTree: TreeData<LedgerAccountGet>
@@ -12,7 +14,29 @@ interface BankAccountPostFormProps {
 
 const ADD_NEW_LEDGER_ACCOUNT_PROMPT = "Add new ledger account..."
 
-export function BankAccountPostForm({ledgerAccountTree, onAddLedgerAccount}: BankAccountPostFormProps) {
+export function BankAccountPostForm(
+    {
+        ledgerAccountTree,
+        onAddLedgerAccount,
+    }: BankAccountPostFormProps
+) {
+    const [rateProviders] = useRateProviders()
+    const [decimalProviders] = useDecimalProviders()
+    const [schedules] = useSchedules()
+
+    const decimalProvidersData = decimalProviders.map(decimalProvider => ({
+        value: decimalProvider.id,
+        label: decimalProvider.name,
+    }))
+    const rateProvidersData = rateProviders.map(rateProvider => ({
+        value: rateProvider.id,
+        label: rateProvider.name,
+    }))
+    const schedulesData = schedules.map(schedule => ({
+        value: schedule.id,
+        label: schedule.name,
+    }))
+
     const addLedgerAccount = useCallback((account_name: string, parentPath: LedgerAccountGet[]) => {
         const parent_id = parentPath.length === 0 ? undefined : parentPath[parentPath.length - 1].id
         const name = [
@@ -96,6 +120,38 @@ export function BankAccountPostForm({ledgerAccountTree, onAddLedgerAccount}: Ban
             label="Fees payable account"
             description={"Bank account fees payable ledger account"}
             placeholder="Fees payable account"
+        />
+        <BoundSelect
+            formName={BANK_ACCOUNT_POST_FORM_NAME}
+            fieldName="fees_provider_id"
+            data={decimalProvidersData}
+            label="Fees provider"
+            description={"Bank account fees provider"}
+            placeholder="Fees provider"
+        />
+        <BoundSelect
+            formName={BANK_ACCOUNT_POST_FORM_NAME}
+            fieldName="fee_payment_schedule_id"
+            data={schedulesData}
+            label="Fee payment schedule"
+            description={"Bank account fee payment schedule"}
+            placeholder="Fee payment schedule"
+        />
+        <BoundSelect
+            formName={BANK_ACCOUNT_POST_FORM_NAME}
+            fieldName="rate_provider_id"
+            data={rateProvidersData}
+            label="Interest rate provider"
+            description={"Bank account interest rate provider"}
+            placeholder="Interest rate provider"
+        />
+        <BoundSelect
+            formName={BANK_ACCOUNT_POST_FORM_NAME}
+            fieldName="interest_payment_schedule_id"
+            data={schedulesData}
+            label="Interest payment schedule"
+            description={"Bank account interest payment schedule"}
+            placeholder="Interest payment schedule"
         />
     </>
 }

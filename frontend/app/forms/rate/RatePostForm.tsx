@@ -1,7 +1,7 @@
 import {Title} from "@mantine/core";
 import {RATE_TYPES} from "~/strings";
 import {BoundTextInput} from "~/components/controls/bound/BoundTextInput";
-import {BoundSelect} from "~/components/controls/bound/BoundSelect";
+import {BoundSelect, type BoundSelectOption} from "~/components/controls/bound/BoundSelect";
 import {RATE_POST_FORM_NAME, useRatePostFormContext} from "~/forms/rate/RatePostFormContext";
 import {PeriodicRatePostForm} from "~/forms/rate/PeriodicRatePostForm";
 import {ContinuousRatePostForm} from "~/forms/rate/ContinuousRatePostForm";
@@ -11,7 +11,7 @@ export interface Props {
     allowSelectType?: boolean,
 }
 
-const TYPE_SELECT_DATA = Object.entries(RATE_TYPES).map(entry => ({
+const TYPE_SELECT_DATA: BoundSelectOption[] = Object.entries(RATE_TYPES).map(entry => ({
     value: entry[0],
     label: entry[1],
 }))

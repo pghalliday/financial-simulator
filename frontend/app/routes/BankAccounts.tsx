@@ -1,5 +1,10 @@
 import {useDisclosure} from "@mantine/hooks";
-import {BankAccountsProvider} from "~/providers/items_providers";
+import {
+    BankAccountsProvider,
+    DecimalProvidersProvider,
+    RateProvidersProvider,
+    SchedulesProvider
+} from "~/providers/items_providers";
 import BankAccountsPage from "~/pages/BankAccountsPage";
 import {LedgerAccountTreeProvider} from "~/providers/tree_providers";
 import {LoadingProvider} from "~/providers/LoadingProvider";
@@ -10,7 +15,25 @@ export default function BankAccounts() {
         open: startLoadingLedgerAccounts,
         close: stopLoadingLedgerAccounts
     }] = useDisclosure()
-    return <LoadingProvider loading={loadingBankAccounts || loadingLedgerAccounts}>
+    const [loadingDecimalProviders, {
+        open: startLoadingDecimalProviders,
+        close: stopLoadingDecimalProviders,
+    }] = useDisclosure()
+    const [loadingRateProviders, {
+        open: startLoadingRateProviders,
+        close: stopLoadingRateProviders,
+    }] = useDisclosure()
+    const [loadingSchedules, {
+        open: startLoadingSchedules,
+        close: stopLoadingSchedules,
+    }] = useDisclosure()
+    return <LoadingProvider loading={
+        loadingBankAccounts ||
+        loadingLedgerAccounts ||
+        loadingDecimalProviders ||
+        loadingRateProviders ||
+        loadingSchedules
+    }>
         <BankAccountsProvider
             onBegin={startLoadingBankAccounts}
             onEnd={stopLoadingBankAccounts}
@@ -19,7 +42,22 @@ export default function BankAccounts() {
                 onBegin={startLoadingLedgerAccounts}
                 onEnd={stopLoadingLedgerAccounts}
             >
-                <BankAccountsPage/>
+                <DecimalProvidersProvider
+                    onBegin={startLoadingDecimalProviders}
+                    onEnd={stopLoadingDecimalProviders}
+                >
+                    <RateProvidersProvider
+                        onBegin={startLoadingRateProviders}
+                        onEnd={stopLoadingRateProviders}
+                    >
+                        <SchedulesProvider
+                            onBegin={startLoadingSchedules}
+                            onEnd={stopLoadingSchedules}
+                        >
+                            <BankAccountsPage/>
+                        </SchedulesProvider>
+                    </RateProvidersProvider>
+                </DecimalProvidersProvider>
             </LedgerAccountTreeProvider>
         </BankAccountsProvider>
     </LoadingProvider>

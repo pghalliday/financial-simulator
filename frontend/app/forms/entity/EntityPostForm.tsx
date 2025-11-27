@@ -6,13 +6,13 @@ import {CorporationEntityPostForm} from "~/forms/entity/CorporationEntityPostFor
 import {BoundTextInput} from "~/components/controls/bound/BoundTextInput";
 import {useScenarios} from "~/providers/items_providers";
 import {BoundRelationSelect} from "~/components/controls/bound/BoundRelationSelect";
-import {BoundSelect} from "~/components/controls/bound/BoundSelect";
+import {BoundSelect, type BoundSelectOption} from "~/components/controls/bound/BoundSelect";
 
 export interface Props {
     allowSelectType?: boolean,
 }
 
-const TYPE_SELECT_DATA = Object.entries(ENTITY_TYPES).map(entry => ({
+const TYPE_SELECT_DATA: BoundSelectOption[] = Object.entries(ENTITY_TYPES).map(entry => ({
     value: entry[0],
     label: entry[1],
 }))
