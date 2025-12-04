@@ -38,7 +38,7 @@ class BankAccount(BaseWithNameAndDescription):
     )
     fees_provider_id: Mapped[UUID | None] = mapped_column(ForeignKey("decimal_provider.id"))
     fee_payment_schedule_id: Mapped[UUID | None] = mapped_column(ForeignKey("schedule.id"))
-    rate_provider_id: Mapped[UUID | None] = mapped_column(ForeignKey("rate_provider.id"))
+    interest_rate_provider_id: Mapped[UUID | None] = mapped_column(ForeignKey("rate_provider.id"))
     interest_payment_schedule_id: Mapped[UUID | None] = mapped_column(
         ForeignKey("schedule.id")
     )
@@ -71,9 +71,9 @@ class BankAccount(BaseWithNameAndDescription):
         back_populates="bank_account_fee_payment_schedules",
         foreign_keys="BankAccount.fee_payment_schedule_id"
     )
-    rate_provider: Mapped[RateProvider | None] = relationship(
-        back_populates="bank_account_rate_providers",
-        foreign_keys="BankAccount.rate_provider_id"
+    interest_rate_provider: Mapped[RateProvider | None] = relationship(
+        back_populates="bank_account_interest_rate_providers",
+        foreign_keys="BankAccount.interest_rate_provider_id"
     )
     interest_payment_schedule: Mapped[Schedule | None] = relationship(
         back_populates="bank_account_interest_payment_schedules",

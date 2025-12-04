@@ -1,81 +1,15 @@
-import {AppShell} from "@mantine/core";
-import {NavbarLink} from "~/components/layout/NavbarLink";
-import {
-    BANK_ACCOUNTS_HREF,
-    BANK_ACCOUNTS_PAGE_DESCRIPTION,
-    COMPARE_SCENARIOS_HREF,
-    COMPARE_SCENARIOS_PAGE_DESCRIPTION,
-    DECIMAL_PROVIDERS_HREF,
-    DECIMAL_PROVIDERS_PAGE_DESCRIPTION,
-    ENTITIES_HREF,
-    ENTITIES_PAGE_DESCRIPTION,
-    LEDGER_ACCOUNTS_HREF,
-    LEDGER_ACCOUNTS_PAGE_DESCRIPTION,
-    RATE_PROVIDERS_HREF,
-    RATE_PROVIDERS_PAGE_DESCRIPTION,
-    RATES_HREF,
-    RATES_PAGE_DESCRIPTION,
-    SCENARIOS_HREF,
-    SCENARIOS_PAGE_DESCRIPTION,
-    SCHEDULES_HREF,
-    SCHEDULES_PAGE_DESCRIPTION,
-} from "~/strings";
+import {AppShell, ScrollArea} from "@mantine/core";
+import {NavbarLink, type NavbarLinkTree} from "~/components/layout/NavbarLink";
 
 interface Props {
     close: () => void
+    navbarLinkTrees: NavbarLinkTree[]
 }
 
-export function Navbar({close}: Props) {
+export function Navbar({close, navbarLinkTrees}: Props) {
     return <AppShell.Navbar>
-        <NavbarLink
-            href={COMPARE_SCENARIOS_HREF}
-            label={COMPARE_SCENARIOS_PAGE_DESCRIPTION}
-            onClick={close}
-        />
-        <NavbarLink
-            href={SCENARIOS_HREF}
-            label={SCENARIOS_PAGE_DESCRIPTION}
-            onClick={close}
-        />
-        <NavbarLink
-            href={ENTITIES_HREF}
-            label={ENTITIES_PAGE_DESCRIPTION}
-            onClick={close}
-        />
-        <NavbarLink
-            href={BANK_ACCOUNTS_HREF}
-            label={BANK_ACCOUNTS_PAGE_DESCRIPTION}
-            onClick={close}
-        />
-        <NavbarLink
-            href={LEDGER_ACCOUNTS_HREF}
-            label={LEDGER_ACCOUNTS_PAGE_DESCRIPTION}
-            onClick={close}
-        />
-        <NavbarLink
-            href={RATES_HREF}
-            label={RATES_PAGE_DESCRIPTION}
-            onClick={close}
-        />
-        <NavbarLink
-            href={SCHEDULES_HREF}
-            label={SCHEDULES_PAGE_DESCRIPTION}
-            onClick={close}
-        />
-        <NavbarLink
-            href={DECIMAL_PROVIDERS_HREF}
-            label={DECIMAL_PROVIDERS_PAGE_DESCRIPTION}
-            onClick={close}
-        />
-        <NavbarLink
-            href={RATE_PROVIDERS_HREF}
-            label={RATE_PROVIDERS_PAGE_DESCRIPTION}
-            onClick={close}
-        />
-        <NavbarLink
-            href="/playground"
-            label="Playground"
-            onClick={close}
-        />
+        <ScrollArea>
+            {navbarLinkTrees.map(tree => (<NavbarLink key={tree.navbarLinkHref} tree={tree} onClick={close}/>))}
+        </ScrollArea>
     </AppShell.Navbar>
 }

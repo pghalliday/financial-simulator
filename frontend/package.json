@@ -10,10 +10,11 @@
     "openapi-ts": "openapi-ts"
   },
   "dependencies": {
-    "@mantine/core": "^8.3.3",
-    "@mantine/form": "^8.3.6",
-    "@mantine/hooks": "^8.3.3",
-    "@mantine/notifications": "^8.3.4",
+    "@mantine/core": "^8.3.9",
+    "@mantine/dates": "^8.3.9",
+    "@mantine/form": "^8.3.9",
+    "@mantine/hooks": "^8.3.9",
+    "@mantine/notifications": "^8.3.9",
     "@react-router/node": "^7.9.2",
     "@react-router/serve": "^7.9.2",
     "@tabler/icons-react": "^3.35.0",

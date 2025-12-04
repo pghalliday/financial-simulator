@@ -1,11 +1,11 @@
 import {type LedgerAccountGet, type LedgerAccountPost} from "../../../client";
 import {useCallback} from "react";
-import {BANK_ACCOUNT_POST_FORM_NAME} from "~/forms/bank_account/BankAccountPostFormContext";
+import {useBankAccountPostFormContext} from "~/forms/bank_account/contexts";
 import type {TreeData} from "~/lib/TreeData";
-import {BoundTextInput} from "~/components/controls/bound/BoundTextInput";
-import {BoundTreeSelect} from "~/components/controls/bound/BoundTreeSelect";
-import {BoundSelect} from "~/components/controls/bound/BoundSelect";
 import {useDecimalProviders, useRateProviders, useSchedules} from "~/providers/items_providers";
+import {TextInput} from "@mantine/core";
+import {TreeSelect} from "~/components/controls/TreeSelect/TreeSelect";
+import {RelationSelect} from "~/components/controls/RelationSelect";
 
 interface BankAccountPostFormProps {
     ledgerAccountTree: TreeData<LedgerAccountGet>
@@ -20,22 +20,10 @@ export function BankAccountPostForm(
         onAddLedgerAccount,
     }: BankAccountPostFormProps
 ) {
+    const form = useBankAccountPostFormContext()
     const [rateProviders] = useRateProviders()
     const [decimalProviders] = useDecimalProviders()
     const [schedules] = useSchedules()
-
-    const decimalProvidersData = decimalProviders.map(decimalProvider => ({
-        value: decimalProvider.id,
-        label: decimalProvider.name,
-    }))
-    const rateProvidersData = rateProviders.map(rateProvider => ({
-        value: rateProvider.id,
-        label: rateProvider.name,
-    }))
-    const schedulesData = schedules.map(schedule => ({
-        value: schedule.id,
-        label: schedule.name,
-    }))
 
     const addLedgerAccount = useCallback((account_name: string, parentPath: LedgerAccountGet[]) => {
         const parent_id = parentPath.length === 0 ? undefined : parentPath[parentPath.length - 1].id
@@ -55,103 +43,103 @@ export function BankAccountPostForm(
     }, [ledgerAccountTree, onAddLedgerAccount])
 
     return <>
-        <BoundTextInput
+        <TextInput
             autoFocus
-            formName={BANK_ACCOUNT_POST_FORM_NAME}
-            fieldName="name"
             label="Name"
             description="Bank account name"
             placeholder="The unique bank account name"
             required
+            key={form.key("name")}
+            {...form.getInputProps("name")}
         />
-        <BoundTextInput
-            formName={BANK_ACCOUNT_POST_FORM_NAME}
-            fieldName="description"
+        <TextInput
             label="Description"
             description="Bank account description"
             placeholder="The bank account description"
+            key={form.key("description")}
+            {...form.getInputProps("description")}
         />
-        <BoundTreeSelect
-            formName={BANK_ACCOUNT_POST_FORM_NAME}
-            fieldName="asset_account_id"
+        <TreeSelect
             data={ledgerAccountTree}
             onCreate={addLedgerAccount}
             createPrompt={ADD_NEW_LEDGER_ACCOUNT_PROMPT}
             label="Asset account"
             description={"Bank account asset ledger account"}
             placeholder="Asset account"
+            key={form.key("asset_account_id")}
+            {...form.getInputProps("asset_account_id")}
         />
-        <BoundTreeSelect
-            formName={BANK_ACCOUNT_POST_FORM_NAME}
-            fieldName="interest_income_account_id"
+        <TreeSelect
             data={ledgerAccountTree}
             onCreate={addLedgerAccount}
             createPrompt={ADD_NEW_LEDGER_ACCOUNT_PROMPT}
             label="Interest income account"
             description={"Bank account interest income ledger account"}
             placeholder="Interest income account"
+            key={form.key("interest_income_account_id")}
+            {...form.getInputProps("interest_income_account_id")}
         />
-        <BoundTreeSelect
-            formName={BANK_ACCOUNT_POST_FORM_NAME}
-            fieldName="interest_receivable_account_id"
+        <TreeSelect
             data={ledgerAccountTree}
             onCreate={addLedgerAccount}
             createPrompt={ADD_NEW_LEDGER_ACCOUNT_PROMPT}
             label="Interest receivable account"
             description={"Bank account interest receivable ledger account"}
             placeholder="Interest receivable account"
+            key={form.key("interest_receivable_account_id")}
+            {...form.getInputProps("interest_receivable_account_id")}
         />
-        <BoundTreeSelect
-            formName={BANK_ACCOUNT_POST_FORM_NAME}
-            fieldName="fee_expenses_account_id"
+        <TreeSelect
             data={ledgerAccountTree}
             onCreate={addLedgerAccount}
             createPrompt={ADD_NEW_LEDGER_ACCOUNT_PROMPT}
             label="Fee expenses account"
             description={"Bank account fee expenses ledger account"}
             placeholder="Fee expenses account"
+            key={form.key("fee_expenses_account_id")}
+            {...form.getInputProps("fee_expenses_account_id")}
         />
-        <BoundTreeSelect
-            formName={BANK_ACCOUNT_POST_FORM_NAME}
-            fieldName="fees_payable_account_id"
+        <TreeSelect
             data={ledgerAccountTree}
             onCreate={addLedgerAccount}
             createPrompt={ADD_NEW_LEDGER_ACCOUNT_PROMPT}
             label="Fees payable account"
             description={"Bank account fees payable ledger account"}
             placeholder="Fees payable account"
+            key={form.key("fees_payable_account_id")}
+            {...form.getInputProps("fees_payable_account_id")}
         />
-        <BoundSelect
-            formName={BANK_ACCOUNT_POST_FORM_NAME}
-            fieldName="fees_provider_id"
-            data={decimalProvidersData}
+        <RelationSelect
+            data={decimalProviders}
             label="Fees provider"
             description={"Bank account fees provider"}
             placeholder="Fees provider"
+            key={form.key("fees_provider_id")}
+            {...form.getInputProps("fees_provider_id")}
         />
-        <BoundSelect
-            formName={BANK_ACCOUNT_POST_FORM_NAME}
-            fieldName="fee_payment_schedule_id"
-            data={schedulesData}
+        <RelationSelect
+            data={schedules}
             label="Fee payment schedule"
             description={"Bank account fee payment schedule"}
             placeholder="Fee payment schedule"
+            key={form.key("fee_payment_schedule_id")}
+            {...form.getInputProps("fee_payment_schedule_id")}
         />
-        <BoundSelect
-            formName={BANK_ACCOUNT_POST_FORM_NAME}
-            fieldName="rate_provider_id"
-            data={rateProvidersData}
+        <RelationSelect
+            data={rateProviders}
             label="Interest rate provider"
             description={"Bank account interest rate provider"}
             placeholder="Interest rate provider"
+            key={form.key("interest_rate_provider_id")}
+            {...form.getInputProps("interest_rate_provider_id")}
         />
-        <BoundSelect
-            formName={BANK_ACCOUNT_POST_FORM_NAME}
-            fieldName="interest_payment_schedule_id"
-            data={schedulesData}
+        <RelationSelect
+            data={schedules}
             label="Interest payment schedule"
             description={"Bank account interest payment schedule"}
             placeholder="Interest payment schedule"
+            key={form.key("interest_payment_schedule_id")}
+            {...form.getInputProps("interest_payment_schedule_id")}
         />
     </>
 }

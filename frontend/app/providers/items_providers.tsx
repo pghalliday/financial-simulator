@@ -1,5 +1,5 @@
 import {createContext, type PropsWithChildren, type ReactElement, useContext} from "react";
-import {useGetItems} from "~/lib/hooks/useGetItems";
+import {useGetItems} from "~/hooks/useGetItems";
 import type {GetItemsApi} from "~/lib/types";
 import {
     getItemsRouteBankAccountsGet,
@@ -64,7 +64,7 @@ export const [ScenariosProvider, useScenarios] = createItemsProvider({
 })
 
 export const [EntitiesProvider, useEntities] = createItemsProvider({
-    label: "Entities",
+    label: "IndividualEntities",
     getItemsApi: getItemsRouteEntitiesGet,
 })
 
@@ -79,21 +79,21 @@ export const [LedgerAccountsProvider, useLedgerAccounts] = createItemsProvider({
 })
 
 export const [RatesProvider, useRates] = createItemsProvider({
-    label: "Rates",
+    label: "PeriodicRates",
     getItemsApi: getItemsRouteRatesGet,
 })
 
 export const [SchedulesProvider, useSchedules] = createItemsProvider({
-    label: "Schedules",
+    label: "DailySchedules",
     getItemsApi: getItemsRouteSchedulesGet,
 })
 
 export const [DecimalProvidersProvider, useDecimalProviders] = createItemsProvider({
-    label: "DecimalProviders",
+    label: "ScheduledDecimalProviders",
     getItemsApi: getItemsRouteDecimalProvidersGet,
 })
 
 export const [RateProvidersProvider, useRateProviders] = createItemsProvider({
-    label: "RateProviders",
+    label: "ScheduledRateProviders",
     getItemsApi: getItemsRouteRateProvidersGet,
 })

@@ -33,9 +33,9 @@ class RateProvider(BaseWithType):
         cascade="all, delete-orphan",
     )
 
-    bank_account_rate_providers: Mapped[List[BankAccount]] = relationship(
-        foreign_keys="BankAccount.rate_provider_id",
-        back_populates="rate_provider",
+    bank_account_interest_rate_providers: Mapped[List[BankAccount]] = relationship(
+        foreign_keys="BankAccount.interest_rate_provider_id",
+        back_populates="interest_rate_provider",
     )
 
     __mapper_args__ = {

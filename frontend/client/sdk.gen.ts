@@ -57,18 +57,23 @@ import type {
   GetItemsRouteBankAccountsGetData,
   GetItemsRouteBankAccountsGetResponses,
   GetItemsRouteDecimalProvidersGetData,
+  GetItemsRouteDecimalProvidersGetErrors,
   GetItemsRouteDecimalProvidersGetResponses,
   GetItemsRouteEntitiesGetData,
+  GetItemsRouteEntitiesGetErrors,
   GetItemsRouteEntitiesGetResponses,
   GetItemsRouteLedgerAccountsGetData,
   GetItemsRouteLedgerAccountsGetResponses,
   GetItemsRouteRateProvidersGetData,
+  GetItemsRouteRateProvidersGetErrors,
   GetItemsRouteRateProvidersGetResponses,
   GetItemsRouteRatesGetData,
+  GetItemsRouteRatesGetErrors,
   GetItemsRouteRatesGetResponses,
   GetItemsRouteScenariosGetData,
   GetItemsRouteScenariosGetResponses,
   GetItemsRouteSchedulesGetData,
+  GetItemsRouteSchedulesGetErrors,
   GetItemsRouteSchedulesGetResponses,
   PostItemRouteBankAccountsPostData,
   PostItemRouteBankAccountsPostErrors,
@@ -241,7 +246,7 @@ export const getItemsRouteEntitiesGet = <ThrowOnError extends boolean = false>(
 ) => {
   return (options?.client ?? client).get<
     GetItemsRouteEntitiesGetResponses,
-    unknown,
+    GetItemsRouteEntitiesGetErrors,
     ThrowOnError
   >({
     url: "/entities/",
@@ -531,7 +536,7 @@ export const getItemsRouteRatesGet = <ThrowOnError extends boolean = false>(
 ) => {
   return (options?.client ?? client).get<
     GetItemsRouteRatesGetResponses,
-    unknown,
+    GetItemsRouteRatesGetErrors,
     ThrowOnError
   >({
     url: "/rates/",
@@ -625,7 +630,7 @@ export const getItemsRouteSchedulesGet = <ThrowOnError extends boolean = false>(
 ) => {
   return (options?.client ?? client).get<
     GetItemsRouteSchedulesGetResponses,
-    unknown,
+    GetItemsRouteSchedulesGetErrors,
     ThrowOnError
   >({
     url: "/schedules/",
@@ -723,7 +728,7 @@ export const getItemsRouteRateProvidersGet = <
 ) => {
   return (options?.client ?? client).get<
     GetItemsRouteRateProvidersGetResponses,
-    unknown,
+    GetItemsRouteRateProvidersGetErrors,
     ThrowOnError
   >({
     url: "/rate-providers/",
@@ -821,7 +826,7 @@ export const getItemsRouteDecimalProvidersGet = <
 ) => {
   return (options?.client ?? client).get<
     GetItemsRouteDecimalProvidersGetResponses,
-    unknown,
+    GetItemsRouteDecimalProvidersGetErrors,
     ThrowOnError
   >({
     url: "/decimal-providers/",

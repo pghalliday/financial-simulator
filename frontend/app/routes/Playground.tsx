@@ -1,6 +1,6 @@
 import {useDisclosure} from '@mantine/hooks';
 import {Button, Modal, Space, TextInput, useModalsStack} from '@mantine/core';
-import {Page} from "~/pages/common/Page";
+import {Page} from "~/pages/Page";
 import {LoadingProvider} from "~/providers/LoadingProvider";
 import {useForm} from "@mantine/form";
 

@@ -49,7 +49,7 @@ class BankAccountPost(BaseModel):
     fees_payable_account_id: UUID | None = None
     fees_provider_id: UUID | None = None
     fee_payment_schedule_id: UUID | None = None
-    rate_provider_id: UUID | None = None
+    interest_rate_provider_id: UUID | None = None
     interest_payment_schedule_id: UUID | None = None
 
 class BankAccountGet(BaseModel):
@@ -70,8 +70,8 @@ class BankAccountGet(BaseModel):
     fees_provider: DecimalProviderDependentGet | None
     fee_payment_schedule_id: UUID | None
     fee_payment_schedule: ScheduleDependentGet | None
-    rate_provider_id: UUID | None
-    rate_provider: RateProviderDependentGet | None
+    interest_rate_provider_id: UUID | None
+    interest_rate_provider: RateProviderDependentGet | None
     interest_payment_schedule_id: UUID | None
     interest_payment_schedule: ScheduleDependentGet | None
     individual_entities: Sequence[EntityDependentGet]
@@ -137,10 +137,10 @@ model_mapper = ModelMapper(
     )
     .field("fee_payment_schedule", ParentModelField(schedule_dependent_get_mapper))
     .field(
-        "rate_provider_id",
-        OptionalRelatedModelField(field="rate_provider", model=RateProvider),
+        "interest_rate_provider_id",
+        OptionalRelatedModelField(field="interest_rate_provider", model=RateProvider),
     )
-    .field("rate_provider", ParentModelField(rate_provider_dependent_get_mapper))
+    .field("interest_rate_provider", ParentModelField(rate_provider_dependent_get_mapper))
     .field(
         "interest_payment_schedule_id",
         OptionalRelatedModelField(field="interest_payment_schedule", model=Schedule),

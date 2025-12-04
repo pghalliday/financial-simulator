@@ -1,5 +1,5 @@
 import {createContext, type Dispatch, type PropsWithChildren, type SetStateAction, useContext, useState} from 'react'
-import {APP_NAME} from "~/strings";
+import {APP_NAME} from "~/page_params/PageParams";
 import type {Breadcrumb} from "~/lib/types";
 
 export interface HeaderData {

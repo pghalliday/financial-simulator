@@ -5,7 +5,7 @@ import classes from './SearchSortList.module.css';
 import {type ChangeEvent, type ReactElement, type ReactNode, useEffect, useLayoutEffect, useRef, useState} from "react";
 
 import {getFieldOfType, type IdItem, type KeysOfType} from "~/lib/types";
-import type {ItemPageParams} from "~/lib/hooks/useItemPageParams";
+import type {ItemPageParams} from "~/hooks/useItemPageParams";
 
 const VISIBLE_HEIGHT_OFFSET = 30
 

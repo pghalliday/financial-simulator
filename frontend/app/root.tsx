@@ -11,9 +11,10 @@ import '@mantine/notifications/styles.css';
 
 import {Shell} from "~/components/layout/Shell";
 import {HeaderDataProvider} from "~/providers/HeaderDataProvider";
-import {ApiError} from "~/ApiError";
+import {ApiError} from "~/lib/ApiError";
 import {Notifications} from "@mantine/notifications";
 import type {ReactNode} from "react";
+import {NAVBAR_LINK_TREES} from "~/page_params/constants";
 
 export function Layout({children}: { children: ReactNode }) {
     return (
@@ -30,7 +31,7 @@ export function Layout({children}: { children: ReactNode }) {
         <MantineProvider>
             <Notifications/>
             <HeaderDataProvider>
-                <Shell>{children}</Shell>
+                <Shell navbarLinkTrees={NAVBAR_LINK_TREES}>{children}</Shell>
             </HeaderDataProvider>
         </MantineProvider>
         <ScrollRestoration/>

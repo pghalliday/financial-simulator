@@ -29,27 +29,27 @@ export type AllScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All Schedules
+   * All DailySchedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any Schedules
+   * Any DailySchedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment Schedules
+   * Bank Account Fee Payment DailySchedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment Schedules
+   * Bank Account Interest Payment DailySchedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
-   * Schedules
+   * DailySchedules
    */
   schedules: Array<ScheduleDependentGet>;
 };
@@ -71,7 +71,7 @@ export type AllSchedulePost = {
    */
   description?: string | null;
   /**
-   * Schedules
+   * DailySchedules
    */
   schedules: Array<AssociationReference>;
 };
@@ -101,27 +101,27 @@ export type AnyScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All Schedules
+   * All DailySchedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any Schedules
+   * Any DailySchedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment Schedules
+   * Bank Account Fee Payment DailySchedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment Schedules
+   * Bank Account Interest Payment DailySchedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
-   * Schedules
+   * DailySchedules
    */
   schedules: Array<ScheduleDependentGet>;
 };
@@ -143,7 +143,7 @@ export type AnySchedulePost = {
    */
   description?: string | null;
   /**
-   * Schedules
+   * DailySchedules
    */
   schedules: Array<AssociationReference>;
 };
@@ -171,7 +171,7 @@ export type BandedRateBandGet = {
    */
   size: number | string | null;
   /**
-   * Rate Id
+   * PeriodicRate Id
    */
   rate_id: string | null;
   rate: RateDependentGet | null;
@@ -186,7 +186,7 @@ export type BandedRateBandPost = {
    */
   size?: number | string | null;
   /**
-   * Rate Id
+   * PeriodicRate Id
    */
   rate_id?: string | null;
 };
@@ -212,11 +212,11 @@ export type BandedRateGet = {
    */
   description: string | null;
   /**
-   * Banded Rate Bands
+   * Banded PeriodicRate Bands
    */
   banded_rate_bands: Array<RateBandedRateBandGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
@@ -294,26 +294,26 @@ export type BankAccountGet = {
   fees_provider_id: string | null;
   fees_provider: DecimalProviderDependentGet | null;
   /**
-   * Fee Payment Schedule Id
+   * Fee Payment DailySchedule Id
    */
   fee_payment_schedule_id: string | null;
   fee_payment_schedule: ScheduleDependentGet | null;
   /**
-   * Rate Provider Id
+   * Interest PeriodicRate Provider Id
    */
-  rate_provider_id: string | null;
-  rate_provider: RateProviderDependentGet | null;
+  interest_rate_provider_id: string | null;
+  interest_rate_provider: RateProviderDependentGet | null;
   /**
-   * Interest Payment Schedule Id
+   * Interest Payment DailySchedule Id
    */
   interest_payment_schedule_id: string | null;
   interest_payment_schedule: ScheduleDependentGet | null;
   /**
-   * Individual Entities
+   * Individual IndividualEntities
    */
   individual_entities: Array<EntityDependentGet>;
   /**
-   * Corporation Entities
+   * Corporation IndividualEntities
    */
   corporation_entities: Array<EntityDependentGet>;
 };
@@ -355,15 +355,15 @@ export type BankAccountPost = {
    */
   fees_provider_id?: string | null;
   /**
-   * Fee Payment Schedule Id
+   * Fee Payment DailySchedule Id
    */
   fee_payment_schedule_id?: string | null;
   /**
-   * Rate Provider Id
+   * Interest PeriodicRate Provider Id
    */
-  rate_provider_id?: string | null;
+  interest_rate_provider_id?: string | null;
   /**
-   * Interest Payment Schedule Id
+   * Interest Payment DailySchedule Id
    */
   interest_payment_schedule_id?: string | null;
 };
@@ -407,15 +407,15 @@ export type ContinuousRateGet = {
    */
   description: string | null;
   /**
-   * Banded Rate Bands
+   * Banded PeriodicRate Bands
    */
   banded_rate_bands: Array<RateBandedRateBandGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Annual Rate
+   * Annual PeriodicRate
    */
   annual_rate: number | string | null;
 };
@@ -437,7 +437,7 @@ export type ContinuousRatePost = {
    */
   description?: string | null;
   /**
-   * Annual Rate
+   * Annual PeriodicRate
    */
   annual_rate?: number | string | null;
 };
@@ -523,23 +523,23 @@ export type DailyScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All Schedules
+   * All DailySchedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any Schedules
+   * Any DailySchedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment Schedules
+   * Bank Account Fee Payment DailySchedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment Schedules
+   * Bank Account Interest Payment DailySchedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
 };
@@ -601,23 +601,23 @@ export type DayScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All Schedules
+   * All DailySchedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any Schedules
+   * Any DailySchedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment Schedules
+   * Bank Account Fee Payment DailySchedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment Schedules
+   * Bank Account Interest Payment DailySchedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -731,7 +731,7 @@ export type DummyDayDay = {
    */
   date: string;
   /**
-   * Entities
+   * IndividualEntities
    */
   entities: Array<DummyDayEntity>;
 };
@@ -868,23 +868,23 @@ export type FromScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All Schedules
+   * All DailySchedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any Schedules
+   * Any DailySchedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment Schedules
+   * Bank Account Fee Payment DailySchedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment Schedules
+   * Bank Account Interest Payment DailySchedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -1200,19 +1200,19 @@ export type MergeRateProviderGet = {
    */
   description: string | null;
   /**
-   * Merge Rate Providers
+   * Merge PeriodicRate Providers
    */
   merge_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Next Rate Providers
+   * Next PeriodicRate Providers
    */
   next_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Bank Account Rate Providers
+   * Bank Account PeriodicRate Providers
    */
   bank_account_rate_providers: Array<DependentGet>;
   /**
-   * Rate Providers
+   * PeriodicRate Providers
    */
   rate_providers: Array<RateProviderDependentGet>;
 };
@@ -1234,7 +1234,7 @@ export type MergeRateProviderPost = {
    */
   description?: string | null;
   /**
-   * Rate Providers
+   * PeriodicRate Providers
    */
   rate_providers: Array<AssociationReference>;
 };
@@ -1264,23 +1264,23 @@ export type MonthlyScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All Schedules
+   * All DailySchedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any Schedules
+   * Any DailySchedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment Schedules
+   * Bank Account Fee Payment DailySchedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment Schedules
+   * Bank Account Interest Payment DailySchedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -1392,19 +1392,19 @@ export type NextRateProviderGet = {
    */
   description: string | null;
   /**
-   * Merge Rate Providers
+   * Merge PeriodicRate Providers
    */
   merge_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Next Rate Providers
+   * Next PeriodicRate Providers
    */
   next_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Bank Account Rate Providers
+   * Bank Account PeriodicRate Providers
    */
   bank_account_rate_providers: Array<DependentGet>;
   /**
-   * Rate Providers
+   * PeriodicRate Providers
    */
   rate_providers: Array<RateProviderDependentGet>;
 };
@@ -1426,7 +1426,7 @@ export type NextRateProviderPost = {
    */
   description?: string | null;
   /**
-   * Rate Providers
+   * PeriodicRate Providers
    */
   rate_providers: Array<AssociationReference>;
 };
@@ -1466,15 +1466,15 @@ export type PeriodicRateGet = {
    */
   description: string | null;
   /**
-   * Banded Rate Bands
+   * Banded PeriodicRate Bands
    */
   banded_rate_bands: Array<RateBandedRateBandGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Annual Rate
+   * Annual PeriodicRate
    */
   annual_rate: number | string | null;
   /**
@@ -1500,7 +1500,7 @@ export type PeriodicRatePost = {
    */
   description?: string | null;
   /**
-   * Annual Rate
+   * Annual PeriodicRate
    */
   annual_rate?: number | string | null;
   /**
@@ -1534,23 +1534,23 @@ export type RangeScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All Schedules
+   * All DailySchedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any Schedules
+   * Any DailySchedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment Schedules
+   * Bank Account Fee Payment DailySchedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment Schedules
+   * Bank Account Interest Payment DailySchedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -1598,7 +1598,7 @@ export type RateBandedRateBandGet = {
    */
   id: string;
   /**
-   * Banded Rate Id
+   * Banded PeriodicRate Id
    */
   banded_rate_id: string;
   banded_rate: RateDependentGet;
@@ -1710,7 +1710,7 @@ export type ScenarioGet = {
    */
   description: string | null;
   /**
-   * Entities
+   * IndividualEntities
    */
   entities: Array<EntityDependentGet>;
 };
@@ -1728,7 +1728,7 @@ export type ScenarioPost = {
    */
   description?: string | null;
   /**
-   * Entities
+   * IndividualEntities
    */
   entities: Array<ManyToManyReference>;
 };
@@ -1810,7 +1810,7 @@ export type ScheduledDecimalProviderGet = {
    */
   value: number | string | null;
   /**
-   * Schedule Id
+   * DailySchedule Id
    */
   schedule_id: string | null;
   schedule: ScheduleDependentGet | null;
@@ -1837,7 +1837,7 @@ export type ScheduledDecimalProviderPost = {
    */
   value?: number | string | null;
   /**
-   * Schedule Id
+   * DailySchedule Id
    */
   schedule_id?: string | null;
 };
@@ -1863,23 +1863,23 @@ export type ScheduledRateProviderGet = {
    */
   description: string | null;
   /**
-   * Merge Rate Providers
+   * Merge PeriodicRate Providers
    */
   merge_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Next Rate Providers
+   * Next PeriodicRate Providers
    */
   next_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Bank Account Rate Providers
+   * Bank Account PeriodicRate Providers
    */
   bank_account_rate_providers: Array<DependentGet>;
   /**
-   * Rate Id
+   * PeriodicRate Id
    */
   rate_id: string | null;
   /**
-   * Schedule Id
+   * DailySchedule Id
    */
   schedule_id: string | null;
   rate: RateDependentGet | null;
@@ -1903,11 +1903,11 @@ export type ScheduledRateProviderPost = {
    */
   description?: string | null;
   /**
-   * Rate Id
+   * PeriodicRate Id
    */
   rate_id?: string | null;
   /**
-   * Schedule Id
+   * DailySchedule Id
    */
   schedule_id?: string | null;
 };
@@ -1937,23 +1937,23 @@ export type UntilScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All Schedules
+   * All DailySchedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any Schedules
+   * Any DailySchedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment Schedules
+   * Bank Account Fee Payment DailySchedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment Schedules
+   * Bank Account Interest Payment DailySchedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -2027,23 +2027,23 @@ export type WeeklyScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All Schedules
+   * All DailySchedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any Schedules
+   * Any DailySchedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment Schedules
+   * Bank Account Fee Payment DailySchedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment Schedules
+   * Bank Account Interest Payment DailySchedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -2099,23 +2099,23 @@ export type YearlyScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled Rate Providers
+   * Scheduled PeriodicRate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All Schedules
+   * All DailySchedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any Schedules
+   * Any DailySchedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment Schedules
+   * Bank Account Fee Payment DailySchedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment Schedules
+   * Bank Account Interest Payment DailySchedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -2322,13 +2322,28 @@ export type PutItemRouteScenariosItemIdPutResponse =
 export type GetItemsRouteEntitiesGetData = {
   body?: never;
   path?: never;
-  query?: never;
+  query?: {
+    /**
+     * Type
+     */
+    type?: EntityType | null;
+  };
   url: "/entities/";
 };
 
+export type GetItemsRouteEntitiesGetErrors = {
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemsRouteEntitiesGetError =
+  GetItemsRouteEntitiesGetErrors[keyof GetItemsRouteEntitiesGetErrors];
+
 export type GetItemsRouteEntitiesGetResponses = {
   /**
-   * Response Get Items Route Entities  Get
+   * Response Get Items Route IndividualEntities  Get
    * Successful Response
    */
   200: Array<IndividualEntityGet | CorporationEntityGet>;
@@ -2367,7 +2382,7 @@ export type PostItemRouteEntitiesPostError =
 
 export type PostItemRouteEntitiesPostResponses = {
   /**
-   * Response Post Item Route Entities  Post
+   * Response Post Item Route IndividualEntities  Post
    * Successful Response
    */
   201: IndividualEntityGet | CorporationEntityGet;
@@ -2404,7 +2419,7 @@ export type DeleteItemRouteEntitiesItemIdDeleteError =
 
 export type DeleteItemRouteEntitiesItemIdDeleteResponses = {
   /**
-   * Response Delete Item Route Entities  Item Id  Delete
+   * Response Delete Item Route IndividualEntities  Item Id  Delete
    * Successful Response
    */
   200: IndividualEntityGet | CorporationEntityGet;
@@ -2441,7 +2456,7 @@ export type GetItemRouteEntitiesItemIdGetError =
 
 export type GetItemRouteEntitiesItemIdGetResponses = {
   /**
-   * Response Get Item Route Entities  Item Id  Get
+   * Response Get Item Route IndividualEntities  Item Id  Get
    * Successful Response
    */
   200: IndividualEntityGet | CorporationEntityGet;
@@ -2471,7 +2486,7 @@ export type PutItemRouteEntitiesItemIdPutErrors = {
    */
   400: HttpRelationInvalidError;
   /**
-   * Response 409 Put Item Route Entities  Item Id  Put
+   * Response 409 Put Item Route IndividualEntities  Item Id  Put
    * Database error
    */
   409: HttpDatabaseIntegrityError | HttpChangeTypeError;
@@ -2486,7 +2501,7 @@ export type PutItemRouteEntitiesItemIdPutError =
 
 export type PutItemRouteEntitiesItemIdPutResponses = {
   /**
-   * Response Put Item Route Entities  Item Id  Put
+   * Response Put Item Route IndividualEntities  Item Id  Put
    * Successful Response
    */
   200: IndividualEntityGet | CorporationEntityGet;
@@ -2828,13 +2843,28 @@ export type PutItemRouteLedgerAccountsItemIdPutResponse =
 export type GetItemsRouteRatesGetData = {
   body?: never;
   path?: never;
-  query?: never;
+  query?: {
+    /**
+     * Type
+     */
+    type?: RateType | null;
+  };
   url: "/rates/";
 };
 
+export type GetItemsRouteRatesGetErrors = {
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemsRouteRatesGetError =
+  GetItemsRouteRatesGetErrors[keyof GetItemsRouteRatesGetErrors];
+
 export type GetItemsRouteRatesGetResponses = {
   /**
-   * Response Get Items Route Rates  Get
+   * Response Get Items Route PeriodicRates  Get
    * Successful Response
    */
   200: Array<PeriodicRateGet | ContinuousRateGet | BandedRateGet>;
@@ -2869,7 +2899,7 @@ export type PostItemRouteRatesPostError =
 
 export type PostItemRouteRatesPostResponses = {
   /**
-   * Response Post Item Route Rates  Post
+   * Response Post Item Route PeriodicRates  Post
    * Successful Response
    */
   201: PeriodicRateGet | ContinuousRateGet | BandedRateGet;
@@ -2906,7 +2936,7 @@ export type DeleteItemRouteRatesItemIdDeleteError =
 
 export type DeleteItemRouteRatesItemIdDeleteResponses = {
   /**
-   * Response Delete Item Route Rates  Item Id  Delete
+   * Response Delete Item Route PeriodicRates  Item Id  Delete
    * Successful Response
    */
   200: PeriodicRateGet | ContinuousRateGet | BandedRateGet;
@@ -2943,7 +2973,7 @@ export type GetItemRouteRatesItemIdGetError =
 
 export type GetItemRouteRatesItemIdGetResponses = {
   /**
-   * Response Get Item Route Rates  Item Id  Get
+   * Response Get Item Route PeriodicRates  Item Id  Get
    * Successful Response
    */
   200: PeriodicRateGet | ContinuousRateGet | BandedRateGet;
@@ -2969,7 +2999,7 @@ export type PutItemRouteRatesItemIdPutData = {
 
 export type PutItemRouteRatesItemIdPutErrors = {
   /**
-   * Response 409 Put Item Route Rates  Item Id  Put
+   * Response 409 Put Item Route PeriodicRates  Item Id  Put
    * Database error
    */
   409: HttpDatabaseIntegrityError | HttpChangeTypeError;
@@ -2984,7 +3014,7 @@ export type PutItemRouteRatesItemIdPutError =
 
 export type PutItemRouteRatesItemIdPutResponses = {
   /**
-   * Response Put Item Route Rates  Item Id  Put
+   * Response Put Item Route PeriodicRates  Item Id  Put
    * Successful Response
    */
   200: PeriodicRateGet | ContinuousRateGet | BandedRateGet;
@@ -2996,13 +3026,28 @@ export type PutItemRouteRatesItemIdPutResponse =
 export type GetItemsRouteSchedulesGetData = {
   body?: never;
   path?: never;
-  query?: never;
+  query?: {
+    /**
+     * Type
+     */
+    type?: ScheduleType | null;
+  };
   url: "/schedules/";
 };
 
+export type GetItemsRouteSchedulesGetErrors = {
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemsRouteSchedulesGetError =
+  GetItemsRouteSchedulesGetErrors[keyof GetItemsRouteSchedulesGetErrors];
+
 export type GetItemsRouteSchedulesGetResponses = {
   /**
-   * Response Get Items Route Schedules  Get
+   * Response Get Items Route DailySchedules  Get
    * Successful Response
    */
   200: Array<
@@ -3062,7 +3107,7 @@ export type PostItemRouteSchedulesPostError =
 
 export type PostItemRouteSchedulesPostResponses = {
   /**
-   * Response Post Item Route Schedules  Post
+   * Response Post Item Route DailySchedules  Post
    * Successful Response
    */
   201:
@@ -3109,7 +3154,7 @@ export type DeleteItemRouteSchedulesItemIdDeleteError =
 
 export type DeleteItemRouteSchedulesItemIdDeleteResponses = {
   /**
-   * Response Delete Item Route Schedules  Item Id  Delete
+   * Response Delete Item Route DailySchedules  Item Id  Delete
    * Successful Response
    */
   200:
@@ -3156,7 +3201,7 @@ export type GetItemRouteSchedulesItemIdGetError =
 
 export type GetItemRouteSchedulesItemIdGetResponses = {
   /**
-   * Response Get Item Route Schedules  Item Id  Get
+   * Response Get Item Route DailySchedules  Item Id  Get
    * Successful Response
    */
   200:
@@ -3206,7 +3251,7 @@ export type PutItemRouteSchedulesItemIdPutErrors = {
    */
   400: HttpRelationInvalidError;
   /**
-   * Response 409 Put Item Route Schedules  Item Id  Put
+   * Response 409 Put Item Route DailySchedules  Item Id  Put
    * Database error
    */
   409: HttpDatabaseIntegrityError | HttpChangeTypeError;
@@ -3221,7 +3266,7 @@ export type PutItemRouteSchedulesItemIdPutError =
 
 export type PutItemRouteSchedulesItemIdPutResponses = {
   /**
-   * Response Put Item Route Schedules  Item Id  Put
+   * Response Put Item Route DailySchedules  Item Id  Put
    * Successful Response
    */
   200:
@@ -3243,13 +3288,28 @@ export type PutItemRouteSchedulesItemIdPutResponse =
 export type GetItemsRouteRateProvidersGetData = {
   body?: never;
   path?: never;
-  query?: never;
+  query?: {
+    /**
+     * Type
+     */
+    type?: RateProviderType | null;
+  };
   url: "/rate-providers/";
 };
 
+export type GetItemsRouteRateProvidersGetErrors = {
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemsRouteRateProvidersGetError =
+  GetItemsRouteRateProvidersGetErrors[keyof GetItemsRouteRateProvidersGetErrors];
+
 export type GetItemsRouteRateProvidersGetResponses = {
   /**
-   * Response Get Items Route Rate Providers  Get
+   * Response Get Items Route PeriodicRate Providers  Get
    * Successful Response
    */
   200: Array<
@@ -3293,7 +3353,7 @@ export type PostItemRouteRateProvidersPostError =
 
 export type PostItemRouteRateProvidersPostResponses = {
   /**
-   * Response Post Item Route Rate Providers  Post
+   * Response Post Item Route PeriodicRate Providers  Post
    * Successful Response
    */
   201: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
@@ -3330,7 +3390,7 @@ export type DeleteItemRouteRateProvidersItemIdDeleteError =
 
 export type DeleteItemRouteRateProvidersItemIdDeleteResponses = {
   /**
-   * Response Delete Item Route Rate Providers  Item Id  Delete
+   * Response Delete Item Route PeriodicRate Providers  Item Id  Delete
    * Successful Response
    */
   200: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
@@ -3367,7 +3427,7 @@ export type GetItemRouteRateProvidersItemIdGetError =
 
 export type GetItemRouteRateProvidersItemIdGetResponses = {
   /**
-   * Response Get Item Route Rate Providers  Item Id  Get
+   * Response Get Item Route PeriodicRate Providers  Item Id  Get
    * Successful Response
    */
   200: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
@@ -3400,7 +3460,7 @@ export type PutItemRouteRateProvidersItemIdPutErrors = {
    */
   400: HttpRelationInvalidError;
   /**
-   * Response 409 Put Item Route Rate Providers  Item Id  Put
+   * Response 409 Put Item Route PeriodicRate Providers  Item Id  Put
    * Database error
    */
   409: HttpDatabaseIntegrityError | HttpChangeTypeError;
@@ -3415,7 +3475,7 @@ export type PutItemRouteRateProvidersItemIdPutError =
 
 export type PutItemRouteRateProvidersItemIdPutResponses = {
   /**
-   * Response Put Item Route Rate Providers  Item Id  Put
+   * Response Put Item Route PeriodicRate Providers  Item Id  Put
    * Successful Response
    */
   200: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
@@ -3427,9 +3487,24 @@ export type PutItemRouteRateProvidersItemIdPutResponse =
 export type GetItemsRouteDecimalProvidersGetData = {
   body?: never;
   path?: never;
-  query?: never;
+  query?: {
+    /**
+     * Type
+     */
+    type?: DecimalProviderType | null;
+  };
   url: "/decimal-providers/";
 };
+
+export type GetItemsRouteDecimalProvidersGetErrors = {
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemsRouteDecimalProvidersGetError =
+  GetItemsRouteDecimalProvidersGetErrors[keyof GetItemsRouteDecimalProvidersGetErrors];
 
 export type GetItemsRouteDecimalProvidersGetResponses = {
   /**

@@ -2,6 +2,7 @@ import logging
 from typing import Union
 
 from fastapi import APIRouter
+from sqlalchemy import ColumnElement
 from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import (
@@ -21,9 +22,18 @@ router = APIRouter(
     tags=["entities"],
 )
 
+
 class EntityQueryParams(DefaultQueryParams):
+    type: EntityType | None = None
+
     def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
         return Entity.name
+
+    def query_where(self) -> Union[ColumnElement[bool], None]:
+        if self.type is None:
+            return None
+        return Entity.type == self.type
+
 
 TypedCollection(
     table_model=Entity,

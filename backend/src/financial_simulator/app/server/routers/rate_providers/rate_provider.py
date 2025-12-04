@@ -28,7 +28,7 @@ class RateProviderGet(TypedBaseModel[RateProviderType]):
     description: str | None
     merge_rate_providers: Sequence[RateProviderDependentGet]
     next_rate_providers: Sequence[RateProviderDependentGet]
-    bank_account_rate_providers: Sequence[DependentGet]
+    bank_account_interest_rate_providers: Sequence[DependentGet]
 
 def add_rate_provider_model_fields(model_mapper: ModelMapper) -> ModelMapper:
     return (
@@ -50,7 +50,7 @@ def add_rate_provider_model_fields(model_mapper: ModelMapper) -> ModelMapper:
             ),
         )
         .field(
-            "bank_account_rate_providers",
+            "bank_account_interest_rate_providers",
             ChildrenModelField(bank_account_dependent_get_mapper),
         )
     )

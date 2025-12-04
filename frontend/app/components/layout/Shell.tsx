@@ -3,8 +3,13 @@ import {useDisclosure} from '@mantine/hooks';
 import {type PropsWithChildren} from "react";
 import {Header} from "~/components/layout/Header";
 import {Navbar} from "~/components/layout/Navbar";
+import type {NavbarLinkTree} from "~/components/layout/NavbarLink";
 
-export function Shell({children}: PropsWithChildren<{}>) {
+interface Props {
+    navbarLinkTrees: NavbarLinkTree[]
+}
+
+export function Shell({navbarLinkTrees, children}: PropsWithChildren<Props>) {
     const [opened, {toggle, close}] = useDisclosure();
     return (
         <AppShell
@@ -17,7 +22,7 @@ export function Shell({children}: PropsWithChildren<{}>) {
             }}
         >
             <Header burgerOpened={opened} toggleBurger={toggle}/>
-            <Navbar close={close}/>
+            <Navbar close={close} navbarLinkTrees={navbarLinkTrees}/>
             <AppShell.Main>{children}</AppShell.Main>
         </AppShell>
     );

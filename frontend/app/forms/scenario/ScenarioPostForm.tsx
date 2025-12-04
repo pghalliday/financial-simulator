@@ -1,33 +1,35 @@
-import {BoundTextInput} from "~/components/controls/bound/BoundTextInput";
-import {SCENARIO_POST_FORM_NAME} from "./ScenarioPostFormContext"
-import {BoundRelationSelect} from "~/components/controls/bound/BoundRelationSelect";
 import {useEntities} from "~/providers/items_providers";
+import {TextInput} from "@mantine/core";
+import {RelationMultiSelect} from "~/components/controls/RelationMultiSelect";
+import {useScenarioPostFormContext} from "~/forms/scenario/contexts";
 
 export function ScenarioPostForm() {
+    const form = useScenarioPostFormContext()
     const [entities] = useEntities()
     return <>
-        <BoundTextInput
-            formName={SCENARIO_POST_FORM_NAME}
-            fieldName="name"
+        <TextInput
+            autoFocus
             label="Name"
             description="Scenario name"
             placeholder="The unique scenario name"
             required
+            key={form.key("name")}
+            {...form.getInputProps("name")}
         />
-        <BoundTextInput
-            formName={SCENARIO_POST_FORM_NAME}
-            fieldName="description"
+        <TextInput
             label="Description"
             description="Scenario description"
             placeholder="The scenario description"
+            key={form.key("description")}
+            {...form.getInputProps("description")}
         />
-        <BoundRelationSelect
-            formName={SCENARIO_POST_FORM_NAME}
-            fieldName="entities"
+        <RelationMultiSelect
             data={entities}
-            label="Entities"
+            label="IndividualEntities"
             description="Linked entities"
             placeholder="The scenario entities"
+            key={form.key("entities")}
+            {...form.getInputProps("entities")}
         />
     </>
 }

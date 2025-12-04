@@ -1,32 +1,29 @@
 import {Button, Group, LoadingOverlay, Modal, Space} from "@mantine/core";
-import {type PropsWithChildren} from "react";
-import {type FormRegistry, type FormValues, useFormContext} from "~/lib/hooks/useFormContext";
+import {type FormEventHandler, type PropsWithChildren} from "react";
 
-interface AddItemModalProps<Form extends keyof FormRegistry> {
+interface AddItemModalProps {
     opened: boolean
-    onClose: () => void,
-    stackId: string,
-    formName: Form,
-    working: boolean,
-    title: string,
-    onSubmit: (post: FormValues<Form>) => void,
-    onCancel: () => void,
+    onClose: () => void
+    stackId: string
+    working: boolean
+    title: string
+    onSubmit: FormEventHandler<HTMLFormElement>
+    onCancel: () => void
 }
 
-export function AddItemModal<Form extends keyof FormRegistry>(
+export function AddItemModal(
     {
         opened,
         onClose,
         stackId,
-        formName,
         working,
         title,
         onSubmit,
         onCancel,
         children,
-    }: PropsWithChildren<AddItemModalProps<Form>>
+    }: PropsWithChildren<AddItemModalProps>
 ) {
-    const form = useFormContext(formName)
+    // const form = useFormContext(formName)
 
     return <Modal
         opened={opened}
@@ -39,7 +36,7 @@ export function AddItemModal<Form extends keyof FormRegistry>(
             zIndex={1000}
             overlayProps={{blur: 2}}
         />
-        <form onSubmit={form.onSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
             {children}
             <Space h={20}/>
             <Group justify="flex-end">
