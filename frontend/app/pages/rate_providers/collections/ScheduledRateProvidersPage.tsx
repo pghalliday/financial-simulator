@@ -1,8 +1,8 @@
 import {Page} from "~/pages/Page";
 import {ScheduledRateProviderList} from "~/lists/rate_providers/ScheduledRateProviderList";
-import {useScheduledRateProviders} from "~/providers/typed_items_providers";
 import {SCHEDULED_RATE_PROVIDER_PARAMS} from "~/page_params/rate_providers";
 import {ScheduledRateProviderPostFormProvider} from "~/forms/rate_provider/contexts";
+import {useScheduledRateProviders} from "~/providers/items_providers";
 
 export function ScheduledRateProvidersPage() {
     const [rateProviders, setRateProviders] = useScheduledRateProviders()

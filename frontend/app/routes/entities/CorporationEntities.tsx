@@ -1,13 +1,13 @@
 import {useDisclosure} from "@mantine/hooks";
 import {LoadingProvider} from "~/providers/LoadingProvider";
-import {CorporationEntitiesProvider} from "~/providers/typed_items_providers";
-import {ScenariosProvider} from "~/providers/items_providers";
+import {BankAccountsProvider, CorporationEntitiesProvider, ScenariosProvider} from "~/providers/items_providers";
 import {CorporationEntitiesPage} from "~/pages/entities/collections/CorporationEntitiesPage";
 
 export default function CorporationEntities() {
     const [loadingEntities, {open: startLoadingEntities, close: stopLoadingEntities}] = useDisclosure()
     const [loadingScenarios, {open: startLoadingScenarios, close: stopLoadingScenarios}] = useDisclosure()
-    return <LoadingProvider loading={loadingEntities || loadingScenarios}>
+    const [loadingBankAccounts, {open: startLoadingBankAccounts, close: stopLoadingBankAccounts}] = useDisclosure()
+    return <LoadingProvider loading={loadingEntities || loadingScenarios || loadingBankAccounts}>
         <CorporationEntitiesProvider
             onBegin={startLoadingEntities}
             onEnd={stopLoadingEntities}
@@ -16,7 +16,12 @@ export default function CorporationEntities() {
                 onBegin={startLoadingScenarios}
                 onEnd={stopLoadingScenarios}
             >
-                <CorporationEntitiesPage/>
+                <BankAccountsProvider
+                    onBegin={startLoadingBankAccounts}
+                    onEnd={stopLoadingBankAccounts}
+                >
+                    <CorporationEntitiesPage/>
+                </BankAccountsProvider>
             </ScenariosProvider>
         </CorporationEntitiesProvider>
     </LoadingProvider>

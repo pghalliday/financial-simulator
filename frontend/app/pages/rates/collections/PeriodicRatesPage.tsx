@@ -2,7 +2,7 @@ import {Page} from "~/pages/Page";
 import {PeriodicRateList} from "~/lists/rates/PeriodicRateList";
 import {PERIODIC_RATE_PARAMS} from "~/page_params/rates";
 import {PeriodicRatePostFormProvider} from "~/forms/rate/contexts";
-import {usePeriodicRates} from "~/providers/typed_items_providers";
+import {usePeriodicRates} from "~/providers/items_providers";
 
 export function PeriodicRatesPage() {
     const [rates, setRates] = usePeriodicRates()

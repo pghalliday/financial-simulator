@@ -1,8 +1,7 @@
 import {useDisclosure} from "@mantine/hooks";
 import {LoadingProvider} from "~/providers/LoadingProvider";
 import {ScheduledRateProvidersPage} from "~/pages/rate_providers/collections/ScheduledRateProvidersPage";
-import {ScheduledRateProvidersProvider} from "~/providers/typed_items_providers";
-import {RatesProvider, SchedulesProvider} from "~/providers/items_providers";
+import {RatesProvider, ScheduledRateProvidersProvider, SchedulesProvider} from "~/providers/items_providers";
 
 export default function ScheduledRateProviders() {
     const [loadingScheduledRateProviders, {

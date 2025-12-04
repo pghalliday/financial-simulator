@@ -1,5 +1,8 @@
-from typing import Literal
+from typing import Literal, Union
 from uuid import UUID
+
+from fastapi import APIRouter
+from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import (
     RateProviderType,
@@ -18,6 +21,8 @@ from financial_simulator.app.server.routers.schedules.schedule_dependent import 
     schedule_dependent_get_mapper,
 )
 from ..rates.rate_dependent import RateDependentGet, rate_dependent_get_mapper
+from ...util.collection import Collection
+from ...util.query_params import DefaultQueryParams
 
 
 class ScheduledRateProviderPost(RateProviderPost):
@@ -49,4 +54,23 @@ scheduled_provider_model_mapper = ModelMapper(
     ))
     .field("rate", ParentModelField(rate_dependent_get_mapper))
     .field("schedule", ParentModelField(schedule_dependent_get_mapper))
+)
+
+
+class ScheduledRateProviderQueryParams(DefaultQueryParams):
+    def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
+        return ScheduledRateProvider.name
+
+
+router = APIRouter(
+    prefix="/scheduled-rate-providers",
+    tags=["scheduled-rate-providers"],
+)
+
+
+Collection(
+    query_params_class=ScheduledRateProviderQueryParams,
+    model_mapper=scheduled_provider_model_mapper,
+).add_endpoints(
+    router=router,
 )

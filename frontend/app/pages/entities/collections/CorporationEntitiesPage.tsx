@@ -1,8 +1,8 @@
 import {Page} from "~/pages/Page";
 import {CorporationEntityList} from "~/lists/entities/CorporationEntityList";
-import {useCorporationEntities} from "~/providers/typed_items_providers";
 import {CORPORATION_ENTITY_PARAMS} from "~/page_params/entities";
 import {CorporationEntityPostFormProvider} from "~/forms/entity/contexts";
+import {useCorporationEntities} from "~/providers/items_providers";
 
 export function CorporationEntitiesPage() {
     const [entities, setEntities] = useCorporationEntities()

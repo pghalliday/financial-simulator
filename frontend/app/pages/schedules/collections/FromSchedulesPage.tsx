@@ -2,7 +2,7 @@ import {Page} from "~/pages/Page";
 import {FromScheduleList} from "~/lists/schedules/FromScheduleList";
 import {FROM_SCHEDULE_PARAMS} from "~/page_params/schedules";
 import {FromSchedulePostFormProvider} from "~/forms/schedule/contexts";
-import {useFromSchedules} from "~/providers/typed_items_providers";
+import {useFromSchedules} from "~/providers/items_providers";
 
 export function FromSchedulesPage() {
     const [schedules, setSchedules] = useFromSchedules()

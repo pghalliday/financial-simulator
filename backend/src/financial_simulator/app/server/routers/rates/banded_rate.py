@@ -1,8 +1,10 @@
 from decimal import Decimal
-from typing import Literal, Sequence
+from typing import Literal, Sequence, Union
 from uuid import UUID
 
+from fastapi import APIRouter
 from pydantic import BaseModel
+from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import BandedRate, BandedRateBand, Rate, RateType
 from .rate import RatePost, RateGet, add_rate_model_fields
@@ -10,6 +12,7 @@ from financial_simulator.app.server.routers.rates.rate_dependent import (
     RateDependentGet,
     rate_dependent_get_mapper,
 )
+from ...util.collection import Collection
 from ...util.model_mapper import (
     ModelMapper,
     ChildrenModelField,
@@ -17,6 +20,8 @@ from ...util.model_mapper import (
     OptionalRelatedModelField,
     ParentModelField,
 )
+from ...util.query_params import DefaultQueryParams
+
 
 class BandedRateBandPost(BaseModel):
     size: Decimal | None = None
@@ -62,4 +67,23 @@ banded_rate_model_mapper = ModelMapper(
         banded_rate_band_model_mapper.get_mapper,
         banded_rate_band_model_mapper.post_mapper,
     ))
+)
+
+
+class BandedRateQueryParams(DefaultQueryParams):
+    def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
+        return BandedRate.name
+
+
+router = APIRouter(
+    prefix="/banded-rates",
+    tags=["banded-rates"],
+)
+
+
+Collection(
+    query_params_class=BandedRateQueryParams,
+    model_mapper=banded_rate_model_mapper,
+).add_endpoints(
+    router=router,
 )

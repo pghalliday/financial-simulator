@@ -33,9 +33,9 @@ export function ScheduledDecimalProviderPostForm() {
         />
         <RelationSelect
             data={schedules}
-            label="DailySchedule"
-            description={"DailySchedule"}
-            placeholder="DailySchedule"
+            label="Schedule"
+            description={"Schedule"}
+            placeholder="Schedule"
             key={form.key("schedule_id")}
             {...form.getInputProps("schedule_id")}
         />

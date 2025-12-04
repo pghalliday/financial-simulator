@@ -1,8 +1,7 @@
 import {useDisclosure} from "@mantine/hooks";
-import {DecimalProvidersProvider} from "~/providers/items_providers";
+import {DecimalProvidersProvider, NextDecimalProvidersProvider} from "~/providers/items_providers";
 import {LoadingProvider} from "~/providers/LoadingProvider";
 import {NextDecimalProvidersPage} from "~/pages/decimal_providers/collections/NextDecimalProvidersPage";
-import {NextDecimalProvidersProvider} from "~/providers/typed_items_providers";
 
 export default function NextDecimalProviders() {
     const [loadingNextDecimalProviders, {

@@ -1,8 +1,7 @@
 import {useDisclosure} from "@mantine/hooks";
-import {SchedulesProvider} from "~/providers/items_providers";
+import {ScheduledDecimalProvidersProvider, SchedulesProvider} from "~/providers/items_providers";
 import {LoadingProvider} from "~/providers/LoadingProvider";
 import {ScheduledDecimalProvidersPage} from "~/pages/decimal_providers/collections/ScheduledDecimalProvidersPage";
-import {ScheduledDecimalProvidersProvider} from "~/providers/typed_items_providers";
 
 export default function ScheduledDecimalProviders() {
     const [loadingDecimalProviders, {

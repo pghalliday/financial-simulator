@@ -2,22 +2,22 @@ import type {Breadcrumb} from "~/lib/types";
 import {useHeaderData} from "~/providers/HeaderDataProvider";
 import {useEffect} from "react";
 
-export interface PageParams {
+export interface PageMetaDataParams {
     title: string
     description: string
     breadcrumbs: Breadcrumb[]
 }
 
-export function PageMetaData({pageParams}: { pageParams: PageParams }) {
+export function PageMetaData({pageMetaDataParams}: { pageMetaDataParams: PageMetaDataParams }) {
     const {setHeaderData} = useHeaderData();
 
     useEffect(() => {
-        setHeaderData(pageParams)
-    }, [pageParams]);
+        setHeaderData(pageMetaDataParams)
+    }, [pageMetaDataParams]);
 
     return <>
-        <title>{pageParams?.title}</title>
-        <meta property="og:title" content={pageParams?.title}/>
-        <meta property="description" content={pageParams?.description}/>
+        <title>{pageMetaDataParams?.title}</title>
+        <meta property="og:title" content={pageMetaDataParams?.title}/>
+        <meta property="description" content={pageMetaDataParams?.description}/>
     </>
 }

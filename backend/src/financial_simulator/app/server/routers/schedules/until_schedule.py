@@ -1,5 +1,8 @@
 from datetime import date
-from typing import Literal
+from typing import Literal, Union
+
+from fastapi import APIRouter
+from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import (
     UntilSchedule,
@@ -10,6 +13,9 @@ from financial_simulator.app.server.util.model_mapper import (
     OrdinaryModelField,
 )
 from .schedule import ScheduleGet, SchedulePost, add_schedule_model_fields
+from ...util.collection import Collection
+from ...util.query_params import DefaultQueryParams
+
 
 class UntilSchedulePost(SchedulePost):
     type: Literal[ScheduleType.UNTIL]
@@ -29,4 +35,23 @@ until_schedule_model_mapper = ModelMapper(
 (
     add_schedule_model_fields(until_schedule_model_mapper)
     .field("until_date", OrdinaryModelField())
+)
+
+
+class UntilScheduleQueryParams(DefaultQueryParams):
+    def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
+        return UntilSchedule.name
+
+
+router = APIRouter(
+    prefix="/until-schedules",
+    tags=["until-schedules"],
+)
+
+
+Collection(
+    query_params_class=UntilScheduleQueryParams,
+    model_mapper=until_schedule_model_mapper,
+).add_endpoints(
+    router=router,
 )

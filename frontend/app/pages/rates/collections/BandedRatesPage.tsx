@@ -2,7 +2,7 @@ import {Page} from "~/pages/Page";
 import {BandedRateList} from "~/lists/rates/BandedRateList";
 import {BANDED_RATE_PARAMS} from "~/page_params/rates";
 import {BandedRatePostFormProvider} from "~/forms/rate/contexts";
-import {useBandedRates} from "~/providers/typed_items_providers";
+import {useBandedRates} from "~/providers/items_providers";
 
 export function BandedRatesPage() {
     const [rates, setRates] = useBandedRates()

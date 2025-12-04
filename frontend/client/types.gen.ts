@@ -29,27 +29,27 @@ export type AllScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All DailySchedules
+   * All Schedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any DailySchedules
+   * Any Schedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment DailySchedules
+   * Bank Account Fee Payment Schedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment DailySchedules
+   * Bank Account Interest Payment Schedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
-   * DailySchedules
+   * Schedules
    */
   schedules: Array<ScheduleDependentGet>;
 };
@@ -71,7 +71,7 @@ export type AllSchedulePost = {
    */
   description?: string | null;
   /**
-   * DailySchedules
+   * Schedules
    */
   schedules: Array<AssociationReference>;
 };
@@ -101,27 +101,27 @@ export type AnyScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All DailySchedules
+   * All Schedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any DailySchedules
+   * Any Schedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment DailySchedules
+   * Bank Account Fee Payment Schedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment DailySchedules
+   * Bank Account Interest Payment Schedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
-   * DailySchedules
+   * Schedules
    */
   schedules: Array<ScheduleDependentGet>;
 };
@@ -143,7 +143,7 @@ export type AnySchedulePost = {
    */
   description?: string | null;
   /**
-   * DailySchedules
+   * Schedules
    */
   schedules: Array<AssociationReference>;
 };
@@ -171,7 +171,7 @@ export type BandedRateBandGet = {
    */
   size: number | string | null;
   /**
-   * PeriodicRate Id
+   * Rate Id
    */
   rate_id: string | null;
   rate: RateDependentGet | null;
@@ -186,7 +186,7 @@ export type BandedRateBandPost = {
    */
   size?: number | string | null;
   /**
-   * PeriodicRate Id
+   * Rate Id
    */
   rate_id?: string | null;
 };
@@ -212,11 +212,11 @@ export type BandedRateGet = {
    */
   description: string | null;
   /**
-   * Banded PeriodicRate Bands
+   * Banded Rate Bands
    */
   banded_rate_bands: Array<RateBandedRateBandGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
@@ -294,26 +294,26 @@ export type BankAccountGet = {
   fees_provider_id: string | null;
   fees_provider: DecimalProviderDependentGet | null;
   /**
-   * Fee Payment DailySchedule Id
+   * Fee Payment Schedule Id
    */
   fee_payment_schedule_id: string | null;
   fee_payment_schedule: ScheduleDependentGet | null;
   /**
-   * Interest PeriodicRate Provider Id
+   * Interest Rate Provider Id
    */
   interest_rate_provider_id: string | null;
   interest_rate_provider: RateProviderDependentGet | null;
   /**
-   * Interest Payment DailySchedule Id
+   * Interest Payment Schedule Id
    */
   interest_payment_schedule_id: string | null;
   interest_payment_schedule: ScheduleDependentGet | null;
   /**
-   * Individual IndividualEntities
+   * Individual Entities
    */
   individual_entities: Array<EntityDependentGet>;
   /**
-   * Corporation IndividualEntities
+   * Corporation Entities
    */
   corporation_entities: Array<EntityDependentGet>;
 };
@@ -355,15 +355,15 @@ export type BankAccountPost = {
    */
   fees_provider_id?: string | null;
   /**
-   * Fee Payment DailySchedule Id
+   * Fee Payment Schedule Id
    */
   fee_payment_schedule_id?: string | null;
   /**
-   * Interest PeriodicRate Provider Id
+   * Interest Rate Provider Id
    */
   interest_rate_provider_id?: string | null;
   /**
-   * Interest Payment DailySchedule Id
+   * Interest Payment Schedule Id
    */
   interest_payment_schedule_id?: string | null;
 };
@@ -407,15 +407,15 @@ export type ContinuousRateGet = {
    */
   description: string | null;
   /**
-   * Banded PeriodicRate Bands
+   * Banded Rate Bands
    */
   banded_rate_bands: Array<RateBandedRateBandGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Annual PeriodicRate
+   * Annual Rate
    */
   annual_rate: number | string | null;
 };
@@ -437,7 +437,7 @@ export type ContinuousRatePost = {
    */
   description?: string | null;
   /**
-   * Annual PeriodicRate
+   * Annual Rate
    */
   annual_rate?: number | string | null;
 };
@@ -523,23 +523,23 @@ export type DailyScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All DailySchedules
+   * All Schedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any DailySchedules
+   * Any Schedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment DailySchedules
+   * Bank Account Fee Payment Schedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment DailySchedules
+   * Bank Account Interest Payment Schedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
 };
@@ -601,23 +601,23 @@ export type DayScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All DailySchedules
+   * All Schedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any DailySchedules
+   * Any Schedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment DailySchedules
+   * Bank Account Fee Payment Schedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment DailySchedules
+   * Bank Account Interest Payment Schedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -731,7 +731,7 @@ export type DummyDayDay = {
    */
   date: string;
   /**
-   * IndividualEntities
+   * Entities
    */
   entities: Array<DummyDayEntity>;
 };
@@ -868,23 +868,23 @@ export type FromScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All DailySchedules
+   * All Schedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any DailySchedules
+   * Any Schedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment DailySchedules
+   * Bank Account Fee Payment Schedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment DailySchedules
+   * Bank Account Interest Payment Schedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -1200,19 +1200,19 @@ export type MergeRateProviderGet = {
    */
   description: string | null;
   /**
-   * Merge PeriodicRate Providers
+   * Merge Rate Providers
    */
   merge_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Next PeriodicRate Providers
+   * Next Rate Providers
    */
   next_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Bank Account PeriodicRate Providers
+   * Bank Account Interest Rate Providers
    */
-  bank_account_rate_providers: Array<DependentGet>;
+  bank_account_interest_rate_providers: Array<DependentGet>;
   /**
-   * PeriodicRate Providers
+   * Rate Providers
    */
   rate_providers: Array<RateProviderDependentGet>;
 };
@@ -1234,7 +1234,7 @@ export type MergeRateProviderPost = {
    */
   description?: string | null;
   /**
-   * PeriodicRate Providers
+   * Rate Providers
    */
   rate_providers: Array<AssociationReference>;
 };
@@ -1264,23 +1264,23 @@ export type MonthlyScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All DailySchedules
+   * All Schedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any DailySchedules
+   * Any Schedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment DailySchedules
+   * Bank Account Fee Payment Schedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment DailySchedules
+   * Bank Account Interest Payment Schedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -1392,19 +1392,19 @@ export type NextRateProviderGet = {
    */
   description: string | null;
   /**
-   * Merge PeriodicRate Providers
+   * Merge Rate Providers
    */
   merge_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Next PeriodicRate Providers
+   * Next Rate Providers
    */
   next_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Bank Account PeriodicRate Providers
+   * Bank Account Interest Rate Providers
    */
-  bank_account_rate_providers: Array<DependentGet>;
+  bank_account_interest_rate_providers: Array<DependentGet>;
   /**
-   * PeriodicRate Providers
+   * Rate Providers
    */
   rate_providers: Array<RateProviderDependentGet>;
 };
@@ -1426,7 +1426,7 @@ export type NextRateProviderPost = {
    */
   description?: string | null;
   /**
-   * PeriodicRate Providers
+   * Rate Providers
    */
   rate_providers: Array<AssociationReference>;
 };
@@ -1466,15 +1466,15 @@ export type PeriodicRateGet = {
    */
   description: string | null;
   /**
-   * Banded PeriodicRate Bands
+   * Banded Rate Bands
    */
   banded_rate_bands: Array<RateBandedRateBandGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Annual PeriodicRate
+   * Annual Rate
    */
   annual_rate: number | string | null;
   /**
@@ -1500,7 +1500,7 @@ export type PeriodicRatePost = {
    */
   description?: string | null;
   /**
-   * Annual PeriodicRate
+   * Annual Rate
    */
   annual_rate?: number | string | null;
   /**
@@ -1534,23 +1534,23 @@ export type RangeScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All DailySchedules
+   * All Schedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any DailySchedules
+   * Any Schedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment DailySchedules
+   * Bank Account Fee Payment Schedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment DailySchedules
+   * Bank Account Interest Payment Schedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -1598,7 +1598,7 @@ export type RateBandedRateBandGet = {
    */
   id: string;
   /**
-   * Banded PeriodicRate Id
+   * Banded Rate Id
    */
   banded_rate_id: string;
   banded_rate: RateDependentGet;
@@ -1710,7 +1710,7 @@ export type ScenarioGet = {
    */
   description: string | null;
   /**
-   * IndividualEntities
+   * Entities
    */
   entities: Array<EntityDependentGet>;
 };
@@ -1728,7 +1728,7 @@ export type ScenarioPost = {
    */
   description?: string | null;
   /**
-   * IndividualEntities
+   * Entities
    */
   entities: Array<ManyToManyReference>;
 };
@@ -1810,7 +1810,7 @@ export type ScheduledDecimalProviderGet = {
    */
   value: number | string | null;
   /**
-   * DailySchedule Id
+   * Schedule Id
    */
   schedule_id: string | null;
   schedule: ScheduleDependentGet | null;
@@ -1837,7 +1837,7 @@ export type ScheduledDecimalProviderPost = {
    */
   value?: number | string | null;
   /**
-   * DailySchedule Id
+   * Schedule Id
    */
   schedule_id?: string | null;
 };
@@ -1863,23 +1863,23 @@ export type ScheduledRateProviderGet = {
    */
   description: string | null;
   /**
-   * Merge PeriodicRate Providers
+   * Merge Rate Providers
    */
   merge_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Next PeriodicRate Providers
+   * Next Rate Providers
    */
   next_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * Bank Account PeriodicRate Providers
+   * Bank Account Interest Rate Providers
    */
-  bank_account_rate_providers: Array<DependentGet>;
+  bank_account_interest_rate_providers: Array<DependentGet>;
   /**
-   * PeriodicRate Id
+   * Rate Id
    */
   rate_id: string | null;
   /**
-   * DailySchedule Id
+   * Schedule Id
    */
   schedule_id: string | null;
   rate: RateDependentGet | null;
@@ -1903,11 +1903,11 @@ export type ScheduledRateProviderPost = {
    */
   description?: string | null;
   /**
-   * PeriodicRate Id
+   * Rate Id
    */
   rate_id?: string | null;
   /**
-   * DailySchedule Id
+   * Schedule Id
    */
   schedule_id?: string | null;
 };
@@ -1937,23 +1937,23 @@ export type UntilScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All DailySchedules
+   * All Schedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any DailySchedules
+   * Any Schedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment DailySchedules
+   * Bank Account Fee Payment Schedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment DailySchedules
+   * Bank Account Interest Payment Schedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -2027,23 +2027,23 @@ export type WeeklyScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All DailySchedules
+   * All Schedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any DailySchedules
+   * Any Schedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment DailySchedules
+   * Bank Account Fee Payment Schedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment DailySchedules
+   * Bank Account Interest Payment Schedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -2099,23 +2099,23 @@ export type YearlyScheduleGet = {
    */
   scheduled_decimal_providers: Array<DecimalProviderDependentGet>;
   /**
-   * Scheduled PeriodicRate Providers
+   * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
   /**
-   * All DailySchedules
+   * All Schedules
    */
   all_schedules: Array<ScheduleDependentGet>;
   /**
-   * Any DailySchedules
+   * Any Schedules
    */
   any_schedules: Array<ScheduleDependentGet>;
   /**
-   * Bank Account Fee Payment DailySchedules
+   * Bank Account Fee Payment Schedules
    */
   bank_account_fee_payment_schedules: Array<DependentGet>;
   /**
-   * Bank Account Interest Payment DailySchedules
+   * Bank Account Interest Payment Schedules
    */
   bank_account_interest_payment_schedules: Array<DependentGet>;
   /**
@@ -2343,7 +2343,7 @@ export type GetItemsRouteEntitiesGetError =
 
 export type GetItemsRouteEntitiesGetResponses = {
   /**
-   * Response Get Items Route IndividualEntities  Get
+   * Response Get Items Route Entities  Get
    * Successful Response
    */
   200: Array<IndividualEntityGet | CorporationEntityGet>;
@@ -2382,7 +2382,7 @@ export type PostItemRouteEntitiesPostError =
 
 export type PostItemRouteEntitiesPostResponses = {
   /**
-   * Response Post Item Route IndividualEntities  Post
+   * Response Post Item Route Entities  Post
    * Successful Response
    */
   201: IndividualEntityGet | CorporationEntityGet;
@@ -2419,7 +2419,7 @@ export type DeleteItemRouteEntitiesItemIdDeleteError =
 
 export type DeleteItemRouteEntitiesItemIdDeleteResponses = {
   /**
-   * Response Delete Item Route IndividualEntities  Item Id  Delete
+   * Response Delete Item Route Entities  Item Id  Delete
    * Successful Response
    */
   200: IndividualEntityGet | CorporationEntityGet;
@@ -2456,7 +2456,7 @@ export type GetItemRouteEntitiesItemIdGetError =
 
 export type GetItemRouteEntitiesItemIdGetResponses = {
   /**
-   * Response Get Item Route IndividualEntities  Item Id  Get
+   * Response Get Item Route Entities  Item Id  Get
    * Successful Response
    */
   200: IndividualEntityGet | CorporationEntityGet;
@@ -2486,7 +2486,7 @@ export type PutItemRouteEntitiesItemIdPutErrors = {
    */
   400: HttpRelationInvalidError;
   /**
-   * Response 409 Put Item Route IndividualEntities  Item Id  Put
+   * Response 409 Put Item Route Entities  Item Id  Put
    * Database error
    */
   409: HttpDatabaseIntegrityError | HttpChangeTypeError;
@@ -2501,7 +2501,7 @@ export type PutItemRouteEntitiesItemIdPutError =
 
 export type PutItemRouteEntitiesItemIdPutResponses = {
   /**
-   * Response Put Item Route IndividualEntities  Item Id  Put
+   * Response Put Item Route Entities  Item Id  Put
    * Successful Response
    */
   200: IndividualEntityGet | CorporationEntityGet;
@@ -2509,6 +2509,336 @@ export type PutItemRouteEntitiesItemIdPutResponses = {
 
 export type PutItemRouteEntitiesItemIdPutResponse =
   PutItemRouteEntitiesItemIdPutResponses[keyof PutItemRouteEntitiesItemIdPutResponses];
+
+export type GetItemsRouteIndividualEntitiesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/individual-entities/";
+};
+
+export type GetItemsRouteIndividualEntitiesGetResponses = {
+  /**
+   * Response Get Items Route Individual Entities  Get
+   * Successful Response
+   */
+  200: Array<IndividualEntityGet>;
+};
+
+export type GetItemsRouteIndividualEntitiesGetResponse =
+  GetItemsRouteIndividualEntitiesGetResponses[keyof GetItemsRouteIndividualEntitiesGetResponses];
+
+export type PostItemRouteIndividualEntitiesPostData = {
+  body: IndividualEntityPost;
+  path?: never;
+  query?: never;
+  url: "/individual-entities/";
+};
+
+export type PostItemRouteIndividualEntitiesPostErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteIndividualEntitiesPostError =
+  PostItemRouteIndividualEntitiesPostErrors[keyof PostItemRouteIndividualEntitiesPostErrors];
+
+export type PostItemRouteIndividualEntitiesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: IndividualEntityGet;
+};
+
+export type PostItemRouteIndividualEntitiesPostResponse =
+  PostItemRouteIndividualEntitiesPostResponses[keyof PostItemRouteIndividualEntitiesPostResponses];
+
+export type DeleteItemRouteIndividualEntitiesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/individual-entities/{item_id}";
+};
+
+export type DeleteItemRouteIndividualEntitiesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteIndividualEntitiesItemIdDeleteError =
+  DeleteItemRouteIndividualEntitiesItemIdDeleteErrors[keyof DeleteItemRouteIndividualEntitiesItemIdDeleteErrors];
+
+export type DeleteItemRouteIndividualEntitiesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: IndividualEntityGet;
+};
+
+export type DeleteItemRouteIndividualEntitiesItemIdDeleteResponse =
+  DeleteItemRouteIndividualEntitiesItemIdDeleteResponses[keyof DeleteItemRouteIndividualEntitiesItemIdDeleteResponses];
+
+export type GetItemRouteIndividualEntitiesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/individual-entities/{item_id}";
+};
+
+export type GetItemRouteIndividualEntitiesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteIndividualEntitiesItemIdGetError =
+  GetItemRouteIndividualEntitiesItemIdGetErrors[keyof GetItemRouteIndividualEntitiesItemIdGetErrors];
+
+export type GetItemRouteIndividualEntitiesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: IndividualEntityGet;
+};
+
+export type GetItemRouteIndividualEntitiesItemIdGetResponse =
+  GetItemRouteIndividualEntitiesItemIdGetResponses[keyof GetItemRouteIndividualEntitiesItemIdGetResponses];
+
+export type PutItemRouteIndividualEntitiesItemIdPutData = {
+  body: IndividualEntityPost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/individual-entities/{item_id}";
+};
+
+export type PutItemRouteIndividualEntitiesItemIdPutErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteIndividualEntitiesItemIdPutError =
+  PutItemRouteIndividualEntitiesItemIdPutErrors[keyof PutItemRouteIndividualEntitiesItemIdPutErrors];
+
+export type PutItemRouteIndividualEntitiesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: IndividualEntityGet;
+};
+
+export type PutItemRouteIndividualEntitiesItemIdPutResponse =
+  PutItemRouteIndividualEntitiesItemIdPutResponses[keyof PutItemRouteIndividualEntitiesItemIdPutResponses];
+
+export type GetItemsRouteCorporationEntitiesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/corporation-entities/";
+};
+
+export type GetItemsRouteCorporationEntitiesGetResponses = {
+  /**
+   * Response Get Items Route Corporation Entities  Get
+   * Successful Response
+   */
+  200: Array<CorporationEntityGet>;
+};
+
+export type GetItemsRouteCorporationEntitiesGetResponse =
+  GetItemsRouteCorporationEntitiesGetResponses[keyof GetItemsRouteCorporationEntitiesGetResponses];
+
+export type PostItemRouteCorporationEntitiesPostData = {
+  body: CorporationEntityPost;
+  path?: never;
+  query?: never;
+  url: "/corporation-entities/";
+};
+
+export type PostItemRouteCorporationEntitiesPostErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteCorporationEntitiesPostError =
+  PostItemRouteCorporationEntitiesPostErrors[keyof PostItemRouteCorporationEntitiesPostErrors];
+
+export type PostItemRouteCorporationEntitiesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: CorporationEntityGet;
+};
+
+export type PostItemRouteCorporationEntitiesPostResponse =
+  PostItemRouteCorporationEntitiesPostResponses[keyof PostItemRouteCorporationEntitiesPostResponses];
+
+export type DeleteItemRouteCorporationEntitiesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/corporation-entities/{item_id}";
+};
+
+export type DeleteItemRouteCorporationEntitiesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteCorporationEntitiesItemIdDeleteError =
+  DeleteItemRouteCorporationEntitiesItemIdDeleteErrors[keyof DeleteItemRouteCorporationEntitiesItemIdDeleteErrors];
+
+export type DeleteItemRouteCorporationEntitiesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: CorporationEntityGet;
+};
+
+export type DeleteItemRouteCorporationEntitiesItemIdDeleteResponse =
+  DeleteItemRouteCorporationEntitiesItemIdDeleteResponses[keyof DeleteItemRouteCorporationEntitiesItemIdDeleteResponses];
+
+export type GetItemRouteCorporationEntitiesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/corporation-entities/{item_id}";
+};
+
+export type GetItemRouteCorporationEntitiesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteCorporationEntitiesItemIdGetError =
+  GetItemRouteCorporationEntitiesItemIdGetErrors[keyof GetItemRouteCorporationEntitiesItemIdGetErrors];
+
+export type GetItemRouteCorporationEntitiesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: CorporationEntityGet;
+};
+
+export type GetItemRouteCorporationEntitiesItemIdGetResponse =
+  GetItemRouteCorporationEntitiesItemIdGetResponses[keyof GetItemRouteCorporationEntitiesItemIdGetResponses];
+
+export type PutItemRouteCorporationEntitiesItemIdPutData = {
+  body: CorporationEntityPost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/corporation-entities/{item_id}";
+};
+
+export type PutItemRouteCorporationEntitiesItemIdPutErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteCorporationEntitiesItemIdPutError =
+  PutItemRouteCorporationEntitiesItemIdPutErrors[keyof PutItemRouteCorporationEntitiesItemIdPutErrors];
+
+export type PutItemRouteCorporationEntitiesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: CorporationEntityGet;
+};
+
+export type PutItemRouteCorporationEntitiesItemIdPutResponse =
+  PutItemRouteCorporationEntitiesItemIdPutResponses[keyof PutItemRouteCorporationEntitiesItemIdPutResponses];
 
 export type GetItemsRouteBankAccountsGetData = {
   body?: never;
@@ -2864,7 +3194,7 @@ export type GetItemsRouteRatesGetError =
 
 export type GetItemsRouteRatesGetResponses = {
   /**
-   * Response Get Items Route PeriodicRates  Get
+   * Response Get Items Route Rates  Get
    * Successful Response
    */
   200: Array<PeriodicRateGet | ContinuousRateGet | BandedRateGet>;
@@ -2899,7 +3229,7 @@ export type PostItemRouteRatesPostError =
 
 export type PostItemRouteRatesPostResponses = {
   /**
-   * Response Post Item Route PeriodicRates  Post
+   * Response Post Item Route Rates  Post
    * Successful Response
    */
   201: PeriodicRateGet | ContinuousRateGet | BandedRateGet;
@@ -2936,7 +3266,7 @@ export type DeleteItemRouteRatesItemIdDeleteError =
 
 export type DeleteItemRouteRatesItemIdDeleteResponses = {
   /**
-   * Response Delete Item Route PeriodicRates  Item Id  Delete
+   * Response Delete Item Route Rates  Item Id  Delete
    * Successful Response
    */
   200: PeriodicRateGet | ContinuousRateGet | BandedRateGet;
@@ -2973,7 +3303,7 @@ export type GetItemRouteRatesItemIdGetError =
 
 export type GetItemRouteRatesItemIdGetResponses = {
   /**
-   * Response Get Item Route PeriodicRates  Item Id  Get
+   * Response Get Item Route Rates  Item Id  Get
    * Successful Response
    */
   200: PeriodicRateGet | ContinuousRateGet | BandedRateGet;
@@ -2999,7 +3329,7 @@ export type PutItemRouteRatesItemIdPutData = {
 
 export type PutItemRouteRatesItemIdPutErrors = {
   /**
-   * Response 409 Put Item Route PeriodicRates  Item Id  Put
+   * Response 409 Put Item Route Rates  Item Id  Put
    * Database error
    */
   409: HttpDatabaseIntegrityError | HttpChangeTypeError;
@@ -3014,7 +3344,7 @@ export type PutItemRouteRatesItemIdPutError =
 
 export type PutItemRouteRatesItemIdPutResponses = {
   /**
-   * Response Put Item Route PeriodicRates  Item Id  Put
+   * Response Put Item Route Rates  Item Id  Put
    * Successful Response
    */
   200: PeriodicRateGet | ContinuousRateGet | BandedRateGet;
@@ -3022,6 +3352,477 @@ export type PutItemRouteRatesItemIdPutResponses = {
 
 export type PutItemRouteRatesItemIdPutResponse =
   PutItemRouteRatesItemIdPutResponses[keyof PutItemRouteRatesItemIdPutResponses];
+
+export type GetItemsRoutePeriodicRatesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/periodic-rates/";
+};
+
+export type GetItemsRoutePeriodicRatesGetResponses = {
+  /**
+   * Response Get Items Route Periodic Rates  Get
+   * Successful Response
+   */
+  200: Array<PeriodicRateGet>;
+};
+
+export type GetItemsRoutePeriodicRatesGetResponse =
+  GetItemsRoutePeriodicRatesGetResponses[keyof GetItemsRoutePeriodicRatesGetResponses];
+
+export type PostItemRoutePeriodicRatesPostData = {
+  body: PeriodicRatePost;
+  path?: never;
+  query?: never;
+  url: "/periodic-rates/";
+};
+
+export type PostItemRoutePeriodicRatesPostErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRoutePeriodicRatesPostError =
+  PostItemRoutePeriodicRatesPostErrors[keyof PostItemRoutePeriodicRatesPostErrors];
+
+export type PostItemRoutePeriodicRatesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: PeriodicRateGet;
+};
+
+export type PostItemRoutePeriodicRatesPostResponse =
+  PostItemRoutePeriodicRatesPostResponses[keyof PostItemRoutePeriodicRatesPostResponses];
+
+export type DeleteItemRoutePeriodicRatesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/periodic-rates/{item_id}";
+};
+
+export type DeleteItemRoutePeriodicRatesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRoutePeriodicRatesItemIdDeleteError =
+  DeleteItemRoutePeriodicRatesItemIdDeleteErrors[keyof DeleteItemRoutePeriodicRatesItemIdDeleteErrors];
+
+export type DeleteItemRoutePeriodicRatesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: PeriodicRateGet;
+};
+
+export type DeleteItemRoutePeriodicRatesItemIdDeleteResponse =
+  DeleteItemRoutePeriodicRatesItemIdDeleteResponses[keyof DeleteItemRoutePeriodicRatesItemIdDeleteResponses];
+
+export type GetItemRoutePeriodicRatesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/periodic-rates/{item_id}";
+};
+
+export type GetItemRoutePeriodicRatesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRoutePeriodicRatesItemIdGetError =
+  GetItemRoutePeriodicRatesItemIdGetErrors[keyof GetItemRoutePeriodicRatesItemIdGetErrors];
+
+export type GetItemRoutePeriodicRatesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: PeriodicRateGet;
+};
+
+export type GetItemRoutePeriodicRatesItemIdGetResponse =
+  GetItemRoutePeriodicRatesItemIdGetResponses[keyof GetItemRoutePeriodicRatesItemIdGetResponses];
+
+export type PutItemRoutePeriodicRatesItemIdPutData = {
+  body: PeriodicRatePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/periodic-rates/{item_id}";
+};
+
+export type PutItemRoutePeriodicRatesItemIdPutErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRoutePeriodicRatesItemIdPutError =
+  PutItemRoutePeriodicRatesItemIdPutErrors[keyof PutItemRoutePeriodicRatesItemIdPutErrors];
+
+export type PutItemRoutePeriodicRatesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: PeriodicRateGet;
+};
+
+export type PutItemRoutePeriodicRatesItemIdPutResponse =
+  PutItemRoutePeriodicRatesItemIdPutResponses[keyof PutItemRoutePeriodicRatesItemIdPutResponses];
+
+export type GetItemsRouteContinuousRatesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/continuous-rates/";
+};
+
+export type GetItemsRouteContinuousRatesGetResponses = {
+  /**
+   * Response Get Items Route Continuous Rates  Get
+   * Successful Response
+   */
+  200: Array<ContinuousRateGet>;
+};
+
+export type GetItemsRouteContinuousRatesGetResponse =
+  GetItemsRouteContinuousRatesGetResponses[keyof GetItemsRouteContinuousRatesGetResponses];
+
+export type PostItemRouteContinuousRatesPostData = {
+  body: ContinuousRatePost;
+  path?: never;
+  query?: never;
+  url: "/continuous-rates/";
+};
+
+export type PostItemRouteContinuousRatesPostErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteContinuousRatesPostError =
+  PostItemRouteContinuousRatesPostErrors[keyof PostItemRouteContinuousRatesPostErrors];
+
+export type PostItemRouteContinuousRatesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: ContinuousRateGet;
+};
+
+export type PostItemRouteContinuousRatesPostResponse =
+  PostItemRouteContinuousRatesPostResponses[keyof PostItemRouteContinuousRatesPostResponses];
+
+export type DeleteItemRouteContinuousRatesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/continuous-rates/{item_id}";
+};
+
+export type DeleteItemRouteContinuousRatesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteContinuousRatesItemIdDeleteError =
+  DeleteItemRouteContinuousRatesItemIdDeleteErrors[keyof DeleteItemRouteContinuousRatesItemIdDeleteErrors];
+
+export type DeleteItemRouteContinuousRatesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: ContinuousRateGet;
+};
+
+export type DeleteItemRouteContinuousRatesItemIdDeleteResponse =
+  DeleteItemRouteContinuousRatesItemIdDeleteResponses[keyof DeleteItemRouteContinuousRatesItemIdDeleteResponses];
+
+export type GetItemRouteContinuousRatesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/continuous-rates/{item_id}";
+};
+
+export type GetItemRouteContinuousRatesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteContinuousRatesItemIdGetError =
+  GetItemRouteContinuousRatesItemIdGetErrors[keyof GetItemRouteContinuousRatesItemIdGetErrors];
+
+export type GetItemRouteContinuousRatesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: ContinuousRateGet;
+};
+
+export type GetItemRouteContinuousRatesItemIdGetResponse =
+  GetItemRouteContinuousRatesItemIdGetResponses[keyof GetItemRouteContinuousRatesItemIdGetResponses];
+
+export type PutItemRouteContinuousRatesItemIdPutData = {
+  body: ContinuousRatePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/continuous-rates/{item_id}";
+};
+
+export type PutItemRouteContinuousRatesItemIdPutErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteContinuousRatesItemIdPutError =
+  PutItemRouteContinuousRatesItemIdPutErrors[keyof PutItemRouteContinuousRatesItemIdPutErrors];
+
+export type PutItemRouteContinuousRatesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: ContinuousRateGet;
+};
+
+export type PutItemRouteContinuousRatesItemIdPutResponse =
+  PutItemRouteContinuousRatesItemIdPutResponses[keyof PutItemRouteContinuousRatesItemIdPutResponses];
+
+export type GetItemsRouteBandedRatesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/banded-rates/";
+};
+
+export type GetItemsRouteBandedRatesGetResponses = {
+  /**
+   * Response Get Items Route Banded Rates  Get
+   * Successful Response
+   */
+  200: Array<BandedRateGet>;
+};
+
+export type GetItemsRouteBandedRatesGetResponse =
+  GetItemsRouteBandedRatesGetResponses[keyof GetItemsRouteBandedRatesGetResponses];
+
+export type PostItemRouteBandedRatesPostData = {
+  body: BandedRatePost;
+  path?: never;
+  query?: never;
+  url: "/banded-rates/";
+};
+
+export type PostItemRouteBandedRatesPostErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteBandedRatesPostError =
+  PostItemRouteBandedRatesPostErrors[keyof PostItemRouteBandedRatesPostErrors];
+
+export type PostItemRouteBandedRatesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: BandedRateGet;
+};
+
+export type PostItemRouteBandedRatesPostResponse =
+  PostItemRouteBandedRatesPostResponses[keyof PostItemRouteBandedRatesPostResponses];
+
+export type DeleteItemRouteBandedRatesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/banded-rates/{item_id}";
+};
+
+export type DeleteItemRouteBandedRatesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteBandedRatesItemIdDeleteError =
+  DeleteItemRouteBandedRatesItemIdDeleteErrors[keyof DeleteItemRouteBandedRatesItemIdDeleteErrors];
+
+export type DeleteItemRouteBandedRatesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: BandedRateGet;
+};
+
+export type DeleteItemRouteBandedRatesItemIdDeleteResponse =
+  DeleteItemRouteBandedRatesItemIdDeleteResponses[keyof DeleteItemRouteBandedRatesItemIdDeleteResponses];
+
+export type GetItemRouteBandedRatesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/banded-rates/{item_id}";
+};
+
+export type GetItemRouteBandedRatesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteBandedRatesItemIdGetError =
+  GetItemRouteBandedRatesItemIdGetErrors[keyof GetItemRouteBandedRatesItemIdGetErrors];
+
+export type GetItemRouteBandedRatesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: BandedRateGet;
+};
+
+export type GetItemRouteBandedRatesItemIdGetResponse =
+  GetItemRouteBandedRatesItemIdGetResponses[keyof GetItemRouteBandedRatesItemIdGetResponses];
+
+export type PutItemRouteBandedRatesItemIdPutData = {
+  body: BandedRatePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/banded-rates/{item_id}";
+};
+
+export type PutItemRouteBandedRatesItemIdPutErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteBandedRatesItemIdPutError =
+  PutItemRouteBandedRatesItemIdPutErrors[keyof PutItemRouteBandedRatesItemIdPutErrors];
+
+export type PutItemRouteBandedRatesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: BandedRateGet;
+};
+
+export type PutItemRouteBandedRatesItemIdPutResponse =
+  PutItemRouteBandedRatesItemIdPutResponses[keyof PutItemRouteBandedRatesItemIdPutResponses];
 
 export type GetItemsRouteSchedulesGetData = {
   body?: never;
@@ -3047,7 +3848,7 @@ export type GetItemsRouteSchedulesGetError =
 
 export type GetItemsRouteSchedulesGetResponses = {
   /**
-   * Response Get Items Route DailySchedules  Get
+   * Response Get Items Route Schedules  Get
    * Successful Response
    */
   200: Array<
@@ -3107,7 +3908,7 @@ export type PostItemRouteSchedulesPostError =
 
 export type PostItemRouteSchedulesPostResponses = {
   /**
-   * Response Post Item Route DailySchedules  Post
+   * Response Post Item Route Schedules  Post
    * Successful Response
    */
   201:
@@ -3154,7 +3955,7 @@ export type DeleteItemRouteSchedulesItemIdDeleteError =
 
 export type DeleteItemRouteSchedulesItemIdDeleteResponses = {
   /**
-   * Response Delete Item Route DailySchedules  Item Id  Delete
+   * Response Delete Item Route Schedules  Item Id  Delete
    * Successful Response
    */
   200:
@@ -3201,7 +4002,7 @@ export type GetItemRouteSchedulesItemIdGetError =
 
 export type GetItemRouteSchedulesItemIdGetResponses = {
   /**
-   * Response Get Item Route DailySchedules  Item Id  Get
+   * Response Get Item Route Schedules  Item Id  Get
    * Successful Response
    */
   200:
@@ -3251,7 +4052,7 @@ export type PutItemRouteSchedulesItemIdPutErrors = {
    */
   400: HttpRelationInvalidError;
   /**
-   * Response 409 Put Item Route DailySchedules  Item Id  Put
+   * Response 409 Put Item Route Schedules  Item Id  Put
    * Database error
    */
   409: HttpDatabaseIntegrityError | HttpChangeTypeError;
@@ -3266,7 +4067,7 @@ export type PutItemRouteSchedulesItemIdPutError =
 
 export type PutItemRouteSchedulesItemIdPutResponses = {
   /**
-   * Response Put Item Route DailySchedules  Item Id  Put
+   * Response Put Item Route Schedules  Item Id  Put
    * Successful Response
    */
   200:
@@ -3284,6 +4085,1592 @@ export type PutItemRouteSchedulesItemIdPutResponses = {
 
 export type PutItemRouteSchedulesItemIdPutResponse =
   PutItemRouteSchedulesItemIdPutResponses[keyof PutItemRouteSchedulesItemIdPutResponses];
+
+export type GetItemsRouteDailySchedulesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/daily-schedules/";
+};
+
+export type GetItemsRouteDailySchedulesGetResponses = {
+  /**
+   * Response Get Items Route Daily Schedules  Get
+   * Successful Response
+   */
+  200: Array<DailyScheduleGet>;
+};
+
+export type GetItemsRouteDailySchedulesGetResponse =
+  GetItemsRouteDailySchedulesGetResponses[keyof GetItemsRouteDailySchedulesGetResponses];
+
+export type PostItemRouteDailySchedulesPostData = {
+  body: DailySchedulePost;
+  path?: never;
+  query?: never;
+  url: "/daily-schedules/";
+};
+
+export type PostItemRouteDailySchedulesPostErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteDailySchedulesPostError =
+  PostItemRouteDailySchedulesPostErrors[keyof PostItemRouteDailySchedulesPostErrors];
+
+export type PostItemRouteDailySchedulesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: DailyScheduleGet;
+};
+
+export type PostItemRouteDailySchedulesPostResponse =
+  PostItemRouteDailySchedulesPostResponses[keyof PostItemRouteDailySchedulesPostResponses];
+
+export type DeleteItemRouteDailySchedulesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/daily-schedules/{item_id}";
+};
+
+export type DeleteItemRouteDailySchedulesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteDailySchedulesItemIdDeleteError =
+  DeleteItemRouteDailySchedulesItemIdDeleteErrors[keyof DeleteItemRouteDailySchedulesItemIdDeleteErrors];
+
+export type DeleteItemRouteDailySchedulesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: DailyScheduleGet;
+};
+
+export type DeleteItemRouteDailySchedulesItemIdDeleteResponse =
+  DeleteItemRouteDailySchedulesItemIdDeleteResponses[keyof DeleteItemRouteDailySchedulesItemIdDeleteResponses];
+
+export type GetItemRouteDailySchedulesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/daily-schedules/{item_id}";
+};
+
+export type GetItemRouteDailySchedulesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteDailySchedulesItemIdGetError =
+  GetItemRouteDailySchedulesItemIdGetErrors[keyof GetItemRouteDailySchedulesItemIdGetErrors];
+
+export type GetItemRouteDailySchedulesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: DailyScheduleGet;
+};
+
+export type GetItemRouteDailySchedulesItemIdGetResponse =
+  GetItemRouteDailySchedulesItemIdGetResponses[keyof GetItemRouteDailySchedulesItemIdGetResponses];
+
+export type PutItemRouteDailySchedulesItemIdPutData = {
+  body: DailySchedulePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/daily-schedules/{item_id}";
+};
+
+export type PutItemRouteDailySchedulesItemIdPutErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteDailySchedulesItemIdPutError =
+  PutItemRouteDailySchedulesItemIdPutErrors[keyof PutItemRouteDailySchedulesItemIdPutErrors];
+
+export type PutItemRouteDailySchedulesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: DailyScheduleGet;
+};
+
+export type PutItemRouteDailySchedulesItemIdPutResponse =
+  PutItemRouteDailySchedulesItemIdPutResponses[keyof PutItemRouteDailySchedulesItemIdPutResponses];
+
+export type GetItemsRouteDaySchedulesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/day-schedules/";
+};
+
+export type GetItemsRouteDaySchedulesGetResponses = {
+  /**
+   * Response Get Items Route Day Schedules  Get
+   * Successful Response
+   */
+  200: Array<DayScheduleGet>;
+};
+
+export type GetItemsRouteDaySchedulesGetResponse =
+  GetItemsRouteDaySchedulesGetResponses[keyof GetItemsRouteDaySchedulesGetResponses];
+
+export type PostItemRouteDaySchedulesPostData = {
+  body: DaySchedulePost;
+  path?: never;
+  query?: never;
+  url: "/day-schedules/";
+};
+
+export type PostItemRouteDaySchedulesPostErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteDaySchedulesPostError =
+  PostItemRouteDaySchedulesPostErrors[keyof PostItemRouteDaySchedulesPostErrors];
+
+export type PostItemRouteDaySchedulesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: DayScheduleGet;
+};
+
+export type PostItemRouteDaySchedulesPostResponse =
+  PostItemRouteDaySchedulesPostResponses[keyof PostItemRouteDaySchedulesPostResponses];
+
+export type DeleteItemRouteDaySchedulesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/day-schedules/{item_id}";
+};
+
+export type DeleteItemRouteDaySchedulesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteDaySchedulesItemIdDeleteError =
+  DeleteItemRouteDaySchedulesItemIdDeleteErrors[keyof DeleteItemRouteDaySchedulesItemIdDeleteErrors];
+
+export type DeleteItemRouteDaySchedulesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: DayScheduleGet;
+};
+
+export type DeleteItemRouteDaySchedulesItemIdDeleteResponse =
+  DeleteItemRouteDaySchedulesItemIdDeleteResponses[keyof DeleteItemRouteDaySchedulesItemIdDeleteResponses];
+
+export type GetItemRouteDaySchedulesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/day-schedules/{item_id}";
+};
+
+export type GetItemRouteDaySchedulesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteDaySchedulesItemIdGetError =
+  GetItemRouteDaySchedulesItemIdGetErrors[keyof GetItemRouteDaySchedulesItemIdGetErrors];
+
+export type GetItemRouteDaySchedulesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: DayScheduleGet;
+};
+
+export type GetItemRouteDaySchedulesItemIdGetResponse =
+  GetItemRouteDaySchedulesItemIdGetResponses[keyof GetItemRouteDaySchedulesItemIdGetResponses];
+
+export type PutItemRouteDaySchedulesItemIdPutData = {
+  body: DaySchedulePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/day-schedules/{item_id}";
+};
+
+export type PutItemRouteDaySchedulesItemIdPutErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteDaySchedulesItemIdPutError =
+  PutItemRouteDaySchedulesItemIdPutErrors[keyof PutItemRouteDaySchedulesItemIdPutErrors];
+
+export type PutItemRouteDaySchedulesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: DayScheduleGet;
+};
+
+export type PutItemRouteDaySchedulesItemIdPutResponse =
+  PutItemRouteDaySchedulesItemIdPutResponses[keyof PutItemRouteDaySchedulesItemIdPutResponses];
+
+export type GetItemsRouteWeeklySchedulesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/weekly-schedules/";
+};
+
+export type GetItemsRouteWeeklySchedulesGetResponses = {
+  /**
+   * Response Get Items Route Weekly Schedules  Get
+   * Successful Response
+   */
+  200: Array<WeeklyScheduleGet>;
+};
+
+export type GetItemsRouteWeeklySchedulesGetResponse =
+  GetItemsRouteWeeklySchedulesGetResponses[keyof GetItemsRouteWeeklySchedulesGetResponses];
+
+export type PostItemRouteWeeklySchedulesPostData = {
+  body: WeeklySchedulePost;
+  path?: never;
+  query?: never;
+  url: "/weekly-schedules/";
+};
+
+export type PostItemRouteWeeklySchedulesPostErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteWeeklySchedulesPostError =
+  PostItemRouteWeeklySchedulesPostErrors[keyof PostItemRouteWeeklySchedulesPostErrors];
+
+export type PostItemRouteWeeklySchedulesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: WeeklyScheduleGet;
+};
+
+export type PostItemRouteWeeklySchedulesPostResponse =
+  PostItemRouteWeeklySchedulesPostResponses[keyof PostItemRouteWeeklySchedulesPostResponses];
+
+export type DeleteItemRouteWeeklySchedulesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/weekly-schedules/{item_id}";
+};
+
+export type DeleteItemRouteWeeklySchedulesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteWeeklySchedulesItemIdDeleteError =
+  DeleteItemRouteWeeklySchedulesItemIdDeleteErrors[keyof DeleteItemRouteWeeklySchedulesItemIdDeleteErrors];
+
+export type DeleteItemRouteWeeklySchedulesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: WeeklyScheduleGet;
+};
+
+export type DeleteItemRouteWeeklySchedulesItemIdDeleteResponse =
+  DeleteItemRouteWeeklySchedulesItemIdDeleteResponses[keyof DeleteItemRouteWeeklySchedulesItemIdDeleteResponses];
+
+export type GetItemRouteWeeklySchedulesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/weekly-schedules/{item_id}";
+};
+
+export type GetItemRouteWeeklySchedulesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteWeeklySchedulesItemIdGetError =
+  GetItemRouteWeeklySchedulesItemIdGetErrors[keyof GetItemRouteWeeklySchedulesItemIdGetErrors];
+
+export type GetItemRouteWeeklySchedulesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: WeeklyScheduleGet;
+};
+
+export type GetItemRouteWeeklySchedulesItemIdGetResponse =
+  GetItemRouteWeeklySchedulesItemIdGetResponses[keyof GetItemRouteWeeklySchedulesItemIdGetResponses];
+
+export type PutItemRouteWeeklySchedulesItemIdPutData = {
+  body: WeeklySchedulePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/weekly-schedules/{item_id}";
+};
+
+export type PutItemRouteWeeklySchedulesItemIdPutErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteWeeklySchedulesItemIdPutError =
+  PutItemRouteWeeklySchedulesItemIdPutErrors[keyof PutItemRouteWeeklySchedulesItemIdPutErrors];
+
+export type PutItemRouteWeeklySchedulesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: WeeklyScheduleGet;
+};
+
+export type PutItemRouteWeeklySchedulesItemIdPutResponse =
+  PutItemRouteWeeklySchedulesItemIdPutResponses[keyof PutItemRouteWeeklySchedulesItemIdPutResponses];
+
+export type GetItemsRouteMonthlySchedulesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/monthly-schedules/";
+};
+
+export type GetItemsRouteMonthlySchedulesGetResponses = {
+  /**
+   * Response Get Items Route Monthly Schedules  Get
+   * Successful Response
+   */
+  200: Array<MonthlyScheduleGet>;
+};
+
+export type GetItemsRouteMonthlySchedulesGetResponse =
+  GetItemsRouteMonthlySchedulesGetResponses[keyof GetItemsRouteMonthlySchedulesGetResponses];
+
+export type PostItemRouteMonthlySchedulesPostData = {
+  body: MonthlySchedulePost;
+  path?: never;
+  query?: never;
+  url: "/monthly-schedules/";
+};
+
+export type PostItemRouteMonthlySchedulesPostErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteMonthlySchedulesPostError =
+  PostItemRouteMonthlySchedulesPostErrors[keyof PostItemRouteMonthlySchedulesPostErrors];
+
+export type PostItemRouteMonthlySchedulesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: MonthlyScheduleGet;
+};
+
+export type PostItemRouteMonthlySchedulesPostResponse =
+  PostItemRouteMonthlySchedulesPostResponses[keyof PostItemRouteMonthlySchedulesPostResponses];
+
+export type DeleteItemRouteMonthlySchedulesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/monthly-schedules/{item_id}";
+};
+
+export type DeleteItemRouteMonthlySchedulesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteMonthlySchedulesItemIdDeleteError =
+  DeleteItemRouteMonthlySchedulesItemIdDeleteErrors[keyof DeleteItemRouteMonthlySchedulesItemIdDeleteErrors];
+
+export type DeleteItemRouteMonthlySchedulesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: MonthlyScheduleGet;
+};
+
+export type DeleteItemRouteMonthlySchedulesItemIdDeleteResponse =
+  DeleteItemRouteMonthlySchedulesItemIdDeleteResponses[keyof DeleteItemRouteMonthlySchedulesItemIdDeleteResponses];
+
+export type GetItemRouteMonthlySchedulesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/monthly-schedules/{item_id}";
+};
+
+export type GetItemRouteMonthlySchedulesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteMonthlySchedulesItemIdGetError =
+  GetItemRouteMonthlySchedulesItemIdGetErrors[keyof GetItemRouteMonthlySchedulesItemIdGetErrors];
+
+export type GetItemRouteMonthlySchedulesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: MonthlyScheduleGet;
+};
+
+export type GetItemRouteMonthlySchedulesItemIdGetResponse =
+  GetItemRouteMonthlySchedulesItemIdGetResponses[keyof GetItemRouteMonthlySchedulesItemIdGetResponses];
+
+export type PutItemRouteMonthlySchedulesItemIdPutData = {
+  body: MonthlySchedulePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/monthly-schedules/{item_id}";
+};
+
+export type PutItemRouteMonthlySchedulesItemIdPutErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteMonthlySchedulesItemIdPutError =
+  PutItemRouteMonthlySchedulesItemIdPutErrors[keyof PutItemRouteMonthlySchedulesItemIdPutErrors];
+
+export type PutItemRouteMonthlySchedulesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: MonthlyScheduleGet;
+};
+
+export type PutItemRouteMonthlySchedulesItemIdPutResponse =
+  PutItemRouteMonthlySchedulesItemIdPutResponses[keyof PutItemRouteMonthlySchedulesItemIdPutResponses];
+
+export type GetItemsRouteYearlySchedulesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/yearly-schedules/";
+};
+
+export type GetItemsRouteYearlySchedulesGetResponses = {
+  /**
+   * Response Get Items Route Yearly Schedules  Get
+   * Successful Response
+   */
+  200: Array<YearlyScheduleGet>;
+};
+
+export type GetItemsRouteYearlySchedulesGetResponse =
+  GetItemsRouteYearlySchedulesGetResponses[keyof GetItemsRouteYearlySchedulesGetResponses];
+
+export type PostItemRouteYearlySchedulesPostData = {
+  body: YearlySchedulePost;
+  path?: never;
+  query?: never;
+  url: "/yearly-schedules/";
+};
+
+export type PostItemRouteYearlySchedulesPostErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteYearlySchedulesPostError =
+  PostItemRouteYearlySchedulesPostErrors[keyof PostItemRouteYearlySchedulesPostErrors];
+
+export type PostItemRouteYearlySchedulesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: YearlyScheduleGet;
+};
+
+export type PostItemRouteYearlySchedulesPostResponse =
+  PostItemRouteYearlySchedulesPostResponses[keyof PostItemRouteYearlySchedulesPostResponses];
+
+export type DeleteItemRouteYearlySchedulesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/yearly-schedules/{item_id}";
+};
+
+export type DeleteItemRouteYearlySchedulesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteYearlySchedulesItemIdDeleteError =
+  DeleteItemRouteYearlySchedulesItemIdDeleteErrors[keyof DeleteItemRouteYearlySchedulesItemIdDeleteErrors];
+
+export type DeleteItemRouteYearlySchedulesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: YearlyScheduleGet;
+};
+
+export type DeleteItemRouteYearlySchedulesItemIdDeleteResponse =
+  DeleteItemRouteYearlySchedulesItemIdDeleteResponses[keyof DeleteItemRouteYearlySchedulesItemIdDeleteResponses];
+
+export type GetItemRouteYearlySchedulesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/yearly-schedules/{item_id}";
+};
+
+export type GetItemRouteYearlySchedulesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteYearlySchedulesItemIdGetError =
+  GetItemRouteYearlySchedulesItemIdGetErrors[keyof GetItemRouteYearlySchedulesItemIdGetErrors];
+
+export type GetItemRouteYearlySchedulesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: YearlyScheduleGet;
+};
+
+export type GetItemRouteYearlySchedulesItemIdGetResponse =
+  GetItemRouteYearlySchedulesItemIdGetResponses[keyof GetItemRouteYearlySchedulesItemIdGetResponses];
+
+export type PutItemRouteYearlySchedulesItemIdPutData = {
+  body: YearlySchedulePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/yearly-schedules/{item_id}";
+};
+
+export type PutItemRouteYearlySchedulesItemIdPutErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteYearlySchedulesItemIdPutError =
+  PutItemRouteYearlySchedulesItemIdPutErrors[keyof PutItemRouteYearlySchedulesItemIdPutErrors];
+
+export type PutItemRouteYearlySchedulesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: YearlyScheduleGet;
+};
+
+export type PutItemRouteYearlySchedulesItemIdPutResponse =
+  PutItemRouteYearlySchedulesItemIdPutResponses[keyof PutItemRouteYearlySchedulesItemIdPutResponses];
+
+export type GetItemsRouteFromSchedulesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/from-schedules/";
+};
+
+export type GetItemsRouteFromSchedulesGetResponses = {
+  /**
+   * Response Get Items Route From Schedules  Get
+   * Successful Response
+   */
+  200: Array<FromScheduleGet>;
+};
+
+export type GetItemsRouteFromSchedulesGetResponse =
+  GetItemsRouteFromSchedulesGetResponses[keyof GetItemsRouteFromSchedulesGetResponses];
+
+export type PostItemRouteFromSchedulesPostData = {
+  body: FromSchedulePost;
+  path?: never;
+  query?: never;
+  url: "/from-schedules/";
+};
+
+export type PostItemRouteFromSchedulesPostErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteFromSchedulesPostError =
+  PostItemRouteFromSchedulesPostErrors[keyof PostItemRouteFromSchedulesPostErrors];
+
+export type PostItemRouteFromSchedulesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: FromScheduleGet;
+};
+
+export type PostItemRouteFromSchedulesPostResponse =
+  PostItemRouteFromSchedulesPostResponses[keyof PostItemRouteFromSchedulesPostResponses];
+
+export type DeleteItemRouteFromSchedulesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/from-schedules/{item_id}";
+};
+
+export type DeleteItemRouteFromSchedulesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteFromSchedulesItemIdDeleteError =
+  DeleteItemRouteFromSchedulesItemIdDeleteErrors[keyof DeleteItemRouteFromSchedulesItemIdDeleteErrors];
+
+export type DeleteItemRouteFromSchedulesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: FromScheduleGet;
+};
+
+export type DeleteItemRouteFromSchedulesItemIdDeleteResponse =
+  DeleteItemRouteFromSchedulesItemIdDeleteResponses[keyof DeleteItemRouteFromSchedulesItemIdDeleteResponses];
+
+export type GetItemRouteFromSchedulesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/from-schedules/{item_id}";
+};
+
+export type GetItemRouteFromSchedulesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteFromSchedulesItemIdGetError =
+  GetItemRouteFromSchedulesItemIdGetErrors[keyof GetItemRouteFromSchedulesItemIdGetErrors];
+
+export type GetItemRouteFromSchedulesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: FromScheduleGet;
+};
+
+export type GetItemRouteFromSchedulesItemIdGetResponse =
+  GetItemRouteFromSchedulesItemIdGetResponses[keyof GetItemRouteFromSchedulesItemIdGetResponses];
+
+export type PutItemRouteFromSchedulesItemIdPutData = {
+  body: FromSchedulePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/from-schedules/{item_id}";
+};
+
+export type PutItemRouteFromSchedulesItemIdPutErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteFromSchedulesItemIdPutError =
+  PutItemRouteFromSchedulesItemIdPutErrors[keyof PutItemRouteFromSchedulesItemIdPutErrors];
+
+export type PutItemRouteFromSchedulesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: FromScheduleGet;
+};
+
+export type PutItemRouteFromSchedulesItemIdPutResponse =
+  PutItemRouteFromSchedulesItemIdPutResponses[keyof PutItemRouteFromSchedulesItemIdPutResponses];
+
+export type GetItemsRouteUntilSchedulesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/until-schedules/";
+};
+
+export type GetItemsRouteUntilSchedulesGetResponses = {
+  /**
+   * Response Get Items Route Until Schedules  Get
+   * Successful Response
+   */
+  200: Array<UntilScheduleGet>;
+};
+
+export type GetItemsRouteUntilSchedulesGetResponse =
+  GetItemsRouteUntilSchedulesGetResponses[keyof GetItemsRouteUntilSchedulesGetResponses];
+
+export type PostItemRouteUntilSchedulesPostData = {
+  body: UntilSchedulePost;
+  path?: never;
+  query?: never;
+  url: "/until-schedules/";
+};
+
+export type PostItemRouteUntilSchedulesPostErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteUntilSchedulesPostError =
+  PostItemRouteUntilSchedulesPostErrors[keyof PostItemRouteUntilSchedulesPostErrors];
+
+export type PostItemRouteUntilSchedulesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: UntilScheduleGet;
+};
+
+export type PostItemRouteUntilSchedulesPostResponse =
+  PostItemRouteUntilSchedulesPostResponses[keyof PostItemRouteUntilSchedulesPostResponses];
+
+export type DeleteItemRouteUntilSchedulesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/until-schedules/{item_id}";
+};
+
+export type DeleteItemRouteUntilSchedulesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteUntilSchedulesItemIdDeleteError =
+  DeleteItemRouteUntilSchedulesItemIdDeleteErrors[keyof DeleteItemRouteUntilSchedulesItemIdDeleteErrors];
+
+export type DeleteItemRouteUntilSchedulesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: UntilScheduleGet;
+};
+
+export type DeleteItemRouteUntilSchedulesItemIdDeleteResponse =
+  DeleteItemRouteUntilSchedulesItemIdDeleteResponses[keyof DeleteItemRouteUntilSchedulesItemIdDeleteResponses];
+
+export type GetItemRouteUntilSchedulesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/until-schedules/{item_id}";
+};
+
+export type GetItemRouteUntilSchedulesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteUntilSchedulesItemIdGetError =
+  GetItemRouteUntilSchedulesItemIdGetErrors[keyof GetItemRouteUntilSchedulesItemIdGetErrors];
+
+export type GetItemRouteUntilSchedulesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: UntilScheduleGet;
+};
+
+export type GetItemRouteUntilSchedulesItemIdGetResponse =
+  GetItemRouteUntilSchedulesItemIdGetResponses[keyof GetItemRouteUntilSchedulesItemIdGetResponses];
+
+export type PutItemRouteUntilSchedulesItemIdPutData = {
+  body: UntilSchedulePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/until-schedules/{item_id}";
+};
+
+export type PutItemRouteUntilSchedulesItemIdPutErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteUntilSchedulesItemIdPutError =
+  PutItemRouteUntilSchedulesItemIdPutErrors[keyof PutItemRouteUntilSchedulesItemIdPutErrors];
+
+export type PutItemRouteUntilSchedulesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: UntilScheduleGet;
+};
+
+export type PutItemRouteUntilSchedulesItemIdPutResponse =
+  PutItemRouteUntilSchedulesItemIdPutResponses[keyof PutItemRouteUntilSchedulesItemIdPutResponses];
+
+export type GetItemsRouteRangeSchedulesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/range-schedules/";
+};
+
+export type GetItemsRouteRangeSchedulesGetResponses = {
+  /**
+   * Response Get Items Route Range Schedules  Get
+   * Successful Response
+   */
+  200: Array<RangeScheduleGet>;
+};
+
+export type GetItemsRouteRangeSchedulesGetResponse =
+  GetItemsRouteRangeSchedulesGetResponses[keyof GetItemsRouteRangeSchedulesGetResponses];
+
+export type PostItemRouteRangeSchedulesPostData = {
+  body: RangeSchedulePost;
+  path?: never;
+  query?: never;
+  url: "/range-schedules/";
+};
+
+export type PostItemRouteRangeSchedulesPostErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteRangeSchedulesPostError =
+  PostItemRouteRangeSchedulesPostErrors[keyof PostItemRouteRangeSchedulesPostErrors];
+
+export type PostItemRouteRangeSchedulesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: RangeScheduleGet;
+};
+
+export type PostItemRouteRangeSchedulesPostResponse =
+  PostItemRouteRangeSchedulesPostResponses[keyof PostItemRouteRangeSchedulesPostResponses];
+
+export type DeleteItemRouteRangeSchedulesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/range-schedules/{item_id}";
+};
+
+export type DeleteItemRouteRangeSchedulesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteRangeSchedulesItemIdDeleteError =
+  DeleteItemRouteRangeSchedulesItemIdDeleteErrors[keyof DeleteItemRouteRangeSchedulesItemIdDeleteErrors];
+
+export type DeleteItemRouteRangeSchedulesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: RangeScheduleGet;
+};
+
+export type DeleteItemRouteRangeSchedulesItemIdDeleteResponse =
+  DeleteItemRouteRangeSchedulesItemIdDeleteResponses[keyof DeleteItemRouteRangeSchedulesItemIdDeleteResponses];
+
+export type GetItemRouteRangeSchedulesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/range-schedules/{item_id}";
+};
+
+export type GetItemRouteRangeSchedulesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteRangeSchedulesItemIdGetError =
+  GetItemRouteRangeSchedulesItemIdGetErrors[keyof GetItemRouteRangeSchedulesItemIdGetErrors];
+
+export type GetItemRouteRangeSchedulesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: RangeScheduleGet;
+};
+
+export type GetItemRouteRangeSchedulesItemIdGetResponse =
+  GetItemRouteRangeSchedulesItemIdGetResponses[keyof GetItemRouteRangeSchedulesItemIdGetResponses];
+
+export type PutItemRouteRangeSchedulesItemIdPutData = {
+  body: RangeSchedulePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/range-schedules/{item_id}";
+};
+
+export type PutItemRouteRangeSchedulesItemIdPutErrors = {
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteRangeSchedulesItemIdPutError =
+  PutItemRouteRangeSchedulesItemIdPutErrors[keyof PutItemRouteRangeSchedulesItemIdPutErrors];
+
+export type PutItemRouteRangeSchedulesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: RangeScheduleGet;
+};
+
+export type PutItemRouteRangeSchedulesItemIdPutResponse =
+  PutItemRouteRangeSchedulesItemIdPutResponses[keyof PutItemRouteRangeSchedulesItemIdPutResponses];
+
+export type GetItemsRouteAllSchedulesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/all-schedules/";
+};
+
+export type GetItemsRouteAllSchedulesGetResponses = {
+  /**
+   * Response Get Items Route All Schedules  Get
+   * Successful Response
+   */
+  200: Array<AllScheduleGet>;
+};
+
+export type GetItemsRouteAllSchedulesGetResponse =
+  GetItemsRouteAllSchedulesGetResponses[keyof GetItemsRouteAllSchedulesGetResponses];
+
+export type PostItemRouteAllSchedulesPostData = {
+  body: AllSchedulePost;
+  path?: never;
+  query?: never;
+  url: "/all-schedules/";
+};
+
+export type PostItemRouteAllSchedulesPostErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteAllSchedulesPostError =
+  PostItemRouteAllSchedulesPostErrors[keyof PostItemRouteAllSchedulesPostErrors];
+
+export type PostItemRouteAllSchedulesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: AllScheduleGet;
+};
+
+export type PostItemRouteAllSchedulesPostResponse =
+  PostItemRouteAllSchedulesPostResponses[keyof PostItemRouteAllSchedulesPostResponses];
+
+export type DeleteItemRouteAllSchedulesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/all-schedules/{item_id}";
+};
+
+export type DeleteItemRouteAllSchedulesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteAllSchedulesItemIdDeleteError =
+  DeleteItemRouteAllSchedulesItemIdDeleteErrors[keyof DeleteItemRouteAllSchedulesItemIdDeleteErrors];
+
+export type DeleteItemRouteAllSchedulesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: AllScheduleGet;
+};
+
+export type DeleteItemRouteAllSchedulesItemIdDeleteResponse =
+  DeleteItemRouteAllSchedulesItemIdDeleteResponses[keyof DeleteItemRouteAllSchedulesItemIdDeleteResponses];
+
+export type GetItemRouteAllSchedulesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/all-schedules/{item_id}";
+};
+
+export type GetItemRouteAllSchedulesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteAllSchedulesItemIdGetError =
+  GetItemRouteAllSchedulesItemIdGetErrors[keyof GetItemRouteAllSchedulesItemIdGetErrors];
+
+export type GetItemRouteAllSchedulesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: AllScheduleGet;
+};
+
+export type GetItemRouteAllSchedulesItemIdGetResponse =
+  GetItemRouteAllSchedulesItemIdGetResponses[keyof GetItemRouteAllSchedulesItemIdGetResponses];
+
+export type PutItemRouteAllSchedulesItemIdPutData = {
+  body: AllSchedulePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/all-schedules/{item_id}";
+};
+
+export type PutItemRouteAllSchedulesItemIdPutErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteAllSchedulesItemIdPutError =
+  PutItemRouteAllSchedulesItemIdPutErrors[keyof PutItemRouteAllSchedulesItemIdPutErrors];
+
+export type PutItemRouteAllSchedulesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: AllScheduleGet;
+};
+
+export type PutItemRouteAllSchedulesItemIdPutResponse =
+  PutItemRouteAllSchedulesItemIdPutResponses[keyof PutItemRouteAllSchedulesItemIdPutResponses];
+
+export type GetItemsRouteAnySchedulesGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/any-schedules/";
+};
+
+export type GetItemsRouteAnySchedulesGetResponses = {
+  /**
+   * Response Get Items Route Any Schedules  Get
+   * Successful Response
+   */
+  200: Array<AnyScheduleGet>;
+};
+
+export type GetItemsRouteAnySchedulesGetResponse =
+  GetItemsRouteAnySchedulesGetResponses[keyof GetItemsRouteAnySchedulesGetResponses];
+
+export type PostItemRouteAnySchedulesPostData = {
+  body: AnySchedulePost;
+  path?: never;
+  query?: never;
+  url: "/any-schedules/";
+};
+
+export type PostItemRouteAnySchedulesPostErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteAnySchedulesPostError =
+  PostItemRouteAnySchedulesPostErrors[keyof PostItemRouteAnySchedulesPostErrors];
+
+export type PostItemRouteAnySchedulesPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: AnyScheduleGet;
+};
+
+export type PostItemRouteAnySchedulesPostResponse =
+  PostItemRouteAnySchedulesPostResponses[keyof PostItemRouteAnySchedulesPostResponses];
+
+export type DeleteItemRouteAnySchedulesItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/any-schedules/{item_id}";
+};
+
+export type DeleteItemRouteAnySchedulesItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteAnySchedulesItemIdDeleteError =
+  DeleteItemRouteAnySchedulesItemIdDeleteErrors[keyof DeleteItemRouteAnySchedulesItemIdDeleteErrors];
+
+export type DeleteItemRouteAnySchedulesItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: AnyScheduleGet;
+};
+
+export type DeleteItemRouteAnySchedulesItemIdDeleteResponse =
+  DeleteItemRouteAnySchedulesItemIdDeleteResponses[keyof DeleteItemRouteAnySchedulesItemIdDeleteResponses];
+
+export type GetItemRouteAnySchedulesItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/any-schedules/{item_id}";
+};
+
+export type GetItemRouteAnySchedulesItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteAnySchedulesItemIdGetError =
+  GetItemRouteAnySchedulesItemIdGetErrors[keyof GetItemRouteAnySchedulesItemIdGetErrors];
+
+export type GetItemRouteAnySchedulesItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: AnyScheduleGet;
+};
+
+export type GetItemRouteAnySchedulesItemIdGetResponse =
+  GetItemRouteAnySchedulesItemIdGetResponses[keyof GetItemRouteAnySchedulesItemIdGetResponses];
+
+export type PutItemRouteAnySchedulesItemIdPutData = {
+  body: AnySchedulePost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/any-schedules/{item_id}";
+};
+
+export type PutItemRouteAnySchedulesItemIdPutErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteAnySchedulesItemIdPutError =
+  PutItemRouteAnySchedulesItemIdPutErrors[keyof PutItemRouteAnySchedulesItemIdPutErrors];
+
+export type PutItemRouteAnySchedulesItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: AnyScheduleGet;
+};
+
+export type PutItemRouteAnySchedulesItemIdPutResponse =
+  PutItemRouteAnySchedulesItemIdPutResponses[keyof PutItemRouteAnySchedulesItemIdPutResponses];
 
 export type GetItemsRouteRateProvidersGetData = {
   body?: never;
@@ -3309,7 +5696,7 @@ export type GetItemsRouteRateProvidersGetError =
 
 export type GetItemsRouteRateProvidersGetResponses = {
   /**
-   * Response Get Items Route PeriodicRate Providers  Get
+   * Response Get Items Route Rate Providers  Get
    * Successful Response
    */
   200: Array<
@@ -3353,7 +5740,7 @@ export type PostItemRouteRateProvidersPostError =
 
 export type PostItemRouteRateProvidersPostResponses = {
   /**
-   * Response Post Item Route PeriodicRate Providers  Post
+   * Response Post Item Route Rate Providers  Post
    * Successful Response
    */
   201: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
@@ -3390,7 +5777,7 @@ export type DeleteItemRouteRateProvidersItemIdDeleteError =
 
 export type DeleteItemRouteRateProvidersItemIdDeleteResponses = {
   /**
-   * Response Delete Item Route PeriodicRate Providers  Item Id  Delete
+   * Response Delete Item Route Rate Providers  Item Id  Delete
    * Successful Response
    */
   200: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
@@ -3427,7 +5814,7 @@ export type GetItemRouteRateProvidersItemIdGetError =
 
 export type GetItemRouteRateProvidersItemIdGetResponses = {
   /**
-   * Response Get Item Route PeriodicRate Providers  Item Id  Get
+   * Response Get Item Route Rate Providers  Item Id  Get
    * Successful Response
    */
   200: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
@@ -3460,7 +5847,7 @@ export type PutItemRouteRateProvidersItemIdPutErrors = {
    */
   400: HttpRelationInvalidError;
   /**
-   * Response 409 Put Item Route PeriodicRate Providers  Item Id  Put
+   * Response 409 Put Item Route Rate Providers  Item Id  Put
    * Database error
    */
   409: HttpDatabaseIntegrityError | HttpChangeTypeError;
@@ -3475,7 +5862,7 @@ export type PutItemRouteRateProvidersItemIdPutError =
 
 export type PutItemRouteRateProvidersItemIdPutResponses = {
   /**
-   * Response Put Item Route PeriodicRate Providers  Item Id  Put
+   * Response Put Item Route Rate Providers  Item Id  Put
    * Successful Response
    */
   200: ScheduledRateProviderGet | MergeRateProviderGet | NextRateProviderGet;
@@ -3483,6 +5870,501 @@ export type PutItemRouteRateProvidersItemIdPutResponses = {
 
 export type PutItemRouteRateProvidersItemIdPutResponse =
   PutItemRouteRateProvidersItemIdPutResponses[keyof PutItemRouteRateProvidersItemIdPutResponses];
+
+export type GetItemsRouteScheduledRateProvidersGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/scheduled-rate-providers/";
+};
+
+export type GetItemsRouteScheduledRateProvidersGetResponses = {
+  /**
+   * Response Get Items Route Scheduled Rate Providers  Get
+   * Successful Response
+   */
+  200: Array<ScheduledRateProviderGet>;
+};
+
+export type GetItemsRouteScheduledRateProvidersGetResponse =
+  GetItemsRouteScheduledRateProvidersGetResponses[keyof GetItemsRouteScheduledRateProvidersGetResponses];
+
+export type PostItemRouteScheduledRateProvidersPostData = {
+  body: ScheduledRateProviderPost;
+  path?: never;
+  query?: never;
+  url: "/scheduled-rate-providers/";
+};
+
+export type PostItemRouteScheduledRateProvidersPostErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteScheduledRateProvidersPostError =
+  PostItemRouteScheduledRateProvidersPostErrors[keyof PostItemRouteScheduledRateProvidersPostErrors];
+
+export type PostItemRouteScheduledRateProvidersPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: ScheduledRateProviderGet;
+};
+
+export type PostItemRouteScheduledRateProvidersPostResponse =
+  PostItemRouteScheduledRateProvidersPostResponses[keyof PostItemRouteScheduledRateProvidersPostResponses];
+
+export type DeleteItemRouteScheduledRateProvidersItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/scheduled-rate-providers/{item_id}";
+};
+
+export type DeleteItemRouteScheduledRateProvidersItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteScheduledRateProvidersItemIdDeleteError =
+  DeleteItemRouteScheduledRateProvidersItemIdDeleteErrors[keyof DeleteItemRouteScheduledRateProvidersItemIdDeleteErrors];
+
+export type DeleteItemRouteScheduledRateProvidersItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: ScheduledRateProviderGet;
+};
+
+export type DeleteItemRouteScheduledRateProvidersItemIdDeleteResponse =
+  DeleteItemRouteScheduledRateProvidersItemIdDeleteResponses[keyof DeleteItemRouteScheduledRateProvidersItemIdDeleteResponses];
+
+export type GetItemRouteScheduledRateProvidersItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/scheduled-rate-providers/{item_id}";
+};
+
+export type GetItemRouteScheduledRateProvidersItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteScheduledRateProvidersItemIdGetError =
+  GetItemRouteScheduledRateProvidersItemIdGetErrors[keyof GetItemRouteScheduledRateProvidersItemIdGetErrors];
+
+export type GetItemRouteScheduledRateProvidersItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: ScheduledRateProviderGet;
+};
+
+export type GetItemRouteScheduledRateProvidersItemIdGetResponse =
+  GetItemRouteScheduledRateProvidersItemIdGetResponses[keyof GetItemRouteScheduledRateProvidersItemIdGetResponses];
+
+export type PutItemRouteScheduledRateProvidersItemIdPutData = {
+  body: ScheduledRateProviderPost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/scheduled-rate-providers/{item_id}";
+};
+
+export type PutItemRouteScheduledRateProvidersItemIdPutErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteScheduledRateProvidersItemIdPutError =
+  PutItemRouteScheduledRateProvidersItemIdPutErrors[keyof PutItemRouteScheduledRateProvidersItemIdPutErrors];
+
+export type PutItemRouteScheduledRateProvidersItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: ScheduledRateProviderGet;
+};
+
+export type PutItemRouteScheduledRateProvidersItemIdPutResponse =
+  PutItemRouteScheduledRateProvidersItemIdPutResponses[keyof PutItemRouteScheduledRateProvidersItemIdPutResponses];
+
+export type GetItemsRouteMergeRateProvidersGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/merge-rate-providers/";
+};
+
+export type GetItemsRouteMergeRateProvidersGetResponses = {
+  /**
+   * Response Get Items Route Merge Rate Providers  Get
+   * Successful Response
+   */
+  200: Array<MergeRateProviderGet>;
+};
+
+export type GetItemsRouteMergeRateProvidersGetResponse =
+  GetItemsRouteMergeRateProvidersGetResponses[keyof GetItemsRouteMergeRateProvidersGetResponses];
+
+export type PostItemRouteMergeRateProvidersPostData = {
+  body: MergeRateProviderPost;
+  path?: never;
+  query?: never;
+  url: "/merge-rate-providers/";
+};
+
+export type PostItemRouteMergeRateProvidersPostErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteMergeRateProvidersPostError =
+  PostItemRouteMergeRateProvidersPostErrors[keyof PostItemRouteMergeRateProvidersPostErrors];
+
+export type PostItemRouteMergeRateProvidersPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: MergeRateProviderGet;
+};
+
+export type PostItemRouteMergeRateProvidersPostResponse =
+  PostItemRouteMergeRateProvidersPostResponses[keyof PostItemRouteMergeRateProvidersPostResponses];
+
+export type DeleteItemRouteMergeRateProvidersItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/merge-rate-providers/{item_id}";
+};
+
+export type DeleteItemRouteMergeRateProvidersItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteMergeRateProvidersItemIdDeleteError =
+  DeleteItemRouteMergeRateProvidersItemIdDeleteErrors[keyof DeleteItemRouteMergeRateProvidersItemIdDeleteErrors];
+
+export type DeleteItemRouteMergeRateProvidersItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: MergeRateProviderGet;
+};
+
+export type DeleteItemRouteMergeRateProvidersItemIdDeleteResponse =
+  DeleteItemRouteMergeRateProvidersItemIdDeleteResponses[keyof DeleteItemRouteMergeRateProvidersItemIdDeleteResponses];
+
+export type GetItemRouteMergeRateProvidersItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/merge-rate-providers/{item_id}";
+};
+
+export type GetItemRouteMergeRateProvidersItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteMergeRateProvidersItemIdGetError =
+  GetItemRouteMergeRateProvidersItemIdGetErrors[keyof GetItemRouteMergeRateProvidersItemIdGetErrors];
+
+export type GetItemRouteMergeRateProvidersItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: MergeRateProviderGet;
+};
+
+export type GetItemRouteMergeRateProvidersItemIdGetResponse =
+  GetItemRouteMergeRateProvidersItemIdGetResponses[keyof GetItemRouteMergeRateProvidersItemIdGetResponses];
+
+export type PutItemRouteMergeRateProvidersItemIdPutData = {
+  body: MergeRateProviderPost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/merge-rate-providers/{item_id}";
+};
+
+export type PutItemRouteMergeRateProvidersItemIdPutErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteMergeRateProvidersItemIdPutError =
+  PutItemRouteMergeRateProvidersItemIdPutErrors[keyof PutItemRouteMergeRateProvidersItemIdPutErrors];
+
+export type PutItemRouteMergeRateProvidersItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: MergeRateProviderGet;
+};
+
+export type PutItemRouteMergeRateProvidersItemIdPutResponse =
+  PutItemRouteMergeRateProvidersItemIdPutResponses[keyof PutItemRouteMergeRateProvidersItemIdPutResponses];
+
+export type GetItemsRouteNextRateProvidersGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/next-rate-providers/";
+};
+
+export type GetItemsRouteNextRateProvidersGetResponses = {
+  /**
+   * Response Get Items Route Next Rate Providers  Get
+   * Successful Response
+   */
+  200: Array<NextRateProviderGet>;
+};
+
+export type GetItemsRouteNextRateProvidersGetResponse =
+  GetItemsRouteNextRateProvidersGetResponses[keyof GetItemsRouteNextRateProvidersGetResponses];
+
+export type PostItemRouteNextRateProvidersPostData = {
+  body: NextRateProviderPost;
+  path?: never;
+  query?: never;
+  url: "/next-rate-providers/";
+};
+
+export type PostItemRouteNextRateProvidersPostErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteNextRateProvidersPostError =
+  PostItemRouteNextRateProvidersPostErrors[keyof PostItemRouteNextRateProvidersPostErrors];
+
+export type PostItemRouteNextRateProvidersPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: NextRateProviderGet;
+};
+
+export type PostItemRouteNextRateProvidersPostResponse =
+  PostItemRouteNextRateProvidersPostResponses[keyof PostItemRouteNextRateProvidersPostResponses];
+
+export type DeleteItemRouteNextRateProvidersItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/next-rate-providers/{item_id}";
+};
+
+export type DeleteItemRouteNextRateProvidersItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteNextRateProvidersItemIdDeleteError =
+  DeleteItemRouteNextRateProvidersItemIdDeleteErrors[keyof DeleteItemRouteNextRateProvidersItemIdDeleteErrors];
+
+export type DeleteItemRouteNextRateProvidersItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: NextRateProviderGet;
+};
+
+export type DeleteItemRouteNextRateProvidersItemIdDeleteResponse =
+  DeleteItemRouteNextRateProvidersItemIdDeleteResponses[keyof DeleteItemRouteNextRateProvidersItemIdDeleteResponses];
+
+export type GetItemRouteNextRateProvidersItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/next-rate-providers/{item_id}";
+};
+
+export type GetItemRouteNextRateProvidersItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteNextRateProvidersItemIdGetError =
+  GetItemRouteNextRateProvidersItemIdGetErrors[keyof GetItemRouteNextRateProvidersItemIdGetErrors];
+
+export type GetItemRouteNextRateProvidersItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: NextRateProviderGet;
+};
+
+export type GetItemRouteNextRateProvidersItemIdGetResponse =
+  GetItemRouteNextRateProvidersItemIdGetResponses[keyof GetItemRouteNextRateProvidersItemIdGetResponses];
+
+export type PutItemRouteNextRateProvidersItemIdPutData = {
+  body: NextRateProviderPost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/next-rate-providers/{item_id}";
+};
+
+export type PutItemRouteNextRateProvidersItemIdPutErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteNextRateProvidersItemIdPutError =
+  PutItemRouteNextRateProvidersItemIdPutErrors[keyof PutItemRouteNextRateProvidersItemIdPutErrors];
+
+export type PutItemRouteNextRateProvidersItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: NextRateProviderGet;
+};
+
+export type PutItemRouteNextRateProvidersItemIdPutResponse =
+  PutItemRouteNextRateProvidersItemIdPutResponses[keyof PutItemRouteNextRateProvidersItemIdPutResponses];
 
 export type GetItemsRouteDecimalProvidersGetData = {
   body?: never;
@@ -3696,6 +6578,501 @@ export type PutItemRouteDecimalProvidersItemIdPutResponses = {
 
 export type PutItemRouteDecimalProvidersItemIdPutResponse =
   PutItemRouteDecimalProvidersItemIdPutResponses[keyof PutItemRouteDecimalProvidersItemIdPutResponses];
+
+export type GetItemsRouteScheduledDecimalProvidersGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/scheduled-decimal-providers/";
+};
+
+export type GetItemsRouteScheduledDecimalProvidersGetResponses = {
+  /**
+   * Response Get Items Route Scheduled Decimal Providers  Get
+   * Successful Response
+   */
+  200: Array<ScheduledDecimalProviderGet>;
+};
+
+export type GetItemsRouteScheduledDecimalProvidersGetResponse =
+  GetItemsRouteScheduledDecimalProvidersGetResponses[keyof GetItemsRouteScheduledDecimalProvidersGetResponses];
+
+export type PostItemRouteScheduledDecimalProvidersPostData = {
+  body: ScheduledDecimalProviderPost;
+  path?: never;
+  query?: never;
+  url: "/scheduled-decimal-providers/";
+};
+
+export type PostItemRouteScheduledDecimalProvidersPostErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteScheduledDecimalProvidersPostError =
+  PostItemRouteScheduledDecimalProvidersPostErrors[keyof PostItemRouteScheduledDecimalProvidersPostErrors];
+
+export type PostItemRouteScheduledDecimalProvidersPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: ScheduledDecimalProviderGet;
+};
+
+export type PostItemRouteScheduledDecimalProvidersPostResponse =
+  PostItemRouteScheduledDecimalProvidersPostResponses[keyof PostItemRouteScheduledDecimalProvidersPostResponses];
+
+export type DeleteItemRouteScheduledDecimalProvidersItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/scheduled-decimal-providers/{item_id}";
+};
+
+export type DeleteItemRouteScheduledDecimalProvidersItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteScheduledDecimalProvidersItemIdDeleteError =
+  DeleteItemRouteScheduledDecimalProvidersItemIdDeleteErrors[keyof DeleteItemRouteScheduledDecimalProvidersItemIdDeleteErrors];
+
+export type DeleteItemRouteScheduledDecimalProvidersItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: ScheduledDecimalProviderGet;
+};
+
+export type DeleteItemRouteScheduledDecimalProvidersItemIdDeleteResponse =
+  DeleteItemRouteScheduledDecimalProvidersItemIdDeleteResponses[keyof DeleteItemRouteScheduledDecimalProvidersItemIdDeleteResponses];
+
+export type GetItemRouteScheduledDecimalProvidersItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/scheduled-decimal-providers/{item_id}";
+};
+
+export type GetItemRouteScheduledDecimalProvidersItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteScheduledDecimalProvidersItemIdGetError =
+  GetItemRouteScheduledDecimalProvidersItemIdGetErrors[keyof GetItemRouteScheduledDecimalProvidersItemIdGetErrors];
+
+export type GetItemRouteScheduledDecimalProvidersItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: ScheduledDecimalProviderGet;
+};
+
+export type GetItemRouteScheduledDecimalProvidersItemIdGetResponse =
+  GetItemRouteScheduledDecimalProvidersItemIdGetResponses[keyof GetItemRouteScheduledDecimalProvidersItemIdGetResponses];
+
+export type PutItemRouteScheduledDecimalProvidersItemIdPutData = {
+  body: ScheduledDecimalProviderPost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/scheduled-decimal-providers/{item_id}";
+};
+
+export type PutItemRouteScheduledDecimalProvidersItemIdPutErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteScheduledDecimalProvidersItemIdPutError =
+  PutItemRouteScheduledDecimalProvidersItemIdPutErrors[keyof PutItemRouteScheduledDecimalProvidersItemIdPutErrors];
+
+export type PutItemRouteScheduledDecimalProvidersItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: ScheduledDecimalProviderGet;
+};
+
+export type PutItemRouteScheduledDecimalProvidersItemIdPutResponse =
+  PutItemRouteScheduledDecimalProvidersItemIdPutResponses[keyof PutItemRouteScheduledDecimalProvidersItemIdPutResponses];
+
+export type GetItemsRouteMergeDecimalProvidersGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/merge-decimal-providers/";
+};
+
+export type GetItemsRouteMergeDecimalProvidersGetResponses = {
+  /**
+   * Response Get Items Route Merge Decimal Providers  Get
+   * Successful Response
+   */
+  200: Array<MergeDecimalProviderGet>;
+};
+
+export type GetItemsRouteMergeDecimalProvidersGetResponse =
+  GetItemsRouteMergeDecimalProvidersGetResponses[keyof GetItemsRouteMergeDecimalProvidersGetResponses];
+
+export type PostItemRouteMergeDecimalProvidersPostData = {
+  body: MergeDecimalProviderPost;
+  path?: never;
+  query?: never;
+  url: "/merge-decimal-providers/";
+};
+
+export type PostItemRouteMergeDecimalProvidersPostErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteMergeDecimalProvidersPostError =
+  PostItemRouteMergeDecimalProvidersPostErrors[keyof PostItemRouteMergeDecimalProvidersPostErrors];
+
+export type PostItemRouteMergeDecimalProvidersPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: MergeDecimalProviderGet;
+};
+
+export type PostItemRouteMergeDecimalProvidersPostResponse =
+  PostItemRouteMergeDecimalProvidersPostResponses[keyof PostItemRouteMergeDecimalProvidersPostResponses];
+
+export type DeleteItemRouteMergeDecimalProvidersItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/merge-decimal-providers/{item_id}";
+};
+
+export type DeleteItemRouteMergeDecimalProvidersItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteMergeDecimalProvidersItemIdDeleteError =
+  DeleteItemRouteMergeDecimalProvidersItemIdDeleteErrors[keyof DeleteItemRouteMergeDecimalProvidersItemIdDeleteErrors];
+
+export type DeleteItemRouteMergeDecimalProvidersItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: MergeDecimalProviderGet;
+};
+
+export type DeleteItemRouteMergeDecimalProvidersItemIdDeleteResponse =
+  DeleteItemRouteMergeDecimalProvidersItemIdDeleteResponses[keyof DeleteItemRouteMergeDecimalProvidersItemIdDeleteResponses];
+
+export type GetItemRouteMergeDecimalProvidersItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/merge-decimal-providers/{item_id}";
+};
+
+export type GetItemRouteMergeDecimalProvidersItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteMergeDecimalProvidersItemIdGetError =
+  GetItemRouteMergeDecimalProvidersItemIdGetErrors[keyof GetItemRouteMergeDecimalProvidersItemIdGetErrors];
+
+export type GetItemRouteMergeDecimalProvidersItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: MergeDecimalProviderGet;
+};
+
+export type GetItemRouteMergeDecimalProvidersItemIdGetResponse =
+  GetItemRouteMergeDecimalProvidersItemIdGetResponses[keyof GetItemRouteMergeDecimalProvidersItemIdGetResponses];
+
+export type PutItemRouteMergeDecimalProvidersItemIdPutData = {
+  body: MergeDecimalProviderPost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/merge-decimal-providers/{item_id}";
+};
+
+export type PutItemRouteMergeDecimalProvidersItemIdPutErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteMergeDecimalProvidersItemIdPutError =
+  PutItemRouteMergeDecimalProvidersItemIdPutErrors[keyof PutItemRouteMergeDecimalProvidersItemIdPutErrors];
+
+export type PutItemRouteMergeDecimalProvidersItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: MergeDecimalProviderGet;
+};
+
+export type PutItemRouteMergeDecimalProvidersItemIdPutResponse =
+  PutItemRouteMergeDecimalProvidersItemIdPutResponses[keyof PutItemRouteMergeDecimalProvidersItemIdPutResponses];
+
+export type GetItemsRouteNextDecimalProvidersGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/next-decimal-providers/";
+};
+
+export type GetItemsRouteNextDecimalProvidersGetResponses = {
+  /**
+   * Response Get Items Route Next Decimal Providers  Get
+   * Successful Response
+   */
+  200: Array<NextDecimalProviderGet>;
+};
+
+export type GetItemsRouteNextDecimalProvidersGetResponse =
+  GetItemsRouteNextDecimalProvidersGetResponses[keyof GetItemsRouteNextDecimalProvidersGetResponses];
+
+export type PostItemRouteNextDecimalProvidersPostData = {
+  body: NextDecimalProviderPost;
+  path?: never;
+  query?: never;
+  url: "/next-decimal-providers/";
+};
+
+export type PostItemRouteNextDecimalProvidersPostErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PostItemRouteNextDecimalProvidersPostError =
+  PostItemRouteNextDecimalProvidersPostErrors[keyof PostItemRouteNextDecimalProvidersPostErrors];
+
+export type PostItemRouteNextDecimalProvidersPostResponses = {
+  /**
+   * Successful Response
+   */
+  201: NextDecimalProviderGet;
+};
+
+export type PostItemRouteNextDecimalProvidersPostResponse =
+  PostItemRouteNextDecimalProvidersPostResponses[keyof PostItemRouteNextDecimalProvidersPostResponses];
+
+export type DeleteItemRouteNextDecimalProvidersItemIdDeleteData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/next-decimal-providers/{item_id}";
+};
+
+export type DeleteItemRouteNextDecimalProvidersItemIdDeleteErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type DeleteItemRouteNextDecimalProvidersItemIdDeleteError =
+  DeleteItemRouteNextDecimalProvidersItemIdDeleteErrors[keyof DeleteItemRouteNextDecimalProvidersItemIdDeleteErrors];
+
+export type DeleteItemRouteNextDecimalProvidersItemIdDeleteResponses = {
+  /**
+   * Successful Response
+   */
+  200: NextDecimalProviderGet;
+};
+
+export type DeleteItemRouteNextDecimalProvidersItemIdDeleteResponse =
+  DeleteItemRouteNextDecimalProvidersItemIdDeleteResponses[keyof DeleteItemRouteNextDecimalProvidersItemIdDeleteResponses];
+
+export type GetItemRouteNextDecimalProvidersItemIdGetData = {
+  body?: never;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/next-decimal-providers/{item_id}";
+};
+
+export type GetItemRouteNextDecimalProvidersItemIdGetErrors = {
+  /**
+   * Not found
+   */
+  404: HttpNotFoundError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type GetItemRouteNextDecimalProvidersItemIdGetError =
+  GetItemRouteNextDecimalProvidersItemIdGetErrors[keyof GetItemRouteNextDecimalProvidersItemIdGetErrors];
+
+export type GetItemRouteNextDecimalProvidersItemIdGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: NextDecimalProviderGet;
+};
+
+export type GetItemRouteNextDecimalProvidersItemIdGetResponse =
+  GetItemRouteNextDecimalProvidersItemIdGetResponses[keyof GetItemRouteNextDecimalProvidersItemIdGetResponses];
+
+export type PutItemRouteNextDecimalProvidersItemIdPutData = {
+  body: NextDecimalProviderPost;
+  path: {
+    /**
+     * Item Id
+     */
+    item_id: string;
+  };
+  query?: never;
+  url: "/next-decimal-providers/{item_id}";
+};
+
+export type PutItemRouteNextDecimalProvidersItemIdPutErrors = {
+  /**
+   * Relation invalid
+   */
+  400: HttpRelationInvalidError;
+  /**
+   * Database integrity error
+   */
+  409: HttpDatabaseIntegrityError;
+  /**
+   * Validation Error
+   */
+  422: HttpValidationError;
+};
+
+export type PutItemRouteNextDecimalProvidersItemIdPutError =
+  PutItemRouteNextDecimalProvidersItemIdPutErrors[keyof PutItemRouteNextDecimalProvidersItemIdPutErrors];
+
+export type PutItemRouteNextDecimalProvidersItemIdPutResponses = {
+  /**
+   * Successful Response
+   */
+  200: NextDecimalProviderGet;
+};
+
+export type PutItemRouteNextDecimalProvidersItemIdPutResponse =
+  PutItemRouteNextDecimalProvidersItemIdPutResponses[keyof PutItemRouteNextDecimalProvidersItemIdPutResponses];
 
 export type GetDummyDaysGetData = {
   body?: never;

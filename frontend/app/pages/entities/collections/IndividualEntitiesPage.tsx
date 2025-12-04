@@ -1,8 +1,8 @@
 import {Page} from "~/pages/Page";
 import {IndividualEntityList} from "~/lists/entities/IndividualEntityList";
-import {useIndividualEntities} from "~/providers/typed_items_providers";
 import {INDIVIDUAL_ENTITY_PARAMS} from "~/page_params/entities";
 import {IndividualEntityPostFormProvider} from "~/forms/entity/contexts";
+import {useIndividualEntities} from "~/providers/items_providers";
 
 export function IndividualEntitiesPage() {
     const [entities, setEntities] = useIndividualEntities()

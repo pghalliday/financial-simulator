@@ -1,4 +1,7 @@
-from typing import Literal, Sequence
+from typing import Literal, Sequence, Union
+
+from fastapi import APIRouter
+from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import (
     DecimalProviderType,
@@ -15,6 +18,8 @@ from .decimal_provider_dependent import (
     DecimalProviderDependentGet,
     decimal_provider_dependent_get_mapper,
 )
+from ...util.collection import Collection
+from ...util.query_params import DefaultQueryParams
 
 
 class NextDecimalProviderPost(DecimalProviderPost):
@@ -39,4 +44,23 @@ next_provider_model_mapper = ModelMapper(
         association_model=NextDecimalProviderProvider,
         get_mapper=decimal_provider_dependent_get_mapper,
     ))
+)
+
+
+class NextDecimalProviderQueryParams(DefaultQueryParams):
+    def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
+        return NextDecimalProvider.name
+
+
+router = APIRouter(
+    prefix="/next-decimal-providers",
+    tags=["next-decimal-providers"],
+)
+
+
+Collection(
+    query_params_class=NextDecimalProviderQueryParams,
+    model_mapper=next_provider_model_mapper,
+).add_endpoints(
+    router=router,
 )

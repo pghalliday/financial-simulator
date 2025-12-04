@@ -1,7 +1,7 @@
 import {useDisclosure} from "@mantine/hooks";
 import {LoadingProvider} from "~/providers/LoadingProvider";
 import {WeeklySchedulesPage} from "~/pages/schedules/collections/WeeklySchedulesPage";
-import {WeeklySchedulesProvider} from "~/providers/typed_items_providers";
+import {WeeklySchedulesProvider} from "~/providers/items_providers";
 
 export default function WeeklySchedules() {
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()

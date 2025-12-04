@@ -2,7 +2,7 @@ import {Page} from "~/pages/Page";
 import {YearlyScheduleList} from "~/lists/schedules/YearlyScheduleList";
 import {YEARLY_SCHEDULE_PARAMS} from "~/page_params/schedules";
 import {YearlySchedulePostFormProvider} from "~/forms/schedule/contexts";
-import {useYearlySchedules} from "~/providers/typed_items_providers";
+import {useYearlySchedules} from "~/providers/items_providers";
 
 export function YearlySchedulesPage() {
     const [schedules, setSchedules] = useYearlySchedules()

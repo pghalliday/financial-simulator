@@ -1,4 +1,7 @@
-from typing import Literal, Sequence
+from typing import Literal, Sequence, Union
+
+from fastapi import APIRouter
+from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import (
     RateProviderType,
@@ -15,6 +18,8 @@ from .rate_provider_dependent import (
     RateProviderDependentGet,
     rate_provider_dependent_get_mapper,
 )
+from ...util.collection import Collection
+from ...util.query_params import DefaultQueryParams
 
 
 class MergeRateProviderPost(RateProviderPost):
@@ -39,4 +44,23 @@ merge_provider_model_mapper = ModelMapper(
         association_model=MergeRateProviderProvider,
         get_mapper=rate_provider_dependent_get_mapper,
     ))
+)
+
+
+class MergeRateProviderQueryParams(DefaultQueryParams):
+    def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
+        return MergeRateProvider.name
+
+
+router = APIRouter(
+    prefix="/merge-rate-providers",
+    tags=["merge-rate-providers"],
+)
+
+
+Collection(
+    query_params_class=MergeRateProviderQueryParams,
+    model_mapper=merge_provider_model_mapper,
+).add_endpoints(
+    router=router,
 )

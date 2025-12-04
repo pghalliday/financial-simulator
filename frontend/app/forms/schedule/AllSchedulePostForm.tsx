@@ -10,7 +10,7 @@ export function AllSchedulePostForm() {
         <TextInput
             autoFocus
             label="Name"
-            description="DailySchedule name"
+            description="Schedule name"
             placeholder="The unique schedule name"
             required
             key={form.key("name")}
@@ -18,16 +18,16 @@ export function AllSchedulePostForm() {
         />
         <TextInput
             label="Description"
-            description="DailySchedule description"
+            description="Schedule description"
             placeholder="The schedule description"
             key={form.key("description")}
             {...form.getInputProps("description")}
         />
         <RelationMultiSelect
             data={schedules}
-            label="DailySchedules"
-            description={"DailySchedules"}
-            placeholder="DailySchedules"
+            label="Schedules"
+            description={"Schedules"}
+            placeholder="Schedules"
             key={form.key("schedules")}
             {...form.getInputProps("schedules")}
         />

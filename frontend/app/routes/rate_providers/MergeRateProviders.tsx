@@ -1,8 +1,7 @@
 import {useDisclosure} from "@mantine/hooks";
 import {LoadingProvider} from "~/providers/LoadingProvider";
 import {MergeRateProvidersPage} from "~/pages/rate_providers/collections/MergeRateProvidersPage";
-import {MergeRateProvidersProvider} from "~/providers/typed_items_providers";
-import {RateProvidersProvider} from "~/providers/items_providers";
+import {MergeRateProvidersProvider, RateProvidersProvider} from "~/providers/items_providers";
 
 export default function MergeRateProviders() {
     const [loadingMergeRateProviders, {

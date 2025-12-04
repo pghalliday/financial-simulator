@@ -7,7 +7,7 @@ export function BandedRatePostForm() {
         <TextInput
             autoFocus
             label="Name"
-            description="PeriodicRate name"
+            description="Rate name"
             placeholder="The unique rate name"
             required
             key={form.key("name")}
@@ -15,7 +15,7 @@ export function BandedRatePostForm() {
         />
         <TextInput
             label="Description"
-            description="PeriodicRate description"
+            description="Rate description"
             placeholder="The rate description"
             key={form.key("description")}
             {...form.getInputProps("description")}

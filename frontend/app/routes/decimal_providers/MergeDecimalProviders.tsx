@@ -1,8 +1,7 @@
 import {useDisclosure} from "@mantine/hooks";
-import {DecimalProvidersProvider} from "~/providers/items_providers";
+import {DecimalProvidersProvider, MergeDecimalProvidersProvider} from "~/providers/items_providers";
 import {LoadingProvider} from "~/providers/LoadingProvider";
 import {MergeDecimalProvidersPage} from "~/pages/decimal_providers/collections/MergeDecimalProvidersPage";
-import {MergeDecimalProvidersProvider} from "~/providers/typed_items_providers";
 
 export default function MergeDecimalProviders() {
     const [loadingMergeDecimalProviders, {

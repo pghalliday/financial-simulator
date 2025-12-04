@@ -1,4 +1,7 @@
-from typing import Literal, Sequence
+from typing import Literal, Sequence, Union
+
+from fastapi import APIRouter
+from sqlalchemy.orm import InstrumentedAttribute
 
 from financial_simulator.app.database.schema import (
     AllSchedule,
@@ -15,6 +18,8 @@ from financial_simulator.app.server.routers.schedules.schedule_dependent import 
     ScheduleDependentGet,
     schedule_dependent_get_mapper,
 )
+from ...util.collection import Collection
+from ...util.query_params import DefaultQueryParams
 
 
 class AllSchedulePost(SchedulePost):
@@ -39,4 +44,23 @@ all_schedule_model_mapper = ModelMapper(
         association_model=AllScheduleSchedule,
         get_mapper=schedule_dependent_get_mapper,
     ))
+)
+
+
+class AllScheduleQueryParams(DefaultQueryParams):
+    def query_order_by(self) -> Union[InstrumentedAttribute[str], None]:
+        return AllSchedule.name
+
+
+router = APIRouter(
+    prefix="/all-schedules",
+    tags=["all-schedules"],
+)
+
+
+Collection(
+    query_params_class=AllScheduleQueryParams,
+    model_mapper=all_schedule_model_mapper,
+).add_endpoints(
+    router=router,
 )

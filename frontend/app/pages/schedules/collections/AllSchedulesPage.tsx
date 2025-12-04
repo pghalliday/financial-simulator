@@ -2,7 +2,7 @@ import {Page} from "~/pages/Page";
 import {AllScheduleList} from "~/lists/schedules/AllScheduleList";
 import {ALL_SCHEDULE_PARAMS} from "~/page_params/schedules";
 import {AllSchedulePostFormProvider} from "~/forms/schedule/contexts";
-import {useAllSchedules} from "~/providers/typed_items_providers";
+import {useAllSchedules} from "~/providers/items_providers";
 
 export function AllSchedulesPage() {
     const [schedules, setSchedules] = useAllSchedules()

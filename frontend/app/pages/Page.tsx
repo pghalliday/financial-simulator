@@ -1,10 +1,10 @@
 import {Box, LoadingOverlay} from "@mantine/core";
 import {type PropsWithChildren} from "react";
-import {PageMetaData, type PageParams} from "~/pages/PageMetaData";
+import {PageMetaData, type PageMetaDataParams} from "~/pages/PageMetaData";
 import {useLoading} from "~/providers/LoadingProvider";
 
 interface Props {
-    pageParams: PageParams
+    pageParams: PageMetaDataParams
 }
 
 export function Page(
@@ -15,7 +15,7 @@ export function Page(
 ) {
     const loading = useLoading()
     return <>
-        <PageMetaData pageParams={pageParams}/>
+        <PageMetaData pageMetaDataParams={pageParams}/>
         <Box pos="relative">
             <LoadingOverlay
                 visible={loading}

@@ -2,7 +2,7 @@ import {Page} from "~/pages/Page";
 import {DailyScheduleList} from "~/lists/schedules/DailyScheduleList";
 import {DAILY_SCHEDULE_PARAMS} from "~/page_params/schedules";
 import {DailySchedulePostFormProvider} from "~/forms/schedule/contexts";
-import {useDailySchedules} from "~/providers/typed_items_providers";
+import {useDailySchedules} from "~/providers/items_providers";
 
 export function DailySchedulesPage() {
     const [schedules, setSchedules] = useDailySchedules()

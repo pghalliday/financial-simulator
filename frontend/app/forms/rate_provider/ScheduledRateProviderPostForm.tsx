@@ -26,17 +26,17 @@ export function ScheduledRateProviderPostForm() {
         />
         <RelationSelect
             data={rates}
-            label="PeriodicRate"
-            description={"PeriodicRate"}
-            placeholder="PeriodicRate"
+            label="Rate"
+            description={"Rate"}
+            placeholder="Rate"
             key={form.key("rate_id")}
             {...form.getInputProps("rate_id")}
         />
         <RelationSelect
             data={schedules}
-            label="DailySchedule"
-            description={"DailySchedule"}
-            placeholder="DailySchedule"
+            label="Schedule"
+            description={"Schedule"}
+            placeholder="Schedule"
             key={form.key("schedule_id")}
             {...form.getInputProps("schedule_id")}
         />

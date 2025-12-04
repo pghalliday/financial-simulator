@@ -1,8 +1,8 @@
 import {Page} from "~/pages/Page";
 import {ScheduledDecimalProviderList} from "~/lists/decimal_providers/ScheduledDecimalProviderList";
-import {useScheduledDecimalProviders} from "~/providers/typed_items_providers";
 import {SCHEDULED_DECIMAL_PROVIDER_PARAMS} from "~/page_params/decimal_providers";
 import {ScheduledDecimalProviderPostFormProvider} from "~/forms/decimal_provider/contexts";
+import {useScheduledDecimalProviders} from "~/providers/items_providers";
 
 export function ScheduledDecimalProvidersPage() {
     const [decimalProviders, setDecimalProviders] = useScheduledDecimalProviders()

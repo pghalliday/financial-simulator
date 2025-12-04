@@ -3,18 +3,66 @@
 import type { Client, Options as Options2, TDataShape } from "./client";
 import { client } from "./client.gen";
 import type {
+  DeleteItemRouteAllSchedulesItemIdDeleteData,
+  DeleteItemRouteAllSchedulesItemIdDeleteErrors,
+  DeleteItemRouteAllSchedulesItemIdDeleteResponses,
+  DeleteItemRouteAnySchedulesItemIdDeleteData,
+  DeleteItemRouteAnySchedulesItemIdDeleteErrors,
+  DeleteItemRouteAnySchedulesItemIdDeleteResponses,
+  DeleteItemRouteBandedRatesItemIdDeleteData,
+  DeleteItemRouteBandedRatesItemIdDeleteErrors,
+  DeleteItemRouteBandedRatesItemIdDeleteResponses,
   DeleteItemRouteBankAccountsItemIdDeleteData,
   DeleteItemRouteBankAccountsItemIdDeleteErrors,
   DeleteItemRouteBankAccountsItemIdDeleteResponses,
+  DeleteItemRouteContinuousRatesItemIdDeleteData,
+  DeleteItemRouteContinuousRatesItemIdDeleteErrors,
+  DeleteItemRouteContinuousRatesItemIdDeleteResponses,
+  DeleteItemRouteCorporationEntitiesItemIdDeleteData,
+  DeleteItemRouteCorporationEntitiesItemIdDeleteErrors,
+  DeleteItemRouteCorporationEntitiesItemIdDeleteResponses,
+  DeleteItemRouteDailySchedulesItemIdDeleteData,
+  DeleteItemRouteDailySchedulesItemIdDeleteErrors,
+  DeleteItemRouteDailySchedulesItemIdDeleteResponses,
+  DeleteItemRouteDaySchedulesItemIdDeleteData,
+  DeleteItemRouteDaySchedulesItemIdDeleteErrors,
+  DeleteItemRouteDaySchedulesItemIdDeleteResponses,
   DeleteItemRouteDecimalProvidersItemIdDeleteData,
   DeleteItemRouteDecimalProvidersItemIdDeleteErrors,
   DeleteItemRouteDecimalProvidersItemIdDeleteResponses,
   DeleteItemRouteEntitiesItemIdDeleteData,
   DeleteItemRouteEntitiesItemIdDeleteErrors,
   DeleteItemRouteEntitiesItemIdDeleteResponses,
+  DeleteItemRouteFromSchedulesItemIdDeleteData,
+  DeleteItemRouteFromSchedulesItemIdDeleteErrors,
+  DeleteItemRouteFromSchedulesItemIdDeleteResponses,
+  DeleteItemRouteIndividualEntitiesItemIdDeleteData,
+  DeleteItemRouteIndividualEntitiesItemIdDeleteErrors,
+  DeleteItemRouteIndividualEntitiesItemIdDeleteResponses,
   DeleteItemRouteLedgerAccountsItemIdDeleteData,
   DeleteItemRouteLedgerAccountsItemIdDeleteErrors,
   DeleteItemRouteLedgerAccountsItemIdDeleteResponses,
+  DeleteItemRouteMergeDecimalProvidersItemIdDeleteData,
+  DeleteItemRouteMergeDecimalProvidersItemIdDeleteErrors,
+  DeleteItemRouteMergeDecimalProvidersItemIdDeleteResponses,
+  DeleteItemRouteMergeRateProvidersItemIdDeleteData,
+  DeleteItemRouteMergeRateProvidersItemIdDeleteErrors,
+  DeleteItemRouteMergeRateProvidersItemIdDeleteResponses,
+  DeleteItemRouteMonthlySchedulesItemIdDeleteData,
+  DeleteItemRouteMonthlySchedulesItemIdDeleteErrors,
+  DeleteItemRouteMonthlySchedulesItemIdDeleteResponses,
+  DeleteItemRouteNextDecimalProvidersItemIdDeleteData,
+  DeleteItemRouteNextDecimalProvidersItemIdDeleteErrors,
+  DeleteItemRouteNextDecimalProvidersItemIdDeleteResponses,
+  DeleteItemRouteNextRateProvidersItemIdDeleteData,
+  DeleteItemRouteNextRateProvidersItemIdDeleteErrors,
+  DeleteItemRouteNextRateProvidersItemIdDeleteResponses,
+  DeleteItemRoutePeriodicRatesItemIdDeleteData,
+  DeleteItemRoutePeriodicRatesItemIdDeleteErrors,
+  DeleteItemRoutePeriodicRatesItemIdDeleteResponses,
+  DeleteItemRouteRangeSchedulesItemIdDeleteData,
+  DeleteItemRouteRangeSchedulesItemIdDeleteErrors,
+  DeleteItemRouteRangeSchedulesItemIdDeleteResponses,
   DeleteItemRouteRateProvidersItemIdDeleteData,
   DeleteItemRouteRateProvidersItemIdDeleteErrors,
   DeleteItemRouteRateProvidersItemIdDeleteResponses,
@@ -24,24 +72,87 @@ import type {
   DeleteItemRouteScenariosItemIdDeleteData,
   DeleteItemRouteScenariosItemIdDeleteErrors,
   DeleteItemRouteScenariosItemIdDeleteResponses,
+  DeleteItemRouteScheduledDecimalProvidersItemIdDeleteData,
+  DeleteItemRouteScheduledDecimalProvidersItemIdDeleteErrors,
+  DeleteItemRouteScheduledDecimalProvidersItemIdDeleteResponses,
+  DeleteItemRouteScheduledRateProvidersItemIdDeleteData,
+  DeleteItemRouteScheduledRateProvidersItemIdDeleteErrors,
+  DeleteItemRouteScheduledRateProvidersItemIdDeleteResponses,
   DeleteItemRouteSchedulesItemIdDeleteData,
   DeleteItemRouteSchedulesItemIdDeleteErrors,
   DeleteItemRouteSchedulesItemIdDeleteResponses,
+  DeleteItemRouteUntilSchedulesItemIdDeleteData,
+  DeleteItemRouteUntilSchedulesItemIdDeleteErrors,
+  DeleteItemRouteUntilSchedulesItemIdDeleteResponses,
+  DeleteItemRouteWeeklySchedulesItemIdDeleteData,
+  DeleteItemRouteWeeklySchedulesItemIdDeleteErrors,
+  DeleteItemRouteWeeklySchedulesItemIdDeleteResponses,
+  DeleteItemRouteYearlySchedulesItemIdDeleteData,
+  DeleteItemRouteYearlySchedulesItemIdDeleteErrors,
+  DeleteItemRouteYearlySchedulesItemIdDeleteResponses,
   GetDummyDaysGetData,
   GetDummyDaysGetErrors,
   GetDummyDaysGetResponses,
+  GetItemRouteAllSchedulesItemIdGetData,
+  GetItemRouteAllSchedulesItemIdGetErrors,
+  GetItemRouteAllSchedulesItemIdGetResponses,
+  GetItemRouteAnySchedulesItemIdGetData,
+  GetItemRouteAnySchedulesItemIdGetErrors,
+  GetItemRouteAnySchedulesItemIdGetResponses,
+  GetItemRouteBandedRatesItemIdGetData,
+  GetItemRouteBandedRatesItemIdGetErrors,
+  GetItemRouteBandedRatesItemIdGetResponses,
   GetItemRouteBankAccountsItemIdGetData,
   GetItemRouteBankAccountsItemIdGetErrors,
   GetItemRouteBankAccountsItemIdGetResponses,
+  GetItemRouteContinuousRatesItemIdGetData,
+  GetItemRouteContinuousRatesItemIdGetErrors,
+  GetItemRouteContinuousRatesItemIdGetResponses,
+  GetItemRouteCorporationEntitiesItemIdGetData,
+  GetItemRouteCorporationEntitiesItemIdGetErrors,
+  GetItemRouteCorporationEntitiesItemIdGetResponses,
+  GetItemRouteDailySchedulesItemIdGetData,
+  GetItemRouteDailySchedulesItemIdGetErrors,
+  GetItemRouteDailySchedulesItemIdGetResponses,
+  GetItemRouteDaySchedulesItemIdGetData,
+  GetItemRouteDaySchedulesItemIdGetErrors,
+  GetItemRouteDaySchedulesItemIdGetResponses,
   GetItemRouteDecimalProvidersItemIdGetData,
   GetItemRouteDecimalProvidersItemIdGetErrors,
   GetItemRouteDecimalProvidersItemIdGetResponses,
   GetItemRouteEntitiesItemIdGetData,
   GetItemRouteEntitiesItemIdGetErrors,
   GetItemRouteEntitiesItemIdGetResponses,
+  GetItemRouteFromSchedulesItemIdGetData,
+  GetItemRouteFromSchedulesItemIdGetErrors,
+  GetItemRouteFromSchedulesItemIdGetResponses,
+  GetItemRouteIndividualEntitiesItemIdGetData,
+  GetItemRouteIndividualEntitiesItemIdGetErrors,
+  GetItemRouteIndividualEntitiesItemIdGetResponses,
   GetItemRouteLedgerAccountsItemIdGetData,
   GetItemRouteLedgerAccountsItemIdGetErrors,
   GetItemRouteLedgerAccountsItemIdGetResponses,
+  GetItemRouteMergeDecimalProvidersItemIdGetData,
+  GetItemRouteMergeDecimalProvidersItemIdGetErrors,
+  GetItemRouteMergeDecimalProvidersItemIdGetResponses,
+  GetItemRouteMergeRateProvidersItemIdGetData,
+  GetItemRouteMergeRateProvidersItemIdGetErrors,
+  GetItemRouteMergeRateProvidersItemIdGetResponses,
+  GetItemRouteMonthlySchedulesItemIdGetData,
+  GetItemRouteMonthlySchedulesItemIdGetErrors,
+  GetItemRouteMonthlySchedulesItemIdGetResponses,
+  GetItemRouteNextDecimalProvidersItemIdGetData,
+  GetItemRouteNextDecimalProvidersItemIdGetErrors,
+  GetItemRouteNextDecimalProvidersItemIdGetResponses,
+  GetItemRouteNextRateProvidersItemIdGetData,
+  GetItemRouteNextRateProvidersItemIdGetErrors,
+  GetItemRouteNextRateProvidersItemIdGetResponses,
+  GetItemRoutePeriodicRatesItemIdGetData,
+  GetItemRoutePeriodicRatesItemIdGetErrors,
+  GetItemRoutePeriodicRatesItemIdGetResponses,
+  GetItemRouteRangeSchedulesItemIdGetData,
+  GetItemRouteRangeSchedulesItemIdGetErrors,
+  GetItemRouteRangeSchedulesItemIdGetResponses,
   GetItemRouteRateProvidersItemIdGetData,
   GetItemRouteRateProvidersItemIdGetErrors,
   GetItemRouteRateProvidersItemIdGetResponses,
@@ -51,19 +162,66 @@ import type {
   GetItemRouteScenariosItemIdGetData,
   GetItemRouteScenariosItemIdGetErrors,
   GetItemRouteScenariosItemIdGetResponses,
+  GetItemRouteScheduledDecimalProvidersItemIdGetData,
+  GetItemRouteScheduledDecimalProvidersItemIdGetErrors,
+  GetItemRouteScheduledDecimalProvidersItemIdGetResponses,
+  GetItemRouteScheduledRateProvidersItemIdGetData,
+  GetItemRouteScheduledRateProvidersItemIdGetErrors,
+  GetItemRouteScheduledRateProvidersItemIdGetResponses,
   GetItemRouteSchedulesItemIdGetData,
   GetItemRouteSchedulesItemIdGetErrors,
   GetItemRouteSchedulesItemIdGetResponses,
+  GetItemRouteUntilSchedulesItemIdGetData,
+  GetItemRouteUntilSchedulesItemIdGetErrors,
+  GetItemRouteUntilSchedulesItemIdGetResponses,
+  GetItemRouteWeeklySchedulesItemIdGetData,
+  GetItemRouteWeeklySchedulesItemIdGetErrors,
+  GetItemRouteWeeklySchedulesItemIdGetResponses,
+  GetItemRouteYearlySchedulesItemIdGetData,
+  GetItemRouteYearlySchedulesItemIdGetErrors,
+  GetItemRouteYearlySchedulesItemIdGetResponses,
+  GetItemsRouteAllSchedulesGetData,
+  GetItemsRouteAllSchedulesGetResponses,
+  GetItemsRouteAnySchedulesGetData,
+  GetItemsRouteAnySchedulesGetResponses,
+  GetItemsRouteBandedRatesGetData,
+  GetItemsRouteBandedRatesGetResponses,
   GetItemsRouteBankAccountsGetData,
   GetItemsRouteBankAccountsGetResponses,
+  GetItemsRouteContinuousRatesGetData,
+  GetItemsRouteContinuousRatesGetResponses,
+  GetItemsRouteCorporationEntitiesGetData,
+  GetItemsRouteCorporationEntitiesGetResponses,
+  GetItemsRouteDailySchedulesGetData,
+  GetItemsRouteDailySchedulesGetResponses,
+  GetItemsRouteDaySchedulesGetData,
+  GetItemsRouteDaySchedulesGetResponses,
   GetItemsRouteDecimalProvidersGetData,
   GetItemsRouteDecimalProvidersGetErrors,
   GetItemsRouteDecimalProvidersGetResponses,
   GetItemsRouteEntitiesGetData,
   GetItemsRouteEntitiesGetErrors,
   GetItemsRouteEntitiesGetResponses,
+  GetItemsRouteFromSchedulesGetData,
+  GetItemsRouteFromSchedulesGetResponses,
+  GetItemsRouteIndividualEntitiesGetData,
+  GetItemsRouteIndividualEntitiesGetResponses,
   GetItemsRouteLedgerAccountsGetData,
   GetItemsRouteLedgerAccountsGetResponses,
+  GetItemsRouteMergeDecimalProvidersGetData,
+  GetItemsRouteMergeDecimalProvidersGetResponses,
+  GetItemsRouteMergeRateProvidersGetData,
+  GetItemsRouteMergeRateProvidersGetResponses,
+  GetItemsRouteMonthlySchedulesGetData,
+  GetItemsRouteMonthlySchedulesGetResponses,
+  GetItemsRouteNextDecimalProvidersGetData,
+  GetItemsRouteNextDecimalProvidersGetResponses,
+  GetItemsRouteNextRateProvidersGetData,
+  GetItemsRouteNextRateProvidersGetResponses,
+  GetItemsRoutePeriodicRatesGetData,
+  GetItemsRoutePeriodicRatesGetResponses,
+  GetItemsRouteRangeSchedulesGetData,
+  GetItemsRouteRangeSchedulesGetResponses,
   GetItemsRouteRateProvidersGetData,
   GetItemsRouteRateProvidersGetErrors,
   GetItemsRouteRateProvidersGetResponses,
@@ -72,21 +230,79 @@ import type {
   GetItemsRouteRatesGetResponses,
   GetItemsRouteScenariosGetData,
   GetItemsRouteScenariosGetResponses,
+  GetItemsRouteScheduledDecimalProvidersGetData,
+  GetItemsRouteScheduledDecimalProvidersGetResponses,
+  GetItemsRouteScheduledRateProvidersGetData,
+  GetItemsRouteScheduledRateProvidersGetResponses,
   GetItemsRouteSchedulesGetData,
   GetItemsRouteSchedulesGetErrors,
   GetItemsRouteSchedulesGetResponses,
+  GetItemsRouteUntilSchedulesGetData,
+  GetItemsRouteUntilSchedulesGetResponses,
+  GetItemsRouteWeeklySchedulesGetData,
+  GetItemsRouteWeeklySchedulesGetResponses,
+  GetItemsRouteYearlySchedulesGetData,
+  GetItemsRouteYearlySchedulesGetResponses,
+  PostItemRouteAllSchedulesPostData,
+  PostItemRouteAllSchedulesPostErrors,
+  PostItemRouteAllSchedulesPostResponses,
+  PostItemRouteAnySchedulesPostData,
+  PostItemRouteAnySchedulesPostErrors,
+  PostItemRouteAnySchedulesPostResponses,
+  PostItemRouteBandedRatesPostData,
+  PostItemRouteBandedRatesPostErrors,
+  PostItemRouteBandedRatesPostResponses,
   PostItemRouteBankAccountsPostData,
   PostItemRouteBankAccountsPostErrors,
   PostItemRouteBankAccountsPostResponses,
+  PostItemRouteContinuousRatesPostData,
+  PostItemRouteContinuousRatesPostErrors,
+  PostItemRouteContinuousRatesPostResponses,
+  PostItemRouteCorporationEntitiesPostData,
+  PostItemRouteCorporationEntitiesPostErrors,
+  PostItemRouteCorporationEntitiesPostResponses,
+  PostItemRouteDailySchedulesPostData,
+  PostItemRouteDailySchedulesPostErrors,
+  PostItemRouteDailySchedulesPostResponses,
+  PostItemRouteDaySchedulesPostData,
+  PostItemRouteDaySchedulesPostErrors,
+  PostItemRouteDaySchedulesPostResponses,
   PostItemRouteDecimalProvidersPostData,
   PostItemRouteDecimalProvidersPostErrors,
   PostItemRouteDecimalProvidersPostResponses,
   PostItemRouteEntitiesPostData,
   PostItemRouteEntitiesPostErrors,
   PostItemRouteEntitiesPostResponses,
+  PostItemRouteFromSchedulesPostData,
+  PostItemRouteFromSchedulesPostErrors,
+  PostItemRouteFromSchedulesPostResponses,
+  PostItemRouteIndividualEntitiesPostData,
+  PostItemRouteIndividualEntitiesPostErrors,
+  PostItemRouteIndividualEntitiesPostResponses,
   PostItemRouteLedgerAccountsPostData,
   PostItemRouteLedgerAccountsPostErrors,
   PostItemRouteLedgerAccountsPostResponses,
+  PostItemRouteMergeDecimalProvidersPostData,
+  PostItemRouteMergeDecimalProvidersPostErrors,
+  PostItemRouteMergeDecimalProvidersPostResponses,
+  PostItemRouteMergeRateProvidersPostData,
+  PostItemRouteMergeRateProvidersPostErrors,
+  PostItemRouteMergeRateProvidersPostResponses,
+  PostItemRouteMonthlySchedulesPostData,
+  PostItemRouteMonthlySchedulesPostErrors,
+  PostItemRouteMonthlySchedulesPostResponses,
+  PostItemRouteNextDecimalProvidersPostData,
+  PostItemRouteNextDecimalProvidersPostErrors,
+  PostItemRouteNextDecimalProvidersPostResponses,
+  PostItemRouteNextRateProvidersPostData,
+  PostItemRouteNextRateProvidersPostErrors,
+  PostItemRouteNextRateProvidersPostResponses,
+  PostItemRoutePeriodicRatesPostData,
+  PostItemRoutePeriodicRatesPostErrors,
+  PostItemRoutePeriodicRatesPostResponses,
+  PostItemRouteRangeSchedulesPostData,
+  PostItemRouteRangeSchedulesPostErrors,
+  PostItemRouteRangeSchedulesPostResponses,
   PostItemRouteRateProvidersPostData,
   PostItemRouteRateProvidersPostErrors,
   PostItemRouteRateProvidersPostResponses,
@@ -96,21 +312,84 @@ import type {
   PostItemRouteScenariosPostData,
   PostItemRouteScenariosPostErrors,
   PostItemRouteScenariosPostResponses,
+  PostItemRouteScheduledDecimalProvidersPostData,
+  PostItemRouteScheduledDecimalProvidersPostErrors,
+  PostItemRouteScheduledDecimalProvidersPostResponses,
+  PostItemRouteScheduledRateProvidersPostData,
+  PostItemRouteScheduledRateProvidersPostErrors,
+  PostItemRouteScheduledRateProvidersPostResponses,
   PostItemRouteSchedulesPostData,
   PostItemRouteSchedulesPostErrors,
   PostItemRouteSchedulesPostResponses,
+  PostItemRouteUntilSchedulesPostData,
+  PostItemRouteUntilSchedulesPostErrors,
+  PostItemRouteUntilSchedulesPostResponses,
+  PostItemRouteWeeklySchedulesPostData,
+  PostItemRouteWeeklySchedulesPostErrors,
+  PostItemRouteWeeklySchedulesPostResponses,
+  PostItemRouteYearlySchedulesPostData,
+  PostItemRouteYearlySchedulesPostErrors,
+  PostItemRouteYearlySchedulesPostResponses,
+  PutItemRouteAllSchedulesItemIdPutData,
+  PutItemRouteAllSchedulesItemIdPutErrors,
+  PutItemRouteAllSchedulesItemIdPutResponses,
+  PutItemRouteAnySchedulesItemIdPutData,
+  PutItemRouteAnySchedulesItemIdPutErrors,
+  PutItemRouteAnySchedulesItemIdPutResponses,
+  PutItemRouteBandedRatesItemIdPutData,
+  PutItemRouteBandedRatesItemIdPutErrors,
+  PutItemRouteBandedRatesItemIdPutResponses,
   PutItemRouteBankAccountsItemIdPutData,
   PutItemRouteBankAccountsItemIdPutErrors,
   PutItemRouteBankAccountsItemIdPutResponses,
+  PutItemRouteContinuousRatesItemIdPutData,
+  PutItemRouteContinuousRatesItemIdPutErrors,
+  PutItemRouteContinuousRatesItemIdPutResponses,
+  PutItemRouteCorporationEntitiesItemIdPutData,
+  PutItemRouteCorporationEntitiesItemIdPutErrors,
+  PutItemRouteCorporationEntitiesItemIdPutResponses,
+  PutItemRouteDailySchedulesItemIdPutData,
+  PutItemRouteDailySchedulesItemIdPutErrors,
+  PutItemRouteDailySchedulesItemIdPutResponses,
+  PutItemRouteDaySchedulesItemIdPutData,
+  PutItemRouteDaySchedulesItemIdPutErrors,
+  PutItemRouteDaySchedulesItemIdPutResponses,
   PutItemRouteDecimalProvidersItemIdPutData,
   PutItemRouteDecimalProvidersItemIdPutErrors,
   PutItemRouteDecimalProvidersItemIdPutResponses,
   PutItemRouteEntitiesItemIdPutData,
   PutItemRouteEntitiesItemIdPutErrors,
   PutItemRouteEntitiesItemIdPutResponses,
+  PutItemRouteFromSchedulesItemIdPutData,
+  PutItemRouteFromSchedulesItemIdPutErrors,
+  PutItemRouteFromSchedulesItemIdPutResponses,
+  PutItemRouteIndividualEntitiesItemIdPutData,
+  PutItemRouteIndividualEntitiesItemIdPutErrors,
+  PutItemRouteIndividualEntitiesItemIdPutResponses,
   PutItemRouteLedgerAccountsItemIdPutData,
   PutItemRouteLedgerAccountsItemIdPutErrors,
   PutItemRouteLedgerAccountsItemIdPutResponses,
+  PutItemRouteMergeDecimalProvidersItemIdPutData,
+  PutItemRouteMergeDecimalProvidersItemIdPutErrors,
+  PutItemRouteMergeDecimalProvidersItemIdPutResponses,
+  PutItemRouteMergeRateProvidersItemIdPutData,
+  PutItemRouteMergeRateProvidersItemIdPutErrors,
+  PutItemRouteMergeRateProvidersItemIdPutResponses,
+  PutItemRouteMonthlySchedulesItemIdPutData,
+  PutItemRouteMonthlySchedulesItemIdPutErrors,
+  PutItemRouteMonthlySchedulesItemIdPutResponses,
+  PutItemRouteNextDecimalProvidersItemIdPutData,
+  PutItemRouteNextDecimalProvidersItemIdPutErrors,
+  PutItemRouteNextDecimalProvidersItemIdPutResponses,
+  PutItemRouteNextRateProvidersItemIdPutData,
+  PutItemRouteNextRateProvidersItemIdPutErrors,
+  PutItemRouteNextRateProvidersItemIdPutResponses,
+  PutItemRoutePeriodicRatesItemIdPutData,
+  PutItemRoutePeriodicRatesItemIdPutErrors,
+  PutItemRoutePeriodicRatesItemIdPutResponses,
+  PutItemRouteRangeSchedulesItemIdPutData,
+  PutItemRouteRangeSchedulesItemIdPutErrors,
+  PutItemRouteRangeSchedulesItemIdPutResponses,
   PutItemRouteRateProvidersItemIdPutData,
   PutItemRouteRateProvidersItemIdPutErrors,
   PutItemRouteRateProvidersItemIdPutResponses,
@@ -120,9 +399,24 @@ import type {
   PutItemRouteScenariosItemIdPutData,
   PutItemRouteScenariosItemIdPutErrors,
   PutItemRouteScenariosItemIdPutResponses,
+  PutItemRouteScheduledDecimalProvidersItemIdPutData,
+  PutItemRouteScheduledDecimalProvidersItemIdPutErrors,
+  PutItemRouteScheduledDecimalProvidersItemIdPutResponses,
+  PutItemRouteScheduledRateProvidersItemIdPutData,
+  PutItemRouteScheduledRateProvidersItemIdPutErrors,
+  PutItemRouteScheduledRateProvidersItemIdPutResponses,
   PutItemRouteSchedulesItemIdPutData,
   PutItemRouteSchedulesItemIdPutErrors,
   PutItemRouteSchedulesItemIdPutResponses,
+  PutItemRouteUntilSchedulesItemIdPutData,
+  PutItemRouteUntilSchedulesItemIdPutErrors,
+  PutItemRouteUntilSchedulesItemIdPutResponses,
+  PutItemRouteWeeklySchedulesItemIdPutData,
+  PutItemRouteWeeklySchedulesItemIdPutErrors,
+  PutItemRouteWeeklySchedulesItemIdPutResponses,
+  PutItemRouteYearlySchedulesItemIdPutData,
+  PutItemRouteYearlySchedulesItemIdPutErrors,
+  PutItemRouteYearlySchedulesItemIdPutResponses,
 } from "./types.gen";
 
 export type Options<
@@ -324,6 +618,208 @@ export const putItemRouteEntitiesItemIdPut = <
     ThrowOnError
   >({
     url: "/entities/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteIndividualEntitiesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteIndividualEntitiesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteIndividualEntitiesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/individual-entities/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteIndividualEntitiesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteIndividualEntitiesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteIndividualEntitiesPostResponses,
+    PostItemRouteIndividualEntitiesPostErrors,
+    ThrowOnError
+  >({
+    url: "/individual-entities/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteIndividualEntitiesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteIndividualEntitiesItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteIndividualEntitiesItemIdDeleteResponses,
+    DeleteItemRouteIndividualEntitiesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/individual-entities/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteIndividualEntitiesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteIndividualEntitiesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteIndividualEntitiesItemIdGetResponses,
+    GetItemRouteIndividualEntitiesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/individual-entities/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteIndividualEntitiesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteIndividualEntitiesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteIndividualEntitiesItemIdPutResponses,
+    PutItemRouteIndividualEntitiesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/individual-entities/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteCorporationEntitiesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteCorporationEntitiesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteCorporationEntitiesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/corporation-entities/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteCorporationEntitiesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteCorporationEntitiesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteCorporationEntitiesPostResponses,
+    PostItemRouteCorporationEntitiesPostErrors,
+    ThrowOnError
+  >({
+    url: "/corporation-entities/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteCorporationEntitiesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteCorporationEntitiesItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteCorporationEntitiesItemIdDeleteResponses,
+    DeleteItemRouteCorporationEntitiesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/corporation-entities/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteCorporationEntitiesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteCorporationEntitiesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteCorporationEntitiesItemIdGetResponses,
+    GetItemRouteCorporationEntitiesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/corporation-entities/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteCorporationEntitiesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteCorporationEntitiesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteCorporationEntitiesItemIdPutResponses,
+    PutItemRouteCorporationEntitiesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/corporation-entities/{item_id}",
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -625,6 +1121,303 @@ export const putItemRouteRatesItemIdPut = <
 /**
  * Get Items Route
  */
+export const getItemsRoutePeriodicRatesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRoutePeriodicRatesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRoutePeriodicRatesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/periodic-rates/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRoutePeriodicRatesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRoutePeriodicRatesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRoutePeriodicRatesPostResponses,
+    PostItemRoutePeriodicRatesPostErrors,
+    ThrowOnError
+  >({
+    url: "/periodic-rates/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRoutePeriodicRatesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DeleteItemRoutePeriodicRatesItemIdDeleteData, ThrowOnError>,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRoutePeriodicRatesItemIdDeleteResponses,
+    DeleteItemRoutePeriodicRatesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/periodic-rates/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRoutePeriodicRatesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRoutePeriodicRatesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRoutePeriodicRatesItemIdGetResponses,
+    GetItemRoutePeriodicRatesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/periodic-rates/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRoutePeriodicRatesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRoutePeriodicRatesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRoutePeriodicRatesItemIdPutResponses,
+    PutItemRoutePeriodicRatesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/periodic-rates/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteContinuousRatesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteContinuousRatesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteContinuousRatesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/continuous-rates/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteContinuousRatesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteContinuousRatesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteContinuousRatesPostResponses,
+    PostItemRouteContinuousRatesPostErrors,
+    ThrowOnError
+  >({
+    url: "/continuous-rates/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteContinuousRatesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteContinuousRatesItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteContinuousRatesItemIdDeleteResponses,
+    DeleteItemRouteContinuousRatesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/continuous-rates/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteContinuousRatesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteContinuousRatesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteContinuousRatesItemIdGetResponses,
+    GetItemRouteContinuousRatesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/continuous-rates/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteContinuousRatesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteContinuousRatesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteContinuousRatesItemIdPutResponses,
+    PutItemRouteContinuousRatesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/continuous-rates/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteBandedRatesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteBandedRatesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteBandedRatesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/banded-rates/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteBandedRatesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteBandedRatesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteBandedRatesPostResponses,
+    PostItemRouteBandedRatesPostErrors,
+    ThrowOnError
+  >({
+    url: "/banded-rates/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteBandedRatesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DeleteItemRouteBandedRatesItemIdDeleteData, ThrowOnError>,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteBandedRatesItemIdDeleteResponses,
+    DeleteItemRouteBandedRatesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/banded-rates/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteBandedRatesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteBandedRatesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteBandedRatesItemIdGetResponses,
+    GetItemRouteBandedRatesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/banded-rates/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteBandedRatesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteBandedRatesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteBandedRatesItemIdPutResponses,
+    PutItemRouteBandedRatesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/banded-rates/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
 export const getItemsRouteSchedulesGet = <ThrowOnError extends boolean = false>(
   options?: Options<GetItemsRouteSchedulesGetData, ThrowOnError>,
 ) => {
@@ -710,6 +1503,995 @@ export const putItemRouteSchedulesItemIdPut = <
     ThrowOnError
   >({
     url: "/schedules/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteDailySchedulesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteDailySchedulesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteDailySchedulesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/daily-schedules/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteDailySchedulesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteDailySchedulesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteDailySchedulesPostResponses,
+    PostItemRouteDailySchedulesPostErrors,
+    ThrowOnError
+  >({
+    url: "/daily-schedules/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteDailySchedulesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DeleteItemRouteDailySchedulesItemIdDeleteData, ThrowOnError>,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteDailySchedulesItemIdDeleteResponses,
+    DeleteItemRouteDailySchedulesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/daily-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteDailySchedulesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteDailySchedulesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteDailySchedulesItemIdGetResponses,
+    GetItemRouteDailySchedulesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/daily-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteDailySchedulesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteDailySchedulesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteDailySchedulesItemIdPutResponses,
+    PutItemRouteDailySchedulesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/daily-schedules/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteDaySchedulesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteDaySchedulesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteDaySchedulesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/day-schedules/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteDaySchedulesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteDaySchedulesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteDaySchedulesPostResponses,
+    PostItemRouteDaySchedulesPostErrors,
+    ThrowOnError
+  >({
+    url: "/day-schedules/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteDaySchedulesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DeleteItemRouteDaySchedulesItemIdDeleteData, ThrowOnError>,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteDaySchedulesItemIdDeleteResponses,
+    DeleteItemRouteDaySchedulesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/day-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteDaySchedulesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteDaySchedulesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteDaySchedulesItemIdGetResponses,
+    GetItemRouteDaySchedulesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/day-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteDaySchedulesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteDaySchedulesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteDaySchedulesItemIdPutResponses,
+    PutItemRouteDaySchedulesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/day-schedules/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteWeeklySchedulesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteWeeklySchedulesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteWeeklySchedulesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/weekly-schedules/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteWeeklySchedulesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteWeeklySchedulesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteWeeklySchedulesPostResponses,
+    PostItemRouteWeeklySchedulesPostErrors,
+    ThrowOnError
+  >({
+    url: "/weekly-schedules/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteWeeklySchedulesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteWeeklySchedulesItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteWeeklySchedulesItemIdDeleteResponses,
+    DeleteItemRouteWeeklySchedulesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/weekly-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteWeeklySchedulesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteWeeklySchedulesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteWeeklySchedulesItemIdGetResponses,
+    GetItemRouteWeeklySchedulesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/weekly-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteWeeklySchedulesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteWeeklySchedulesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteWeeklySchedulesItemIdPutResponses,
+    PutItemRouteWeeklySchedulesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/weekly-schedules/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteMonthlySchedulesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteMonthlySchedulesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteMonthlySchedulesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/monthly-schedules/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteMonthlySchedulesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteMonthlySchedulesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteMonthlySchedulesPostResponses,
+    PostItemRouteMonthlySchedulesPostErrors,
+    ThrowOnError
+  >({
+    url: "/monthly-schedules/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteMonthlySchedulesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteMonthlySchedulesItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteMonthlySchedulesItemIdDeleteResponses,
+    DeleteItemRouteMonthlySchedulesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/monthly-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteMonthlySchedulesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteMonthlySchedulesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteMonthlySchedulesItemIdGetResponses,
+    GetItemRouteMonthlySchedulesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/monthly-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteMonthlySchedulesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteMonthlySchedulesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteMonthlySchedulesItemIdPutResponses,
+    PutItemRouteMonthlySchedulesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/monthly-schedules/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteYearlySchedulesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteYearlySchedulesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteYearlySchedulesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/yearly-schedules/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteYearlySchedulesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteYearlySchedulesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteYearlySchedulesPostResponses,
+    PostItemRouteYearlySchedulesPostErrors,
+    ThrowOnError
+  >({
+    url: "/yearly-schedules/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteYearlySchedulesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteYearlySchedulesItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteYearlySchedulesItemIdDeleteResponses,
+    DeleteItemRouteYearlySchedulesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/yearly-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteYearlySchedulesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteYearlySchedulesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteYearlySchedulesItemIdGetResponses,
+    GetItemRouteYearlySchedulesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/yearly-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteYearlySchedulesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteYearlySchedulesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteYearlySchedulesItemIdPutResponses,
+    PutItemRouteYearlySchedulesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/yearly-schedules/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteFromSchedulesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteFromSchedulesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteFromSchedulesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/from-schedules/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteFromSchedulesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteFromSchedulesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteFromSchedulesPostResponses,
+    PostItemRouteFromSchedulesPostErrors,
+    ThrowOnError
+  >({
+    url: "/from-schedules/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteFromSchedulesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DeleteItemRouteFromSchedulesItemIdDeleteData, ThrowOnError>,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteFromSchedulesItemIdDeleteResponses,
+    DeleteItemRouteFromSchedulesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/from-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteFromSchedulesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteFromSchedulesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteFromSchedulesItemIdGetResponses,
+    GetItemRouteFromSchedulesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/from-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteFromSchedulesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteFromSchedulesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteFromSchedulesItemIdPutResponses,
+    PutItemRouteFromSchedulesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/from-schedules/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteUntilSchedulesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteUntilSchedulesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteUntilSchedulesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/until-schedules/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteUntilSchedulesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteUntilSchedulesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteUntilSchedulesPostResponses,
+    PostItemRouteUntilSchedulesPostErrors,
+    ThrowOnError
+  >({
+    url: "/until-schedules/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteUntilSchedulesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DeleteItemRouteUntilSchedulesItemIdDeleteData, ThrowOnError>,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteUntilSchedulesItemIdDeleteResponses,
+    DeleteItemRouteUntilSchedulesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/until-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteUntilSchedulesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteUntilSchedulesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteUntilSchedulesItemIdGetResponses,
+    GetItemRouteUntilSchedulesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/until-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteUntilSchedulesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteUntilSchedulesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteUntilSchedulesItemIdPutResponses,
+    PutItemRouteUntilSchedulesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/until-schedules/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteRangeSchedulesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteRangeSchedulesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteRangeSchedulesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/range-schedules/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteRangeSchedulesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteRangeSchedulesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteRangeSchedulesPostResponses,
+    PostItemRouteRangeSchedulesPostErrors,
+    ThrowOnError
+  >({
+    url: "/range-schedules/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteRangeSchedulesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DeleteItemRouteRangeSchedulesItemIdDeleteData, ThrowOnError>,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteRangeSchedulesItemIdDeleteResponses,
+    DeleteItemRouteRangeSchedulesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/range-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteRangeSchedulesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteRangeSchedulesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteRangeSchedulesItemIdGetResponses,
+    GetItemRouteRangeSchedulesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/range-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteRangeSchedulesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteRangeSchedulesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteRangeSchedulesItemIdPutResponses,
+    PutItemRouteRangeSchedulesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/range-schedules/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteAllSchedulesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteAllSchedulesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteAllSchedulesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/all-schedules/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteAllSchedulesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteAllSchedulesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteAllSchedulesPostResponses,
+    PostItemRouteAllSchedulesPostErrors,
+    ThrowOnError
+  >({
+    url: "/all-schedules/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteAllSchedulesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DeleteItemRouteAllSchedulesItemIdDeleteData, ThrowOnError>,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteAllSchedulesItemIdDeleteResponses,
+    DeleteItemRouteAllSchedulesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/all-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteAllSchedulesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteAllSchedulesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteAllSchedulesItemIdGetResponses,
+    GetItemRouteAllSchedulesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/all-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteAllSchedulesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteAllSchedulesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteAllSchedulesItemIdPutResponses,
+    PutItemRouteAllSchedulesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/all-schedules/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteAnySchedulesGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteAnySchedulesGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteAnySchedulesGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/any-schedules/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteAnySchedulesPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteAnySchedulesPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteAnySchedulesPostResponses,
+    PostItemRouteAnySchedulesPostErrors,
+    ThrowOnError
+  >({
+    url: "/any-schedules/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteAnySchedulesItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<DeleteItemRouteAnySchedulesItemIdDeleteData, ThrowOnError>,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteAnySchedulesItemIdDeleteResponses,
+    DeleteItemRouteAnySchedulesItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/any-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteAnySchedulesItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteAnySchedulesItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteAnySchedulesItemIdGetResponses,
+    GetItemRouteAnySchedulesItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/any-schedules/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteAnySchedulesItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteAnySchedulesItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteAnySchedulesItemIdPutResponses,
+    PutItemRouteAnySchedulesItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/any-schedules/{item_id}",
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -819,6 +2601,315 @@ export const putItemRouteRateProvidersItemIdPut = <
 /**
  * Get Items Route
  */
+export const getItemsRouteScheduledRateProvidersGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteScheduledRateProvidersGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteScheduledRateProvidersGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/scheduled-rate-providers/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteScheduledRateProvidersPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteScheduledRateProvidersPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteScheduledRateProvidersPostResponses,
+    PostItemRouteScheduledRateProvidersPostErrors,
+    ThrowOnError
+  >({
+    url: "/scheduled-rate-providers/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteScheduledRateProvidersItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteScheduledRateProvidersItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteScheduledRateProvidersItemIdDeleteResponses,
+    DeleteItemRouteScheduledRateProvidersItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/scheduled-rate-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteScheduledRateProvidersItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    GetItemRouteScheduledRateProvidersItemIdGetData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteScheduledRateProvidersItemIdGetResponses,
+    GetItemRouteScheduledRateProvidersItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/scheduled-rate-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteScheduledRateProvidersItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    PutItemRouteScheduledRateProvidersItemIdPutData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteScheduledRateProvidersItemIdPutResponses,
+    PutItemRouteScheduledRateProvidersItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/scheduled-rate-providers/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteMergeRateProvidersGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteMergeRateProvidersGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteMergeRateProvidersGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/merge-rate-providers/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteMergeRateProvidersPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteMergeRateProvidersPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteMergeRateProvidersPostResponses,
+    PostItemRouteMergeRateProvidersPostErrors,
+    ThrowOnError
+  >({
+    url: "/merge-rate-providers/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteMergeRateProvidersItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteMergeRateProvidersItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteMergeRateProvidersItemIdDeleteResponses,
+    DeleteItemRouteMergeRateProvidersItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/merge-rate-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteMergeRateProvidersItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteMergeRateProvidersItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteMergeRateProvidersItemIdGetResponses,
+    GetItemRouteMergeRateProvidersItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/merge-rate-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteMergeRateProvidersItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteMergeRateProvidersItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteMergeRateProvidersItemIdPutResponses,
+    PutItemRouteMergeRateProvidersItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/merge-rate-providers/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteNextRateProvidersGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteNextRateProvidersGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteNextRateProvidersGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/next-rate-providers/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteNextRateProvidersPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteNextRateProvidersPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteNextRateProvidersPostResponses,
+    PostItemRouteNextRateProvidersPostErrors,
+    ThrowOnError
+  >({
+    url: "/next-rate-providers/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteNextRateProvidersItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteNextRateProvidersItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteNextRateProvidersItemIdDeleteResponses,
+    DeleteItemRouteNextRateProvidersItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/next-rate-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteNextRateProvidersItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteNextRateProvidersItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteNextRateProvidersItemIdGetResponses,
+    GetItemRouteNextRateProvidersItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/next-rate-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteNextRateProvidersItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteNextRateProvidersItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteNextRateProvidersItemIdPutResponses,
+    PutItemRouteNextRateProvidersItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/next-rate-providers/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
 export const getItemsRouteDecimalProvidersGet = <
   ThrowOnError extends boolean = false,
 >(
@@ -909,6 +3000,327 @@ export const putItemRouteDecimalProvidersItemIdPut = <
     ThrowOnError
   >({
     url: "/decimal-providers/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteScheduledDecimalProvidersGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<
+    GetItemsRouteScheduledDecimalProvidersGetData,
+    ThrowOnError
+  >,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteScheduledDecimalProvidersGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/scheduled-decimal-providers/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteScheduledDecimalProvidersPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    PostItemRouteScheduledDecimalProvidersPostData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteScheduledDecimalProvidersPostResponses,
+    PostItemRouteScheduledDecimalProvidersPostErrors,
+    ThrowOnError
+  >({
+    url: "/scheduled-decimal-providers/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteScheduledDecimalProvidersItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteScheduledDecimalProvidersItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteScheduledDecimalProvidersItemIdDeleteResponses,
+    DeleteItemRouteScheduledDecimalProvidersItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/scheduled-decimal-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteScheduledDecimalProvidersItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    GetItemRouteScheduledDecimalProvidersItemIdGetData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteScheduledDecimalProvidersItemIdGetResponses,
+    GetItemRouteScheduledDecimalProvidersItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/scheduled-decimal-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteScheduledDecimalProvidersItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    PutItemRouteScheduledDecimalProvidersItemIdPutData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteScheduledDecimalProvidersItemIdPutResponses,
+    PutItemRouteScheduledDecimalProvidersItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/scheduled-decimal-providers/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteMergeDecimalProvidersGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteMergeDecimalProvidersGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteMergeDecimalProvidersGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/merge-decimal-providers/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteMergeDecimalProvidersPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteMergeDecimalProvidersPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteMergeDecimalProvidersPostResponses,
+    PostItemRouteMergeDecimalProvidersPostErrors,
+    ThrowOnError
+  >({
+    url: "/merge-decimal-providers/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteMergeDecimalProvidersItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteMergeDecimalProvidersItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteMergeDecimalProvidersItemIdDeleteResponses,
+    DeleteItemRouteMergeDecimalProvidersItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/merge-decimal-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteMergeDecimalProvidersItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    GetItemRouteMergeDecimalProvidersItemIdGetData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteMergeDecimalProvidersItemIdGetResponses,
+    GetItemRouteMergeDecimalProvidersItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/merge-decimal-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteMergeDecimalProvidersItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    PutItemRouteMergeDecimalProvidersItemIdPutData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteMergeDecimalProvidersItemIdPutResponses,
+    PutItemRouteMergeDecimalProvidersItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/merge-decimal-providers/{item_id}",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Get Items Route
+ */
+export const getItemsRouteNextDecimalProvidersGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options?: Options<GetItemsRouteNextDecimalProvidersGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetItemsRouteNextDecimalProvidersGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/next-decimal-providers/",
+    ...options,
+  });
+};
+
+/**
+ * Post Item Route
+ */
+export const postItemRouteNextDecimalProvidersPost = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PostItemRouteNextDecimalProvidersPostData, ThrowOnError>,
+) => {
+  return (options.client ?? client).post<
+    PostItemRouteNextDecimalProvidersPostResponses,
+    PostItemRouteNextDecimalProvidersPostErrors,
+    ThrowOnError
+  >({
+    url: "/next-decimal-providers/",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+};
+
+/**
+ * Delete Item Route
+ */
+export const deleteItemRouteNextDecimalProvidersItemIdDelete = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<
+    DeleteItemRouteNextDecimalProvidersItemIdDeleteData,
+    ThrowOnError
+  >,
+) => {
+  return (options.client ?? client).delete<
+    DeleteItemRouteNextDecimalProvidersItemIdDeleteResponses,
+    DeleteItemRouteNextDecimalProvidersItemIdDeleteErrors,
+    ThrowOnError
+  >({
+    url: "/next-decimal-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Get Item Route
+ */
+export const getItemRouteNextDecimalProvidersItemIdGet = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetItemRouteNextDecimalProvidersItemIdGetData, ThrowOnError>,
+) => {
+  return (options.client ?? client).get<
+    GetItemRouteNextDecimalProvidersItemIdGetResponses,
+    GetItemRouteNextDecimalProvidersItemIdGetErrors,
+    ThrowOnError
+  >({
+    url: "/next-decimal-providers/{item_id}",
+    ...options,
+  });
+};
+
+/**
+ * Put Item Route
+ */
+export const putItemRouteNextDecimalProvidersItemIdPut = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<PutItemRouteNextDecimalProvidersItemIdPutData, ThrowOnError>,
+) => {
+  return (options.client ?? client).put<
+    PutItemRouteNextDecimalProvidersItemIdPutResponses,
+    PutItemRouteNextDecimalProvidersItemIdPutErrors,
+    ThrowOnError
+  >({
+    url: "/next-decimal-providers/{item_id}",
     ...options,
     headers: {
       "Content-Type": "application/json",

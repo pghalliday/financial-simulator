@@ -25,7 +25,7 @@ export function ScenarioPostForm() {
         />
         <RelationMultiSelect
             data={entities}
-            label="IndividualEntities"
+            label="Entities"
             description="Linked entities"
             placeholder="The scenario entities"
             key={form.key("entities")}

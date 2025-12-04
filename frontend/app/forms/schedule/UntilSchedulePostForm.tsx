@@ -8,7 +8,7 @@ export function UntilSchedulePostForm() {
         <TextInput
             autoFocus
             label="Name"
-            description="DailySchedule name"
+            description="Schedule name"
             placeholder="The unique schedule name"
             required
             key={form.key("name")}
@@ -16,7 +16,7 @@ export function UntilSchedulePostForm() {
         />
         <TextInput
             label="Description"
-            description="DailySchedule description"
+            description="Schedule description"
             placeholder="The schedule description"
             key={form.key("description")}
             {...form.getInputProps("description")}

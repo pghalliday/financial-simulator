@@ -2,7 +2,7 @@ import {Page} from "~/pages/Page";
 import {ContinuousRateList} from "~/lists/rates/ContinuousRateList";
 import {CONTINUOUS_RATE_PARAMS} from "~/page_params/rates";
 import {ContinuousRatePostFormProvider} from "~/forms/rate/contexts";
-import {useContinuousRates} from "~/providers/typed_items_providers";
+import {useContinuousRates} from "~/providers/items_providers";
 
 export function ContinuousRatesPage() {
     const [rates, setRates] = useContinuousRates()
