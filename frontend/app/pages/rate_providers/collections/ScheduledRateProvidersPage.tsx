@@ -2,10 +2,10 @@ import {Page} from "~/pages/Page";
 import {ScheduledRateProviderList} from "~/lists/rate_providers/ScheduledRateProviderList";
 import {SCHEDULED_RATE_PROVIDER_PARAMS} from "~/page_params/rate_providers";
 import {ScheduledRateProviderPostFormProvider} from "~/forms/rate_provider/contexts";
-import {useScheduledRateProviders} from "~/providers/items_providers";
+import {useRateProviders} from "~/providers/items_providers";
 
 export function ScheduledRateProvidersPage() {
-    const [rateProviders, setRateProviders] = useScheduledRateProviders()
+    const [rateProviders, setRateProviders] = useRateProviders()
     return <Page
         pageParams={{
             title: SCHEDULED_RATE_PROVIDER_PARAMS.collectionPageTitle,

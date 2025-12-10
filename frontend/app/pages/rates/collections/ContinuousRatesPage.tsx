@@ -2,10 +2,10 @@ import {Page} from "~/pages/Page";
 import {ContinuousRateList} from "~/lists/rates/ContinuousRateList";
 import {CONTINUOUS_RATE_PARAMS} from "~/page_params/rates";
 import {ContinuousRatePostFormProvider} from "~/forms/rate/contexts";
-import {useContinuousRates} from "~/providers/items_providers";
+import {useRates} from "~/providers/items_providers";
 
 export function ContinuousRatesPage() {
-    const [rates, setRates] = useContinuousRates()
+    const [rates, setRates] = useRates()
     return <Page
         pageParams={{
             title: CONTINUOUS_RATE_PARAMS.collectionPageTitle,

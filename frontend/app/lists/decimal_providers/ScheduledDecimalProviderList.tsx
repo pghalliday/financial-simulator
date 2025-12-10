@@ -5,12 +5,13 @@ import {
     type SortBy
 } from "~/components/controls/SearchSortList/SearchSortList";
 import {
+    DecimalProviderType,
     deleteItemRouteDecimalProvidersItemIdDelete,
     postItemRouteDecimalProvidersPost,
     type ScheduledDecimalProviderGet,
     type ScheduledDecimalProviderPost
 } from "../../../client";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {DecimalProviderGet, DecimalProviderPost} from "~/lib/types";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useListPost} from "~/hooks/useListPost";
@@ -48,8 +49,8 @@ const DEFAULT_SORT_BY: SortBy<ScheduledDecimalProviderGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<ScheduledDecimalProviderGet>[] = ["name", "description"]
 
 export interface Props {
-    decimalProviders?: ScheduledDecimalProviderGet[]
-    onChange?: (items: ScheduledDecimalProviderGet[]) => void
+    decimalProviders?: DecimalProviderGet[]
+    onChange?: (items: DecimalProviderGet[]) => void
 }
 
 export function ScheduledDecimalProviderList(
@@ -65,24 +66,26 @@ export function ScheduledDecimalProviderList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<ScheduledDecimalProviderPost, ScheduledDecimalProviderGet>({
+    const scheduledDecimalProviders = decimalProviders?.filter(item => item.type === DecimalProviderType.SCHEDULED_DECIMAL_PROVIDER)
+
+    const postItem = useListPost<DecimalProviderPost, DecimalProviderGet>({
         items: decimalProviders,
         onPostSuccess: (items) => {
             stack.close("add-decimal-provider")
             onChange(items)
         },
-        onPost: postItemRouteDecimalProvidersPost as PostItemApi<ScheduledDecimalProviderPost, ScheduledDecimalProviderGet>,
+        onPost: postItemRouteDecimalProvidersPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<ScheduledDecimalProviderGet>({
+    const {setToDelete, deleteItem} = useListDelete<DecimalProviderGet>({
         items: decimalProviders,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteDecimalProvidersItemIdDelete as DeleteItemApi<ScheduledDecimalProviderGet>,
+        onDelete: deleteItemRouteDecimalProvidersItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -123,7 +126,7 @@ export function ScheduledDecimalProviderList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={decimalProviders}
+            items={scheduledDecimalProviders}
             getItemPageParams={SCHEDULED_DECIMAL_PROVIDER_PARAMS.getItemPageParams}
             href={SCHEDULED_DECIMAL_PROVIDER_PARAMS.itemHref}
             onAdd={onAdd}

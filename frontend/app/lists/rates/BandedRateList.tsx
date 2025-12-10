@@ -8,9 +8,10 @@ import {
     type BandedRateGet,
     type BandedRatePost,
     deleteItemRouteRatesItemIdDelete,
-    postItemRouteRatesPost
+    postItemRouteRatesPost,
+    RateType
 } from "../../../client";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {RateGet, RatePost} from "~/lib/types";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useListPost} from "~/hooks/useListPost";
@@ -46,8 +47,8 @@ const DEFAULT_SORT_BY: SortBy<BandedRateGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<BandedRateGet>[] = ["name", "description"]
 
 export interface Props {
-    rates?: BandedRateGet[]
-    onChange?: (items: BandedRateGet[]) => void
+    rates?: RateGet[]
+    onChange?: (items: RateGet[]) => void
 }
 
 export function BandedRateList(
@@ -63,24 +64,26 @@ export function BandedRateList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<BandedRatePost, BandedRateGet>({
+    const bandedRates = rates?.filter(item => item.type === RateType.BANDED_RATE)
+
+    const postItem = useListPost<RatePost, RateGet>({
         items: rates,
         onPostSuccess: (items) => {
             stack.close("add-rate")
             onChange(items)
         },
-        onPost: postItemRouteRatesPost as PostItemApi<BandedRatePost, BandedRateGet>,
+        onPost: postItemRouteRatesPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<BandedRateGet>({
+    const {setToDelete, deleteItem} = useListDelete<RateGet>({
         items: rates,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteRatesItemIdDelete as DeleteItemApi<BandedRateGet>,
+        onDelete: deleteItemRouteRatesItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -122,7 +125,7 @@ export function BandedRateList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={rates}
+            items={bandedRates}
             getItemPageParams={BANDED_RATE_PARAMS.getItemPageParams}
             href={BANDED_RATE_PARAMS.itemHref}
             onAdd={onAdd}

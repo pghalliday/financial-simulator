@@ -2,10 +2,10 @@ import {Page} from "~/pages/Page";
 import {DayScheduleList} from "~/lists/schedules/DayScheduleList";
 import {DAY_SCHEDULE_PARAMS} from "~/page_params/schedules";
 import {DaySchedulePostFormProvider} from "~/forms/schedule/contexts";
-import {useDaySchedules} from "~/providers/items_providers";
+import {useSchedules} from "~/providers/items_providers";
 
 export function DaySchedulesPage() {
-    const [schedules, setSchedules] = useDaySchedules()
+    const [schedules, setSchedules] = useSchedules()
     return <Page
         pageParams={{
             title: DAY_SCHEDULE_PARAMS.collectionPageTitle,

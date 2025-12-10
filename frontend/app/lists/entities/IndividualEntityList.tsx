@@ -6,6 +6,7 @@ import {
 } from "~/components/controls/SearchSortList/SearchSortList";
 import {
     deleteItemRouteEntitiesItemIdDelete,
+    EntityType,
     type IndividualEntityGet,
     type IndividualEntityPost,
     postItemRouteEntitiesPost
@@ -19,7 +20,7 @@ import {useListDelete} from "~/hooks/useListDelete";
 import {Modal, useModalsStack} from "@mantine/core";
 import {useIndividualEntityPostFormContext} from "~/forms/entity/contexts";
 import {INDIVIDUAL_ENTITY_PARAMS} from "~/page_params/entities";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {EntityGet, EntityPost} from "~/lib/types";
 
 const NAME_COLUMN: Column<IndividualEntityGet> = {
     heading: "Name",
@@ -46,13 +47,13 @@ const DEFAULT_SORT_BY: SortBy<IndividualEntityGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<IndividualEntityGet>[] = ["name", "description"]
 
 export interface Props {
-    items?: IndividualEntityGet[]
-    onChange?: (items: IndividualEntityGet[]) => void
+    entities?: EntityGet[]
+    onChange?: (items: EntityGet[]) => void
 }
 
 export function IndividualEntityList(
     {
-        items = [],
+        entities = [],
         onChange = () => {
         },
     }: Props
@@ -63,24 +64,26 @@ export function IndividualEntityList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<IndividualEntityPost, IndividualEntityGet>({
-        items: items,
+    const individualEntities = entities?.filter(item => item.type === EntityType.INDIVIDUAL_ENTITY)
+
+    const postItem = useListPost<EntityPost, EntityGet>({
+        items: entities,
         onPostSuccess: (items) => {
             stack.close("add-item")
             onChange(items)
         },
-        onPost: postItemRouteEntitiesPost as PostItemApi<IndividualEntityPost, IndividualEntityGet>,
+        onPost: postItemRouteEntitiesPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<IndividualEntityGet>({
-        items: items,
+    const {setToDelete, deleteItem} = useListDelete<EntityGet>({
+        items: entities,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteEntitiesItemIdDelete as DeleteItemApi<IndividualEntityGet>,
+        onDelete: deleteItemRouteEntitiesItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -123,7 +126,7 @@ export function IndividualEntityList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={items}
+            items={individualEntities}
             getItemPageParams={INDIVIDUAL_ENTITY_PARAMS.getItemPageParams}
             href={INDIVIDUAL_ENTITY_PARAMS.itemHref}
             onAdd={onAdd}

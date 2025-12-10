@@ -2,10 +2,10 @@ import {Page} from "~/pages/Page";
 import {MergeRateProviderList} from "~/lists/rate_providers/MergeRateProviderList";
 import {MERGE_RATE_PROVIDER_PARAMS} from "~/page_params/rate_providers";
 import {MergeRateProviderPostFormProvider} from "~/forms/rate_provider/contexts";
-import {useMergeRateProviders} from "~/providers/items_providers";
+import {useRateProviders} from "~/providers/items_providers";
 
 export function MergeRateProvidersPage() {
-    const [rateProviders, setRateProviders] = useMergeRateProviders()
+    const [rateProviders, setRateProviders] = useRateProviders()
     return <Page
         pageParams={{
             title: MERGE_RATE_PROVIDER_PARAMS.collectionPageTitle,

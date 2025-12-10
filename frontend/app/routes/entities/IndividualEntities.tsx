@@ -1,6 +1,6 @@
 import {useDisclosure} from "@mantine/hooks";
 import {LoadingProvider} from "~/providers/LoadingProvider";
-import {BankAccountsProvider, IndividualEntitiesProvider, ScenariosProvider} from "~/providers/items_providers";
+import {BankAccountsProvider, EntitiesProvider, ScenariosProvider} from "~/providers/items_providers";
 import {IndividualEntitiesPage} from "~/pages/entities/collections/IndividualEntitiesPage";
 
 export default function IndividualEntities() {
@@ -8,7 +8,7 @@ export default function IndividualEntities() {
     const [loadingScenarios, {open: startLoadingScenarios, close: stopLoadingScenarios}] = useDisclosure()
     const [loadingBankAccounts, {open: startLoadingBankAccounts, close: stopLoadingBankAccounts}] = useDisclosure()
     return <LoadingProvider loading={loadingEntities || loadingScenarios || loadingBankAccounts}>
-        <IndividualEntitiesProvider
+        <EntitiesProvider
             onBegin={startLoadingEntities}
             onEnd={stopLoadingEntities}
         >
@@ -23,6 +23,6 @@ export default function IndividualEntities() {
                     <IndividualEntitiesPage/>
                 </BankAccountsProvider>
             </ScenariosProvider>
-        </IndividualEntitiesProvider>
+        </EntitiesProvider>
     </LoadingProvider>
 }

@@ -7,10 +7,11 @@ import {
 import {
     deleteItemRouteRateProvidersItemIdDelete,
     postItemRouteRateProvidersPost,
+    RateProviderType,
     type ScheduledRateProviderGet,
     type ScheduledRateProviderPost
 } from "../../../client";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {RateProviderGet, RateProviderPost} from "~/lib/types";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useListPost} from "~/hooks/useListPost";
@@ -46,8 +47,8 @@ const DEFAULT_SORT_BY: SortBy<ScheduledRateProviderGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<ScheduledRateProviderGet>[] = ["name", "description"]
 
 export interface Props {
-    rateProviders?: ScheduledRateProviderGet[]
-    onChange?: (items: ScheduledRateProviderGet[]) => void
+    rateProviders?: RateProviderGet[]
+    onChange?: (items: RateProviderGet[]) => void
 }
 
 export function ScheduledRateProviderList(
@@ -63,24 +64,26 @@ export function ScheduledRateProviderList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<ScheduledRateProviderPost, ScheduledRateProviderGet>({
+    const scheduledRateProviders = rateProviders?.filter(item => item.type === RateProviderType.SCHEDULED_RATE_PROVIDER)
+
+    const postItem = useListPost<RateProviderPost, RateProviderGet>({
         items: rateProviders,
         onPostSuccess: (items) => {
             stack.close("add-rate-provider")
             onChange(items)
         },
-        onPost: postItemRouteRateProvidersPost as PostItemApi<ScheduledRateProviderPost, ScheduledRateProviderGet>,
+        onPost: postItemRouteRateProvidersPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<ScheduledRateProviderGet>({
+    const {setToDelete, deleteItem} = useListDelete<RateProviderGet>({
         items: rateProviders,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteRateProvidersItemIdDelete as DeleteItemApi<ScheduledRateProviderGet>,
+        onDelete: deleteItemRouteRateProvidersItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -121,7 +124,7 @@ export function ScheduledRateProviderList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={rateProviders}
+            items={scheduledRateProviders}
             getItemPageParams={SCHEDULED_RATE_PROVIDER_PARAMS.getItemPageParams}
             href={SCHEDULED_RATE_PROVIDER_PARAMS.itemHref}
             onAdd={onAdd}

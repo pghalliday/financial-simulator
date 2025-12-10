@@ -2,10 +2,10 @@ import {Page} from "~/pages/Page";
 import {ScheduledDecimalProviderList} from "~/lists/decimal_providers/ScheduledDecimalProviderList";
 import {SCHEDULED_DECIMAL_PROVIDER_PARAMS} from "~/page_params/decimal_providers";
 import {ScheduledDecimalProviderPostFormProvider} from "~/forms/decimal_provider/contexts";
-import {useScheduledDecimalProviders} from "~/providers/items_providers";
+import {useDecimalProviders} from "~/providers/items_providers";
 
 export function ScheduledDecimalProvidersPage() {
-    const [decimalProviders, setDecimalProviders] = useScheduledDecimalProviders()
+    const [decimalProviders, setDecimalProviders] = useDecimalProviders()
     return <Page
         pageParams={{
             title: SCHEDULED_DECIMAL_PROVIDER_PARAMS.collectionPageTitle,

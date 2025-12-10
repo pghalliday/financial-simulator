@@ -2,10 +2,10 @@ import {Page} from "~/pages/Page";
 import {UntilScheduleList} from "~/lists/schedules/UntilScheduleList";
 import {UNTIL_SCHEDULE_PARAMS} from "~/page_params/schedules";
 import {UntilSchedulePostFormProvider} from "~/forms/schedule/contexts";
-import {useUntilSchedules} from "~/providers/items_providers";
+import {useSchedules} from "~/providers/items_providers";
 
 export function UntilSchedulesPage() {
-    const [schedules, setSchedules] = useUntilSchedules()
+    const [schedules, setSchedules] = useSchedules()
     return <Page
         pageParams={{
             title: UNTIL_SCHEDULE_PARAMS.collectionPageTitle,

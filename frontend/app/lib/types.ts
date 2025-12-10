@@ -33,12 +33,6 @@ export interface Breadcrumb {
 
 export type GetItemsApi<Get> = () => Promise<APIResult<Get[]>>
 
-export type GetTypedItemsApi<Get extends { type: any }, Type = Get["type"]> = (options?: {
-    query?: {
-        type?: Type,
-    },
-}) => Promise<APIResult<Get[]>>
-
 export type GetItemApi<Get> = (options: {
     path: {
         item_id: string,

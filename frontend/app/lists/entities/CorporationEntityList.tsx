@@ -8,6 +8,7 @@ import {
     type CorporationEntityGet,
     type CorporationEntityPost,
     deleteItemRouteEntitiesItemIdDelete,
+    EntityType,
     postItemRouteEntitiesPost
 } from "../../../client";
 import {type ReactElement, useCallback, useState} from "react";
@@ -19,7 +20,7 @@ import {useListDelete} from "~/hooks/useListDelete";
 import {Modal, useModalsStack} from "@mantine/core";
 import {useCorporationEntityPostFormContext} from "~/forms/entity/contexts";
 import {CORPORATION_ENTITY_PARAMS} from "~/page_params/entities";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {EntityGet, EntityPost} from "~/lib/types";
 
 const NAME_COLUMN: Column<CorporationEntityGet> = {
     heading: "Name",
@@ -46,13 +47,13 @@ const DEFAULT_SORT_BY: SortBy<CorporationEntityGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<CorporationEntityGet>[] = ["name", "description"]
 
 export interface Props {
-    items?: CorporationEntityGet[]
-    onChange?: (items: CorporationEntityGet[]) => void
+    entities?: EntityGet[]
+    onChange?: (items: EntityGet[]) => void
 }
 
 export function CorporationEntityList(
     {
-        items = [],
+        entities = [],
         onChange = () => {
         },
     }: Props
@@ -63,24 +64,26 @@ export function CorporationEntityList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<CorporationEntityPost, CorporationEntityGet>({
-        items: items,
+    const corporationEntities = entities?.filter(item => item.type === EntityType.CORPORATION_ENTITY)
+
+    const postItem = useListPost<EntityPost, EntityGet>({
+        items: entities,
         onPostSuccess: (items) => {
             stack.close("add-item")
             onChange(items)
         },
-        onPost: postItemRouteEntitiesPost as PostItemApi<CorporationEntityPost, CorporationEntityGet>,
+        onPost: postItemRouteEntitiesPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<CorporationEntityGet>({
-        items: items,
+    const {setToDelete, deleteItem} = useListDelete<EntityGet>({
+        items: entities,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteEntitiesItemIdDelete as DeleteItemApi<CorporationEntityGet>,
+        onDelete: deleteItemRouteEntitiesItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -123,7 +126,7 @@ export function CorporationEntityList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={items}
+            items={corporationEntities}
             getItemPageParams={CORPORATION_ENTITY_PARAMS.getItemPageParams}
             href={CORPORATION_ENTITY_PARAMS.itemHref}
             onAdd={onAdd}

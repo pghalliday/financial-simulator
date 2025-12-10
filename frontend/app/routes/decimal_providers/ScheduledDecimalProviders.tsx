@@ -1,5 +1,5 @@
 import {useDisclosure} from "@mantine/hooks";
-import {ScheduledDecimalProvidersProvider, SchedulesProvider} from "~/providers/items_providers";
+import {DecimalProvidersProvider, SchedulesProvider} from "~/providers/items_providers";
 import {LoadingProvider} from "~/providers/LoadingProvider";
 import {ScheduledDecimalProvidersPage} from "~/pages/decimal_providers/collections/ScheduledDecimalProvidersPage";
 
@@ -13,7 +13,7 @@ export default function ScheduledDecimalProviders() {
         close: stopLoadingSchedules,
     }] = useDisclosure()
     return <LoadingProvider loading={loadingDecimalProviders || loadingSchedules}>
-        <ScheduledDecimalProvidersProvider
+        <DecimalProvidersProvider
             onBegin={startLoadingDecimalProviders}
             onEnd={stopLoadingDecimalProviders}
         >
@@ -23,6 +23,6 @@ export default function ScheduledDecimalProviders() {
             >
                 <ScheduledDecimalProvidersPage/>
             </SchedulesProvider>
-        </ScheduledDecimalProvidersProvider>
+        </DecimalProvidersProvider>
     </LoadingProvider>
 }

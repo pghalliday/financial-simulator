@@ -8,9 +8,10 @@ import {
     type ContinuousRateGet,
     type ContinuousRatePost,
     deleteItemRouteRatesItemIdDelete,
-    postItemRouteRatesPost
+    postItemRouteRatesPost,
+    RateType
 } from "../../../client";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {RateGet, RatePost} from "~/lib/types";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useListPost} from "~/hooks/useListPost";
@@ -46,8 +47,8 @@ const DEFAULT_SORT_BY: SortBy<ContinuousRateGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<ContinuousRateGet>[] = ["name", "description"]
 
 export interface Props {
-    rates?: ContinuousRateGet[]
-    onChange?: (items: ContinuousRateGet[]) => void
+    rates?: RateGet[]
+    onChange?: (items: RateGet[]) => void
 }
 
 export function ContinuousRateList(
@@ -63,24 +64,26 @@ export function ContinuousRateList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<ContinuousRatePost, ContinuousRateGet>({
+    const continuousRates = rates?.filter(item => item.type === RateType.CONTINUOUS_RATE)
+
+    const postItem = useListPost<RatePost, RateGet>({
         items: rates,
         onPostSuccess: (items) => {
             stack.close("add-rate")
             onChange(items)
         },
-        onPost: postItemRouteRatesPost as PostItemApi<ContinuousRatePost, ContinuousRateGet>,
+        onPost: postItemRouteRatesPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<ContinuousRateGet>({
+    const {setToDelete, deleteItem} = useListDelete<RateGet>({
         items: rates,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteRatesItemIdDelete as DeleteItemApi<ContinuousRateGet>,
+        onDelete: deleteItemRouteRatesItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -121,7 +124,7 @@ export function ContinuousRateList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={rates}
+            items={continuousRates}
             getItemPageParams={CONTINUOUS_RATE_PARAMS.getItemPageParams}
             href={CONTINUOUS_RATE_PARAMS.itemHref}
             onAdd={onAdd}

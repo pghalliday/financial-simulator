@@ -2,10 +2,10 @@ import {Page} from "~/pages/Page";
 import {IndividualEntityList} from "~/lists/entities/IndividualEntityList";
 import {INDIVIDUAL_ENTITY_PARAMS} from "~/page_params/entities";
 import {IndividualEntityPostFormProvider} from "~/forms/entity/contexts";
-import {useIndividualEntities} from "~/providers/items_providers";
+import {useEntities} from "~/providers/items_providers";
 
 export function IndividualEntitiesPage() {
-    const [entities, setEntities] = useIndividualEntities()
+    const [entities, setEntities] = useEntities()
     return <Page
         pageParams={{
             title: INDIVIDUAL_ENTITY_PARAMS.collectionPageTitle,
@@ -14,7 +14,7 @@ export function IndividualEntitiesPage() {
         }}
     >
         <IndividualEntityPostFormProvider>
-            <IndividualEntityList items={entities} onChange={setEntities}/>
+            <IndividualEntityList entities={entities} onChange={setEntities}/>
         </IndividualEntityPostFormProvider>
     </Page>
 }

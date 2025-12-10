@@ -2,10 +2,10 @@ import {Page} from "~/pages/Page";
 import {NextRateProviderList} from "~/lists/rate_providers/NextRateProviderList";
 import {NEXT_RATE_PROVIDER_PARAMS} from "~/page_params/rate_providers";
 import {NextRateProviderPostFormProvider} from "~/forms/rate_provider/contexts";
-import {useNextRateProviders} from "~/providers/items_providers";
+import {useRateProviders} from "~/providers/items_providers";
 
 export function NextRateProvidersPage() {
-    const [rateProviders, setRateProviders] = useNextRateProviders()
+    const [rateProviders, setRateProviders] = useRateProviders()
     return <Page
         pageParams={{
             title: NEXT_RATE_PROVIDER_PARAMS.collectionPageTitle,

@@ -8,9 +8,10 @@ import {
     deleteItemRouteSchedulesItemIdDelete,
     type MonthlyScheduleGet,
     type MonthlySchedulePost,
-    postItemRouteSchedulesPost
+    postItemRouteSchedulesPost,
+    ScheduleType
 } from "../../../client";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {ScheduleGet, SchedulePost} from "~/lib/types";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useListPost} from "~/hooks/useListPost";
@@ -46,8 +47,8 @@ const DEFAULT_SORT_BY: SortBy<MonthlyScheduleGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<MonthlyScheduleGet>[] = ["name", "description"]
 
 export interface Props {
-    schedules?: MonthlyScheduleGet[]
-    onChange?: (items: MonthlyScheduleGet[]) => void
+    schedules?: ScheduleGet[]
+    onChange?: (items: ScheduleGet[]) => void
 }
 
 export function MonthlyScheduleList(
@@ -63,24 +64,26 @@ export function MonthlyScheduleList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<MonthlySchedulePost, MonthlyScheduleGet>({
+    const monthlySchedules = schedules?.filter(item => item.type === ScheduleType.MONTHLY_SCHEDULE)
+
+    const postItem = useListPost<SchedulePost, ScheduleGet>({
         items: schedules,
         onPostSuccess: (items) => {
             stack.close("add-schedule")
             onChange(items)
         },
-        onPost: postItemRouteSchedulesPost as PostItemApi<MonthlySchedulePost, MonthlyScheduleGet>,
+        onPost: postItemRouteSchedulesPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<MonthlyScheduleGet>({
+    const {setToDelete, deleteItem} = useListDelete<ScheduleGet>({
         items: schedules,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteSchedulesItemIdDelete as DeleteItemApi<MonthlyScheduleGet>,
+        onDelete: deleteItemRouteSchedulesItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -121,7 +124,7 @@ export function MonthlyScheduleList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={schedules}
+            items={monthlySchedules}
             getItemPageParams={MONTHLY_SCHEDULE_PARAMS.getItemPageParams}
             href={MONTHLY_SCHEDULE_PARAMS.itemHref}
             onAdd={onAdd}

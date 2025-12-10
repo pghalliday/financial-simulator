@@ -5,12 +5,13 @@ import {
     type SortBy
 } from "~/components/controls/SearchSortList/SearchSortList";
 import {
+    DecimalProviderType,
     deleteItemRouteDecimalProvidersItemIdDelete,
     type NextDecimalProviderGet,
     type NextDecimalProviderPost,
     postItemRouteDecimalProvidersPost
 } from "../../../client";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {DecimalProviderGet, DecimalProviderPost} from "~/lib/types";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useListPost} from "~/hooks/useListPost";
@@ -46,8 +47,8 @@ const DEFAULT_SORT_BY: SortBy<NextDecimalProviderGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<NextDecimalProviderGet>[] = ["name", "description"]
 
 export interface Props {
-    decimalProviders?: NextDecimalProviderGet[]
-    onChange?: (items: NextDecimalProviderGet[]) => void
+    decimalProviders?: DecimalProviderGet[]
+    onChange?: (items: DecimalProviderGet[]) => void
 }
 
 export function NextDecimalProviderList(
@@ -63,24 +64,26 @@ export function NextDecimalProviderList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<NextDecimalProviderPost, NextDecimalProviderGet>({
+    const nextDecimalProviders = decimalProviders?.filter(item => item.type === DecimalProviderType.NEXT_DECIMAL_PROVIDER)
+
+    const postItem = useListPost<DecimalProviderPost, DecimalProviderGet>({
         items: decimalProviders,
         onPostSuccess: (items) => {
             stack.close("add-decimal-provider")
             onChange(items)
         },
-        onPost: postItemRouteDecimalProvidersPost as PostItemApi<NextDecimalProviderPost, NextDecimalProviderGet>,
+        onPost: postItemRouteDecimalProvidersPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<NextDecimalProviderGet>({
+    const {setToDelete, deleteItem} = useListDelete<DecimalProviderGet>({
         items: decimalProviders,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteDecimalProvidersItemIdDelete as DeleteItemApi<NextDecimalProviderGet>,
+        onDelete: deleteItemRouteDecimalProvidersItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -122,7 +125,7 @@ export function NextDecimalProviderList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={decimalProviders}
+            items={nextDecimalProviders}
             getItemPageParams={NEXT_DECIMAL_PROVIDER_PARAMS.getItemPageParams}
             href={NEXT_DECIMAL_PROVIDER_PARAMS.itemHref}
             onAdd={onAdd}

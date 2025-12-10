@@ -2,10 +2,10 @@ import {Page} from "~/pages/Page";
 import {CorporationEntityList} from "~/lists/entities/CorporationEntityList";
 import {CORPORATION_ENTITY_PARAMS} from "~/page_params/entities";
 import {CorporationEntityPostFormProvider} from "~/forms/entity/contexts";
-import {useCorporationEntities} from "~/providers/items_providers";
+import {useEntities} from "~/providers/items_providers";
 
 export function CorporationEntitiesPage() {
-    const [entities, setEntities] = useCorporationEntities()
+    const [entities, setEntities] = useEntities()
     return <Page
         pageParams={{
             title: CORPORATION_ENTITY_PARAMS.collectionPageTitle,
@@ -14,7 +14,7 @@ export function CorporationEntitiesPage() {
         }}
     >
         <CorporationEntityPostFormProvider>
-            <CorporationEntityList items={entities} onChange={setEntities}/>
+            <CorporationEntityList entities={entities} onChange={setEntities}/>
         </CorporationEntityPostFormProvider>
     </Page>
 }

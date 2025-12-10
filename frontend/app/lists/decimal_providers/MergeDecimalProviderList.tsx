@@ -5,12 +5,13 @@ import {
     type SortBy
 } from "~/components/controls/SearchSortList/SearchSortList";
 import {
+    DecimalProviderType,
     deleteItemRouteDecimalProvidersItemIdDelete,
     type MergeDecimalProviderGet,
     type MergeDecimalProviderPost,
     postItemRouteDecimalProvidersPost
 } from "../../../client";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {DecimalProviderGet, DecimalProviderPost} from "~/lib/types";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useListPost} from "~/hooks/useListPost";
@@ -46,8 +47,8 @@ const DEFAULT_SORT_BY: SortBy<MergeDecimalProviderGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<MergeDecimalProviderGet>[] = ["name", "description"]
 
 export interface Props {
-    decimalProviders?: MergeDecimalProviderGet[]
-    onChange?: (items: MergeDecimalProviderGet[]) => void
+    decimalProviders?: DecimalProviderGet[]
+    onChange?: (items: DecimalProviderGet[]) => void
 }
 
 export function MergeDecimalProviderList(
@@ -63,24 +64,26 @@ export function MergeDecimalProviderList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<MergeDecimalProviderPost, MergeDecimalProviderGet>({
+    const mergeDecimalProviders = decimalProviders?.filter(item => item.type === DecimalProviderType.MERGE_DECIMAL_PROVIDER)
+
+    const postItem = useListPost<DecimalProviderPost, DecimalProviderGet>({
         items: decimalProviders,
         onPostSuccess: (items) => {
             stack.close("add-decimal-provider")
             onChange(items)
         },
-        onPost: postItemRouteDecimalProvidersPost as PostItemApi<MergeDecimalProviderPost, MergeDecimalProviderGet>,
+        onPost: postItemRouteDecimalProvidersPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<MergeDecimalProviderGet>({
+    const {setToDelete, deleteItem} = useListDelete<DecimalProviderGet>({
         items: decimalProviders,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteDecimalProvidersItemIdDelete as DeleteItemApi<MergeDecimalProviderGet>,
+        onDelete: deleteItemRouteDecimalProvidersItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -122,7 +125,7 @@ export function MergeDecimalProviderList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={decimalProviders}
+            items={mergeDecimalProviders}
             getItemPageParams={MERGE_DECIMAL_PROVIDER_PARAMS.getItemPageParams}
             href={MERGE_DECIMAL_PROVIDER_PARAMS.itemHref}
             onAdd={onAdd}

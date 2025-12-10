@@ -8,9 +8,10 @@ import {
     deleteItemRouteRatesItemIdDelete,
     type PeriodicRateGet,
     type PeriodicRatePost,
-    postItemRouteRatesPost
+    postItemRouteRatesPost,
+    RateType
 } from "../../../client";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {RateGet, RatePost} from "~/lib/types";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useListPost} from "~/hooks/useListPost";
@@ -46,8 +47,8 @@ const DEFAULT_SORT_BY: SortBy<PeriodicRateGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<PeriodicRateGet>[] = ["name", "description"]
 
 export interface Props {
-    rates?: PeriodicRateGet[]
-    onChange?: (items: PeriodicRateGet[]) => void
+    rates?: RateGet[]
+    onChange?: (items: RateGet[]) => void
 }
 
 export function PeriodicRateList(
@@ -63,24 +64,26 @@ export function PeriodicRateList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<PeriodicRatePost, PeriodicRateGet>({
+    const periodicRates = rates?.filter(item => item.type === RateType.PERIODIC_RATE)
+
+    const postItem = useListPost<RatePost, RateGet>({
         items: rates,
         onPostSuccess: (items) => {
             stack.close("add-rate")
             onChange(items)
         },
-        onPost: postItemRouteRatesPost as PostItemApi<PeriodicRatePost, PeriodicRateGet>,
+        onPost: postItemRouteRatesPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<PeriodicRateGet>({
+    const {setToDelete, deleteItem} = useListDelete<RateGet>({
         items: rates,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteRatesItemIdDelete as DeleteItemApi<PeriodicRateGet>,
+        onDelete: deleteItemRouteRatesItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -121,7 +124,7 @@ export function PeriodicRateList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={rates}
+            items={periodicRates}
             getItemPageParams={PERIODIC_RATE_PARAMS.getItemPageParams}
             href={PERIODIC_RATE_PARAMS.itemHref}
             onAdd={onAdd}

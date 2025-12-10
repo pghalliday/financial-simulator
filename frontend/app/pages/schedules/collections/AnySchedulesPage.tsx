@@ -2,10 +2,10 @@ import {Page} from "~/pages/Page";
 import {AnyScheduleList} from "~/lists/schedules/AnyScheduleList";
 import {ANY_SCHEDULE_PARAMS} from "~/page_params/schedules";
 import {AnySchedulePostFormProvider} from "~/forms/schedule/contexts";
-import {useAnySchedules} from "~/providers/items_providers";
+import {useSchedules} from "~/providers/items_providers";
 
 export function AnySchedulesPage() {
-    const [schedules, setSchedules] = useAnySchedules()
+    const [schedules, setSchedules] = useSchedules()
     return <Page
         pageParams={{
             title: ANY_SCHEDULE_PARAMS.collectionPageTitle,

@@ -1,16 +1,16 @@
 import {useDisclosure} from "@mantine/hooks";
 import {LoadingProvider} from "~/providers/LoadingProvider";
 import {MonthlySchedulesPage} from "~/pages/schedules/collections/MonthlySchedulesPage";
-import {MonthlySchedulesProvider} from "~/providers/items_providers";
+import {SchedulesProvider} from "~/providers/items_providers";
 
 export default function MonthlySchedules() {
     const [loading, {open: startLoading, close: stopLoading}] = useDisclosure()
     return <LoadingProvider loading={loading}>
-        <MonthlySchedulesProvider
+        <SchedulesProvider
             onBegin={startLoading}
             onEnd={stopLoading}
         >
             <MonthlySchedulesPage/>
-        </MonthlySchedulesProvider>
+        </SchedulesProvider>
     </LoadingProvider>
 }

@@ -1,22 +1,22 @@
 import {useDisclosure} from "@mantine/hooks";
 import {LoadingProvider} from "~/providers/LoadingProvider";
 import {ScheduledRateProvidersPage} from "~/pages/rate_providers/collections/ScheduledRateProvidersPage";
-import {RatesProvider, ScheduledRateProvidersProvider, SchedulesProvider} from "~/providers/items_providers";
+import {RateProvidersProvider, RatesProvider, SchedulesProvider} from "~/providers/items_providers";
 
 export default function ScheduledRateProviders() {
-    const [loadingScheduledRateProviders, {
-        open: startLoadingScheduledRateProviders,
-        close: stopLoadingScheduledRateProviders,
+    const [loadingRateProviders, {
+        open: startLoadingRateProviders,
+        close: stopLoadingRateProviders,
     }] = useDisclosure()
     const [loadingRates, {open: startLoadingRates, close: stopLoadingRates}] = useDisclosure()
     const [loadingSchedules, {
         open: startLoadingSchedules,
         close: stopLoadingSchedules,
     }] = useDisclosure()
-    return <LoadingProvider loading={loadingScheduledRateProviders || loadingRates || loadingSchedules}>
-        <ScheduledRateProvidersProvider
-            onBegin={startLoadingScheduledRateProviders}
-            onEnd={stopLoadingScheduledRateProviders}
+    return <LoadingProvider loading={loadingRateProviders || loadingRates || loadingSchedules}>
+        <RateProvidersProvider
+            onBegin={startLoadingRateProviders}
+            onEnd={stopLoadingRateProviders}
         >
             <RatesProvider
                 onBegin={startLoadingRates}
@@ -29,6 +29,6 @@ export default function ScheduledRateProviders() {
                     <ScheduledRateProvidersPage/>
                 </SchedulesProvider>
             </RatesProvider>
-        </ScheduledRateProvidersProvider>
+        </RateProvidersProvider>
     </LoadingProvider>
 }

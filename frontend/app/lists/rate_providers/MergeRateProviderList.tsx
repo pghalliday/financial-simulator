@@ -8,9 +8,10 @@ import {
     deleteItemRouteRateProvidersItemIdDelete,
     type MergeRateProviderGet,
     type MergeRateProviderPost,
-    postItemRouteRateProvidersPost
+    postItemRouteRateProvidersPost,
+    RateProviderType
 } from "../../../client";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {RateProviderGet, RateProviderPost} from "~/lib/types";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useListPost} from "~/hooks/useListPost";
@@ -46,8 +47,8 @@ const DEFAULT_SORT_BY: SortBy<MergeRateProviderGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<MergeRateProviderGet>[] = ["name", "description"]
 
 export interface Props {
-    rateProviders?: MergeRateProviderGet[]
-    onChange?: (items: MergeRateProviderGet[]) => void
+    rateProviders?: RateProviderGet[]
+    onChange?: (items: RateProviderGet[]) => void
 }
 
 export function MergeRateProviderList(
@@ -63,24 +64,26 @@ export function MergeRateProviderList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<MergeRateProviderPost, MergeRateProviderGet>({
+    const mergeRateProviders = rateProviders?.filter(item => item.type === RateProviderType.MERGE_RATE_PROVIDER)
+
+    const postItem = useListPost<RateProviderPost, RateProviderGet>({
         items: rateProviders,
         onPostSuccess: (items) => {
             stack.close("add-rate-provider")
             onChange(items)
         },
-        onPost: postItemRouteRateProvidersPost as PostItemApi<MergeRateProviderPost, MergeRateProviderGet>,
+        onPost: postItemRouteRateProvidersPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<MergeRateProviderGet>({
+    const {setToDelete, deleteItem} = useListDelete<RateProviderGet>({
         items: rateProviders,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteRateProvidersItemIdDelete as DeleteItemApi<MergeRateProviderGet>,
+        onDelete: deleteItemRouteRateProvidersItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -122,7 +125,7 @@ export function MergeRateProviderList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={rateProviders}
+            items={mergeRateProviders}
             getItemPageParams={MERGE_RATE_PROVIDER_PARAMS.getItemPageParams}
             href={MERGE_RATE_PROVIDER_PARAMS.itemHref}
             onAdd={onAdd}

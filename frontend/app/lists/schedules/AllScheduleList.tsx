@@ -8,9 +8,10 @@ import {
     type AllScheduleGet,
     type AllSchedulePost,
     deleteItemRouteSchedulesItemIdDelete,
-    postItemRouteSchedulesPost
+    postItemRouteSchedulesPost,
+    ScheduleType
 } from "../../../client";
-import type {DeleteItemApi, PostItemApi} from "~/lib/types";
+import type {ScheduleGet, SchedulePost} from "~/lib/types";
 import {type ReactElement, useCallback, useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useListPost} from "~/hooks/useListPost";
@@ -46,8 +47,8 @@ const DEFAULT_SORT_BY: SortBy<AllScheduleGet>[] = [{
 const SEARCH_FIELDS: SearchKeys<AllScheduleGet>[] = ["name", "description"]
 
 export interface Props {
-    schedules?: AllScheduleGet[]
-    onChange?: (items: AllScheduleGet[]) => void
+    schedules?: ScheduleGet[]
+    onChange?: (items: ScheduleGet[]) => void
 }
 
 export function AllScheduleList(
@@ -63,24 +64,26 @@ export function AllScheduleList(
     const [confirmDeletePrompt, setConfirmDeletePrompt] = useState<ReactElement>(<p/>)
     const [deletingItem, {open: startDeletingItem, close: stopDeletingItem}] = useDisclosure()
 
-    const postItem = useListPost<AllSchedulePost, AllScheduleGet>({
+    const allSchedules = schedules?.filter(item => item.type === ScheduleType.ALL_SCHEDULE)
+
+    const postItem = useListPost<SchedulePost, ScheduleGet>({
         items: schedules,
         onPostSuccess: (items) => {
             stack.close("add-schedule")
             onChange(items)
         },
-        onPost: postItemRouteSchedulesPost as PostItemApi<AllSchedulePost, AllScheduleGet>,
+        onPost: postItemRouteSchedulesPost,
         onBeginPost: startAddingItem,
         onEndPost: stopAddingItem,
     })
 
-    const {setToDelete, deleteItem} = useListDelete<AllScheduleGet>({
+    const {setToDelete, deleteItem} = useListDelete<ScheduleGet>({
         items: schedules,
         onDeleteSuccess: (items) => {
             stack.close("confirm-delete")
             onChange(items)
         },
-        onDelete: deleteItemRouteSchedulesItemIdDelete as DeleteItemApi<AllScheduleGet>,
+        onDelete: deleteItemRouteSchedulesItemIdDelete,
         onBeginDelete: startDeletingItem,
         onEndDelete: stopDeletingItem,
     })
@@ -122,7 +125,7 @@ export function AllScheduleList(
         </Modal.Stack>
         <SearchSortList
             columns={COLUMNS}
-            items={schedules}
+            items={allSchedules}
             getItemPageParams={ALL_SCHEDULE_PARAMS.getItemPageParams}
             href={ALL_SCHEDULE_PARAMS.itemHref}
             onAdd={onAdd}
