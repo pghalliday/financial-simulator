@@ -4,7 +4,7 @@ from .entity import CorporationEntity, Entity, IndividualEntity, CorporationEnti
 from .ledger_account import LedgerAccount
 from .decimal_provider import DecimalProvider, ScheduledDecimalProvider, MergeDecimalProvider, MergeDecimalProviderProvider, NextDecimalProviderProvider, NextDecimalProvider, DecimalProviderType
 from .rate_provider import RateProvider, ScheduledRateProvider, MergeRateProvider, MergeRateProviderProvider, NextRateProviderProvider, NextRateProvider, RateProviderType
-from .rate import BandedRate, ContinuousRate, PeriodicRate, Rate, BandedRateBand, RateType
+from .rate import BandedRate, ContinuousRate, PeriodicRate, Rate, BandedRateBands, BandedRateBand, RateType
 from .scenario import Scenario, ScenarioEntity
 from .schedule import Schedule, DailySchedule, DaySchedule, FromSchedule, MonthlySchedule, RangeSchedule, UntilSchedule, WeeklySchedule, YearlySchedule, AllSchedule, AllScheduleSchedule, AnySchedule, AnyScheduleSchedule, ScheduleType
 
@@ -55,5 +55,6 @@ __all__ = [
     "ContinuousRate",
     "PeriodicRate",
     "BandedRate",
+    "BandedRateBands",
     "BandedRateBand",
 ]

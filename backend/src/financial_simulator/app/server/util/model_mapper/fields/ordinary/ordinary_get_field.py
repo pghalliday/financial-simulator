@@ -1,3 +1,4 @@
+import logging
 from typing import Any
 
 from ..get_field import GetField
@@ -5,6 +6,8 @@ from ...type_vars import (
     TABLE,
     GET,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class OrdinaryGetField(GetField[TABLE, GET]):

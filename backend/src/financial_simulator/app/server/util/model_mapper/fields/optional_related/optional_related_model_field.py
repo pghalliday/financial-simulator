@@ -9,8 +9,8 @@ from ...type_vars import (
 
 
 class OptionalRelatedModelField(ModelField[TABLE, GET, POST]):
-    def __init__(self, field: str, model: type[TABLE]) -> None:
+    def __init__(self, model: type[TABLE]) -> None:
         super().__init__(
             get_field=OrdinaryGetField[TABLE, GET](),
-            post_field=OptionalRelatedPostField[TABLE, POST](field, model),
+            post_field=OptionalRelatedPostField[TABLE, POST](model),
         )

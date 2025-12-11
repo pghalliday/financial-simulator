@@ -8,6 +8,7 @@ import type {Route} from "./+types/root";
 // All packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/dates/styles.css';
 
 import {Shell} from "~/components/layout/Shell";
 import {HeaderDataProvider} from "~/providers/HeaderDataProvider";

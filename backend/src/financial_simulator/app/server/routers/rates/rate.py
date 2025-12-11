@@ -1,10 +1,10 @@
-from decimal import Decimal
 from typing import Sequence
 from uuid import UUID
 
 from pydantic import BaseModel
 
 from financial_simulator.app.database.schema import (
+    BandedRateBands,
     BandedRateBand,
 )
 from financial_simulator.app.database.schema import RateType
@@ -15,7 +15,6 @@ from financial_simulator.app.server.routers.rates.rate_dependent import RateDepe
     rate_dependent_get_mapper
 from financial_simulator.app.server.util.model_mapper import (
     GetMapper,
-    OrdinaryGetField,
     OrdinaryModelField,
     ChildrenModelField,
     ModelMapper,
@@ -27,21 +26,29 @@ class RatePost(TypedBaseModel[RateType]):
     name: str
     description: str | None = None
 
+class RateBandedRateBandsGet(BaseModel):
+    banded_rate: RateDependentGet
 
 class RateBandedRateBandGet(BaseModel):
-    id: UUID
-    banded_rate_id: UUID
-    banded_rate: RateDependentGet
-    size: Decimal | None
-
+    banded_rate_bands: RateBandedRateBandsGet
 
 class RateGet(TypedBaseModel[RateType]):
     id: UUID
     name: str
     description: str | None
+    banded_rate_bands_remainders: Sequence[RateBandedRateBandsGet]
     banded_rate_bands: Sequence[RateBandedRateBandGet]
     scheduled_rate_providers: Sequence[RateProviderDependentGet]
 
+
+rate_banded_rate_bands_get_mapper = GetMapper(
+    table_model=BandedRateBands,
+    get_model=RateBandedRateBandsGet,
+)
+(
+    rate_banded_rate_bands_get_mapper
+    .field("banded_rate", ParentGetField(rate_dependent_get_mapper))
+)
 
 rate_banded_rate_band_get_mapper = GetMapper(
     table_model=BandedRateBand,
@@ -49,9 +56,7 @@ rate_banded_rate_band_get_mapper = GetMapper(
 )
 (
     rate_banded_rate_band_get_mapper
-    .field("banded_rate_id", OrdinaryGetField())
-    .field("banded_rate", ParentGetField(rate_dependent_get_mapper))
-    .field("size", OrdinaryGetField())
+    .field("banded_rate_bands", ParentGetField(rate_banded_rate_bands_get_mapper))
 )
 
 def add_rate_model_fields(model_mapper: ModelMapper) -> ModelMapper:
@@ -60,6 +65,7 @@ def add_rate_model_fields(model_mapper: ModelMapper) -> ModelMapper:
         .field("type", OrdinaryModelField())
         .field("name", OrdinaryModelField())
         .field("description", OrdinaryModelField())
+        .field("banded_rate_bands_remainders", ChildrenModelField(rate_banded_rate_bands_get_mapper))
         .field("banded_rate_bands", ChildrenModelField(rate_banded_rate_band_get_mapper))
         .field("scheduled_rate_providers", ChildrenModelField(rate_provider_dependent_get_mapper))
     )

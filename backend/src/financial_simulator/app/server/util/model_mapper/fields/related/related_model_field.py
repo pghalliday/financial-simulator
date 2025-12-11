@@ -9,8 +9,8 @@ from financial_simulator.app.server.util.model_mapper.type_vars import (
 
 
 class RelatedModelField(ModelField[TABLE, GET, POST]):
-    def __init__(self, field: str, model: type[TABLE]) -> None:
+    def __init__(self, model: type[TABLE]) -> None:
         super().__init__(
             get_field=OrdinaryGetField[TABLE, GET](),
-            post_field=RelatedPostField[TABLE, POST](field, model),
+            post_field=RelatedPostField[TABLE, POST](model),
         )

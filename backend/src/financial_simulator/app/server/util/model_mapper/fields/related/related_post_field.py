@@ -8,20 +8,16 @@ from ...type_vars import POST, TABLE
 
 
 class RelatedPostField(PostField[TABLE, POST]):
-    __field: str
     __model: type[TABLE]
 
-    def __init__(self, field: str, model: type[TABLE]) -> None:
-        self.__field = field
+    def __init__(self, model: type[TABLE]) -> None:
         self.__model = model
 
     def map(self, field: str, session: Session, item: TABLE, item_post: POST) -> None:
-        setattr(item, self.__field, get_related_item(
-            session,
-            self.__model,
-            self.__field,
-            getattr(item_post, field)
-        ))
+        related_item = get_related_item(
+            session, self.__model, field, getattr(item_post, field)
+        )
+        setattr(item, field, related_item.id)
 
     def has_invalid_relation_error(self) -> bool:
         return True

@@ -8,23 +8,23 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ...base import BaseWithId
 
 if TYPE_CHECKING:
-    from .banded_rate import BandedRate
+    from .banded_rate_bands import BandedRateBands
     from ..rate import Rate
 else:
-    BandedRate = "BandedRate"
+    BandedRateBands = "BandedRateBands"
     Rate = "Rate"
 
 
 class BandedRateBand(BaseWithId):
     __tablename__ = "banded_rate_band"
 
-    banded_rate_id: Mapped[UUID] = mapped_column(ForeignKey("banded_rate.id"))
+    banded_rate_bands_id: Mapped[UUID] = mapped_column(ForeignKey("banded_rate_bands.id"))
     position: Mapped[int] = mapped_column()
     size: Mapped[Decimal | None] = mapped_column()
     rate_id: Mapped[UUID | None] = mapped_column(ForeignKey("rate.id"))
 
-    banded_rate: Mapped[BandedRate] = relationship(
-        foreign_keys="BandedRateBand.banded_rate_id",
+    banded_rate_bands: Mapped[BandedRateBands] = relationship(
+        foreign_keys="BandedRateBand.banded_rate_bands_id",
         back_populates="bands",
     )
 

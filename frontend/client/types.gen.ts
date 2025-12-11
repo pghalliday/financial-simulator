@@ -192,6 +192,35 @@ export type BandedRateBandPost = {
 };
 
 /**
+ * BandedRateBandsGet
+ */
+export type BandedRateBandsGet = {
+  /**
+   * Remainder Rate Id
+   */
+  remainder_rate_id: string | null;
+  remainder_rate: RateDependentGet | null;
+  /**
+   * Bands
+   */
+  bands: Array<BandedRateBandGet>;
+};
+
+/**
+ * BandedRateBandsPost
+ */
+export type BandedRateBandsPost = {
+  /**
+   * Remainder Rate Id
+   */
+  remainder_rate_id?: string | null;
+  /**
+   * Bands
+   */
+  bands: Array<BandedRateBandPost>;
+};
+
+/**
  * BandedRateGet
  */
 export type BandedRateGet = {
@@ -212,17 +241,14 @@ export type BandedRateGet = {
    */
   description: string | null;
   /**
-   * Banded Rate Bands
+   * Banded Rate Bands Remainders
    */
-  banded_rate_bands: Array<RateBandedRateBandGet>;
+  banded_rate_bands_remainders: Array<RateBandedRateBandsGet>;
+  banded_rate_bands: BandedRateBandsGet | null;
   /**
    * Scheduled Rate Providers
    */
   scheduled_rate_providers: Array<RateProviderDependentGet>;
-  /**
-   * Bands
-   */
-  bands: Array<BandedRateBandGet>;
 };
 
 /**
@@ -241,10 +267,7 @@ export type BandedRatePost = {
    * Description
    */
   description?: string | null;
-  /**
-   * Bands
-   */
-  bands: Array<BandedRateBandPost>;
+  banded_rate_bands?: BandedRateBandsPost | null;
 };
 
 /**
@@ -406,6 +429,10 @@ export type ContinuousRateGet = {
    * Description
    */
   description: string | null;
+  /**
+   * Banded Rate Bands Remainders
+   */
+  banded_rate_bands_remainders: Array<RateBandedRateBandsGet>;
   /**
    * Banded Rate Bands
    */
@@ -1466,6 +1493,10 @@ export type PeriodicRateGet = {
    */
   description: string | null;
   /**
+   * Banded Rate Bands Remainders
+   */
+  banded_rate_bands_remainders: Array<RateBandedRateBandsGet>;
+  /**
    * Banded Rate Bands
    */
   banded_rate_bands: Array<RateBandedRateBandGet>;
@@ -1593,19 +1624,14 @@ export type RangeSchedulePost = {
  * RateBandedRateBandGet
  */
 export type RateBandedRateBandGet = {
-  /**
-   * Id
-   */
-  id: string;
-  /**
-   * Banded Rate Id
-   */
-  banded_rate_id: string;
+  banded_rate_bands: RateBandedRateBandsGet;
+};
+
+/**
+ * RateBandedRateBandsGet
+ */
+export type RateBandedRateBandsGet = {
   banded_rate: RateDependentGet;
-  /**
-   * Size
-   */
-  size: number | string | null;
 };
 
 /**

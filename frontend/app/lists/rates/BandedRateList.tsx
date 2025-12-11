@@ -93,7 +93,6 @@ export function BandedRateList(
             type: "banded_rate",
             name: "",
             description: "",
-            bands: [],
         }
         form.setInitialValues(initialValues)
         form.reset()

@@ -84,7 +84,7 @@ model_mapper = ModelMapper(
     .field("name", OrdinaryModelField())
     .field("description", OrdinaryModelField())
     .field("account_name", OrdinaryModelField())
-    .field("parent_id", OptionalRelatedModelField(field="parent", model=LedgerAccount))
+    .field("parent_id", OptionalRelatedModelField(model=LedgerAccount))
     .field("sub_accounts", ChildrenModelField(model_mapper.get_mapper))
     .field("parent", ParentModelField(ledger_account_parent_get_mapper))
     .field("bank_account_asset_accounts", ChildrenModelField(bank_account_dependent_get_mapper))

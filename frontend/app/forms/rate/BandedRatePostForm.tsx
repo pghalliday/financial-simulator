@@ -1,5 +1,6 @@
 import {useBandedRatePostFormContext} from "~/forms/rate/contexts";
 import {TextInput} from "@mantine/core";
+import {RateBandsSelect} from "~/components/controls/RateBandsSelect";
 
 export function BandedRatePostForm() {
     const form = useBandedRatePostFormContext()
@@ -19,6 +20,12 @@ export function BandedRatePostForm() {
             placeholder="The rate description"
             key={form.key("description")}
             {...form.getInputProps("description")}
+        />
+        <RateBandsSelect
+            label="Bands"
+            description="Rate bands"
+            key={form.key("banded_rate_bands")}
+            {...form.getInputProps("banded_rate_bands")}
         />
     </>
 }

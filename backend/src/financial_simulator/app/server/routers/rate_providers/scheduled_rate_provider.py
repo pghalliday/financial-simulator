@@ -46,12 +46,8 @@ scheduled_provider_model_mapper = ModelMapper(
 )
 (
     add_rate_provider_model_fields(scheduled_provider_model_mapper)
-    .field("rate_id", OptionalRelatedModelField(
-        field="rate", model=Rate
-    ))
-    .field("schedule_id", OptionalRelatedModelField(
-        field="schedule", model=Schedule
-    ))
+    .field("rate_id", OptionalRelatedModelField(model=Rate))
+    .field("schedule_id", OptionalRelatedModelField(model=Schedule))
     .field("rate", ParentModelField(rate_dependent_get_mapper))
     .field("schedule", ParentModelField(schedule_dependent_get_mapper))
 )

@@ -9,6 +9,7 @@ from sqlalchemy.exc import IntegrityError
 
 from .errors import DatabaseIntegrityError
 from .routers import (
+    init_db,
     scenarios,
     entities,
     dummy_days,
@@ -44,6 +45,7 @@ async def db_integrity_error_exception_handler(request: Request, exc: IntegrityE
     raise HTTPException(status_code=409, detail=jsonable_encoder(DatabaseIntegrityError(message=str(exc))))
 
 
+app.include_router(init_db.router)
 app.include_router(scenarios.router)
 app.include_router(entities.router)
 app.include_router(entities.individual_entity_router)

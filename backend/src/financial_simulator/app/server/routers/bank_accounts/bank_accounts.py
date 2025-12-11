@@ -92,21 +92,19 @@ model_mapper = ModelMapper(
     .field("description", OrdinaryModelField())
     .field(
         "asset_account_id",
-        OptionalRelatedModelField(field="asset_account", model=LedgerAccount),
+        OptionalRelatedModelField(model=LedgerAccount),
     )
     .field("asset_account", ParentModelField(ledger_account_dependent_get_mapper))
     .field(
         "interest_income_account_id",
-        OptionalRelatedModelField(field="interest_income_account", model=LedgerAccount),
+        OptionalRelatedModelField(model=LedgerAccount),
     )
     .field(
         "interest_income_account", ParentModelField(ledger_account_dependent_get_mapper)
     )
     .field(
         "interest_receivable_account_id",
-        OptionalRelatedModelField(
-            field="interest_receivable_account", model=LedgerAccount
-        ),
+        OptionalRelatedModelField(model=LedgerAccount),
     )
     .field(
         "interest_receivable_account",
@@ -114,36 +112,36 @@ model_mapper = ModelMapper(
     )
     .field(
         "fee_expenses_account_id",
-        OptionalRelatedModelField(field="fee_expenses_account", model=LedgerAccount),
+        OptionalRelatedModelField(model=LedgerAccount),
     )
     .field(
         "fee_expenses_account", ParentModelField(ledger_account_dependent_get_mapper)
     )
     .field(
         "fees_payable_account_id",
-        OptionalRelatedModelField(field="fees_payable_account", model=LedgerAccount),
+        OptionalRelatedModelField(model=LedgerAccount),
     )
     .field(
         "fees_payable_account", ParentModelField(ledger_account_dependent_get_mapper)
     )
     .field(
         "fees_provider_id",
-        OptionalRelatedModelField(field="fees_provider", model=DecimalProvider),
+        OptionalRelatedModelField(model=DecimalProvider),
     )
     .field("fees_provider", ParentModelField(decimal_provider_dependent_get_mapper))
     .field(
         "fee_payment_schedule_id",
-        OptionalRelatedModelField(field="fee_payment_schedule", model=Schedule),
+        OptionalRelatedModelField(model=Schedule),
     )
     .field("fee_payment_schedule", ParentModelField(schedule_dependent_get_mapper))
     .field(
         "interest_rate_provider_id",
-        OptionalRelatedModelField(field="interest_rate_provider", model=RateProvider),
+        OptionalRelatedModelField(model=RateProvider),
     )
     .field("interest_rate_provider", ParentModelField(rate_provider_dependent_get_mapper))
     .field(
         "interest_payment_schedule_id",
-        OptionalRelatedModelField(field="interest_payment_schedule", model=Schedule),
+        OptionalRelatedModelField(model=Schedule),
     )
     .field(
         "interest_payment_schedule",

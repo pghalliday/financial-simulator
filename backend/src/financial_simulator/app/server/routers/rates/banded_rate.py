@@ -6,7 +6,13 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from sqlalchemy.orm import InstrumentedAttribute
 
-from financial_simulator.app.database.schema import BandedRate, BandedRateBand, Rate, RateType
+from financial_simulator.app.database.schema import (
+    BandedRate,
+    BandedRateBand,
+    Rate,
+    RateType,
+    BandedRateBands,
+)
 from .rate import RatePost, RateGet, add_rate_model_fields
 from financial_simulator.app.server.routers.rates.rate_dependent import (
     RateDependentGet,
@@ -19,6 +25,7 @@ from ...util.model_mapper import (
     OrdinaryModelField,
     OptionalRelatedModelField,
     ParentModelField,
+    ChildModelField,
 )
 from ...util.query_params import DefaultQueryParams
 
@@ -28,9 +35,14 @@ class BandedRateBandPost(BaseModel):
     rate_id: UUID | None = None
 
 
+class BandedRateBandsPost(BaseModel):
+    remainder_rate_id: UUID | None = None
+    bands: Sequence[BandedRateBandPost]
+
+
 class BandedRatePost(RatePost):
     type: Literal[RateType.BANDED]
-    bands: Sequence[BandedRateBandPost]
+    banded_rate_bands: BandedRateBandsPost | None = None
 
 
 class BandedRateBandGet(BaseModel):
@@ -40,9 +52,15 @@ class BandedRateBandGet(BaseModel):
     rate: RateDependentGet | None
 
 
+class BandedRateBandsGet(BaseModel):
+    remainder_rate_id: UUID | None
+    remainder_rate: RateDependentGet | None
+    bands: Sequence[BandedRateBandGet]
+
+
 class BandedRateGet(RateGet):
     type: Literal[RateType.BANDED]
-    bands: Sequence[BandedRateBandGet]
+    banded_rate_bands: BandedRateBandsGet | None
 
 
 banded_rate_band_model_mapper = ModelMapper(
@@ -51,9 +69,28 @@ banded_rate_band_model_mapper = ModelMapper(
     post_model=BandedRateBandPost,
 )
 (
-    banded_rate_band_model_mapper.field("size", OrdinaryModelField())
-    .field("rate_id", OptionalRelatedModelField(field="rate", model=Rate))
+    banded_rate_band_model_mapper
+    .field("size", OrdinaryModelField())
+    .field("rate_id", OptionalRelatedModelField(model=Rate))
     .field("rate", ParentModelField(rate_dependent_get_mapper))
+)
+
+banded_rate_bands_model_mapper = ModelMapper(
+    table_model=BandedRateBands,
+    get_model=BandedRateBandsGet,
+    post_model=BandedRateBandsPost,
+)
+(
+    banded_rate_bands_model_mapper
+    .field("remainder_rate_id", OptionalRelatedModelField(model=Rate))
+    .field("remainder_rate", ParentModelField(rate_dependent_get_mapper))
+    .field(
+        "bands",
+        ChildrenModelField(
+            banded_rate_band_model_mapper.get_mapper,
+            banded_rate_band_model_mapper.post_mapper,
+        ),
+    )
 )
 
 banded_rate_model_mapper = ModelMapper(
@@ -63,9 +100,9 @@ banded_rate_model_mapper = ModelMapper(
 )
 (
     add_rate_model_fields(banded_rate_model_mapper)
-    .field("bands", ChildrenModelField(
-        banded_rate_band_model_mapper.get_mapper,
-        banded_rate_band_model_mapper.post_mapper,
+    .field("banded_rate_bands", ChildModelField(
+        banded_rate_bands_model_mapper.get_mapper,
+        banded_rate_bands_model_mapper.post_mapper,
     ))
 )
 

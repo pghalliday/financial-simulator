@@ -4,6 +4,7 @@ from .model_field import ModelField
 from .ordinary import OrdinaryGetField, OrdinaryPostField, OrdinaryModelField
 from .related import RelatedPostField, RelatedModelField
 from .optional_related import OptionalRelatedPostField, OptionalRelatedModelField
+from .child import ChildGetField, ChildPostField, ChildModelField
 from .children import ChildrenGetField, ChildrenPostField, ChildrenModelField
 from .parent import ParentGetField, ParentModelField
 from .many_to_many import ManyToManyReference, ManyToManyModelField, ManyToManyGetField, ManyToManyPostField
@@ -22,6 +23,9 @@ __all__ = [
     "OptionalRelatedModelField",
     "ParentGetField",
     "ParentModelField",
+    "ChildGetField",
+    "ChildPostField",
+    "ChildModelField",
     "ChildrenGetField",
     "ChildrenPostField",
     "ChildrenModelField",

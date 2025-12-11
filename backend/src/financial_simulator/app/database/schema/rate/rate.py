@@ -9,9 +9,10 @@ from ..base import (
 )
 
 if TYPE_CHECKING:
-    from .banded_rate import BandedRateBand
+    from .banded_rate import BandedRateBands, BandedRateBand
     from ..rate_provider import ScheduledRateProvider
 else:
+    BandedRateBands = "BandedRateBands"
     BandedRateBand = "BandedRateBand"
     ScheduledRateProvider = "ScheduledRateProvider"
 
@@ -20,6 +21,10 @@ class Rate(BaseWithType):
     __tablename__ = "rate"
 
     type: Mapped[RateType] = mapped_column()
+
+    banded_rate_bands_remainders: Mapped[List[BandedRateBands]] = relationship(
+        back_populates="remainder_rate",
+    )
 
     banded_rate_bands: Mapped[List[BandedRateBand]] = relationship(
         back_populates="rate",

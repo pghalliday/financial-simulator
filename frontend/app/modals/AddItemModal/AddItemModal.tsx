@@ -30,6 +30,7 @@ export function AddItemModal(
         onClose={onClose}
         stackId={stackId}
         title={title}
+        size="auto"
     >
         <LoadingOverlay
             visible={working}

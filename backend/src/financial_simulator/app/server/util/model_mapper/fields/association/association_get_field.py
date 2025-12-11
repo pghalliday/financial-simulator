@@ -21,7 +21,7 @@ class AssociationGetField(GetField[TABLE, GET], Generic[TABLE, GET, RELATED_TABL
         self.__association_field = association_field
         self.__get_mapper = get_mapper
 
-    def map(self, field: str, item: TABLE) -> Sequence[GET]:
+    def map(self, field: str, item: TABLE) -> Sequence[RELATED_GET]:
         return [
             self.__get_mapper.map(getattr(sub_item, self.__association_field)) for sub_item in getattr(item, field)
         ]

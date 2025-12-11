@@ -19,7 +19,7 @@ class ParentGetField(GetField[TABLE, GET], Generic[TABLE, GET, RELATED_TABLE, RE
     def __init__(self, get_mapper: GetMapper[RELATED_TABLE, RELATED_GET]) -> None:
         self.__get_mapper = get_mapper
 
-    def map(self, field: str, item: TABLE) -> GET | None:
+    def map(self, field: str, item: TABLE) -> RELATED_GET | None:
         parent = getattr(item, field)
         if parent is not None:
             return self.__get_mapper.map(parent)
