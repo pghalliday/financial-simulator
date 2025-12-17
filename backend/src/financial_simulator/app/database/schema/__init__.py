@@ -1,5 +1,5 @@
 from .bank_account import BankAccount
-from .base import Base, BaseWithId, BaseWithNameAndDescription
+from .base import Base, NamedAssociation, BaseWithId, BaseWithNameAndDescription
 from .entity import CorporationEntity, Entity, IndividualEntity, CorporationEntityBankAccount, IndividualEntityBankAccount, EntityType
 from .ledger_account import LedgerAccount
 from .decimal_provider import DecimalProvider, ScheduledDecimalProvider, MergeDecimalProvider, MergeDecimalProviderProvider, NextDecimalProviderProvider, NextDecimalProvider, DecimalProviderType
@@ -10,6 +10,7 @@ from .schedule import Schedule, DailySchedule, DaySchedule, FromSchedule, Monthl
 
 __all__ = [
     "Base",
+    "NamedAssociation",
     "BaseWithId",
     "BaseWithNameAndDescription",
     "Scenario",

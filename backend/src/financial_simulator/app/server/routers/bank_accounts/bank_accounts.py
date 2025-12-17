@@ -33,7 +33,7 @@ from financial_simulator.app.server.util.model_mapper import (
     OptionalRelatedModelField,
     OrdinaryModelField,
     ParentModelField,
-    ManyToManyModelField,
+    AssociationModelField,
 )
 from financial_simulator.app.server.util.query_params import DefaultQueryParams
 
@@ -149,11 +149,11 @@ model_mapper = ModelMapper(
     )
     .field(
         "individual_entities",
-        ManyToManyModelField(get_mapper=entity_dependent_get_mapper),
+        AssociationModelField(association_field="individual_entity", get_mapper=entity_dependent_get_mapper),
     )
     .field(
         "corporation_entities",
-        ManyToManyModelField(get_mapper=entity_dependent_get_mapper),
+        AssociationModelField(association_field="corporation_entity", get_mapper=entity_dependent_get_mapper),
     )
 )
 

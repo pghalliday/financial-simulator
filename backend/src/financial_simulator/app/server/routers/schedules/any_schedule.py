@@ -11,7 +11,6 @@ from financial_simulator.app.database.schema import (
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     AssociationModelField,
-    AssociationReference,
 )
 from .schedule import (
     ScheduleGet,
@@ -23,12 +22,13 @@ from financial_simulator.app.server.routers.schedules.schedule_dependent import 
     schedule_dependent_get_mapper,
 )
 from ...util.collection import Collection
+from ...util.dependent_types import DependentPost
 from ...util.query_params import DefaultQueryParams
 
 
 class AnySchedulePost(SchedulePost):
     type: Literal[ScheduleType.ANY]
-    schedules: Sequence[AssociationReference]
+    schedules: Sequence[DependentPost]
 
 
 class AnyScheduleGet(ScheduleGet):

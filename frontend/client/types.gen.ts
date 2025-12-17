@@ -73,7 +73,7 @@ export type AllSchedulePost = {
   /**
    * Schedules
    */
-  schedules: Array<AssociationReference>;
+  schedules: Array<DependentPost>;
 };
 
 /**
@@ -145,17 +145,7 @@ export type AnySchedulePost = {
   /**
    * Schedules
    */
-  schedules: Array<AssociationReference>;
-};
-
-/**
- * AssociationReference
- */
-export type AssociationReference = {
-  /**
-   * Id
-   */
-  id: string;
+  schedules: Array<DependentPost>;
 };
 
 /**
@@ -496,7 +486,7 @@ export type CorporationEntityGet = {
   /**
    * Bank Accounts
    */
-  bank_accounts: Array<DependentGet>;
+  bank_accounts: Array<NamedDependentGet>;
 };
 
 /**
@@ -518,11 +508,11 @@ export type CorporationEntityPost = {
   /**
    * Scenarios
    */
-  scenarios: Array<ManyToManyReference>;
+  scenarios: Array<DependentPost>;
   /**
    * Bank Accounts
    */
-  bank_accounts: Array<ManyToManyReference>;
+  bank_accounts: Array<NamedDependentPost>;
 };
 
 /**
@@ -725,6 +715,16 @@ export type DependentGet = {
    * Description
    */
   description: string | null;
+};
+
+/**
+ * DependentPost
+ */
+export type DependentPost = {
+  /**
+   * Id
+   */
+  id: string;
 };
 
 /**
@@ -1007,7 +1007,7 @@ export type IndividualEntityGet = {
   /**
    * Bank Accounts
    */
-  bank_accounts: Array<DependentGet>;
+  bank_accounts: Array<NamedDependentGet>;
 };
 
 /**
@@ -1029,11 +1029,21 @@ export type IndividualEntityPost = {
   /**
    * Scenarios
    */
-  scenarios: Array<ManyToManyReference>;
+  scenarios: Array<DependentPost>;
   /**
    * Bank Accounts
    */
-  bank_accounts: Array<ManyToManyReference>;
+  bank_accounts: Array<NamedDependentPost>;
+};
+
+/**
+ * InitDBGet
+ */
+export type InitDbGet = {
+  /**
+   * Log
+   */
+  log: Array<string>;
 };
 
 /**
@@ -1137,16 +1147,6 @@ export type LedgerAccountPost = {
 };
 
 /**
- * ManyToManyReference
- */
-export type ManyToManyReference = {
-  /**
-   * Id
-   */
-  id: string;
-};
-
-/**
  * MergeDecimalProviderGet
  */
 export type MergeDecimalProviderGet = {
@@ -1203,7 +1203,7 @@ export type MergeDecimalProviderPost = {
   /**
    * Decimal Providers
    */
-  decimal_providers: Array<AssociationReference>;
+  decimal_providers: Array<DependentPost>;
 };
 
 /**
@@ -1263,7 +1263,7 @@ export type MergeRateProviderPost = {
   /**
    * Rate Providers
    */
-  rate_providers: Array<AssociationReference>;
+  rate_providers: Array<DependentPost>;
 };
 
 /**
@@ -1339,6 +1339,28 @@ export type MonthlySchedulePost = {
 };
 
 /**
+ * NamedDependentGet
+ */
+export type NamedDependentGet = {
+  /**
+   * Name
+   */
+  name: string;
+  value: DependentGet | null;
+};
+
+/**
+ * NamedDependentPost
+ */
+export type NamedDependentPost = {
+  /**
+   * Name
+   */
+  name: string;
+  value?: DependentPost | null;
+};
+
+/**
  * NextDecimalProviderGet
  */
 export type NextDecimalProviderGet = {
@@ -1395,7 +1417,7 @@ export type NextDecimalProviderPost = {
   /**
    * Decimal Providers
    */
-  decimal_providers: Array<AssociationReference>;
+  decimal_providers: Array<DependentPost>;
 };
 
 /**
@@ -1455,7 +1477,7 @@ export type NextRateProviderPost = {
   /**
    * Rate Providers
    */
-  rate_providers: Array<AssociationReference>;
+  rate_providers: Array<DependentPost>;
 };
 
 /**
@@ -1756,7 +1778,7 @@ export type ScenarioPost = {
   /**
    * Entities
    */
-  entities: Array<ManyToManyReference>;
+  entities: Array<DependentPost>;
 };
 
 /**
@@ -2179,6 +2201,23 @@ export type YearlySchedulePost = {
    */
   day?: number | null;
 };
+
+export type GetInitDbRouteInitDbGetData = {
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/init-db/";
+};
+
+export type GetInitDbRouteInitDbGetResponses = {
+  /**
+   * Successful Response
+   */
+  200: InitDbGet;
+};
+
+export type GetInitDbRouteInitDbGetResponse =
+  GetInitDbRouteInitDbGetResponses[keyof GetInitDbRouteInitDbGetResponses];
 
 export type GetItemsRouteScenariosGetData = {
   body?: never;

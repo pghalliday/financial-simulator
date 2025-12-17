@@ -1,18 +1,10 @@
-from uuid import UUID
-
-from pydantic import BaseModel
-
 from financial_simulator.app.server.util.model_mapper import (
     GetMapper,
     TABLE,
     OrdinaryGetField,
 )
 
-
-class DependentGet(BaseModel):
-    id: UUID
-    name: str
-    description: str | None
+from .dependent_types import DependentGet, NamedDependentGet
 
 
 def create_dependent_get_mapper(table_model: type[TABLE]) -> GetMapper[TABLE, DependentGet]:
@@ -20,6 +12,17 @@ def create_dependent_get_mapper(table_model: type[TABLE]) -> GetMapper[TABLE, De
         GetMapper(
             table_model=table_model,
             get_model=DependentGet,
+        )
+        .field("name", OrdinaryGetField())
+        .field("description", OrdinaryGetField())
+    )
+
+
+def create_named_dependent_get_mapper(table_model: type[TABLE]) -> GetMapper[TABLE, NamedDependentGet]:
+    return (
+        GetMapper(
+            table_model=table_model,
+            get_model=NamedDependentGet,
         )
         .field("name", OrdinaryGetField())
         .field("description", OrdinaryGetField())

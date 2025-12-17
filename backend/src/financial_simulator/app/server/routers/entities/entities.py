@@ -11,8 +11,8 @@ from financial_simulator.app.database.schema import (
 )
 
 from financial_simulator.app.server.util.typed_collection import TypedCollection
-from .corporation_entity import CorporationEntityPost, CorporationEntityGet, corporation_model_mapper
-from .individual_entity import IndividualEntityPost, IndividualEntityGet, individual_model_mapper
+from .corporation_entity import CorporationEntityPost, CorporationEntityGet, corporation_entity_model_mapper
+from .individual_entity import IndividualEntityPost, IndividualEntityGet, individual_entity_model_mapper
 from ...util.query_params import DefaultQueryParams
 
 logger = logging.getLogger(__name__)
@@ -41,8 +41,8 @@ TypedCollection(
     get_model=Union[IndividualEntityGet, CorporationEntityGet],
     post_model=Union[IndividualEntityPost, CorporationEntityPost],
     model_mappers={
-        EntityType.INDIVIDUAL: individual_model_mapper,
-        EntityType.CORPORATION: corporation_model_mapper,
+        EntityType.INDIVIDUAL: individual_entity_model_mapper,
+        EntityType.CORPORATION: corporation_entity_model_mapper,
     },
 ).add_endpoints(
     router=router,

@@ -26,9 +26,9 @@ class ManyToManyPostField(PostField[TABLE, POST], Generic[TABLE, POST, RELATED_T
                 session,
                 self.__model,
                 field,
-                many_to_many_reference.id,
+                dependent_post.id,
             )
-            for many_to_many_reference in getattr(item_post, field)
+            for dependent_post in getattr(item_post, field)
         ])
 
     def has_invalid_relation_error(self) -> bool:

@@ -2,6 +2,7 @@ import {useBankAccounts, useScenarios} from "~/providers/items_providers";
 import {TextInput} from "@mantine/core";
 import {RelationMultiSelect} from "~/components/controls/RelationMultiSelect";
 import {useIndividualEntityPostFormContext} from "~/forms/entity/contexts";
+import {NamedRelationsSelect} from "~/components/controls/NamedRelationsSelect/NamedRelationsSelect";
 
 export function IndividualEntityPostForm() {
     const form = useIndividualEntityPostFormContext()
@@ -24,11 +25,13 @@ export function IndividualEntityPostForm() {
             key={form.key("description")}
             {...form.getInputProps("description")}
         />
-        <RelationMultiSelect
+        <NamedRelationsSelect
             label="Bank accounts"
             description="Linked bank accounts"
-            placeholder="The entity bank accounts"
+            placeholder="Add entity bank accounts"
+            relationHeading="Bank Account"
             data={bankAccounts}
+            id={form.key("bank_accounts")}
             key={form.key("bank_accounts")}
             {...form.getInputProps("bank_accounts")}
         />

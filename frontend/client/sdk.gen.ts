@@ -93,6 +93,8 @@ import type {
   GetDummyDaysGetData,
   GetDummyDaysGetErrors,
   GetDummyDaysGetResponses,
+  GetInitDbRouteInitDbGetData,
+  GetInitDbRouteInitDbGetResponses,
   GetItemRouteAllSchedulesItemIdGetData,
   GetItemRouteAllSchedulesItemIdGetErrors,
   GetItemRouteAllSchedulesItemIdGetResponses,
@@ -434,6 +436,22 @@ export type Options<
    * used to access values that aren't defined as part of the SDK function.
    */
   meta?: Record<string, unknown>;
+};
+
+/**
+ * Get Init Db Route
+ */
+export const getInitDbRouteInitDbGet = <ThrowOnError extends boolean = false>(
+  options?: Options<GetInitDbRouteInitDbGetData, ThrowOnError>,
+) => {
+  return (options?.client ?? client).get<
+    GetInitDbRouteInitDbGetResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: "/init-db/",
+    ...options,
+  });
 };
 
 /**

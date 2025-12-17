@@ -10,11 +10,11 @@ from ..rate_provider import RateProvider
 from ..schedule import Schedule
 
 if TYPE_CHECKING:
-    from ..entity import CorporationEntity, IndividualEntity
+    from ..entity import CorporationEntityBankAccount, IndividualEntityBankAccount
     from ..ledger_account import LedgerAccount
 else:
-    IndividualEntity = "IndividualEntity"
-    CorporationEntity = "CorporationEntity"
+    IndividualEntityBankAccount = "IndividualEntityBankAccount"
+    CorporationEntityBankAccount = "CorporationEntityBankAccount"
     LedgerAccount = "LedgerAccount"
 
 
@@ -80,12 +80,10 @@ class BankAccount(BaseWithNameAndDescription):
         foreign_keys="BankAccount.interest_payment_schedule_id"
     )
 
-    individual_entities: Mapped[List[IndividualEntity]] = relationship(
-        secondary="individual_entity_bank_account",
-        back_populates="bank_accounts",
+    individual_entities: Mapped[List[IndividualEntityBankAccount]] = relationship(
+        back_populates="bank_account",
     )
 
-    corporation_entities: Mapped[List[CorporationEntity]] = relationship(
-        secondary="corporation_entity_bank_account",
-        back_populates="bank_accounts",
+    corporation_entities: Mapped[List[CorporationEntityBankAccount]] = relationship(
+        back_populates="bank_account",
     )

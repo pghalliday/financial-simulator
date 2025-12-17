@@ -10,7 +10,6 @@ from financial_simulator.app.database.schema import (
 )
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
-    AssociationReference,
     AssociationModelField,
 )
 from .decimal_provider import DecimalProviderGet, DecimalProviderPost, add_decimal_provider_model_fields
@@ -19,12 +18,13 @@ from .decimal_provider_dependent import (
     decimal_provider_dependent_get_mapper,
 )
 from ...util.collection import Collection
+from ...util.dependent_types import DependentPost
 from ...util.query_params import DefaultQueryParams
 
 
 class MergeDecimalProviderPost(DecimalProviderPost):
     type: Literal[DecimalProviderType.MERGE]
-    decimal_providers: Sequence[AssociationReference]
+    decimal_providers: Sequence[DependentPost]
 
 
 class MergeDecimalProviderGet(DecimalProviderGet):

@@ -10,7 +10,6 @@ from financial_simulator.app.database.schema import (
 )
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
-    AssociationReference,
     AssociationModelField,
 )
 from .rate_provider import RateProviderGet, RateProviderPost, add_rate_provider_model_fields
@@ -19,12 +18,13 @@ from .rate_provider_dependent import (
     rate_provider_dependent_get_mapper,
 )
 from ...util.collection import Collection
+from ...util.dependent_types import DependentPost
 from ...util.query_params import DefaultQueryParams
 
 
 class NextRateProviderPost(RateProviderPost):
     type: Literal[RateProviderType.NEXT]
-    rate_providers: Sequence[AssociationReference]
+    rate_providers: Sequence[DependentPost]
 
 
 class NextRateProviderGet(RateProviderGet):

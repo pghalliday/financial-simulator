@@ -21,6 +21,11 @@ class BaseWithId(Base):
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
 
 
+class NamedAssociation(Base):
+    __abstract__ = True
+    name: Mapped[str] = mapped_column(primary_key=True)
+
+
 class BaseWithNameAndDescription(BaseWithId):
     __abstract__ = True
     name: Mapped[str] = mapped_column(unique=True)

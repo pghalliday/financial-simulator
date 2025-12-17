@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 3850b1fa6196
+Revision ID: 0417a484fc57
 Revises: 
-Create Date: 2025-12-16 13:00:28.550690
+Create Date: 2025-12-17 01:33:03.958484
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '3850b1fa6196'
+revision: str = '0417a484fc57'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -261,17 +261,19 @@ def upgrade() -> None:
     )
     op.create_table('corporation_entity_bank_account',
     sa.Column('corporation_entity_id', sa.Uuid(), nullable=False),
-    sa.Column('bank_account_id', sa.Uuid(), nullable=False),
+    sa.Column('bank_account_id', sa.Uuid(), nullable=True),
+    sa.Column('name', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['bank_account_id'], ['bank_account.id'], name=op.f('fk_corporation_entity_bank_account_bank_account_id_bank_account')),
     sa.ForeignKeyConstraint(['corporation_entity_id'], ['corporation_entity.id'], name=op.f('fk_corporation_entity_bank_account_corporation_entity_id_corporation_entity')),
-    sa.PrimaryKeyConstraint('corporation_entity_id', 'bank_account_id', name=op.f('pk_corporation_entity_bank_account'))
+    sa.PrimaryKeyConstraint('corporation_entity_id', 'name', name=op.f('pk_corporation_entity_bank_account'))
     )
     op.create_table('individual_entity_bank_account',
     sa.Column('individual_entity_id', sa.Uuid(), nullable=False),
-    sa.Column('bank_account_id', sa.Uuid(), nullable=False),
+    sa.Column('bank_account_id', sa.Uuid(), nullable=True),
+    sa.Column('name', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['bank_account_id'], ['bank_account.id'], name=op.f('fk_individual_entity_bank_account_bank_account_id_bank_account')),
     sa.ForeignKeyConstraint(['individual_entity_id'], ['individual_entity.id'], name=op.f('fk_individual_entity_bank_account_individual_entity_id_individual_entity')),
-    sa.PrimaryKeyConstraint('individual_entity_id', 'bank_account_id', name=op.f('pk_individual_entity_bank_account'))
+    sa.PrimaryKeyConstraint('individual_entity_id', 'name', name=op.f('pk_individual_entity_bank_account'))
     )
     op.create_table('merge_decimal_provider_provider',
     sa.Column('merge_decimal_provider_id', sa.Uuid(), nullable=False),

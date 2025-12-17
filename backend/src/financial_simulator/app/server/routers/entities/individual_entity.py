@@ -1,42 +1,45 @@
-from typing import Literal, Sequence, Union
+from typing import Literal, Union, Sequence
 
 from fastapi import APIRouter
 from sqlalchemy.orm import InstrumentedAttribute
 
-from financial_simulator.app.database.schema import IndividualEntity, EntityType
+from financial_simulator.app.database.schema import IndividualEntity, EntityType, IndividualEntityBankAccount
 from financial_simulator.app.server.routers.bank_accounts.bank_account_dependent import \
     bank_account_dependent_get_mapper
 from financial_simulator.app.server.util.collection import Collection
-from financial_simulator.app.server.util.dependent import DependentGet
 from financial_simulator.app.server.routers.entities.entity import EntityPost, EntityGet, add_entity_model_fields
+from financial_simulator.app.server.util.dependent_types import (
+    NamedDependentPost,
+    NamedDependentGet,
+)
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
-    ManyToManyReference,
-    ManyToManyModelField,
+    NamedAssociationModelField,
 )
 from financial_simulator.app.server.util.query_params import DefaultQueryParams
 
 
 class IndividualEntityPost(EntityPost):
     type: Literal[EntityType.INDIVIDUAL]
-    bank_accounts: Sequence[ManyToManyReference]
+    bank_accounts: Sequence[NamedDependentPost]
 
 
 class IndividualEntityGet(EntityGet):
     type: Literal[EntityType.INDIVIDUAL]
-    bank_accounts: Sequence[DependentGet]
+    bank_accounts: Sequence[NamedDependentGet]
 
 
-individual_model_mapper = ModelMapper(
+individual_entity_model_mapper = ModelMapper(
     table_model=IndividualEntity,
     get_model=IndividualEntityGet,
     post_model=IndividualEntityPost,
 )
 (
-    add_entity_model_fields(individual_model_mapper)
-    .field("bank_accounts", ManyToManyModelField(
-        include_post=True,
+    add_entity_model_fields(individual_entity_model_mapper)
+    .field("bank_accounts", NamedAssociationModelField(
+        association_field="bank_account",
         get_mapper=bank_account_dependent_get_mapper,
+        association_model=IndividualEntityBankAccount,
     ))
 )
 
@@ -54,7 +57,7 @@ router = APIRouter(
 
 Collection(
     query_params_class=IndividualEntityQueryParams,
-    model_mapper=individual_model_mapper,
+    model_mapper=individual_entity_model_mapper,
 ).add_endpoints(
     router=router,
 )

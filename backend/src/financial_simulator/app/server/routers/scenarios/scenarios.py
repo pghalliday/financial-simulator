@@ -13,10 +13,10 @@ from financial_simulator.app.server.routers.entities.entity_dependent import (
     EntityDependentGet,
     entity_dependent_get_mapper,
 )
+from financial_simulator.app.server.util.dependent_types import DependentPost
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
     OrdinaryModelField,
-    ManyToManyReference,
     ManyToManyModelField,
 )
 from financial_simulator.app.server.util.query_params import DefaultQueryParams
@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 class ScenarioPost(BaseModel):
     name: str
     description: str | None = None
-    entities: Sequence[ManyToManyReference]
+    entities: Sequence[DependentPost]
 
 class ScenarioGet(BaseModel):
     id: UUID

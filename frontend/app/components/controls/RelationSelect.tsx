@@ -3,6 +3,7 @@ import {type FocusEventHandler, useCallback} from "react";
 import type {NamedItem} from "~/lib/types";
 
 export interface Props {
+    id?: string
     data: NamedItem[]
     label?: string
     description?: string
@@ -22,6 +23,7 @@ function mapData(items: NamedItem[]): { value: string, label: string }[] {
 
 export function RelationSelect(
     {
+        id,
         data,
         label,
         description,
@@ -40,6 +42,8 @@ export function RelationSelect(
     }, [onChange])
 
     return <Select
+        id={`${id}-select`}
+        key={`${id}-select`}
         label={label}
         placeholder={placeholder}
         description={description}

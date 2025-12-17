@@ -20,14 +20,15 @@ from .fields import (
     ChildrenModelField,
     ParentGetField,
     ParentModelField,
-    ManyToManyReference,
     ManyToManyGetField,
     ManyToManyModelField,
     ManyToManyPostField,
     AssociationGetField,
-    AssociationReference,
     AssociationModelField,
     AssociationPostField,
+    NamedAssociationGetField,
+    NamedAssociationModelField,
+    NamedAssociationPostField,
 )
 from .type_vars import (
     TABLE,
@@ -37,6 +38,7 @@ from .type_vars import (
     RELATED_GET,
     RELATED_POST,
     ASSOCIATION_TABLE,
+    NAMED_ASSOCIATION_TABLE,
 )
 
 __all__ = [
@@ -61,14 +63,15 @@ __all__ = [
     "ChildrenModelField",
     "ParentGetField",
     "ParentModelField",
-    "ManyToManyReference",
     "ManyToManyGetField",
     "ManyToManyModelField",
     "ManyToManyPostField",
     "AssociationGetField",
-    "AssociationReference",
     "AssociationModelField",
     "AssociationPostField",
+    "NamedAssociationGetField",
+    "NamedAssociationPostField",
+    "NamedAssociationModelField",
     "TABLE",
     "GET",
     "POST",
@@ -76,4 +79,5 @@ __all__ = [
     "RELATED_GET",
     "RELATED_POST",
     "ASSOCIATION_TABLE",
+    "NAMED_ASSOCIATION_TABLE",
 ]

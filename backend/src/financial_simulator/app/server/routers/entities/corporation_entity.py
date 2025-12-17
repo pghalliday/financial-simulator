@@ -1,42 +1,48 @@
-from typing import Literal, Sequence, Union
+from typing import Literal, Union, Sequence
 
 from fastapi import APIRouter
 from sqlalchemy.orm import InstrumentedAttribute
 
-from financial_simulator.app.database.schema import CorporationEntity, EntityType
+from financial_simulator.app.database.schema import (
+    CorporationEntity,
+    EntityType,
+    CorporationEntityBankAccount,
+)
 from financial_simulator.app.server.routers.bank_accounts.bank_account_dependent import \
     bank_account_dependent_get_mapper
 from financial_simulator.app.server.util.collection import Collection
-from financial_simulator.app.server.util.dependent import DependentGet
 from financial_simulator.app.server.routers.entities.entity import EntityPost, EntityGet, add_entity_model_fields
+from financial_simulator.app.server.util.dependent_types import (
+    NamedDependentPost,
+    NamedDependentGet,
+)
 from financial_simulator.app.server.util.model_mapper import (
     ModelMapper,
-    ManyToManyReference,
-    ManyToManyModelField,
+    NamedAssociationModelField,
 )
 from financial_simulator.app.server.util.query_params import DefaultQueryParams
 
-
 class CorporationEntityPost(EntityPost):
     type: Literal[EntityType.CORPORATION]
-    bank_accounts: Sequence[ManyToManyReference]
+    bank_accounts: Sequence[NamedDependentPost]
 
 
 class CorporationEntityGet(EntityGet):
     type: Literal[EntityType.CORPORATION]
-    bank_accounts: Sequence[DependentGet]
+    bank_accounts: Sequence[NamedDependentGet]
 
 
-corporation_model_mapper = ModelMapper(
+corporation_entity_model_mapper = ModelMapper(
     table_model=CorporationEntity,
     get_model=CorporationEntityGet,
     post_model=CorporationEntityPost,
 )
 (
-    add_entity_model_fields(corporation_model_mapper)
-    .field("bank_accounts", ManyToManyModelField(
-        include_post=True,
+    add_entity_model_fields(corporation_entity_model_mapper)
+    .field("bank_accounts", NamedAssociationModelField(
+        association_field="bank_account",
         get_mapper=bank_account_dependent_get_mapper,
+        association_model=CorporationEntityBankAccount,
     ))
 )
 
@@ -54,7 +60,7 @@ router = APIRouter(
 
 Collection(
     query_params_class=CorporationEntityQueryParams,
-    model_mapper=corporation_model_mapper,
+    model_mapper=corporation_entity_model_mapper,
 ).add_endpoints(
     router=router,
 )

@@ -117,7 +117,9 @@ class Collection(Generic[TABLE, GET, POST, QUERY_PARAMS]):
             item_id: UUID, item_post: post_model, session: DBSessionDependency
         ) -> get_model:
             item = model_mapper.map_post(session, item_post, item_id)
+            logger.info(item)
             merged = session.merge(item)
+            logger.info(merged)
             session.commit()
             return model_mapper.map_get(merged)
 
